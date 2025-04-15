@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1>Products:</h1>
+<ul>
+    <li th:each="product : ${data}">
+        <p th:text="${product.id}"></p>
+        <p th:text="'Nosaukums: ' + ${product.title}"></p>
+        <p th:text="'Apraksts: ' + ${product.description}"></p>
+        <p th:text="'Daudzums: ' + ${product.quantity}"></p>
+        <p th:text="${product.toString()}"></p>
+    </li>
+</ul>
+</body>
+</html>
