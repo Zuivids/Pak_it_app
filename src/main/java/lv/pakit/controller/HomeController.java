@@ -2,6 +2,7 @@ package lv.pakit.controller;
 
 import lv.pakit.model.Product;
 import lv.pakit.model.Fragility;
+import lv.pakit.repo.IProductRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,12 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+    private final IProductRepo productRepo;
+
+    public HomeController(IProductRepo productRepo) {
+        this.productRepo = productRepo;
+    }
+    
     @GetMapping("/")
     public String index() {
         return "index";
@@ -18,7 +25,7 @@ public class HomeController {
 
     @GetMapping("/product")
     public String getProduct(Model model) {
-        Product product = new Product("Jaka", "Jakas apraksts", 250, "Apģērbs", Fragility.NON_FRAGILE);
+        Product product = productRepo.findById(1).orElse(null); // Example: fetch the first product with ID 1
         model.addAttribute("data", product);
         return "product-show-one-page";
     }
@@ -26,12 +33,8 @@ public class HomeController {
     @GetMapping("/product/list")
     public String getProductList(Model model) {
 
-       List<Product> allProducts = Arrays.asList(
-                new Product("Telefons", "Telefona apraksts", 21, "Elektroprece", Fragility.FRAGILE),
-                new Product("Ziepes", "Ziepju apraksts", 14, "Higēnas prece", Fragility.NON_FRAGILE),
-                new Product("Marinēti gurķi", "Marinētu gurķu apraksts", 133, "Pārtika", Fragility.FRAGILE)
-        );
-        model.addAttribute("data",allProducts);
+        List<Product> allProducts = (List<Product>) productRepo.findAll();
+        model.addAttribute("data", allProducts);
         return "product-show-many-page";
     }
 

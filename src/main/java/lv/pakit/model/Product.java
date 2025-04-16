@@ -8,19 +8,19 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "ProductTable")
+@Table(name = "Product_Table")
 @Entity
 public class Product {
 
     @Setter(value = AccessLevel.NONE)
     @Column(name = "Id")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull
     @Size(min = 3, max =500)
-    @Pattern(regexp = "[A-ZĒŪĪĶĻĢŠĀŽČŅa-zēūīķļģšāžčņ]+")
+    @Pattern(regexp = "[A-ZĒŪĪĶĻĢŠĀŽČŅa-zēūīķļģšāžčņ\\s\\d]+")
     @Column(name = "Title")
     private String title;
 
@@ -32,17 +32,18 @@ public class Product {
 
     @NotNull
     @Size(min = 3, max = 500)
-    @Pattern(regexp = "[A-ZĒŪĪĶĻĢŠĀŽČŅa-zēūīķļģšāžčņ]+")
+    @Pattern(regexp = "[A-ZĒŪĪĶĻĢŠĀŽČŅa-zēūīķļģšāžčņ\\s\\d]+")
     @Column(name = "Description")
     private String description;
 
     @NotNull
     @Size(min = 3, max = 50)
-    @Pattern(regexp = "[A-ZĒŪĪĶĻĢŠĀŽČŅa-zēūīķļģšāžčņ]+")
+    @Pattern(regexp = "[A-ZĒŪĪĶĻĢŠĀŽČŅa-zēūīķļģšāžčņ\\s\\d]+")
     @Column(name = "Type")
     private String type; //TODO Varbūt mainīt uz enum?
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "Fragility")
     private Fragility fragility;
 
