@@ -17,6 +17,6 @@ public interface IProductRepo extends CrudRepository<Product, Integer> {
 
     ArrayList<Product> findByTypeIgnoreCaseLike(String type);
 
-    ArrayList<Product> findByFragilityIgnoreCaseLike(Fragility fragility);
+    ArrayList<Product> findByFragility(String fragility);
 
 }

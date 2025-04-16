@@ -3,10 +3,14 @@ package lv.pakit;
 import lv.pakit.model.Fragility;
 import lv.pakit.model.Product;
 import lv.pakit.repo.IProductRepo;
+import lv.pakit.service.IProductCRUDService;
+import lv.pakit.service.IProductFilteringService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.ArrayList;
 
 @SpringBootApplication
 public class PakItAppApplication {
@@ -16,30 +20,50 @@ public class PakItAppApplication {
     }
 
     @Bean
-    public CommandLineRunner testDatabase(IProductRepo productRepo) {
-        return new CommandLineRunner() {
+    public CommandLineRunner testDatabase(IProductCRUDService crudService, IProductFilteringService filteringService) {
+        return args -> {
+            crudService.create(new Product("Telefons", "Telefona apraksts", 21, "Elektroprece", Fragility.FRAGILE));
+            crudService.create(new Product("Ziepes", "Ziepju apraksts", 14, "Higēnas prece", Fragility.NON_FRAGILE));
+            crudService.create(new Product("Marinēti gurķi", "Marinētu gurķu apraksts", 133, "Pārtika", Fragility.FRAGILE));
 
-            @Override
-            public void run(String... args) throws Exception {
+            System.out.println("===========================");
+            //All Products
+            ArrayList<Product> allProducts = crudService.retriveAll();
+            System.out.println("All products:");
+            allProducts.forEach(System.out::println);
+            System.out.println("---------------------------");
 
-                Product p1 = new Product("Telefons", "Telefona apraksts", 21, "Elektroprece", Fragility.FRAGILE);
-                Product p2 = new Product("Ziepes", "Ziepju apraksts", 14, "Higēnas prece", Fragility.NON_FRAGILE);
-                Product p3 = new Product("Marinēti gurķi", "Marinētu gurķu apraksts", 133, "Pārtika", Fragility.FRAGILE);
+            //Quantity filter test
+            System.out.println("Products with quantity less than 100:");
+            filteringService.filterByQuantityLess(100).forEach(System.out::println);
+            System.out.println("---------------------------");
 
-                productRepo.save(p1);
-                productRepo.save(p2);
-                productRepo.save(p3);
+            //Title and Description filter test
+            System.out.println("Products with title or description containing 'Ziepes':");
+            filteringService.filterByTitleOrDescription("%apr%").forEach(System.out::println);
+            System.out.println("---------------------------");
 
-                long size = productRepo.count();
-                System.out.println("Products in database: " + size);
-                System.out.println("Products:");
-                for (int i = 1; i <= size; i++) {
-                    System.out.println("Get  product by id (" + i + "): " + productRepo.findById(i).get());
-                }
+            //Retrive service test
+            System.out.println("Product with id eqaual to 2:");
+            crudService.retriveById(2);
+            System.out.println(crudService.retriveById(2));
+            System.out.println("---------------------------");
 
+            //Update service test
+            System.out.println("Update 2nd product Quantity and Fragility:");
+            Product p2 = new Product("Ziepes", "Ziepju apraksts", 444, "Higēnas prece", Fragility.FRAGILE);
+            crudService.updateById(2, p2);
+            System.out.println(crudService.retriveById(2));
+            System.out.println("---------------------------");
 
-
-            }
+            //Delete service test
+            System.out.println("Delete 2nd product:");
+            crudService.deleteById(2);
+            System.out.println("---------------------------");
+            System.out.println("Final products after filter and CRUD tests:");
+            allProducts = crudService.retriveAll();
+            allProducts.forEach(System.out::println);
+            System.out.println("===========================");
         };
     }
 
