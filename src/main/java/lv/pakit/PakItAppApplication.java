@@ -11,27 +11,36 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class PakItAppApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PakItAppApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(PakItAppApplication.class, args);
+    }
 
-	@Bean
-	public CommandLineRunner testDatabase(IProductRepo productRepo) {
-		return new CommandLineRunner() {
+    @Bean
+    public CommandLineRunner testDatabase(IProductRepo productRepo) {
+        return new CommandLineRunner() {
 
-			@Override
-			public void run(String... args) throws Exception {
+            @Override
+            public void run(String... args) throws Exception {
 
-				Product p1 = new Product("Telefons", "Telefona apraksts", 21, "Elektroprece", Fragility.FRAGILE);
-				Product p2 = new Product("Ziepes", "Ziepju apraksts", 14, "Higēnas prece", Fragility.NON_FRAGILE);
-				Product p3 = new Product("Marinēti gurķi", "Marinētu gurķu apraksts", 133, "Pārtika", Fragility.FRAGILE);
+                Product p1 = new Product("Telefons", "Telefona apraksts", 21, "Elektroprece", Fragility.FRAGILE);
+                Product p2 = new Product("Ziepes", "Ziepju apraksts", 14, "Higēnas prece", Fragility.NON_FRAGILE);
+                Product p3 = new Product("Marinēti gurķi", "Marinētu gurķu apraksts", 133, "Pārtika", Fragility.FRAGILE);
 
-				productRepo.save(p1);
-				productRepo.save(p2);
-				productRepo.save(p3);
+                productRepo.save(p1);
+                productRepo.save(p2);
+                productRepo.save(p3);
 
-			}
-		};
-	}
+                long size = productRepo.count();
+                System.out.println("Products in database: " + size);
+                System.out.println("Products:");
+                for (int i = 1; i <= size; i++) {
+                    System.out.println("Get  product by id (" + i + "): " + productRepo.findById(i).get());
+                }
+
+
+
+            }
+        };
+    }
 
 }
