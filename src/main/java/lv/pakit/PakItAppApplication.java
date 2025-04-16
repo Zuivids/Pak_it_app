@@ -57,9 +57,9 @@ public class PakItAppApplication {
             System.out.println("---------------------------");
 
             //Delete service test
-            System.out.println("Delete 2nd product:");
-            crudService.deleteById(2);
-            System.out.println("---------------------------");
+//            System.out.println("Delete 2nd product:");
+//            crudService.deleteById(2);
+//            System.out.println("---------------------------");
             System.out.println("Final products after filter and CRUD tests:");
             allProducts = crudService.retriveAll();
             allProducts.forEach(System.out::println);

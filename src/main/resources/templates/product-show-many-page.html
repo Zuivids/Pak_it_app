@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+</head>
 <body>
-<h1>Products:</h1>
-<ul>
-    <li th:each="product : ${data}">
-        <p th:text="${product.id}"></p>
-        <p th:text="'Nosaukums: ' + ${product.title}"></p>
-        <p th:text="'Apraksts: ' + ${product.description}"></p>
-        <p th:text="'Daudzums: ' + ${product.quantity}"></p>getFragility
-        <p th:text="'Trausls: ' + ${product.getFragility}"></p>
-        <p th:text="${product.toString()}"></p>
-    </li>
-</ul>
+<h1>Product List</h1>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Quantity</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Fragility</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${mydata}">
+        <td th:text="${product.title}">Title</td>
+        <td th:text="${product.quantity}">Quantity</td>
+        <td th:text="${product.description}">Description</td>
+        <td th:text="${product.type}">Type</td>
+        <td th:text="${product.fragility}">Fragility</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
