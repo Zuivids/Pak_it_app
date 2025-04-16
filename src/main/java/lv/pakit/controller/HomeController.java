@@ -25,7 +25,7 @@ public class HomeController {
 
     @GetMapping("/product")
     public String getProduct(Model model) {
-        Product product = productRepo.findById(1).orElse(null); // Example: fetch the first product with ID 1
+        Product product = productRepo.findById(1).orElse(null);
         model.addAttribute("data", product);
         return "product-show-one-page";
     }
