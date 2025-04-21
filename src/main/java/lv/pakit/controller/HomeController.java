@@ -1,11 +1,13 @@
 package lv.pakit.controller;
 
+import jakarta.validation.Valid;
 import lv.pakit.model.Product;
 import lv.pakit.repo.IProductRepo;
 import lv.pakit.service.IProductCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,4 +75,29 @@ public class HomeController {
         crudService.create(product);
         return "redirect:/product/all";
     }
+
+    @GetMapping("/product/edit/{id}")
+    public String editProductForm(@PathVariable("id") int id, Model model) throws Exception {
+        Product product = crudService.retriveById(id);
+        if (product != null) {
+            model.addAttribute("product", product);
+            return "product-edit-page";
+        } else {
+            model.addAttribute("errorMessage", "Product not found with ID: " + id);
+            return "error-page";
+        }
+    }
+
+    @PostMapping("/product/update/{id}")
+    public String updateProduct(@PathVariable("id") int id, @Valid Product product, BindingResult result,
+                                Model model) {
+        try {
+            crudService.updateById(id, product);
+            return "redirect:/product/all";
+        } catch (Exception e) {
+            model.addAttribute("mydata", e.getMessage());
+            return "error-page";
+        }
+    }
+
 }
