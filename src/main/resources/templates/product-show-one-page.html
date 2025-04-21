@@ -10,6 +10,7 @@
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>
+            <th>ID</th>
             <th>Title</th>
             <th>Quantity</th>
             <th>Description</th>
@@ -18,6 +19,7 @@
         </tr>
         </thead>
         <tbody>
+            <td th:text="${product.id}">ID</td>
             <td th:text="${product.title}">Title</td>
             <td th:text="${product.quantity}">Quantity</td>
             <td th:text="${product.description}">Description</td>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert New Product</title>
+</head>
+<body>
+<h1>Insert New Product</h1>
+
+<form th:action="@{/product/save}" th:object="${product}" method="post">
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+        <tr>
+            <th>Field</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Title</td>
+            <td><input type="text" th:field="*{title}" /></td>
+        </tr>
+        <tr>
+            <td>Quantity</td>
+            <td><input type="number" th:field="*{quantity}" /></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td><input type="text" th:field="*{description}" /></td>
+        </tr>
+        <tr>
+            <td>Type</td>
+            <td><input type="text" th:field="*{type}" /></td>
+        </tr>
+        <tr>
+            <td>Fragility</td>
+            <td>
+            <select th:field="*{fragility}">
+                <option th:each="f : ${T(lv.pakit.model.Fragility).values()}"
+                        th:value="${f}"
+                        th:text="${f}">
+                </option>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <button type="submit">Save Product</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+</body>
+</html>

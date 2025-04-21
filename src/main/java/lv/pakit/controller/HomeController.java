@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -56,5 +58,19 @@ public class HomeController {
             model.addAttribute("mydata", e.getMessage());
             return "error-page";
         }
+    }
+
+    @GetMapping("/product/add")
+    public String addProductById(Model model) {
+
+        model.addAttribute("product", new Product());
+
+        return "product-add-new-page";
+    }
+
+    @PostMapping("/product/save")
+    public String saveProduct(@ModelAttribute Product product) {
+        crudService.create(product);
+        return "redirect:/product/all";
     }
 }
