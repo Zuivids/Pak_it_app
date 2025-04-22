@@ -7,9 +7,11 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Table(name = "Product_Table")
 @Entity
+@Builder
 public class Product {
 
     @Setter(value = AccessLevel.NONE)
@@ -18,7 +20,7 @@ public class Product {
     private int id;
 
     @NotNull
-    @Size(min = 3, max =500)
+    @Size(min = 3, max = 500)
     private String title;
 
     @NotNull
@@ -38,12 +40,4 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Fragility fragility;
 
-    @Builder
-    public Product(String title, String description, int quantity, Category category, Fragility fragility) {
-        setTitle(title);
-        setDescription(description);
-        setQuantity(quantity);
-        setCategory(category);
-        setFragility(fragility);
-    }
 }
