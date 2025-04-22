@@ -2,10 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Product Details</title>
+    <title>Confirm Delete</title>
 </head>
 <body>
-<h1>Product Details</h1>
+<h2>Confirm Delete</h2>
+<p>Are you sure you want to delete the following product?</p>
+
 <div>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
@@ -19,14 +21,23 @@
         </tr>
         </thead>
         <tbody>
+        <tr>
             <td th:text="${product.id}">ID</td>
             <td th:text="${product.title}">Title</td>
             <td th:text="${product.quantity}">Quantity</td>
             <td th:text="${product.description}">Description</td>
             <td th:text="${product.category}">Category</td>
             <td th:text="${product.fragility}">Fragility</td>
+        </tr>
         </tbody>
     </table>
+</div>
+
+<div>
+    <form th:action="@{/product/deleted/{id}(id=${product.id})}" method="post" style="display:inline;">
+        <input type="submit" value="Delete">
+    </form>
+    <a th:href="@{/product/all}">Cancel</a>
 </div>
 </body>
 </html>

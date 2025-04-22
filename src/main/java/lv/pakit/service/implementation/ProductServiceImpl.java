@@ -41,8 +41,8 @@ public class ProductServiceImpl implements IProductCRUDService, IProductFilterin
     @Override
     public void create(Product product) {
 
-        Product existedProduct = productRepo.findByTitleAndDescriptionAndQuantityAndTypeAndFragility(product.getTitle(),
-                product.getDescription(), product.getQuantity(), product.getType(), product.getFragility());
+        Product existedProduct = productRepo.findByTitleAndDescriptionAndQuantityAndCategoryAndFragility(product.getTitle(),
+                product.getDescription(), product.getQuantity(), product.getCategory(), product.getFragility());
 
         if(existedProduct != null) {
             existedProduct.setQuantity(existedProduct.getQuantity() + product.getQuantity());
@@ -81,7 +81,7 @@ public class ProductServiceImpl implements IProductCRUDService, IProductFilterin
         productForUpdating.setTitle(product.getTitle());
         productForUpdating.setDescription(product.getDescription());
         productForUpdating.setQuantity(product.getQuantity());
-        productForUpdating.setType(product.getType());
+        productForUpdating.setCategory(product.getCategory());
         productForUpdating.setFragility(product.getFragility());
 
         productRepo.save(productForUpdating);

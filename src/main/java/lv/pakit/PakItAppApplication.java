@@ -22,10 +22,29 @@ public class PakItAppApplication {
     @Bean
     public CommandLineRunner testDatabase(IProductCRUDService crudService, IProductFilteringService filteringService) {
         return args -> {
-            crudService.create(new Product("Telefons", "Telefona apraksts", 21, "Elektroprece", Fragility.FRAGILE));
-            crudService.create(new Product("Ziepes", "Ziepju apraksts", 14, "Higēnas prece", Fragility.NON_FRAGILE));
-            crudService.create(new Product("Marinēti gurķi", "Marinētu gurķu apraksts", 133, "Pārtika", Fragility.FRAGILE));
+            crudService.create(Product.builder()
+                    .title("Telefons")
+                    .description("Telefona apraksts")
+                    .quantity(21)
+                    .category("Elektroprece")
+                    .fragility(Fragility.FRAGILE)
+                    .build());
 
+            crudService.create(Product.builder()
+                    .title("Ziepes")
+                    .description("Ziepju apraksts")
+                    .quantity(14)
+                    .category("Higēnas prece")
+                    .fragility(Fragility.NON_FRAGILE)
+                    .build());
+
+            crudService.create(Product.builder()
+                    .title("Marinēti gurķi")
+                    .description("Marinētu gurķu apraksts")
+                    .quantity(133)
+                    .category("Pārtika")
+                    .fragility(Fragility.FRAGILE)
+                    .build());
             System.out.println("===========================");
             //All Products
             ArrayList<Product> allProducts = crudService.retriveAll();
@@ -51,7 +70,13 @@ public class PakItAppApplication {
 
             //Update service test
             System.out.println("Update 2nd product Quantity and Fragility:");
-            Product p2 = new Product("Ziepes", "Ziepju apraksts", 444, "Higēnas prece", Fragility.FRAGILE);
+            Product p2 = Product.builder()
+                    .title("Ziepes")
+                    .description("Ziepju apraksts")
+                    .quantity(444)
+                    .category("Higēnas prece")
+                    .fragility(Fragility.FRAGILE)
+                    .build();
             crudService.updateById(2, p2);
             System.out.println(crudService.retriveById(2));
             System.out.println("---------------------------");
