@@ -29,8 +29,16 @@
             <td><input type="text" th:field="*{description}" /></td>
         </tr>
         <tr>
-            <td>Type</td>
-            <td><input type="text" th:field="*{category}" /></td>
+            <td>Category</td>
+            <td>
+                <select th:field="*{category}">
+                    <option th:each="categoryValue : ${T(lv.pakit.model.Category).values()}"
+                            th:value="${categoryValue}"
+                            th:text="${categoryValue}">
+                        Category Value
+                    </option>
+                </select>
+            </td>
         </tr>
         <tr>
             <td>Fragility</td>

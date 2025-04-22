@@ -1,5 +1,6 @@
 package lv.pakit;
 
+import lv.pakit.model.Category;
 import lv.pakit.model.Fragility;
 import lv.pakit.model.Product;
 import lv.pakit.repo.IProductRepo;
@@ -26,7 +27,7 @@ public class PakItAppApplication {
                     .title("Telefons")
                     .description("Telefona apraksts")
                     .quantity(21)
-                    .category("Elektroprece")
+                    .category(Category.Electronics)
                     .fragility(Fragility.FRAGILE)
                     .build());
 
@@ -34,7 +35,7 @@ public class PakItAppApplication {
                     .title("Ziepes")
                     .description("Ziepju apraksts")
                     .quantity(14)
-                    .category("Higēnas prece")
+                    .category(Category.Cosmetics)
                     .fragility(Fragility.NON_FRAGILE)
                     .build());
 
@@ -42,7 +43,7 @@ public class PakItAppApplication {
                     .title("Marinēti gurķi")
                     .description("Marinētu gurķu apraksts")
                     .quantity(133)
-                    .category("Pārtika")
+                    .category(Category.Food)
                     .fragility(Fragility.FRAGILE)
                     .build());
             System.out.println("===========================");
@@ -74,7 +75,7 @@ public class PakItAppApplication {
                     .title("Ziepes")
                     .description("Ziepju apraksts")
                     .quantity(444)
-                    .category("Higēnas prece")
+                    .category(Category.Cosmetics)
                     .fragility(Fragility.FRAGILE)
                     .build();
             crudService.updateById(2, p2);

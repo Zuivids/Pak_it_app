@@ -31,15 +31,15 @@ public class Product {
     private String description;
 
     @NotNull
-    @Size(min = 3, max = 50)
-    private String category; //TODO Varbūt mainīt uz enum?
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private Fragility fragility;
 
     @Builder
-    public Product(String title, String description, int quantity, String category, Fragility fragility) {
+    public Product(String title, String description, int quantity, Category category, Fragility fragility) {
         setTitle(title);
         setDescription(description);
         setQuantity(quantity);
