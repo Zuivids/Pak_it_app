@@ -3,9 +3,7 @@ package lv.pakit;
 import lv.pakit.model.Category;
 import lv.pakit.model.Fragility;
 import lv.pakit.model.Product;
-import lv.pakit.repo.IProductRepo;
-import lv.pakit.service.IProductCRUDService;
-import lv.pakit.service.IProductFilteringService;
+import lv.pakit.service.ProductService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,9 +19,9 @@ public class PakItAppApplication {
     }
 
     @Bean
-    public CommandLineRunner testDatabase(IProductCRUDService crudService, IProductFilteringService filteringService) {
+    public CommandLineRunner testDatabase(ProductService productService) {
         return args -> {
-            crudService.create(Product.builder()
+            productService.create(Product.builder()
                     .title("Telefons")
                     .description("Telefona apraksts")
                     .quantity(21)
@@ -31,7 +29,7 @@ public class PakItAppApplication {
                     .fragility(Fragility.FRAGILE)
                     .build());
 
-            crudService.create(Product.builder()
+            productService.create(Product.builder()
                     .title("Ziepes")
                     .description("Ziepju apraksts")
                     .quantity(14)
@@ -39,7 +37,7 @@ public class PakItAppApplication {
                     .fragility(Fragility.NON_FRAGILE)
                     .build());
 
-            crudService.create(Product.builder()
+            productService.create(Product.builder()
                     .title("Marinēti gurķi")
                     .description("Marinētu gurķu apraksts")
                     .quantity(133)
@@ -48,25 +46,25 @@ public class PakItAppApplication {
                     .build());
             System.out.println("===========================");
             //All Products
-            ArrayList<Product> allProducts = crudService.retriveAll();
+            ArrayList<Product> allProducts = productService.retriveAll();
             System.out.println("All products:");
             allProducts.forEach(System.out::println);
             System.out.println("---------------------------");
 
             //Quantity filter test
             System.out.println("Products with quantity less than 100:");
-            filteringService.filterByQuantityLess(100).forEach(System.out::println);
+            productService.filterByQuantityLess(100).forEach(System.out::println);
             System.out.println("---------------------------");
 
             //Title and Description filter test
             System.out.println("Products with title or description containing 'Ziepes':");
-            filteringService.filterByTitleOrDescription("%apr%").forEach(System.out::println);
+            productService.filterByTitleOrDescription("%apr%").forEach(System.out::println);
             System.out.println("---------------------------");
 
             //Retrive service test
             System.out.println("Product with id eqaual to 2:");
-            crudService.retriveById(2);
-            System.out.println(crudService.retriveById(2));
+            productService.retriveById(2);
+            System.out.println(productService.retriveById(2));
             System.out.println("---------------------------");
 
             //Update service test
@@ -78,8 +76,8 @@ public class PakItAppApplication {
                     .category(Category.Cosmetics)
                     .fragility(Fragility.FRAGILE)
                     .build();
-            crudService.updateById(2, p2);
-            System.out.println(crudService.retriveById(2));
+            productService.updateById(2, p2);
+            System.out.println(productService.retriveById(2));
             System.out.println("---------------------------");
 
             //Delete service test
@@ -87,7 +85,7 @@ public class PakItAppApplication {
 //            crudService.deleteById(2);
 //            System.out.println("---------------------------");
             System.out.println("Final products after filter and CRUD tests:");
-            allProducts = crudService.retriveAll();
+            allProducts = productService.retriveAll();
             allProducts.forEach(System.out::println);
             System.out.println("===========================");
         };

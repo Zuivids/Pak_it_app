@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.model.Product;
 import lv.pakit.repo.IProductRepo;
-import lv.pakit.service.IProductCRUDService;
+import lv.pakit.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class HomeController {
 
     private final IProductRepo productRepo;
-    private final IProductCRUDService productCrudService;
+    private final ProductService productService;
 
     @GetMapping("/")
     public String index() {
@@ -28,7 +28,7 @@ public class HomeController {
     @GetMapping("/product/{id}")
     public String getProductById(@PathVariable int id, Model model) {
         try {
-            Product product = productCrudService.retriveById(id);
+            Product product = productService.retriveById(id);
             if (product != null) {
                 model.addAttribute("product", product);
                 return "product-show-one-page";
@@ -45,8 +45,8 @@ public class HomeController {
     @GetMapping("/product/all")
     public String getAllProducts(Model model) {
         try {
-            System.out.println("Visi:" + productCrudService.retriveAll());
-            model.addAttribute("mydata", productCrudService.retriveAll());
+            System.out.println("Visi:" + productService.retriveAll());
+            model.addAttribute("mydata", productService.retriveAll());
             return "product-show-many-page";
         } catch (Exception e) {
             model.addAttribute("mydata", e.getMessage());
@@ -63,13 +63,13 @@ public class HomeController {
 
     @PostMapping("/product/save")
     public String saveProduct(@ModelAttribute Product product) {
-        productCrudService.create(product);
+        productService.create(product);
         return "redirect:/product/all";
     }
 
     @GetMapping("/product/edit/{id}")
     public String editProductForm(@PathVariable("id") int id, Model model) throws Exception {
-        Product product = productCrudService.retriveById(id);
+        Product product = productService.retriveById(id);
         if (product != null) {
             model.addAttribute("product", product);
             return "product-edit-page";
@@ -83,7 +83,7 @@ public class HomeController {
     public String updateProduct(@PathVariable("id") int id, @Valid Product product, BindingResult result,
                                 Model model) {
         try {
-            productCrudService.updateById(id, product);
+            productService.updateById(id, product);
             return "redirect:/product/all";
         } catch (Exception e) {
             model.addAttribute("mydata", e.getMessage());
@@ -94,7 +94,7 @@ public class HomeController {
     @GetMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable("id") int id, Model model) throws Exception {
         //TODO soft delete
-        Product product = productCrudService.retriveById(id);
+        Product product = productService.retriveById(id);
 
         if (product != null) {
             model.addAttribute("product", product);
@@ -108,7 +108,7 @@ public class HomeController {
     @PostMapping("/product/deleted/{id}")
     public String deletedProduct(@PathVariable("id") int id, Model model) {
         try {
-            productCrudService.deleteById(id);
+            productService.deleteById(id);
             return "redirect:/product/all";
         } catch (Exception e) {
             model.addAttribute("mydata", e.getMessage());
