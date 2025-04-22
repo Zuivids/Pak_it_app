@@ -15,6 +15,8 @@
         <th>Description</th>
         <th>Category</th>
         <th>Fragility</th>
+        <th>Edit</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -25,8 +27,21 @@
         <td th:text="${product.description}">Description</td>
         <td th:text="${product.category}">Category</td>
         <td th:text="${product.fragility}">Fragility</td>
+        <td>
+            <form th:action="@{'/product/edit/' + ${product.id}}" method="get" style="display:inline;">
+                <button type="submit">Edit</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{'/product/deleted/' + ${product.id}}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
+<form th:action="@{/}" method="get">
+    <button type="submit">Back</button>
+</form>
 </body>
 </html>
