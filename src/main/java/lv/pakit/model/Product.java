@@ -20,24 +20,20 @@ public class Product {
     private int id;
 
     @NotNull
-    @Size(min = 3, max = 500)
     private String title;
 
     @NotNull
-    @Max(1000)
-    @Min(1)
     private int quantity;
 
     @NotNull
-    @Size(min = 3, max = 500)
     private String description;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Category category;
+    private ProductCategory category;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Fragility fragility;
+    private ProductFragility fragility;
 
 }

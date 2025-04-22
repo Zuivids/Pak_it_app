@@ -1,7 +1,8 @@
 package lv.pakit;
 
-import lv.pakit.model.Category;
-import lv.pakit.model.Fragility;
+import lv.pakit.dto.ProductDto;
+import lv.pakit.model.ProductFragility;
+import lv.pakit.model.ProductCategory;
 import lv.pakit.model.Product;
 import lv.pakit.service.ProductService;
 import org.springframework.boot.CommandLineRunner;
@@ -9,7 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class PakItAppApplication {
@@ -21,32 +22,32 @@ public class PakItAppApplication {
     @Bean
     public CommandLineRunner testDatabase(ProductService productService) {
         return args -> {
-            productService.create(Product.builder()
+            productService.create(ProductDto.builder()
                     .title("Telefons")
                     .description("Telefona apraksts")
                     .quantity(21)
-                    .category(Category.Electronics)
-                    .fragility(Fragility.FRAGILE)
+                    .category(ProductCategory.ELECTRONICS.getPublicName())
+                    .fragility(ProductFragility.FRAGILE.getPublicName())
                     .build());
 
-            productService.create(Product.builder()
+            productService.create(ProductDto.builder()
                     .title("Ziepes")
                     .description("Ziepju apraksts")
                     .quantity(14)
-                    .category(Category.Cosmetics)
-                    .fragility(Fragility.NON_FRAGILE)
+                    .category(ProductCategory.COSMETICS.getPublicName())
+                    .fragility(ProductFragility.NON_FRAGILE.getPublicName())
                     .build());
 
-            productService.create(Product.builder()
+            productService.create(ProductDto.builder()
                     .title("Marinēti gurķi")
                     .description("Marinētu gurķu apraksts")
                     .quantity(133)
-                    .category(Category.Food)
-                    .fragility(Fragility.FRAGILE)
+                    .category(ProductCategory.FOOD.getPublicName())
+                    .fragility(ProductFragility.FRAGILE.getPublicName())
                     .build());
             System.out.println("===========================");
             //All Products
-            ArrayList<Product> allProducts = productService.retriveAll();
+            List<ProductDto> allProducts = productService.retrieveAll();
             System.out.println("All products:");
             allProducts.forEach(System.out::println);
             System.out.println("---------------------------");
@@ -63,21 +64,21 @@ public class PakItAppApplication {
 
             //Retrive service test
             System.out.println("Product with id eqaual to 2:");
-            productService.retriveById(2);
-            System.out.println(productService.retriveById(2));
+            productService.retrieveById(2);
+            System.out.println(productService.retrieveById(2));
             System.out.println("---------------------------");
 
             //Update service test
             System.out.println("Update 2nd product Quantity and Fragility:");
-            Product p2 = Product.builder()
+            ProductDto p2 = ProductDto.builder()
                     .title("Ziepes")
                     .description("Ziepju apraksts")
                     .quantity(444)
-                    .category(Category.Cosmetics)
-                    .fragility(Fragility.FRAGILE)
+                    .category(ProductCategory.COSMETICS.getPublicName())
+                    .fragility(ProductFragility.FRAGILE.getPublicName())
                     .build();
             productService.updateById(2, p2);
-            System.out.println(productService.retriveById(2));
+            System.out.println(productService.retrieveById(2));
             System.out.println("---------------------------");
 
             //Delete service test
@@ -85,7 +86,7 @@ public class PakItAppApplication {
 //            crudService.deleteById(2);
 //            System.out.println("---------------------------");
             System.out.println("Final products after filter and CRUD tests:");
-            allProducts = productService.retriveAll();
+            allProducts = productService.retrieveAll();
             allProducts.forEach(System.out::println);
             System.out.println("===========================");
         };

@@ -2,6 +2,7 @@ package lv.pakit.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lv.pakit.dto.ProductDto;
 import lv.pakit.model.Product;
 import lv.pakit.repo.IProductRepo;
 import lv.pakit.service.ProductService;
@@ -27,31 +28,17 @@ public class HomeController {
 
     @GetMapping("/product/{id}")
     public String getProductById(@PathVariable int id, Model model) {
-        try {
-            Product product = productService.retriveById(id);
-            if (product != null) {
-                model.addAttribute("product", product);
-                return "product-show-one-page";
-            } else {
-                model.addAttribute("errorMessage", "Product not found with ID: " + id);
-                return "error-page";
-            }
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "error-page";
-        }
+        ProductDto productDto = productService.retrieveById(id);
+        model.addAttribute("product", productDto);
+
+        return "product-show-one-page";
     }
 
     @GetMapping("/product/all")
     public String getAllProducts(Model model) {
-        try {
-            System.out.println("Visi:" + productService.retriveAll());
-            model.addAttribute("mydata", productService.retriveAll());
-            return "product-show-many-page";
-        } catch (Exception e) {
-            model.addAttribute("mydata", e.getMessage());
-            return "error-page";
-        }
+        model.addAttribute("products", productService.retrieveAll());
+
+        return "product-show-many-page";
     }
 
     @GetMapping("/product/add")
@@ -62,58 +49,41 @@ public class HomeController {
     }
 
     @PostMapping("/product/save")
-    public String saveProduct(@ModelAttribute Product product) {
-        productService.create(product);
+    public String saveProduct(@Valid @ModelAttribute ProductDto productDto) { //prodcutdto + valid
+        productService.create(productDto);
+
         return "redirect:/product/all";
     }
 
     @GetMapping("/product/edit/{id}")
     public String editProductForm(@PathVariable("id") int id, Model model) throws Exception {
-        Product product = productService.retriveById(id);
-        if (product != null) {
-            model.addAttribute("product", product);
-            return "product-edit-page";
-        } else {
-            model.addAttribute("errorMessage", "Product not found with ID: " + id);
-            return "error-page";
-        }
+        model.addAttribute("product", new Product());
+
+        return "product-edit-page";
     }
 
     @PostMapping("/product/update/{id}")
-    public String updateProduct(@PathVariable("id") int id, @Valid Product product, BindingResult result,
+    public String updateProduct(@PathVariable("id") int id, @Valid ProductDto productDto, BindingResult result,
                                 Model model) {
-        try {
-            productService.updateById(id, product);
-            return "redirect:/product/all";
-        } catch (Exception e) {
-            model.addAttribute("mydata", e.getMessage());
-            return "error-page";
-        }
+        productService.updateById(id, productDto);
+
+        return "redirect:/product/all";
     }
 
     @GetMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable("id") int id, Model model) throws Exception {
         //TODO soft delete
-        Product product = productService.retriveById(id);
+        ProductDto product = productService.retrieveById(id);
+        model.addAttribute("product", product);
 
-        if (product != null) {
-            model.addAttribute("product", product);
-            return "product-delete-page";
-        } else {
-            model.addAttribute("errorMessage", "Product not found with ID: " + id);
-            return "error-page";
-        }
+        return "product-delete-page";
     }
 
     @PostMapping("/product/deleted/{id}")
     public String deletedProduct(@PathVariable("id") int id, Model model) {
-        try {
-            productService.deleteById(id);
-            return "redirect:/product/all";
-        } catch (Exception e) {
-            model.addAttribute("mydata", e.getMessage());
-            return "error-page";
-        }
+        productService.deleteById(id);
+
+        return "redirect:/product/all";
     }
 
 }
