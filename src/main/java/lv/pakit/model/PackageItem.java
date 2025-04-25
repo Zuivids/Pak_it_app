@@ -10,6 +10,8 @@ import lombok.*;
 @Table(name = "package_item")
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PackageItem {
 
     @Id

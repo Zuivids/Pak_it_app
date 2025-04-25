@@ -1,9 +1,11 @@
 package lv.pakit;
 
+import lv.pakit.dto.PackageItemDto;
 import lv.pakit.dto.ProductDto;
 import lv.pakit.model.ProductFragility;
 import lv.pakit.model.ProductCategory;
 import lv.pakit.model.Product;
+import lv.pakit.service.PackageItemService;
 import lv.pakit.service.ProductService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +22,7 @@ public class PakItAppApplication {
     }
 
     @Bean
-    public CommandLineRunner testDatabase(ProductService productService) {
+    public CommandLineRunner testProductDatabaseLinkage(ProductService productService) {
         return args -> {
             productService.create(ProductDto.builder()
                     .title("Telefons")
@@ -89,6 +91,44 @@ public class PakItAppApplication {
             allProducts = productService.retrieveAll();
             allProducts.forEach(System.out::println);
             System.out.println("===========================");
+        };
+    }
+
+    @Bean
+    public CommandLineRunner testPackageItemDatabaseLinkage(PackageItemService packageItemService) {
+        return args -> {
+            packageItemService.create(PackageItemDto.builder()
+                    .commodityId(1)
+                    .declarationId(1)
+                    .quantity(11)
+                    .netWeight(14)
+                    .value(100)
+                    .used(true)
+                    .build());
+
+            packageItemService.create(PackageItemDto.builder()
+                    .commodityId(2)
+                    .declarationId(2)
+                    .quantity(22)
+                    .netWeight(76)
+                    .value(1000)
+                    .used(false)
+                    .build());
+            packageItemService.create(PackageItemDto.builder()
+                    .commodityId(3)
+                    .declarationId(3)
+                    .quantity(44)
+                    .netWeight(1)
+                    .value(1900)
+                    .used(false)
+                    .build());
+            System.out.println("===========================");
+            //All Products
+            List<PackageItemDto> allPackageItems = packageItemService.retrieveAll();
+            System.out.println("All packageItems:");
+            allPackageItems.forEach(System.out::println);
+            System.out.println("---------------------------");
+
         };
     }
 

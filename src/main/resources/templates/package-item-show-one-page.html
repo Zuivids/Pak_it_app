@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PackageItem Details</title>
+</head>
+<body>
+<h1>PackageItem Details</h1>
+<div>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Commodity ID</th>
+            <th>Declaration ID</th>
+            <th>Quantity</th>
+            <th>Net Weight</th>
+            <th>Value</th>
+            <th>Used</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${packageItem.Id}">ID</td>
+            <td th:text="${packageItem.commodityId}">Commodity ID</td>
+            <td th:text="${packageItem.declarationId}">Declaration ID</td>
+            <td th:text="${packageItem.quantity}">Quantity</td>
+            <td th:text="${packageItem.netWeight}">Net Weight</td>
+            <td th:text="${packageItem.value}">Value</td>
+            <td th:text="${packageItem.used}">Used</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<form th:action="@{/}" method="get">
+    <button type="submit">Back</button>
+</form>
+</body>
+</html>
