@@ -52,7 +52,7 @@ public class PackageItemService {
 
     private PackageItemDto mapToDto(PackageItem item) {
         return PackageItemDto.builder()
-                .id(item.getPackageItemId())
+                .packageItemId(item.getPackageItemId())
                 .commodityId(item.getCommodityId())
                 .declarationId(item.getDeclarationId())
                 .quantity(item.getQuantity())
@@ -64,7 +64,7 @@ public class PackageItemService {
 
     private PackageItem mapToPackageItem(PackageItemDto dto) {
         return PackageItem.builder()
-                .packageItemId(dto.getId())
+                .packageItemId(dto.getPackageItemId())
                 .commodityId(dto.getCommodityId())
                 .declarationId(dto.getDeclarationId())
                 .quantity(dto.getQuantity())

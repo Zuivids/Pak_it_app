@@ -22,7 +22,7 @@
     </thead>
     <tbody>
     <tr th:each="packageItem : ${packageItems}">
-        <td th:text="${packageItem.Id}">ID</td>
+        <td th:text="${packageItem.packageItemId}">ID</td>
         <td th:text="${packageItem.commodityId}">Commodity ID</td>
         <td th:text="${packageItem.declarationId}">Declaration ID</td>
         <td th:text="${packageItem.quantity}">Quantity</td>
@@ -30,12 +30,12 @@
         <td th:text="${packageItem.value}">Value</td>
         <td th:text="${packageItem.used}">Used</td>
         <td>
-            <form th:action="@{'/packageitem/edit/' + ${packageItem.Id}}" method="get" style="display:inline;">
+            <form th:action="@{'/packageitem/edit/' + ${packageItem.packageItemId}}" method="get" style="display:inline;">
                 <button type="submit">Edit</button>
             </form>
         </td>
         <td>
-            <form th:action="@{'/packageitem/delete/' + ${packageItem.Id}}" method="post" style="display:inline;">
+            <form th:action="@{'/packageitem/delete/' + ${packageItem.packageItemId}}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>

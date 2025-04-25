@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 public class PackageItemDto {
 
-    private Integer  id;
+    private int packageItemId;
     @NotNull
     private int commodityId;
     private int declarationId;

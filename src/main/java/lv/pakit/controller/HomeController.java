@@ -98,7 +98,7 @@ public class HomeController {
     }
 
     @GetMapping("/packageitem/all")
-    public String getAllPackgeItems(Model model) {
+    public String getAllPackageItems(Model model) {
         model.addAttribute("packageItems", packageItemService.retrieveAll());
 
         return "package-item-show-many-page";
@@ -113,6 +113,21 @@ public class HomeController {
     @PostMapping("/packageitem/save")
     public String savePackageItem(@Valid @ModelAttribute PackageItemDto packageItemDto) {
         packageItemService.create(packageItemDto);
+        return "redirect:/packageitem/all";
+    }
+
+    @GetMapping("/packageitem/edit/{id}")
+    public String editPackageItem(@PathVariable("id") int id, Model model) {
+        model.addAttribute("packageItem", new PackageItem());
+
+        return "package-item-edit-page";
+    }
+
+    @PostMapping("/packageitem/update/{id}")
+    public String updatePackageItem(@PathVariable("id") int id, @Valid PackageItemDto packageItemDto, BindingResult result,
+                                Model model) {
+        packageItemService.updateById(id, packageItemDto);
+
         return "redirect:/packageitem/all";
     }
 

@@ -17,7 +17,7 @@ public class PackageItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(value = AccessLevel.NONE)
-    private Integer packageItemId;
+    private int packageItemId;
 
     @NotNull
     private int commodityId;
