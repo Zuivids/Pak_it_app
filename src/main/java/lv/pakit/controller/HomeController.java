@@ -2,17 +2,17 @@ package lv.pakit.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lv.pakit.dto.PackageItemDto;
 import lv.pakit.dto.ProductDto;
 import lv.pakit.model.Product;
+import lv.pakit.repo.IPackageItemRepo;
 import lv.pakit.repo.IProductRepo;
+import lv.pakit.service.PackageItemService;
 import lv.pakit.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,6 +20,8 @@ public class HomeController {
 
     private final IProductRepo productRepo;
     private final ProductService productService;
+    private final IPackageItemRepo packageItemRepo;
+    private final PackageItemService packageItemService;
 
     @GetMapping("/")
     public String index() {
@@ -56,7 +58,7 @@ public class HomeController {
     }
 
     @GetMapping("/product/edit/{id}")
-    public String editProductForm(@PathVariable("id") int id, Model model) throws Exception {
+    public String editProductForm(@PathVariable("id") int id, Model model) {
         model.addAttribute("product", new Product());
 
         return "product-edit-page";
@@ -71,7 +73,7 @@ public class HomeController {
     }
 
     @GetMapping("/product/delete/{id}")
-    public String deleteProduct(@PathVariable("id") int id, Model model) throws Exception {
+    public String deleteProduct(@PathVariable("id") int id, Model model) {
         //TODO soft delete
         ProductDto product = productService.retrieveById(id);
         model.addAttribute("product", product);
@@ -84,6 +86,21 @@ public class HomeController {
         productService.deleteById(id);
 
         return "redirect:/product/all";
+    }
+
+    @GetMapping("/packageitem/{id}")
+    public String getPackageItemById(@PathVariable int id, Model model) {
+        PackageItemDto packageItemDto = packageItemService.retrieveById(id);
+        model.addAttribute("packageItem", packageItemDto);
+
+        return "package-item-show-one-page";
+    }
+
+    @GetMapping("/packageitem/all")
+    public String getAllPackgeItems(Model model) {
+        model.addAttribute("packageItems", packageItemService.retrieveAll());
+
+        return "package-item-show-many-page";
     }
 
 }
