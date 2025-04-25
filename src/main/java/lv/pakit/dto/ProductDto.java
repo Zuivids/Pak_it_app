@@ -2,10 +2,7 @@ package lv.pakit.dto;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -19,11 +16,12 @@ public class ProductDto {
     @Size(min = 3, max = 500)
     private final String title;
 
-    @NotBlank
+    @NotNull
     @Max(1000)
     @Min(1)
     private final int quantity;
 
+    @NotBlank
     @Size(min = 3, max = 500)
     private final String description;
 
