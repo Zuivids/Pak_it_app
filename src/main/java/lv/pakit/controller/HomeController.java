@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.PackageItemDto;
 import lv.pakit.dto.ProductDto;
+import lv.pakit.model.PackageItem;
 import lv.pakit.model.Product;
 import lv.pakit.repo.IPackageItemRepo;
 import lv.pakit.repo.IProductRepo;
@@ -101,6 +102,18 @@ public class HomeController {
         model.addAttribute("packageItems", packageItemService.retrieveAll());
 
         return "package-item-show-many-page";
+    }
+
+    @GetMapping("/packageitem/new")
+    public String showPackageItemForm(Model model) {
+        model.addAttribute("packageItem", new PackageItem());
+        return "package-item-add-new-page";
+    }
+
+    @PostMapping("/packageitem/save")
+    public String savePackageItem(@Valid @ModelAttribute PackageItemDto packageItemDto) {
+        packageItemService.create(packageItemDto);
+        return "redirect:/packageitem/all";
     }
 
 }
