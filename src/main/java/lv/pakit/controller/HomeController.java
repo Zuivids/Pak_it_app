@@ -29,6 +29,8 @@ public class HomeController {
         return "index";
     }
 
+    //    ==================Product==========================
+
     @GetMapping("/product/{id}")
     public String getProductById(@PathVariable int id, Model model) {
         ProductDto productDto = productService.retrieveById(id);
@@ -89,6 +91,8 @@ public class HomeController {
         return "redirect:/product/all";
     }
 
+    //    ==================PackageItem==========================
+
     @GetMapping("/packageitem/{id}")
     public String getPackageItemById(@PathVariable int id, Model model) {
         PackageItemDto packageItemDto = packageItemService.retrieveById(id);
@@ -116,19 +120,37 @@ public class HomeController {
         return "redirect:/packageitem/all";
     }
 
-    @GetMapping("/packageitem/edit/{id}")
-    public String editPackageItem(@PathVariable("id") int id, Model model) {
+    @GetMapping("/packageitem/edit/{packageItemId}")
+    public String editPackageItem(@PathVariable("packageItemId") int packageItemId, Model model) {
         model.addAttribute("packageItem", new PackageItem());
 
         return "package-item-edit-page";
     }
 
-    @PostMapping("/packageitem/update/{id}")
-    public String updatePackageItem(@PathVariable("id") int id, @Valid PackageItemDto packageItemDto, BindingResult result,
-                                Model model) {
-        packageItemService.updateById(id, packageItemDto);
+    @PostMapping("/packageitem/update/{packageItemId}")
+    public String updatePackageItem(@PathVariable("packageItemId") int packageItemId, @Valid PackageItemDto packageItemDto, BindingResult result,
+                                    Model model) {
+        packageItemService.updateById(packageItemId, packageItemDto);
 
         return "redirect:/packageitem/all";
     }
 
+    @GetMapping("/packageitem/delete/{packageItemId}")
+    public String deletePackageItem(@PathVariable("packageItemId") int packageItemId, Model model) {
+        //TODO soft delete
+        PackageItemDto packageItemDto = packageItemService.retrieveById(packageItemId);
+        model.addAttribute("packageItem", packageItemDto);
+
+        return "package-item-delete-page";
+    }
+
+    @PostMapping("/packageitem/deleted/{packageItemId}")
+    public String deletedPackageItem(@PathVariable("packageItemId") int packageItemId, Model model) {
+        packageItemService.deleteById(packageItemId);
+
+        return "redirect:/product/all";
+    }
+//    ==================Commodity==========================
+
+//    ==================Decleration==========================
 }

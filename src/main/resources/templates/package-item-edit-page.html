@@ -8,7 +8,7 @@
 
 <h1>Edit Package Item</h1>
 
-<form th:action="@{/packageitem/update/{packageItemId}(id=${packageItem.packageItemId})}" th:object="${packageItem}" method="post">
+<form th:action="@{/packageitem/update/{packageItemId}(packageItemId=${packageItem.packageItemId})}" th:object="${packageItem}" method="post">
 
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
