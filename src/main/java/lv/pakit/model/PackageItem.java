@@ -19,8 +19,9 @@ public class PackageItem {
     @Setter(value = AccessLevel.NONE)
     private int packageItemId;
 
-    @NotNull
-    private int commodityId;
+    @ManyToOne
+    @JoinColumn(name = "commodity_id")
+    private Commodity commodity;
 
     @NotNull
     private int declarationId;
