@@ -1,7 +1,6 @@
 package lv.pakit.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -17,24 +16,13 @@ public class PackageItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(value = AccessLevel.NONE)
-    private int packageItemId;
-
+    private long packageItemId;
     @ManyToOne
     @JoinColumn(name = "commodity_id")
     private Commodity commodity;
-
-    @NotNull
     private int declarationId;
-
-    @NotNull
     private int quantity;
-
-    @NotNull
     private double netWeight;
-
-    @NotNull
     private double value;
-
-    @NotNull
     private boolean used;
 }

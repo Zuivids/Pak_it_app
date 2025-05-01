@@ -1,25 +1,17 @@
 package lv.pakit.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
 @Builder
 public class PackageItemDto {
 
-    private int packageItemId;
-    @NotNull
-    private int commodityId;
-    private int declarationId;
-    @NotNull
-    @Min(1)
+    private long packageItemId;
     private int quantity;
-    @NotNull
     private double netWeight;
-    @NotNull
     private double value;
-    @NotNull
     private boolean used;
 
+    private CommodityDto commodity;
+    //declaration
 }

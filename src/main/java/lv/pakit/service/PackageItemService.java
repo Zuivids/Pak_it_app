@@ -1,22 +1,24 @@
 package lv.pakit.service;
 
+import lombok.RequiredArgsConstructor;
+import lv.pakit.dto.request.PackageItemRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.dto.PackageItemDto;
 import lv.pakit.model.PackageItem;
 import lv.pakit.repo.IPackageItemRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PackageItemService {
 
-    @Autowired
-    private IPackageItemRepo packageItemRepo;
+    private final IPackageItemRepo packageItemRepo;
+    private final CommodityService commodityService;
 
-    public void create(PackageItemDto dto) {
-        PackageItem item = mapToPackageItem(dto);
+    public void create(PackageItemRequest packageItemRequest) {
+        PackageItem item = mapToPackageItem(packageItemRequest);
         packageItemRepo.save(item);
     }
 
@@ -35,8 +37,6 @@ public class PackageItemService {
     public void updateById(int id, PackageItemDto dto) {
         PackageItem item = requirePackageItemById(id);
 
-        item.setCommodityId(dto.getCommodityId());
-        item.setDeclarationId(dto.getDeclarationId());
         item.setQuantity(dto.getQuantity());
         item.setNetWeight(dto.getNetWeight());
         item.setValue(dto.getValue());
@@ -53,24 +53,20 @@ public class PackageItemService {
     private PackageItemDto mapToDto(PackageItem item) {
         return PackageItemDto.builder()
                 .packageItemId(item.getPackageItemId())
-                .commodityId(item.getCommodityId())
-                .declarationId(item.getDeclarationId())
                 .quantity(item.getQuantity())
                 .netWeight(item.getNetWeight())
                 .value(item.getValue())
                 .used(item.isUsed())
+                .commodity(commodityService.mapToDto(item.getCommodity()))
                 .build();
     }
 
-    private PackageItem mapToPackageItem(PackageItemDto dto) {
+    private PackageItem mapToPackageItem(PackageItemRequest packageItemRequest) {
         return PackageItem.builder()
-                .packageItemId(dto.getPackageItemId())
-                .commodityId(dto.getCommodityId())
-                .declarationId(dto.getDeclarationId())
-                .quantity(dto.getQuantity())
-                .netWeight(dto.getNetWeight())
-                .value(dto.getValue())
-                .used(dto.isUsed())
+                .quantity(packageItemRequest.getQuantity())
+                .netWeight(packageItemRequest.getNetWeight())
+                .value(packageItemRequest.getValue())
+                .used(packageItemRequest.getUsed())
                 .build();
     }
 
