@@ -3,13 +3,10 @@ package lv.pakit.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.PackageItemDto;
-import lv.pakit.dto.ProductDto;
+import lv.pakit.dto.request.PackageItemRequest;
 import lv.pakit.model.PackageItem;
-import lv.pakit.model.Product;
 import lv.pakit.repo.IPackageItemRepo;
-import lv.pakit.repo.IProductRepo;
 import lv.pakit.service.PackageItemService;
-import lv.pakit.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,76 +16,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final IProductRepo productRepo;
-    private final ProductService productService;
     private final IPackageItemRepo packageItemRepo;
     private final PackageItemService packageItemService;
 
     @GetMapping("/")
     public String index() {
         return "index";
-    }
-
-    //    ==================Product==========================
-
-    @GetMapping("/product/{id}")
-    public String getProductById(@PathVariable int id, Model model) {
-        ProductDto productDto = productService.retrieveById(id);
-        model.addAttribute("product", productDto);
-
-        return "product-show-one-page";
-    }
-
-    @GetMapping("/product/all")
-    public String getAllProducts(Model model) {
-        model.addAttribute("products", productService.retrieveAll());
-
-        return "product-show-many-page";
-    }
-
-    @GetMapping("/product/add")
-    public String addProductById(Model model) {
-        model.addAttribute("product", new Product());
-
-        return "product-add-new-page";
-    }
-
-    @PostMapping("/product/save")
-    public String saveProduct(@Valid @ModelAttribute ProductDto productDto) { //prodcutdto + valid
-        productService.create(productDto);
-
-        return "redirect:/product/all";
-    }
-
-    @GetMapping("/product/edit/{id}")
-    public String editProductForm(@PathVariable("id") int id, Model model) {
-        model.addAttribute("product", new Product());
-
-        return "product-edit-page";
-    }
-
-    @PostMapping("/product/update/{id}")
-    public String updateProduct(@PathVariable("id") int id, @Valid ProductDto productDto, BindingResult result,
-                                Model model) {
-        productService.updateById(id, productDto);
-
-        return "redirect:/product/all";
-    }
-
-    @GetMapping("/product/delete/{id}")
-    public String deleteProduct(@PathVariable("id") int id, Model model) {
-        //TODO soft delete
-        ProductDto product = productService.retrieveById(id);
-        model.addAttribute("product", product);
-
-        return "product-delete-page";
-    }
-
-    @PostMapping("/product/deleted/{id}")
-    public String deletedProduct(@PathVariable("id") int id, Model model) {
-        productService.deleteById(id);
-
-        return "redirect:/product/all";
     }
 
     //    ==================PackageItem==========================
@@ -101,7 +34,7 @@ public class HomeController {
         return "package-item-show-one-page";
     }
 
-    @GetMapping("/packageitem/all")
+    @GetMapping("/packageitem")
     public String getAllPackageItems(Model model) {
         model.addAttribute("packageItems", packageItemService.retrieveAll());
 
@@ -114,20 +47,20 @@ public class HomeController {
         return "package-item-add-new-page";
     }
 
-    @PostMapping("/packageitem/save")
-    public String savePackageItem(@Valid @ModelAttribute PackageItemDto packageItemDto) {
-        packageItemService.create(packageItemDto);
-        return "redirect:/packageitem/all";
+    @PostMapping("/packageitem")
+    public String savePackageItem(@Valid @ModelAttribute PackageItemRequest packageItemRequest) {
+        packageItemService.create(packageItemRequest);
+        return "redirect:/packageitem";
     }
 
-    @GetMapping("/packageitem/edit/{packageItemId}")
+    @GetMapping("/packageitem/{packageItemId}/edit")
     public String editPackageItem(@PathVariable("packageItemId") int packageItemId, Model model) {
         model.addAttribute("packageItem", new PackageItem());
 
         return "package-item-edit-page";
     }
 
-    @PostMapping("/packageitem/update/{packageItemId}")
+    @PostMapping("/packageitem/{packageItemId}/edit")
     public String updatePackageItem(@PathVariable("packageItemId") int packageItemId, @Valid PackageItemDto packageItemDto, BindingResult result,
                                     Model model) {
         packageItemService.updateById(packageItemId, packageItemDto);
@@ -135,7 +68,7 @@ public class HomeController {
         return "redirect:/packageitem/all";
     }
 
-    @GetMapping("/packageitem/delete/{packageItemId}")
+    @GetMapping("/packageitem/{packageItemId}/delete")
     public String deletePackageItem(@PathVariable("packageItemId") int packageItemId, Model model) {
         //TODO soft delete
         PackageItemDto packageItemDto = packageItemService.retrieveById(packageItemId);
@@ -144,13 +77,14 @@ public class HomeController {
         return "package-item-delete-page";
     }
 
-    @PostMapping("/packageitem/deleted/{packageItemId}")
+    @PostMapping("/packageitem/{packageItemId}/deleted")
     public String deletedPackageItem(@PathVariable("packageItemId") int packageItemId, Model model) {
         packageItemService.deleteById(packageItemId);
 
-        return "redirect:/product/all";
+        return "redirect:/packageitem";
     }
 //    ==================Commodity==========================
-
+//in new controller
 //    ==================Decleration==========================
+    //in new controller
 }
