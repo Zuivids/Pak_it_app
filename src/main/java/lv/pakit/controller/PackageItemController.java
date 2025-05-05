@@ -6,6 +6,7 @@ import lv.pakit.dto.PackageItemDto;
 import lv.pakit.dto.request.PackageItemRequest;
 import lv.pakit.model.PackageItem;
 import lv.pakit.repo.IPackageItemRepo;
+import lv.pakit.service.CommodityService;
 import lv.pakit.service.PackageItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class PackageItemController {
 
-    private final IPackageItemRepo packageItemRepo;
     private final PackageItemService packageItemService;
-
+    private final CommodityService commodityService;
 
     @GetMapping("/packageitem/{id}")
     public String getPackageItemById(@PathVariable int id, Model model) {
@@ -41,6 +41,7 @@ public class PackageItemController {
     @GetMapping("/packageitem/new")
     public String showPackageItemForm(Model model) {
         model.addAttribute("packageItem", new PackageItem());
+        model.addAttribute("commodities", commodityService.retrieveAll());
         return "package-item-add-new-page";
     }
 
@@ -62,7 +63,7 @@ public class PackageItemController {
                                     Model model) {
         packageItemService.updateById(packageItemId, packageItemDto);
 
-        return "redirect:/packageitem/all";
+        return "redirect:/packageitem";
     }
 
     @GetMapping("/packageitem/{packageItemId}/delete")

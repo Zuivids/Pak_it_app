@@ -17,10 +17,12 @@ public class PackageItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(value = AccessLevel.NONE)
     private long packageItemId;
+
     @ManyToOne
     @JoinColumn(name = "commodity_id")
     private Commodity commodity;
-    private int declarationId;
+
+//    private int declarationId;
     private int quantity;
     private double netWeight;
     private double value;
