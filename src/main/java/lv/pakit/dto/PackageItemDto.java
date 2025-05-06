@@ -4,6 +4,8 @@ import lombok.*;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PackageItemDto {
 
     private long packageItemId;

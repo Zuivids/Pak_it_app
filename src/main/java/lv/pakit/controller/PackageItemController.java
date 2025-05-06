@@ -5,12 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.PackageItemDto;
 import lv.pakit.dto.request.PackageItemRequest;
 import lv.pakit.model.PackageItem;
-import lv.pakit.repo.IPackageItemRepo;
 import lv.pakit.service.CommodityService;
 import lv.pakit.service.PackageItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +22,7 @@ public class PackageItemController {
     private final CommodityService commodityService;
 
     @GetMapping("/packageitem/{id}")
-    public String getPackageItemById(@PathVariable int id, Model model) {
+    public String getPackageItemById(@PathVariable long id, Model model) {
         PackageItemDto packageItemDto = packageItemService.retrieveById(id);
         model.addAttribute("packageItem", packageItemDto);
 
@@ -48,36 +46,37 @@ public class PackageItemController {
     @PostMapping("/packageitem")
     public String savePackageItem(@Valid @ModelAttribute PackageItemRequest packageItemRequest) {
         packageItemService.create(packageItemRequest);
+
         return "redirect:/packageitem";
     }
 
-    @GetMapping("/packageitem/{packageItemId}/edit")
-    public String editPackageItem(@PathVariable("packageItemId") int packageItemId, Model model) {
-        model.addAttribute("packageItem", new PackageItem());
+    @GetMapping("/packageitem/{id}/edit")
+    public String editPackageItem(@PathVariable("id") long id, Model model) {
+        PackageItemDto packageItemDto = packageItemService.retrieveById(id);
+        model.addAttribute("packageItem", packageItemDto);
 
         return "package-item-edit-page";
     }
 
-    @PostMapping("/packageitem/{packageItemId}/edit")
-    public String updatePackageItem(@PathVariable("packageItemId") int packageItemId, @Valid PackageItemDto packageItemDto, BindingResult result,
-                                    Model model) {
-        packageItemService.updateById(packageItemId, packageItemDto);
+    @PostMapping("/packageitem/{id}/edit")
+    public String updatePackageItem(@PathVariable("id") long id, @Valid PackageItemDto packageItemDto) {
+        packageItemService.updateById(id, packageItemDto);
 
         return "redirect:/packageitem";
     }
 
-    @GetMapping("/packageitem/{packageItemId}/delete")
-    public String deletePackageItem(@PathVariable("packageItemId") int packageItemId, Model model) {
+    @GetMapping("/packageitem/{id}/delete")
+    public String deletePackageItem(@PathVariable("id") long id, Model model) {
         //TODO soft delete
-        PackageItemDto packageItemDto = packageItemService.retrieveById(packageItemId);
+        PackageItemDto packageItemDto = packageItemService.retrieveById(id);
         model.addAttribute("packageItem", packageItemDto);
 
         return "package-item-delete-page";
     }
 
-    @PostMapping("/packageitem/{packageItemId}/deleted")
-    public String deletedPackageItem(@PathVariable("packageItemId") int packageItemId, Model model) {
-        packageItemService.deleteById(packageItemId);
+    @PostMapping("/packageitem/{id}/delete")
+    public String deletedPackageItem(@PathVariable("id") long id, Model model) {
+        packageItemService.deleteById(id);
 
         return "redirect:/packageitem";
     }

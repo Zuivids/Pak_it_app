@@ -22,7 +22,7 @@ public class PackageItemService {
         packageItemRepo.save(item);
     }
 
-    public PackageItemDto retrieveById(int id) {
+    public PackageItemDto retrieveById(long id) {
         PackageItem item = requirePackageItemById(id);
 
         return mapToDto(item);
@@ -34,7 +34,7 @@ public class PackageItemService {
                 .toList();
     }
 
-    public void updateById(int id, PackageItemDto dto) {
+    public void updateById(long id, PackageItemDto dto) {
         PackageItem item = requirePackageItemById(id);
 
         item.setQuantity(dto.getQuantity());
@@ -45,7 +45,7 @@ public class PackageItemService {
         packageItemRepo.save(item);
     }
 
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         requirePackageItemById(id);
         packageItemRepo.deleteById(id);
     }
@@ -70,7 +70,7 @@ public class PackageItemService {
                 .build();
     }
 
-    private PackageItem requirePackageItemById(int id) {
+    private PackageItem requirePackageItemById(long id) {
         return packageItemRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("PackageItem with id (" + id + ") not found!"));
     }

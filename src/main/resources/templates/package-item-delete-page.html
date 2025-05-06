@@ -6,15 +6,16 @@
 </head>
 <body>
 <h2>Confirm Delete</h2>
-<p>Are you sure you want to delete the following package-item?</p>
-
+<p>Are you sure you want to delete the following package item?</p>
 <div>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>
             <th>ID</th>
             <th>Commodity ID</th>
-            <th>Declaration ID</th>
+            <td>Commodity Code</td>
+            <td>Commodity Description</td>
+            <!--            <th>Declaration ID</th>-->
             <th>Quantity</th>
             <th>Net Weight</th>
             <th>Value</th>
@@ -24,27 +25,23 @@
         <tbody>
         <tr>
             <td th:text="${packageItem.packageItemId}">ID</td>
-            <td th:text="${packageItem.commodityId}">Commodity ID</td>
-            <td th:text="${packageItem.declarationId}">Declaration ID</td>
+            <td th:text="${packageItem.commodity.commodityId}">Commodity ID</td>
+            <td th:text="${packageItem.commodity.commodityCode}">Commodity Code</td>
+            <td th:text="${packageItem.commodity.description}">Commodity Description</td>
+            <!--            <td th:text="${packageItem.declarationId}">Declaration ID</td>-->
             <td th:text="${packageItem.quantity}">Quantity</td>
             <td th:text="${packageItem.netWeight}">Net Weight</td>
             <td th:text="${packageItem.value}">Value</td>
-            <td>
-                <select th:field="*{used}">
-                    <option th:value="true" th:text="'Yes'">Yes</option>
-                    <option th:value="false" th:text="'No'">No</option>
-                </select>
-            </td>
+            <td th:text="${packageItem.used ? 'Yes' : 'No'}">Used</td>
         </tr>
         </tbody>
     </table>
 </div>
-
 <div>
-    <form th:action="@{/packageitem/deleted/{packageItemId}(packageItemId=${packageItem.packageItemId})}" method="post" style="display:inline;">
+    <form th:action="|/packageitem/${packageItem.packageItemId}/delete|" method="post" style="display:inline;">
         <input type="submit" value="Delete">
     </form>
-    <a th:href="@{/packageitem/all}">Cancel</a>
+    <a th:href="@{/packageitem}">Cancel</a>
 </div>
 <form th:action="@{/}" method="get">
     <button type="submit">Back</button>
