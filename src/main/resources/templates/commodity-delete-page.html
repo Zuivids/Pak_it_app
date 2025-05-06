@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Delete</title>
+</head>
+<body>
+<h2>Confirm Delete</h2>
+<p>Are you sure you want to delete the following commodity?</p>
+<div>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${commodity.commodityId}">ID</td>
+            <td th:text="${commodity.commodityCode}">Code</td>
+            <td th:text="${commodity.description}">Description</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <form th:action="|/commodity/${commodity.commodityId}/delete|" method="post" style="display:inline;">
+        <input type="submit" value="Delete">
+    </form>
+    <a th:href="@{/commodity}">Cancel</a>
+</div>
+<form th:action="@{/}" method="get">
+    <button type="submit">Back</button>
+</form>
+</body>
+</html>

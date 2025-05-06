@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Commodity</title>
+</head>
+<body>
+
+<h1>Edit Commodity</h1>
+<form th:object="${commodity}" th:action="|/commodity/${commodity.commodityId}/edit|" method="post">
+    <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+            <td>ID</td>
+            <td><input type="number" th:field="*{commodityId}" readonly/></td>
+        </tr>
+        <tr>
+            <td>Code</td>
+            <td><input type="text" th:field="*{commodityCode}"/></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td><input type="text" th:field="*{description}"/></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <button type="submit">Update Commodity</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<form th:action="@{/}" method="get">
+    <button type="submit">Back</button>
+</form>
+
+</body>
+</html>

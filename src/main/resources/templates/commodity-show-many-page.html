@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Commodity List</title>
+</head>
+<body>
+<h1>Commodity List</h1>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="commodity : ${commodities}">
+        <td th:text="${commodity.commodityId}">ID</td>
+        <td th:text="${commodity.commodityCode}">Code</td>
+        <td th:text="${commodity.description}">Description</td>
+        <td>
+            <form th:action="|/commodity/${commodity.commodityId}/edit|" method="get" style="display:inline;">
+                <button type="submit">Edit</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="|/commodity/${commodity.commodityId}/delete|" method="get" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<form th:action="@{/}" method="get">
+    <button type="submit">Back</button>
+</form>
+</body>
+</html>

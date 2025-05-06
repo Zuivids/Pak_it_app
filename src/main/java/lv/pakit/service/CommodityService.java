@@ -2,6 +2,7 @@ package lv.pakit.service;
 
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.CommodityDto;
+import lv.pakit.dto.request.CommodityRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Commodity;
 import lv.pakit.repo.ICommodityRepo;
@@ -15,12 +16,12 @@ public class CommodityService {
 
     private final ICommodityRepo commodityRepo;
 
-    public void create(CommodityDto dto) {
-        Commodity commodity = mapToCommodity(dto);
+    public void create(CommodityRequest commodityRequest) {
+        Commodity commodity = mapToCommodity(commodityRequest);
         commodityRepo.save(commodity);
     }
 
-    public CommodityDto retrieveById(int id) {
+    public CommodityDto retrieveById(long id) {
         Commodity commodity = requireCommodityById(id);
 
         return mapToDto(commodity);
@@ -32,35 +33,37 @@ public class CommodityService {
                 .toList();
     }
 
-    public void updateById(int id, Commodity dto) {
+    public void updateById(long id, CommodityDto dto) {
         Commodity commodity = requireCommodityById(id);
 
         commodity.setCommodityCode(dto.getCommodityCode());
         commodity.setDescription(dto.getDescription());
+
         commodityRepo.save(commodity);
     }
 
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         requireCommodityById(id);
         commodityRepo.deleteById(id);
     }
 
     public CommodityDto mapToDto(Commodity commodity) {
         return CommodityDto.builder()
+                .commodityId(commodity.getCommodityId())
                 .commodityCode(commodity.getCommodityCode())
                 .description(commodity.getDescription())
                 .build();
     }
 
-    private Commodity mapToCommodity(CommodityDto dto) {
+    private Commodity mapToCommodity(CommodityRequest commodityRequest) {
         return Commodity.builder()
-                .commodityCode(dto.getCommodityCode())
-                .description(dto.getDescription())
+                .commodityCode(commodityRequest.getCommodityCode())
+                .description(commodityRequest.getDescription())
                 .build();
     }
 
-    private Commodity requireCommodityById(int id) {
+    private Commodity requireCommodityById(long id) {
         return commodityRepo.findById(id)
-                .orElseThrow(() -> new NotFoundException("PackageItem with id (" + id + ") not found!"));
+                .orElseThrow(() -> new NotFoundException("Commodity with id (" + id + ") not found!"));
     }
 }
