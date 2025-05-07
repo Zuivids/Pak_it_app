@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Declaration Details</title>
+</head>
+<body>
+<h1>Declaration Details</h1>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Client Name</th>
+        <th>Identifier Code</th>
+        <th>Sender Name</th>
+        <th>Sender Address</th>
+        <th>Sender Country Code</th>
+        <th>Sender Phone Number</th>
+        <th>Receiver Name</th>
+        <th>Receiver Address</th>
+        <th>Receiver Country Code</th>
+        <th>Receiver Phone Number</th>
+        <th>Total Weight</th>
+        <th>Total Value</th>
+        <th>Date</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="declaration : ${declarations}">
+        <td th:text="${declaration.declarationId}">ID</td>
+        <td th:text="${declaration.client.fullName}">Client Name</td>
+        <td th:text="${declaration.identifierCode}">Identifier Code</td>
+        <td th:text="${declaration.senderName}">Sender Name</td>
+        <td th:text="${declaration.senderAddress}">Sender Address</td>
+        <td th:text="${declaration.senderCountryCode}">Sender Country Code</td>
+        <td th:text="${declaration.senderPhoneNumber}">Sender Phone Number</td>
+        <td th:text="${declaration.receiverName}">Receiver Name</td>
+        <td th:text="${declaration.receiverAddress}">Receiver Address</td>
+        <td th:text="${declaration.receiverCountryCode}">Receiver Country Code</td>
+        <td th:text="${declaration.receiverPhoneNumber}">Receiver Phone Number</td>
+        <td th:text="${declaration.totalWeight}">Total Weight</td>
+        <td th:text="${declaration.totalValue}">Total Value</td>
+        <td th:text="${declaration.date}">Date</td>
+        <td>
+            <form th:action="|/declaration/${declaration.declarationId}/edit|" method="get" style="display:inline;">
+                <button type="submit">Edit</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="|/declaration/${declaration.declarationId}/delete|" method="get" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<form th:action="@{/declaration}" method="get">
+    <button type="submit">Back to Declarations</button>
+</form>
+</body>
+</html>
