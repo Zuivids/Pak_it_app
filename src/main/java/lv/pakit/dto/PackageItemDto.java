@@ -15,5 +15,5 @@ public class PackageItemDto {
     private boolean used;
 
     private CommodityDto commodity;
-    //TODO add declaration
+    private long declarationId;
 }

@@ -22,7 +22,9 @@ public class PackageItem {
     @JoinColumn(name = "commodity_id")
     private Commodity commodity;
 
-//    private int declarationId;
+    @ManyToOne
+    @JoinColumn(name = "declaration_id")
+    private Declaration declaration;
     private int quantity;
     private double netWeight;
     private double value;

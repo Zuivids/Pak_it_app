@@ -50,7 +50,7 @@ public class PackageItemService {
         packageItemRepo.deleteById(id);
     }
 
-    private PackageItemDto mapToDto(PackageItem item) {
+    public PackageItemDto mapToDto(PackageItem item) {
         return PackageItemDto.builder()
                 .packageItemId(item.getPackageItemId())
                 .quantity(item.getQuantity())
@@ -58,6 +58,7 @@ public class PackageItemService {
                 .value(item.getValue())
                 .used(item.isUsed())
                 .commodity(commodityService.mapToDto(item.getCommodity()))
+                .declarationId(item.getDeclaration().getDeclarationId())
                 .build();
     }
 
