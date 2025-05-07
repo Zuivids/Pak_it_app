@@ -21,7 +21,7 @@ public class Declaration {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    private String identifier_code;
+    private String identifierCode;
     private String senderName;
     private String senderAddress;
     private String senderCountryCode;

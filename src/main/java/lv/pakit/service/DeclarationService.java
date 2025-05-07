@@ -41,7 +41,7 @@ public class DeclarationService {
     public void updateById(long id, DeclarationDto dto) {
         Declaration declaration = requireDeclarationById(id);
 
-        declaration.setIdentifier_code(dto.getIdentifierCode());
+        declaration.setIdentifierCode(dto.getIdentifierCode());
         declaration.setSenderName(dto.getSenderName());
         declaration.setSenderAddress(dto.getSenderAddress());
         declaration.setSenderPhoneNumber(dto.getSenderPhoneNumber());
@@ -63,7 +63,7 @@ public class DeclarationService {
     }
 
     public DeclarationDto mapToDto(Declaration declaration) {
-        var packageItemList = packageItemRepo.findByDeclarationId(declaration.getDeclarationId())
+        var packageItemList = packageItemRepo.findByDeclaration_DeclarationId(declaration.getDeclarationId())
                 .stream()
                 .map(packageItemService::mapToDto)
                 .collect(Collectors.toList());
@@ -72,9 +72,10 @@ public class DeclarationService {
                 .declarationId(declaration.getDeclarationId())
                 .client(clientService.mapToDto(declaration.getClient()))
                 .packageItemList(packageItemList)
-                .identifierCode(declaration.getIdentifier_code())
+                .identifierCode(declaration.getIdentifierCode())
                 .senderName(declaration.getSenderName())
                 .senderAddress(declaration.getSenderAddress())
+                .senderCountryCode(declaration.getSenderCountryCode())
                 .senderPhoneNumber(declaration.getSenderPhoneNumber())
                 .receiverName(declaration.getReceiverName())
                 .receiverAddress(declaration.getReceiverAddress())
@@ -88,7 +89,7 @@ public class DeclarationService {
 
     public Declaration mapToDeclaration(DeclarationRequest declarationRequest) {
         return Declaration.builder()
-                .identifier_code(declarationRequest.getIdentifier_code())
+                .identifierCode(declarationRequest.getIdentifier_code())
                 .senderName(declarationRequest.getSenderName())
                 .senderAddress(declarationRequest.getSenderAddress())
                 .senderCountryCode(declarationRequest.getSenderCountryCode())

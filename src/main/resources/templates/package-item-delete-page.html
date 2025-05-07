@@ -13,9 +13,9 @@
         <tr>
             <th>ID</th>
             <th>Commodity ID</th>
+            <th>Declaration ID</th>
             <td>Commodity Code</td>
             <td>Commodity Description</td>
-            <!--            <th>Declaration ID</th>-->
             <th>Quantity</th>
             <th>Net Weight</th>
             <th>Value</th>
@@ -26,9 +26,9 @@
         <tr>
             <td th:text="${packageItem.packageItemId}"></td>
             <td th:text="${packageItem.commodity.commodityId}"></td>
+            <td th:text="${packageItem.declarationId}"></td>
             <td th:text="${packageItem.commodity.commodityCode}"></td>
             <td th:text="${packageItem.commodity.description}"></td>
-            <!--            <td th:text="${packageItem.declarationId}">Declaration ID</td>-->
             <td th:text="${packageItem.quantity}"></td>
             <td th:text="${packageItem.netWeight}"></td>
             <td th:text="${packageItem.value}"></td>
