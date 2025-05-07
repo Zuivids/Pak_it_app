@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert New Client</title>
+</head>
+<body>
+<h1>Insert New Client</h1>
+
+<form th:action="@{/client}" th:object="${client}" method="post">
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+        <tr>
+            <th>Field</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>UserName</td>
+            <td><input type="text" th:field="*{username}" required /></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="text" th:field="*{password}" required /></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="text" th:field="*{password}" required /></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="text" th:field="*{email}" required /></td>
+        </tr><tr>
+            <td>PhoneNumber</td>
+            <td><input type="text" th:field="*{phoneNumber}" required /></td>
+        </tr>
+        <tr>
+            <td>Full Name</td>
+            <td><input type="text" th:field="*{fullName}" required /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <button type="submit">Save Client</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<form th:action="@{/}" method="get">
+    <button type="submit">Back</button>
+</form>
+</body>
+</html>

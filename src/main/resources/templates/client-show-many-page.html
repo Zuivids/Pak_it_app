@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CLient List</title>
+</head>
+<body>
+<h1>Client List</h1>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Email</th>
+        <th>Phone Numer</th>
+        <th>Full Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="client : ${clients}">
+        <td th:text="${client.clientId}">ID</td>
+        <td th:text="${client.username}">Username</td>
+        <td th:text="${client.password}">Password</td>
+        <td th:text="${client.email}">Email</td>
+        <td th:text="${client.phoneNumber}">Phone Number</td>
+        <td th:text="${client.fullName}">Full Name</td>
+        <td>
+            <form th:action="|/client/${client.clientId}/edit|" method="get" style="display:inline;">
+                <button type="submit">Edit</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="|/client/${client.clientId}/delete|" method="get" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<form th:action="@{/}" method="get">
+    <button type="submit">Back</button>
+</form>
+</body>
+</html>
