@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Delete</title>
+</head>
+<body>
+<h2>Confirm Delete</h2>
+<p>Are you sure you want to delete the following client?</p>
+<div>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Email</th>
+            <th>PhoneNumber</th>
+            <th>Full Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="*{client.username}"/></td>
+            <td th:text="*{client.password}"/></td>
+            <td th:text="*{client.email}"/></td>
+            <td th:text="*{client.phoneNumber}"/></td>
+            <td th:text="*{client.fullName}"/></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <form th:action="|/client/${client.clientId}/delete|" method="post" style="display:inline;">
+        <input type="submit" value="Delete">
+    </form>
+    <a th:href="@{/client}">Cancel</a>
+</div>
+<form th:action="@{/}" method="get">
+    <button type="submit">Back</button>
+</form>
+</body>
+</html>

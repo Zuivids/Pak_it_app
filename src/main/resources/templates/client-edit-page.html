@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Client</title>
+</head>
+<body>
+
+<h1>Edit Client</h1>
+<form th:object="${client}" th:action="|/client/${client.clientId}/edit|" method="post">
+    <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+            <td>Username</td>
+            <td><input type="text" th:field="*{username}" required/></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="text" th:field="*{password}" required/></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="text" th:field="*{email}" required/></td>
+        </tr>
+        <tr>
+            <td>PhoneNumber</td>
+            <td><input type="text" th:field="*{phoneNumber}" required/></td>
+        </tr>
+        <tr>
+            <td>Full Name</td>
+            <td><input type="text" th:field="*{fullName}" required/></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <button type="submit">Update Commodity</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<form th:action="@{/}" method="get">
+    <button type="submit">Back</button>
+</form>
+
+</body>
+</html>
