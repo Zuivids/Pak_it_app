@@ -2,37 +2,98 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PakIt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pak it</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 </head>
-<header>
-    <nav>
-        <ul>
-            <li><a>Package Items options:</a></li>
-            <li><a href="http://localhost:8080/packageitem/1">View package item 1</a></li>
-            <li><a href="http://localhost:8080/packageitem">View all package items</a></li>
-            <li><a href="http://localhost:8080/packageitem/new">Add new package item</a></li>
-            <li><a></a></li>
-            <li><a>Commodity options:</a></li>
-            <li><a href="http://localhost:8080/commodity/1">View commodity 1</a></li>
-            <li><a href="http://localhost:8080/commodity">View all commodities</a></li>
-            <li><a href="http://localhost:8080/commodity/new">Add new commodity</a></li>
-            <li><a></a></li>
-            <li><a>Client options:</a></li>
-            <li><a href="http://localhost:8080/client/1">View client 1</a></li>
-            <li><a href="http://localhost:8080/client">View all clients</a></li>
-            <li><a href="http://localhost:8080/client/new">Add new client</a></li>
-            <li><a></a></li>
-            <li><a>Declaration Items option:</a></li>
-            <li><a href="http://localhost:8080/declaration/1">View declaration 1</a></li>
-            <li><a href="http://localhost:8080/declaration">View all declarations</a></li>
-            <li><a href="http://localhost:8080/declaration/new">Add new declaration</a></li>
-            <li><a></a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact Us</a></li>
-            <li><a href="http://localhost:8080/">Log out</a></li>
-        </ul>
-    </nav>
-</header>
-<body>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #6e0101">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Commodity Options
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <li><a class="dropdown-item" href="http://localhost:8080/commodity">View all commodities</a>
+                        </li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/commodity/new">Add new commodity</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Client Options
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <li><a class="dropdown-item" href="http://localhost:8080/client">View all clients</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/client/new">Add new client</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Declaration Options
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                        <li><a class="dropdown-item" href="http://localhost:8080/declaration">View all declarations</a>
+                        </li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/declaration/new">Add new
+                            declaration</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark px-3 py-2 rounded bg-light" href="http://localhost:8080/ ">Log out</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="mb-4">Admin Panel</h3>
+            <div class="list-group">
+                <a href="http://localhost:8080/commodity" class="list-group-item list-group-item-action">View All
+                    Commodities</a>
+                <a href="http://localhost:8080/commodity/new" class="list-group-item list-group-item-action">Add New
+                    Commodity</a>
+                <a href="http://localhost:8080/client" class="list-group-item list-group-item-action">View All
+                    Clients</a>
+                <a href="http://localhost:8080/client/new" class="list-group-item list-group-item-action">Add New
+                    Client</a>
+                <a href="http://localhost:8080/declaration" class="list-group-item list-group-item-action">View All
+                    Declarations</a>
+                <a href="http://localhost:8080/declaration/new" class="list-group-item list-group-item-action">Add New
+                    Declaration</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="text-white text-center py-4 mt-5" style="background-color: #6e0101">
+    <p>&copy; 2025 SIA Pak It. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+
 </body>
 </html>
