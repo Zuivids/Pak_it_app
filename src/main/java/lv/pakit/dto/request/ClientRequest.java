@@ -11,7 +11,9 @@ import lombok.Setter;
 public class ClientRequest {
 
     @NotNull
-    private String username;
+    private String email;
     @NotNull
-    private String password;
+    private String phoneNumber;
+    @NotNull
+    private String fullName;
 }

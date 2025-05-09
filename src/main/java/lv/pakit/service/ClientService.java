@@ -2,11 +2,9 @@ package lv.pakit.service;
 
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.ClientDto;
-import lv.pakit.dto.CommodityDto;
 import lv.pakit.dto.request.ClientRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Client;
-import lv.pakit.model.Commodity;
 import lv.pakit.repo.IClientRepo;
 import org.springframework.stereotype.Service;
 
@@ -65,8 +63,9 @@ public class ClientService {
 
     private Client mapToClient(ClientRequest clientRequest) {
         return Client.builder()
-                .username(clientRequest.getUsername())
-                .password(clientRequest.getPassword())
+                .email(clientRequest.getEmail())
+                .phoneNumber(clientRequest.getPhoneNumber())
+                .fullName(clientRequest.getFullName())
                 .build();
     }
 
