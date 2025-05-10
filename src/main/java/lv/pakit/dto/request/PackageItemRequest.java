@@ -14,7 +14,7 @@ public class PackageItemRequest {
     @NotNull
     private Long commodityId;
     private Commodity commodity;
-//    private Integer declarationId;
+    private long declarationId;
     @NotNull
     private Integer quantity;
     @NotNull

@@ -1,63 +1,141 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Declaration Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 </head>
-<body>
-<h1>Declaration Details</h1>
-<table border="1" cellpadding="8" cellspacing="0">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Client Name</th>
-        <th>Identifier Code</th>
-        <th>Sender Name</th>
-        <th>Sender Address</th>
-        <th>Sender Country Code</th>
-        <th>Sender Phone Number</th>
-        <th>Receiver Name</th>
-        <th>Receiver Address</th>
-        <th>Receiver Country Code</th>
-        <th>Receiver Phone Number</th>
-        <th>Total Weight</th>
-        <th>Total Value</th>
-        <th>Date</th>
-        <th>Edit</th>
-        <th>Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="declaration : ${declarations}">
-        <td th:text="${declaration.declarationId}">ID</td>
-        <td th:text="${declaration.client.fullName}">Client Name</td>
-        <td th:text="${declaration.identifierCode}">Identifier Code</td>
-        <td th:text="${declaration.senderName}">Sender Name</td>
-        <td th:text="${declaration.senderAddress}">Sender Address</td>
-        <td th:text="${declaration.senderCountryCode}">Sender Country Code</td>
-        <td th:text="${declaration.senderPhoneNumber}">Sender Phone Number</td>
-        <td th:text="${declaration.receiverName}">Receiver Name</td>
-        <td th:text="${declaration.receiverAddress}">Receiver Address</td>
-        <td th:text="${declaration.receiverCountryCode}">Receiver Country Code</td>
-        <td th:text="${declaration.receiverPhoneNumber}">Receiver Phone Number</td>
-        <td th:text="${declaration.totalWeight}">Total Weight</td>
-        <td th:text="${declaration.totalValue}">Total Value</td>
-        <td th:text="${declaration.date}">Date</td>
-        <td>
-            <form th:action="|/declaration/${declaration.declarationId}/edit|" method="get" style="display:inline;">
-                <button type="submit">Edit</button>
-            </form>
-        </td>
-        <td>
-            <form th:action="|/declaration/${declaration.declarationId}/delete|" method="get" style="display:inline;">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<form th:action="@{/declaration}" method="get">
-    <button type="submit">Back to Declarations</button>
-</form>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #6e0101">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Declaration Options
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <li><a class="dropdown-item" href="http://localhost:8080/declaration">View all declarations</a>
+                        </li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/declaration/new">Add new
+                            declaration</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Commodity Options
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <li><a class="dropdown-item" href="http://localhost:8080/commodity">View all commodities</a>
+                        </li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/commodity/new">Add new commodity</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Client Options
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                        <li><a class="dropdown-item" href="http://localhost:8080/client">View all clients</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/client/new">Add new client</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark px-3 py-2 rounded bg-light" href="http://localhost:8080/ ">Log out</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container py-5">
+    <h1 class="mb-4">Declaration List</h1>
+    <div class="table-responsive rounded">
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-danger">
+            <tr>
+                <th>ID</th>
+                <th>Client Name</th>
+                <!--TODO add packageItems-->
+                <!--TODO add commodities-->
+                <th>Identifier Code</th>
+                <th>Sender Name</th>
+                <th>Sender Address</th>
+                <th>Sender Country Code</th>
+                <th>Sender Phone Number</th>
+                <th>Receiver Name</th>
+                <th>Receiver Address</th>
+                <th>Receiver Country Code</th>
+                <th>Receiver Phone Number</th>
+                <th>Total Weight</th>
+                <th>Total Value</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="declaration : ${declarations}">
+                <td th:text="${declaration.declarationId}">ID</td>
+                <td th:text="${declaration.client.fullName}">Client Name</td>
+                <td th:text="${declaration.identifierCode}">Identifier Code</td>
+                <td th:text="${declaration.senderName}">Sender Name</td>
+                <td th:text="${declaration.senderAddress}">Sender Address</td>
+                <td th:text="${declaration.senderCountryCode}">Sender Country Code</td>
+                <td th:text="${declaration.senderPhoneNumber}">Sender Phone Number</td>
+                <td th:text="${declaration.receiverName}">Receiver Name</td>
+                <td th:text="${declaration.receiverAddress}">Receiver Address</td>
+                <td th:text="${declaration.receiverCountryCode}">Receiver Country Code</td>
+                <td th:text="${declaration.receiverPhoneNumber}">Receiver Phone Number</td>
+                <td th:text="${declaration.totalWeight}">Total Weight</td>
+                <td th:text="${declaration.totalValue}">Total Value</td>
+                <td th:text="${declaration.date}">Date</td>
+                <!--TODO add view option -->
+                <td class="text-center">
+                    <form th:action="|/declaration/${declaration.declarationId}/edit|" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+                    </form>
+                </td>
+                <td class="text-center">
+                    <form th:action="|/declaration/${declaration.declarationId}/delete|" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form th:action="@{/backoffice}" method="get" class="mt-4">
+        <button type="submit" class="btn btn-secondary">Back</button>
+    </form>
+</main>
+
+<footer class="text-white text-center py-4 mt-5" style="background-color: #6e0101">
+    <p>&copy; 2025 SIA Pak It. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous">
+</script>
+
 </body>
 </html>

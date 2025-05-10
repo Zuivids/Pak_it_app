@@ -3,6 +3,9 @@ package lv.pakit.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -21,6 +24,8 @@ public class Declaration {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @OneToMany(mappedBy = "declaration", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PackageItem> packageItemList = new ArrayList<>();
     private String identifierCode;
     private String senderName;
     private String senderAddress;

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Declaration</title>
+</head>
+<body>
+
+<h1>Edit Declaration</h1>
+<form th:object="${declaration}" th:action="|/declaration/${declaration.declarationId}/edit|" method="post">
+    <table border="1" cellpadding="8" cellspacing="0">
+    </table>
+</form>
+
+<form th:action="@{/}" method="get">
+    <button type="submit">Back</button>
+</form>
+
+</body>
+</html>
