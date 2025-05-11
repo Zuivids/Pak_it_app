@@ -8,7 +8,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class ClientRequest {
+public class ClientUpdateRequest {
 
     @NotNull
     private String email;

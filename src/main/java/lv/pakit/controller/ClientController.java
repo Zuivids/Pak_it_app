@@ -3,7 +3,8 @@ package lv.pakit.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.ClientDto;
-import lv.pakit.dto.request.ClientRequest;
+import lv.pakit.dto.request.ClientCreateRequest;
+import lv.pakit.dto.request.ClientUpdateRequest;
 import lv.pakit.model.Client;
 import lv.pakit.service.ClientService;
 import org.springframework.stereotype.Controller;
@@ -42,8 +43,8 @@ public class ClientController {
     }
 
     @PostMapping("/client")
-    public String saveClient(@Valid @ModelAttribute ClientRequest clientRequest){
-        clientService.create(clientRequest);
+    public String saveClient(@Valid @ModelAttribute ClientCreateRequest clientCreateRequest){
+        clientService.create(clientCreateRequest);
 
         return "redirect:/client";
     }
@@ -57,8 +58,8 @@ public class ClientController {
     }
 
     @PostMapping("/client/{id}/edit")
-    public String editedClient(@PathVariable("id") long id, @Valid @ModelAttribute("client") ClientDto clientDto){
-        clientService.updateById(id, clientDto);
+    public String editedClient(@PathVariable("id") long id, @Valid @ModelAttribute("client") ClientUpdateRequest clientUpdateRequest){
+        clientService.updateById(id, clientUpdateRequest);
 
         return "redirect:/client";
     }

@@ -2,7 +2,8 @@ package lv.pakit.service;
 
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.ClientDto;
-import lv.pakit.dto.request.ClientRequest;
+import lv.pakit.dto.request.ClientCreateRequest;
+import lv.pakit.dto.request.ClientUpdateRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Client;
 import lv.pakit.repo.IClientRepo;
@@ -16,8 +17,8 @@ public class ClientService {
 
     private final IClientRepo clientRepo;
 
-    public void create(ClientRequest clientRequest) {
-        Client client = mapToClient(clientRequest);
+    public void create(ClientCreateRequest clientCreateRequest) {
+        Client client = mapToClient(clientCreateRequest);
         clientRepo.save(client);
     }
 
@@ -33,14 +34,12 @@ public class ClientService {
                 .toList();
     }
 
-    public void updateById(long id, ClientDto clientDto) {
+    public void updateById(long id, ClientUpdateRequest clientUpdateRequest) {
         Client client = requireClientById(id);
 
-        client.setUsername(clientDto.getUsername());
-        client.setPassword(clientDto.getPassword());
-        client.setEmail(clientDto.getEmail());
-        client.setPhoneNumber(clientDto.getPhoneNumber());
-        client.setFullName(clientDto.getFullName());
+        client.setEmail(clientUpdateRequest.getEmail());
+        client.setPhoneNumber(clientUpdateRequest.getPhoneNumber());
+        client.setFullName(clientUpdateRequest.getFullName());
 
         clientRepo.save(client);
     }
@@ -61,11 +60,13 @@ public class ClientService {
                 .build();
     }
 
-    private Client mapToClient(ClientRequest clientRequest) {
+    private Client mapToClient(ClientCreateRequest clientCreateRequest) {
         return Client.builder()
-                .email(clientRequest.getEmail())
-                .phoneNumber(clientRequest.getPhoneNumber())
-                .fullName(clientRequest.getFullName())
+                .username(clientCreateRequest.getUsername())
+                .password(clientCreateRequest.getPassword())
+                .email(clientCreateRequest.getEmail())
+                .phoneNumber(clientCreateRequest.getPhoneNumber())
+                .fullName(clientCreateRequest.getFullName())
                 .build();
     }
 
