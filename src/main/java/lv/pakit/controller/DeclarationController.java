@@ -85,7 +85,7 @@ public class DeclarationController {
     }
 
     @PostMapping("/declaration/{id}/delete")
-    public String deletedDeclaration(@PathVariable("id") long id, Model model) {
+    public String deletedDeclaration(@PathVariable("id") long id) {
         declarationService.deleteById(id);
 
         return "redirect:/declaration";

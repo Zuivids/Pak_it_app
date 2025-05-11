@@ -10,7 +10,6 @@ import lv.pakit.repo.IPackageItemRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,8 +17,6 @@ public class DeclarationService {
 
     private final IDeclarationRepo declarationRepo;
     private final ClientService clientService;
-    private final PackageItemService packageItemService;
-    private final IPackageItemRepo packageItemRepo;
 
     public void create(DeclarationRequest declarationRequest) {
         Declaration declaration = mapToDeclaration(declarationRequest);
@@ -59,7 +56,7 @@ public class DeclarationService {
 
     public void deleteById(long id) {
         requireDeclarationById(id);
-        packageItemRepo.deleteById(id);
+        declarationRepo.deleteById(id);
     }
 
     public DeclarationDto mapToDto(Declaration declaration) {
