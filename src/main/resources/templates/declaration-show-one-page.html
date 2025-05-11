@@ -12,7 +12,6 @@
         <th>ID</th>
         <th>Client Name</th>
         <th>Identifier Code</th>
-<!--        TODO add packgeItems-->
         <th>Sender Name</th>
         <th>Sender Address</th>
         <th>Sender Country Code</th>
@@ -55,6 +54,19 @@
             </form>
         </td>
     </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <th>Commodity ID</th>
+        <th>Quantity</th>
+    </thead>
+    <tbody>
+        <tr th:each="packageItem : ${packageItems}">
+            <td th:text="${packageItem.commodity.commodityCode}"></td>
+            <td th:text="${packageItem.quantity}"></td>
+        </tr>
     </tbody>
 </table>
 <form th:action="@{/}" method="get">

@@ -15,7 +15,6 @@ public class DeclarationDto {
 
     private long declarationId;
     private ClientDto client;
-    private List<PackageItemDto> packageItemList;
     private String identifierCode;
     private String senderName;
     private String senderAddress;

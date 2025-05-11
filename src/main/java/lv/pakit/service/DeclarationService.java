@@ -63,15 +63,10 @@ public class DeclarationService {
     }
 
     public DeclarationDto mapToDto(Declaration declaration) {
-        var packageItemList = packageItemRepo.findByDeclaration_DeclarationId(declaration.getDeclarationId())
-                .stream()
-                .map(packageItemService::mapToDto)
-                .collect(Collectors.toList());
 
         return DeclarationDto.builder()
                 .declarationId(declaration.getDeclarationId())
                 .client(clientService.mapToDto(declaration.getClient()))
-                .packageItemList(packageItemList)
                 .identifierCode(declaration.getIdentifierCode())
                 .senderName(declaration.getSenderName())
                 .senderAddress(declaration.getSenderAddress())

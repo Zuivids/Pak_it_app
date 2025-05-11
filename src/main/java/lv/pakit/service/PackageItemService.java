@@ -28,6 +28,12 @@ public class PackageItemService {
         return mapToDto(item);
     }
 
+    public List<PackageItemDto> retrieveByDeclarationId(long declarationId) {
+        List<PackageItem> items = packageItemRepo.findByDeclaration_DeclarationId(declarationId);
+
+        return items.stream().map(this::mapToDto).toList();
+    }
+
     public List<PackageItemDto> retrieveAll() {
         return packageItemRepo.findAll().stream()
                 .map(this::mapToDto)

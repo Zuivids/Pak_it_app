@@ -3,11 +3,13 @@ package lv.pakit.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.DeclarationDto;
+import lv.pakit.dto.PackageItemDto;
 import lv.pakit.dto.request.DeclarationRequest;
 import lv.pakit.model.Commodity;
 import lv.pakit.model.Declaration;
 import lv.pakit.model.PackageItem;
 import lv.pakit.service.DeclarationService;
+import lv.pakit.service.PackageItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,16 +17,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class DeclarationController {
 
     private final DeclarationService declarationService;
+    private final PackageItemService packageItemService;
 
     @GetMapping("/declaration/{id}")
     public String getDeclarationById(@PathVariable long id, Model model) {
         DeclarationDto declarationDto = declarationService.retriveById(id);
+        List<PackageItemDto> packageItemDtos = packageItemService.retrieveByDeclarationId(id);
+
         model.addAttribute("declaration", declarationDto);
+        model.addAttribute("packageItems", packageItemDtos);
 
         return "declaration-show-one-page";
     }
