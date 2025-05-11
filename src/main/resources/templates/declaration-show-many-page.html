@@ -75,8 +75,6 @@
             <tr>
                 <th>ID</th>
                 <th>Client Name</th>
-                <!--TODO add packageItems-->
-                <!--TODO add commodities-->
                 <th>Identifier Code</th>
                 <th>Sender Name</th>
                 <th>Sender Address</th>
@@ -89,6 +87,9 @@
                 <th>Total Weight</th>
                 <th>Total Value</th>
                 <th>Date</th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -107,7 +108,11 @@
                 <td th:text="${declaration.totalWeight}">Total Weight</td>
                 <td th:text="${declaration.totalValue}">Total Value</td>
                 <td th:text="${declaration.date}">Date</td>
-                <!--TODO add view option -->
+                <td class="text-center">
+                    <form th:action="|/declaration/${declaration.declarationId}|" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-primary btn-sm">View</button>
+                    </form>
+                </td>
                 <td class="text-center">
                     <form th:action="|/declaration/${declaration.declarationId}/edit|" method="get" class="d-inline">
                         <button type="submit" class="btn btn-primary btn-sm">Edit</button>
