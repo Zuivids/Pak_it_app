@@ -33,11 +33,11 @@ public class CommodityService {
                 .toList();
     }
 
-    public void updateById(long id, CommodityDto dto) {
+    public void updateById(long id, CommodityRequest commodityRequest) {
         Commodity commodity = requireCommodityById(id);
 
-        commodity.setCommodityCode(dto.getCommodityCode());
-        commodity.setDescription(dto.getDescription());
+        commodity.setCommodityCode(commodityRequest.getCommodityCode());
+        commodity.setDescription(commodityRequest.getDescription());
 
         commodityRepo.save(commodity);
     }

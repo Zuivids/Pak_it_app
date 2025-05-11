@@ -57,8 +57,8 @@ public class CommodityController {
     }
 
     @PostMapping("/commodity/{id}/edit")
-    public String updateCommodity(@PathVariable("id") long id, @Valid @ModelAttribute("commodity") CommodityDto commodityDto) {
-        commodityService.updateById(id, commodityDto);
+    public String updateCommodity(@PathVariable("id") long id, @Valid @ModelAttribute("commodity") CommodityRequest commodityRequest) {
+        commodityService.updateById(id, commodityRequest);
 
         return "redirect:/commodity";
     }

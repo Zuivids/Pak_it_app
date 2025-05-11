@@ -1,6 +1,6 @@
 package lv.pakit.dto.request;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CommodityRequest {
-    @NotNull
+
+    @NotBlank
     private String commodityCode;
-    @NotNull
+    @NotBlank
     private String description;
 }
