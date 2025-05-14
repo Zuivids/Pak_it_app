@@ -69,6 +69,12 @@
 
 <main class="container py-5">
     <h1 class="mb-4">Commodity List</h1>
+
+    <form th:action="@{/commodity/search}" method="get" class="mb-4 d-flex">
+        <input type="text" name="query" class="form-control me-2" placeholder="Search by code or description">
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+    </form>
+
     <div class="table-responsive rounded">
         <table class="table table-bordered table-striped align-middle">
             <thead class="table-danger">
@@ -95,6 +101,10 @@
                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
                 </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(commodities)}">
+                <td colspan="5" class="text-center text-muted">No commodities found.</td>
             </tr>
             </tbody>
         </table>

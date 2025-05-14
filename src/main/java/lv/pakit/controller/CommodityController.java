@@ -8,10 +8,9 @@ import lv.pakit.model.Commodity;
 import lv.pakit.service.CommodityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -77,5 +76,17 @@ public class CommodityController {
         commodityService.deleteById(id);
 
         return "redirect:/commodity";
+    }
+
+    @GetMapping("/commodities/search")
+    public List<CommodityDto> searchCommodities(@RequestParam(required = false) String query) {
+        return commodityService.search(query);
+    }
+
+    @GetMapping("/commodity/search")
+    public String searchCommodities(@RequestParam(required = false) String query, Model model) {
+        List<CommodityDto> results = commodityService.search(query);
+        model.addAttribute("commodities", results);
+        return "commodity-show-many-page";
     }
 }

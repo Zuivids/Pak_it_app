@@ -66,4 +66,19 @@ public class CommodityService {
         return commodityRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Commodity with id (" + id + ") not found!"));
     }
+
+    public List<CommodityDto> search(String query) {
+        if (query == null || query.isEmpty()) {
+            return commodityRepo.findAll().stream()
+                    .map(this::mapToDto)
+                    .toList();
+        }
+
+        List<Commodity> commodities = commodityRepo
+                .findByCommodityCodeContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query);
+
+        return commodities.stream()
+                .map(this::mapToDto)
+                .toList();
+    }
 }
