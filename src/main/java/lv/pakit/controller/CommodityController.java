@@ -78,11 +78,6 @@ public class CommodityController {
         return "redirect:/commodity";
     }
 
-    @GetMapping("/commodities/search")
-    public List<CommodityDto> searchCommodities(@RequestParam(required = false) String query) {
-        return commodityService.search(query);
-    }
-
     @GetMapping("/commodity/search")
     public String searchCommodities(@RequestParam(required = false) String query, Model model) {
         List<CommodityDto> results = commodityService.search(query);
