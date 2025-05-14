@@ -79,16 +79,14 @@
         <table class="table table-bordered table-striped align-middle">
             <thead class="table-danger">
             <tr>
-                <th>ID</th>
                 <th>Code</th>
                 <th>Description</th>
-                <th></th>
-                <th></th>
+                <th style="width: 80px;"></th>
+                <th style="width: 80px;"></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="commodity : ${commodities}">
-                <td th:text="${commodity.commodityId}">ID</td>
                 <td th:text="${commodity.commodityCode}">Code</td>
                 <td th:text="${commodity.description}">Description</td>
                 <td class="text-center">
