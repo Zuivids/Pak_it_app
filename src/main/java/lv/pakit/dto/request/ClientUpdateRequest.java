@@ -1,13 +1,13 @@
 package lv.pakit.dto.request;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClientUpdateRequest {
 
     @NotNull
