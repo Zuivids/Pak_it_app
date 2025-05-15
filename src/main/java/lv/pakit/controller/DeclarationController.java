@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.DeclarationDto;
 import lv.pakit.dto.PackageItemDto;
 import lv.pakit.dto.request.DeclarationRequest;
+import lv.pakit.dto.request.DeclarationSearchRequest;
 import lv.pakit.model.Commodity;
 import lv.pakit.model.Declaration;
 import lv.pakit.model.PackageItem;
@@ -12,10 +13,7 @@ import lv.pakit.service.DeclarationService;
 import lv.pakit.service.PackageItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,8 +36,9 @@ public class DeclarationController {
     }
 
     @GetMapping("/declaration")
-    public String getAllDeclarations(Model model) {
-        model.addAttribute("declarations", declarationService.retriveAll());
+    public String searchDeclarations(DeclarationSearchRequest request, Model model) {
+        List<DeclarationDto> results = declarationService.search(request);
+        model.addAttribute("declarations", results);
 
         return "declaration-show-many-page";
     }
@@ -49,6 +48,7 @@ public class DeclarationController {
         model.addAttribute("declaration", new Declaration());
         model.addAttribute("packageItem", new PackageItem());
         model.addAttribute("commodity", new Commodity());
+//        //TODO add Client who is creating this
 
         return "declaration-add-new-page";
     }

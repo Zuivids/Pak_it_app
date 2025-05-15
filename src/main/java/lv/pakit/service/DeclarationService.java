@@ -3,10 +3,10 @@ package lv.pakit.service;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.DeclarationDto;
 import lv.pakit.dto.request.DeclarationRequest;
+import lv.pakit.dto.request.DeclarationSearchRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Declaration;
 import lv.pakit.repo.IDeclarationRepo;
-import lv.pakit.repo.IPackageItemRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -99,5 +99,18 @@ public class DeclarationService {
     private Declaration requireDeclarationById(long id) {
         return declarationRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Declaration with id (" + id + ") not found!"));
+    }
+
+    public List<DeclarationDto> search(DeclarationSearchRequest request) {
+        if (request.getIdentifierCode() == null || request.getIdentifierCode().isEmpty()) {
+            return declarationRepo.findAll().stream()
+                    .map(this::mapToDto)
+                    .toList();
+        }
+
+        List<Declaration> declarations = declarationRepo.findByIdentifierCodeContainingIgnoreCase(request.getIdentifierCode());
+        return declarations.stream()
+                .map(this::mapToDto)
+                .toList();
     }
 }
