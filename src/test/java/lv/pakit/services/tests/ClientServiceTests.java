@@ -1,4 +1,4 @@
-package lv.pakit;
+package lv.pakit.services.tests;
 
 import lv.pakit.dto.ClientDto;
 import lv.pakit.dto.request.ClientUpdateRequest;
@@ -149,5 +149,5 @@ public class ClientServiceTests {
         verify(clientRepo).deleteById(123L);
     }
 
-    //TODO add search tests
+    //TODO add search
 }

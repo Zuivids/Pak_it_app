@@ -1,4 +1,4 @@
-package lv.pakit;
+package lv.pakit.services.tests;
 
 import lv.pakit.dto.CommodityDto;
 import lv.pakit.dto.request.CommodityRequest;

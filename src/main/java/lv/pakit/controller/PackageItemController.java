@@ -59,8 +59,8 @@ public class PackageItemController {
     }
 
     @PostMapping("/packageitem/{id}/edit")
-    public String updatePackageItem(@PathVariable("id") long id, @Valid PackageItemDto packageItemDto) {
-        packageItemService.updateById(id, packageItemDto);
+    public String updatePackageItem(@PathVariable("id") long id, @Valid PackageItemRequest packageItemRequest) {
+        packageItemService.updateById(id, packageItemRequest);
 
         return "redirect:/packageitem";
     }

@@ -40,13 +40,13 @@ public class PackageItemService {
                 .toList();
     }
 
-    public void updateById(long id, PackageItemDto dto) {
+    public void updateById(long id, PackageItemRequest packageItemRequest) {
         PackageItem item = requirePackageItemById(id);
 
-        item.setQuantity(dto.getQuantity());
-        item.setNetWeight(dto.getNetWeight());
-        item.setValue(dto.getValue());
-        item.setUsed(dto.isUsed());
+        item.setQuantity(packageItemRequest.getQuantity());
+        item.setNetWeight(packageItemRequest.getNetWeight());
+        item.setValue(packageItemRequest.getValue());
+        item.setUsed(packageItemRequest.getUsed());
 
         packageItemRepo.save(item);
     }

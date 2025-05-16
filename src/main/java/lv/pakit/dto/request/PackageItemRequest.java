@@ -1,14 +1,13 @@
 package lv.pakit.dto.request;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lv.pakit.model.Commodity;
 
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
 public class PackageItemRequest {
 
     @NotNull
