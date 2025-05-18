@@ -14,16 +14,19 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class CommodityController {
+public class CommodityController extends BaseController {
 
     private final CommodityService commodityService;
 
     @GetMapping("/commodity/{id}")
     public String getCommodityById(@PathVariable long id, Model model) {
-        CommodityDto commodityDto = commodityService.retrieveById(id);
-        model.addAttribute("commodity", commodityDto);
+        return handleRequest(() -> {
+            CommodityDto commodityDto = commodityService.retrieveById(id);
+            model.addAttribute("commodity", commodityDto);
 
-        return "commodity-show-one-page";
+//            return "commodity-show-one-page";
+        }, "commodity-show-one-page",model);
+
     }
 
     @GetMapping("/commodity")
