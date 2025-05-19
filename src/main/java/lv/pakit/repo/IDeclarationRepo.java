@@ -10,7 +10,7 @@ import java.util.List;
 public interface IDeclarationRepo extends JpaRepository<Declaration, Long> {
 
     List<Declaration> findByIdentifierCodeContainingIgnoreCase(String identifierCode);
-    //TODO clients name
+    List<Declaration> findByClientFullNameContainingIgnoreCase(String clientName);
     List<Declaration> findBySenderNameContainingIgnoreCase(String senderName);
     List<Declaration> findBySenderAddressContainingIgnoreCase(String senderAddress);
     List<Declaration> findBySenderCountryCodeContainingIgnoreCase(String senderCountryCode);

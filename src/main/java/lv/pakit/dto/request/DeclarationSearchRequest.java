@@ -3,7 +3,6 @@ package lv.pakit.dto.request;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lv.pakit.model.Client;
 
 @Getter
 @Setter
@@ -11,7 +10,7 @@ import lv.pakit.model.Client;
 public class DeclarationSearchRequest {
 
     private String identifierCode;
-    //TODO    private String clientName;
+    private String clientName;
     private String senderName;
     private String senderAddress;
     private String senderCountryCode;

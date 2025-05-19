@@ -108,7 +108,10 @@ public class DeclarationService {
                     .stream().map(this::mapToDto).toList();
         }
 
-        //TODO clients name
+        if (request.getClientName() != null && !request.getClientName().isBlank()) {
+            return declarationRepo.findByClientFullNameContainingIgnoreCase(request.getClientName())
+                    .stream().map(this::mapToDto).toList();
+        }
 
         if (request.getSenderName() != null && !request.getSenderName().isBlank()) {
             return declarationRepo.findBySenderNameContainingIgnoreCase(request.getSenderName())
