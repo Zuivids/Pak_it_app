@@ -14,9 +14,7 @@ public abstract class BaseController {
     }
 
     protected String handleRequest(Runnable runnable, String successPage, String errorPage, Model model, BindingResult bindingResult) {
-
         if (bindingResult != null && bindingResult.hasErrors()) {
-            model.addAttribute("fieldErrors", mapFieldErrors(bindingResult));
             return errorPage;
         }
 
@@ -29,15 +27,4 @@ public abstract class BaseController {
 
         return successPage;
     }
-
-    private Map<String, String> mapFieldErrors(BindingResult bindingResult) {
-        final var fieldErrors = new HashMap<String, String>();
-
-        for (var fieldError : bindingResult.getFieldErrors()) {
-            fieldErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
-        }
-
-        return fieldErrors;
-    }
-
 }

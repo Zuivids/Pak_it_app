@@ -71,27 +71,25 @@
     <h1 class="mb-4">Insert New Commodity</h1>
     <form th:action="@{/commodity}" th:object="${commodity}" method="post">
         <div class="container">
+
             <div class="row mb-3">
                 <label for="commodityCode" class="col-sm-2 col-form-label">Code</label>
+                <span th:if="${#fields.hasErrors('commodityCode')}" th:errors="*{commodityCode}" class="text-danger"></span>
                 <div class="col-sm-10">
                     <input type="text" th:field="*{commodityCode}" class="form-control" id="commodityCode" required/>
-<!--                    <span th:text="${fieldErrors?.get('?.commodityCode')}"></span>-->
-                </div>
-                <div class="alert alert-danger" role="alert">
-                    <span th:text="${fieldErrors?.get('commodityCode')}"></span>
                 </div>
             </div>
+
             <div class="row mb-3">
                 <label for="description" class="col-sm-2 col-form-label">Description</label>
+                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></span>
                 <div class="col-sm-10">
                     <input type="text" th:field="*{description}" class="form-control" id="description" required/>
-<!--                    <span th:text="${fieldErrors?.get('?.description')}"></span>-->
                 </div>
-                <div class="alert alert-danger" role="alert">
-<!--                    <span th:text="${fieldErrors?.get('description')}"></span>-->
-<!--                    <span th:text="${#fields.errors('description')}"></span>-->
-                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Incorrect date</span>
-                </div>
+            </div>
+
+            <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+                <span th:text="${errorMessage}"></span>
             </div>
 
             <div class="row mb-3 text-center">

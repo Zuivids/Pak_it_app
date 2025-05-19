@@ -1,26 +1,221 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Insert New Declaration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 </head>
-<body>
-<h1>Insert New Declaration</h1>
+<body class="bg-light">
 
-<form th:action="@{/declaration}" th:object="${declaration}" method="post">
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-        <tr>
-            <th>Field</th>
-            <th>Value</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</form>
-<form th:action="@{/}" method="get">
-    <button type="submit">Back</button>
-</form>
+<nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #6e0101">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Declaration Options
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <li><a class="dropdown-item" href="http://localhost:8080/declaration">View all declarations</a>
+                        </li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/declaration/new">Add new
+                            declaration</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Commodity Options
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <li><a class="dropdown-item" href="http://localhost:8080/commodity">View all commodities</a>
+                        </li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/commodity/new">Add new commodity</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Client Options
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                        <li><a class="dropdown-item" href="http://localhost:8080/client">View all clients</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/client/new">Add new client</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark px-3 py-2 rounded bg-light" href="http://localhost:8080/ ">Log out</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container py-5">
+    <h1>Insert New Declaration</h1>
+
+    <form th:action="@{/declaration}" th:object="${declaration}" method="post">
+        <div class="container my-4 p-4 rounded" style="background-color: #4b0c0c; color: white;">
+            <div class="row mb-4 justify-content-center">
+                <div class="col-md-4 bg-light text-dark rounded mb-1 mb-md-0 p-3">
+                    <div class="mb-1">
+                        <label for="senderName" class="form-label"><strong>Sender Name:</strong></label>
+                        <input type="text" th:field="*{senderName}" id="senderName" class="form-control"/>
+                    </div>
+                    <div class="mb-1">
+                        <label for="senderPhoneNumber" class="form-label"><strong>Sender phone number:</strong></label>
+                        <input type="text" th:field="*{senderPhoneNumber}" id="senderPhoneNumber" class="form-control"/>
+                    </div>
+                    <div class="mb-1">
+                        <label for="senderAddress" class="form-label"><strong>Sender address:</strong></label>
+                        <input type="text" th:field="*{senderAddress}" id="senderAddress" class="form-control"/>
+                    </div>
+                    <div class="mb-1">
+                        <label for="senderCountryCode" class="form-label"><strong>Sender country code:</strong></label>
+                        <input type="text" th:field="*{senderCountryCode}" id="senderCountryCode" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-4 bg-light text-dark rounded mb-1 mb-md-0 p-3">
+                    <div class="mb-1">
+                        <label for="receiverName" class="form-label"><strong>Receiver Name:</strong></label>
+                        <input type="text" th:field="*{receiverName}" id="receiverName" class="form-control"/>
+                    </div>
+                    <div class="mb-1">
+                        <label for="receiverPhoneNumber" class="form-label"><strong>Receiver phone
+                            number:</strong></label>
+                        <input type="text" th:field="*{receiverPhoneNumber}" id="receiverPhoneNumber"
+                               class="form-control"/>
+                    </div>
+                    <div class="mb-1">
+                        <label for="receiverAddress" class="form-label"><strong>Receiver address:</strong></label>
+                        <input type="text" th:field="*{receiverAddress}" id="receiverAddress" class="form-control"/>
+                    </div>
+                    <div class="mb-1">
+                        <label for="receiverCountryCode" class="form-label"><strong>Receiver country
+                            code:</strong></label>
+                        <input type="text" th:field="*{receiverCountryCode}" id="receiverCountryCode"
+                               class="form-control"/>
+                    </div>
+                </div>
+
+            </div>
+
+<!--            <div class="table-responsive">-->
+<!--                <table class="table table-bordered table-light text-dark">-->
+<!--                    <thead class="table-secondary text-center">-->
+<!--                    <tr>-->
+<!--                        <th>Commodity code</th>-->
+<!--                        <th>Description</th>-->
+<!--                        <th>Used</th>-->
+<!--                        <th>Quantity</th>-->
+<!--                        <th>Net weight</th>-->
+<!--                        <th>Value</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+<!--                    &lt;!&ndash;                <tr th:each="packageItem : ${packageItems}">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <td th:text="${packageItem.commodity.commodityCode}"></td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <td th:text="${packageItem.commodity.description}"></td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <td th:text="${packageItem.used}"></td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <td th:text="${packageItem.quantity}"></td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <td th:text="${packageItem.netWeight}"></td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <td th:text="${packageItem.value}"></td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                </tr>&ndash;&gt;-->
+<!--                </table>-->
+<!--            </div>-->
+
+            <form th:action="@{/packageitem}" th:object="${packageItem}" method="post">
+                <table border="1" cellpadding="8" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Commodity ID</th>
+                        <th>Declaration ID</th>
+                        <th>Quantity</th>
+                        <th>Net Weight</th>
+                        <th>Value</th>
+                        <th>Used</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <select th:field="*{commodity}">
+                                <option value="" disabled selected>Select commodity</option>
+                                <option th:each="commodity : ${commodities}"
+                                        th:value="${commodity.commodityId}"
+                                        th:text="${commodity.commodityCode + ' - ' + commodity.description}">
+                                </option>
+                            </select>
+                        </td>
+                        <td><input type="number" th:field="*{declaration.declarationId}"/></td>
+                        <td><input type="number" th:field="*{quantity}" required/></td>
+                        <td><input type="number" step="0.01" th:field="*{netWeight}" required/></td>
+                        <td><input type="number" step="0.01" th:field="*{value}" required/></td>
+                        <td>
+                            <select th:field="*{used}">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="submit">Save</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+
+            <div class="row text-dark">
+                <div class="col-md-2 bg-light rounded mb-1">
+                    <p><strong>ID kods:</strong> <span th:text="${declaration.identifierCode}"></span></p>
+                </div>
+                <div class="col-md-2 bg-light rounded mb-1">
+                    <p><strong>Date:</strong> <span th:text="${declaration.date}"></span></p>
+                </div>
+
+                <div class="col-md-2 bg-light rounded mb-1 ms-auto">
+                    <p><strong>Total gross weight:</strong> <span th:text="${declaration.totalWeight}"></span></p>
+                </div>
+                <div class="col-md-2 bg-light rounded mb-1">
+                    <p><strong>Total value:</strong> <span th:text="${declaration.totalValue}"></span></p>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form th:action="@{/declaration}" method="get" class="mt-4">
+        <button type="submit" class="btn btn-secondary">Back</button>
+    </form>
+</main>
+
+<footer class="text-white text-center py-4 mt-5" style="background-color: #6e0101">
+    <p>&copy; 2025 SIA Pak It. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous">
+</script>
+
+
 </body>
 </html>
