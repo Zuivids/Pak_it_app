@@ -8,6 +8,7 @@ import lv.pakit.model.Commodity;
 import lv.pakit.service.CommodityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +25,7 @@ public class CommodityController extends BaseController {
             CommodityDto commodityDto = commodityService.retrieveById(id);
             model.addAttribute("commodity", commodityDto);
 
-//            return "commodity-show-one-page";
-        }, "commodity-show-one-page",model);
+        }, "commodity-show-one-page", "commodity-show-one-page", model);
 
     }
 
@@ -44,10 +44,11 @@ public class CommodityController extends BaseController {
     }
 
     @PostMapping("/commodity")
-    public String saveCommodity(@Valid @ModelAttribute CommodityRequest commodityRequest) {
-        commodityService.create(commodityRequest);
+    public String saveCommodity(@Valid @ModelAttribute("commodity") CommodityRequest commodityRequest, BindingResult bindingResult, Model model) {
+        return handleRequest(() -> {
+            commodityService.create(commodityRequest);
+        }, "redirect:/commodity","commodity-add-new-page", model, bindingResult);
 
-        return "redirect:/commodity";
     }
 
     @GetMapping("/commodity/{id}/edit")

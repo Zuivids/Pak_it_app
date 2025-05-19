@@ -9,20 +9,22 @@ import java.util.Map;
 
 public abstract class BaseController {
 
-    protected String handleRequest(Runnable runnable, String successPage, Model model) {
-        return handleRequest(runnable, successPage, model, null);
+    protected String handleRequest(Runnable runnable, String successPage, String errorPage, Model model) {
+        return handleRequest(runnable, successPage, errorPage, model, null);
     }
 
-    protected String handleRequest(Runnable runnable, String successPage, Model model, BindingResult bindingResult) {
+    protected String handleRequest(Runnable runnable, String successPage, String errorPage, Model model, BindingResult bindingResult) {
+
         if (bindingResult != null && bindingResult.hasErrors()) {
             model.addAttribute("fieldErrors", mapFieldErrors(bindingResult));
-            System.out.println(model.getAttribute("fieldErrors"));
+            return errorPage;
         }
 
         try {
             runnable.run();
         } catch (PakItException e) {
             model.addAttribute("errorMessage", e.getMessage());
+            return errorPage;
         }
 
         return successPage;
