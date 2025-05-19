@@ -102,15 +102,69 @@ public class DeclarationService {
     }
 
     public List<DeclarationDto> search(DeclarationSearchRequest request) {
-        if (request.getIdentifierCode() == null || request.getIdentifierCode().isEmpty()) {
-            return declarationRepo.findAll().stream()
-                    .map(this::mapToDto)
-                    .toList();
+
+        if (request.getIdentifierCode() != null && !request.getIdentifierCode().isBlank()) {
+            return declarationRepo.findByIdentifierCodeContainingIgnoreCase(request.getIdentifierCode())
+                    .stream().map(this::mapToDto).toList();
         }
 
-        List<Declaration> declarations = declarationRepo.findByIdentifierCodeContainingIgnoreCase(request.getIdentifierCode());
-        return declarations.stream()
-                .map(this::mapToDto)
-                .toList();
+        //TODO clients name
+
+        if (request.getSenderName() != null && !request.getSenderName().isBlank()) {
+            return declarationRepo.findBySenderNameContainingIgnoreCase(request.getSenderName())
+                    .stream().map(this::mapToDto).toList();
+        }
+
+        if (request.getSenderAddress() != null && !request.getSenderAddress().isBlank()) {
+            return declarationRepo.findBySenderAddressContainingIgnoreCase(request.getSenderAddress())
+                    .stream().map(this::mapToDto).toList();
+        }
+
+        if (request.getSenderCountryCode() != null && !request.getSenderCountryCode().isBlank()) {
+            return declarationRepo.findBySenderCountryCodeContainingIgnoreCase(request.getSenderCountryCode())
+                    .stream().map(this::mapToDto).toList();
+        }
+
+        if (request.getSenderPhoneNumber() != null && !request.getSenderPhoneNumber().isBlank()) {
+            return declarationRepo.findBySenderPhoneNumberContainingIgnoreCase(request.getSenderPhoneNumber())
+                    .stream().map(this::mapToDto).toList();
+        }
+
+        if (request.getReceiverName() != null && !request.getReceiverName().isBlank()) {
+            return declarationRepo.findByReceiverNameContainingIgnoreCase(request.getReceiverName())
+                    .stream().map(this::mapToDto).toList();
+        }
+
+        if (request.getReceiverAddress() != null && !request.getReceiverAddress().isBlank()) {
+            return declarationRepo.findByReceiverAddressContainingIgnoreCase(request.getReceiverAddress())
+                    .stream().map(this::mapToDto).toList();
+        }
+
+        if (request.getReceiverCountryCode() != null && !request.getReceiverCountryCode().isBlank()) {
+            return declarationRepo.findByReceiverCountryCodeContainingIgnoreCase(request.getReceiverCountryCode())
+                    .stream().map(this::mapToDto).toList();
+        }
+
+        if (request.getReceiverPhoneNumber() != null && !request.getReceiverPhoneNumber().isBlank()) {
+            return declarationRepo.findByReceiverPhoneNumberContainingIgnoreCase(request.getReceiverPhoneNumber())
+                    .stream().map(this::mapToDto).toList();
+        }
+
+        if (request.getTotalWeight() != null && !request.getTotalWeight().isNaN()) {
+            return declarationRepo.findByTotalWeight(request.getTotalWeight())
+                    .stream().map(this::mapToDto).toList();
+        }
+
+        if (request.getTotalValue() != null && !request.getTotalValue().isNaN()) {
+            return declarationRepo.findByTotalValue(request.getTotalValue())
+                    .stream().map(this::mapToDto).toList();
+        }
+
+        if (request.getDate() != null && !request.getDate().isBlank()) {
+            return declarationRepo.findByDateContainingIgnoreCase(request.getDate())
+                    .stream().map(this::mapToDto).toList();
+        }
+
+        return declarationRepo.findAll().stream().map(this::mapToDto).toList();
     }
 }

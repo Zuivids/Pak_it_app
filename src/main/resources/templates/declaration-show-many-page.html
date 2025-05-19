@@ -69,38 +69,53 @@
 
 <main class="container py-5">
     <h1 class="mb-4">Declaration List</h1>
-
-    <form th:action="@{/declaration}" method="get" class="mb-4 d-flex">
-        <input type="text" name="identifierCode" class="form-control me-2" placeholder="Search by Identifier Code">
-        <button type="submit" class="btn btn-outline-primary">Search</button>
-    </form>
-
     <div class="table-responsive rounded">
         <table class="table table-bordered table-striped align-middle">
             <thead class="table-danger">
             <tr>
-                <th>ID</th>
-                <th>Client Name</th>
-                <th>Identifier Code</th>
-                <th>Sender Name</th>
-                <th>Sender Address</th>
-                <th>Sender Country Code</th>
-                <th>Sender Phone Number</th>
-                <th>Receiver Name</th>
-                <th>Receiver Address</th>
-                <th>Receiver Country Code</th>
-                <th>Receiver Phone Number</th>
-                <th>Total Weight</th>
-                <th>Total Value</th>
-                <th>Date</th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th style="min-width: 150px;">Client Name</th>
+                <th style="min-width: 50px;">Identifier Code</th>
+                <th style="min-width: 150px;">Sender Name</th>
+                <th style="min-width: 150px;">Sender Address</th>
+                <th style="min-width: 150px;">Sender Country Code</th>
+                <th style="min-width: 150px;">Sender Phone Number</th>
+                <th style="min-width: 150px;">Receiver Name</th>
+                <th style="min-width: 150px;">Receiver Address</th>
+                <th style="min-width: 150px;">Receiver Country Code</th>
+                <th style="min-width: 150px;">Receiver Phone Number</th>
+                <th style="min-width: 150px;">Total Weight</th>
+                <th style="min-width: 150px;">Total Value</th>
+                <th style="min-width: 150px;">Date</th>
+                <th style="min-width: 50px;"></th>
+                <th style="min-width: 50px;"></th>
+                <th style="min-width: 50px;"></th>
             </tr>
             </thead>
             <tbody>
+            <tr>
+                <td></td> <!--add client -->
+                <td><input form="searchForm" type="text" name="identifierCode" class="form-control form-control-sm"></td>
+                <td><input form="searchForm" type="text" name="senderName" class="form-control form-control-sm"></td>
+                <td><input form="searchForm" type="text" name="senderAddress" class="form-control form-control-sm"></td>
+                <td><input form="searchForm" type="text" name="senderCountryCode" class="form-control form-control-sm"></td>
+                <td><input form="searchForm" type="text" name="senderPhoneNumber" class="form-control form-control-sm"></td>
+                <td><input form="searchForm" type="text" name="receiverName" class="form-control form-control-sm"></td>
+                <td><input form="searchForm" type="text" name="receiverAddress" class="form-control form-control-sm"></td>
+                <td><input form="searchForm" type="text" name="receiverCountryCode" class="form-control form-control-sm"></td>
+                <td><input form="searchForm" type="text" name="receiverPhoneNumber" class="form-control form-control-sm"></td>
+                <td><input form="searchForm" type="text" name="totalWeight" class="form-control form-control-sm"></td>
+                <td><input form="searchForm" type="text" name="totalValue" class="form-control form-control-sm"></td>
+                <td><input form="searchForm" type="text" name="date" class="form-control form-control-sm"></td>
+                <td>
+                    <form id="searchForm" th:action="@{/declaration}" method="get">
+                        <button type="submit" class="btn btn-outline-primary btn-sm">Search</button>
+                    </form>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+
             <tr th:each="declaration : ${declarations}">
-                <td th:text="${declaration.declarationId}">ID</td>
                 <td th:text="${declaration.client.fullName}">Client Name</td>
                 <td th:text="${declaration.identifierCode}">Identifier Code</td>
                 <td th:text="${declaration.senderName}">Sender Name</td>

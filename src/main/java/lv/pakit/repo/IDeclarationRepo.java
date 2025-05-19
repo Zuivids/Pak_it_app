@@ -10,7 +10,19 @@ import java.util.List;
 public interface IDeclarationRepo extends JpaRepository<Declaration, Long> {
 
     List<Declaration> findByIdentifierCodeContainingIgnoreCase(String identifierCode);
-    //TODO add filter to all fields except declarationId
+    //TODO clients name
+    List<Declaration> findBySenderNameContainingIgnoreCase(String senderName);
+    List<Declaration> findBySenderAddressContainingIgnoreCase(String senderAddress);
+    List<Declaration> findBySenderCountryCodeContainingIgnoreCase(String senderCountryCode);
+    List<Declaration> findBySenderPhoneNumberContainingIgnoreCase(String senderPhoneNumber);
+    List<Declaration> findByReceiverNameContainingIgnoreCase(String receiverName);
+    List<Declaration> findByReceiverAddressContainingIgnoreCase(String receiverAddress);
+    List<Declaration> findByReceiverCountryCodeContainingIgnoreCase(String receiverCountryCode);
+    List<Declaration> findByReceiverPhoneNumberContainingIgnoreCase(String receiverPhoneNumber);
+    List<Declaration> findByTotalWeight(double totalWeight);
+    List<Declaration> findByTotalValue(double totalValue);
+    List<Declaration> findByDateContainingIgnoreCase(String date);
+
     //TODO add JPA index
 }
 
