@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.CommodityDto;
 import lv.pakit.dto.request.CommodityRequest;
 import lv.pakit.exception.NotFoundException;
-import lv.pakit.exception.PakItException;
 import lv.pakit.model.Commodity;
 import lv.pakit.repo.ICommodityRepo;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ public class CommodityService {
 
     public void create(CommodityRequest commodityRequest) {
         Commodity commodity = mapToCommodity(commodityRequest);
-//        throw new PakItException("Something went wrong!");
         commodityRepo.save(commodity);
     }
 

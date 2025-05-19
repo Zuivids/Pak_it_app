@@ -73,16 +73,24 @@
         <div class="container">
             <div class="row mb-3">
                 <label for="commodityCode" class="col-sm-2 col-form-label">Code</label>
+                <span th:if="${#fields.hasErrors('commodityCode')}" th:errors="*{commodityCode}" class="text-danger"></span>
                 <div class="col-sm-10">
                     <input type="text" th:field="*{commodityCode}" class="form-control" id="commodityCode" required/>
                 </div>
             </div>
+
             <div class="row mb-3">
                 <label for="description" class="col-sm-2 col-form-label">Description</label>
+                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></span>
                 <div class="col-sm-10">
                     <input type="text" th:field="*{description}" class="form-control" id="description" required/>
                 </div>
             </div>
+
+            <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
             <div class="row mb-3 text-center">
                 <div class="col">
                     <button type="submit" class="btn btn-success">Update Commodity</button>

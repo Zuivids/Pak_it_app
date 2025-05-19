@@ -23,7 +23,8 @@
         </tr>
         </tbody>
     </table>
-    <div class="alert alert-danger" role="alert">
+
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
         <span th:text="${errorMessage}"></span>
     </div>
 </div>
