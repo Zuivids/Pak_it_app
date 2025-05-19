@@ -8,9 +8,10 @@ import lv.pakit.repo.ICommodityRepo;
 import lv.pakit.service.CommodityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,13 +21,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 public class CommodityServiceTests {
 
-    @Mock
-    private ICommodityRepo commodityRepo;
-
-    @InjectMocks
+    @Autowired
     private CommodityService commodityService;
+    @MockitoBean
+    private ICommodityRepo commodityRepo;
 
     @BeforeEach
     void setUp() {

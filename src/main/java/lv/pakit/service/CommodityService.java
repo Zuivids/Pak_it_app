@@ -19,8 +19,8 @@ public class CommodityService {
 
     public void create(CommodityRequest commodityRequest) {
         Commodity commodity = mapToCommodity(commodityRequest);
-        throw new PakItException("Something went wrong!");
-//        commodityRepo.save(commodity);
+//        throw new PakItException("Something went wrong!");
+        commodityRepo.save(commodity);
     }
 
     public CommodityDto retrieveById(long id) {
