@@ -71,6 +71,7 @@
     <h1 class="mb-4">Edit Client</h1>
     <form th:object="${commodity}" th:action="|/commodity/${commodity.commodityId}/edit|" method="post">
         <div class="container">
+            <input type="text" th:field="*{commodityId}" id="commodityId" hidden/>
             <div class="row mb-3">
                 <label for="commodityCode" class="col-sm-2 col-form-label">Code</label>
                 <span th:if="${#fields.hasErrors('commodityCode')}" th:errors="*{commodityCode}" class="text-danger"></span>

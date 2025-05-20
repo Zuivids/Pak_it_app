@@ -1,7 +1,6 @@
 package lv.pakit.services.tests;
 
 import lv.pakit.dto.CommodityDto;
-import lv.pakit.dto.request.CommodityRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Commodity;
 import lv.pakit.repo.ICommodityRepo;
@@ -36,9 +35,9 @@ public class CommodityServiceTests {
 
     @Test
     void commodityCreateTest() {
-        CommodityRequest request = new CommodityRequest("12345678", "Test Commodity");
+        CommodityDto commodityDto = new CommodityDto(1L,"12345678", "Test Commodity");
 
-        commodityService.create(request);
+        commodityService.create(commodityDto);
 
         verify(commodityRepo, times(1)).save(any(Commodity.class));
     }
@@ -84,12 +83,21 @@ public class CommodityServiceTests {
 
     @Test
     void commodityUpdateById_ValidTest() {
-        Commodity commodity = Commodity.builder().commodityId(123L).commodityCode("12345678").description("Keyboard").build();
-        CommodityRequest request = new CommodityRequest("87654321", "Monitor");
+        Commodity commodity = Commodity.builder()
+                .commodityId(123L)
+                .commodityCode("12345678")
+                .description("Keyboard")
+                .build();
+
+        CommodityDto commodityDto = CommodityDto.builder()
+                .commodityId(123L)
+                .commodityCode("87654321")
+                .description("Monitor")
+                .build();
 
         when(commodityRepo.findById(123L)).thenReturn(Optional.of(commodity));
 
-        commodityService.updateById(123L, request);
+        commodityService.updateById(123L, commodityDto);
 
         assertEquals("87654321", commodity.getCommodityCode());
         assertEquals("Monitor", commodity.getDescription());

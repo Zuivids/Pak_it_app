@@ -3,8 +3,6 @@ package lv.pakit.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.CommodityDto;
-import lv.pakit.dto.request.CommodityRequest;
-import lv.pakit.exception.PakItException;
 import lv.pakit.model.Commodity;
 import lv.pakit.service.CommodityService;
 import org.springframework.stereotype.Controller;
@@ -39,14 +37,14 @@ public class CommodityController extends BaseController {
     @GetMapping("/commodity/new")
     public String showCommodityForm(Model model) {
         return handleRequest(() -> {
-            model.addAttribute("commodity", new Commodity());
+            model.addAttribute("commodity", new CommodityDto());
         }, "commodity-add-new-page", "commodity-add-new-page", model);
     }
 
     @PostMapping("/commodity")
-    public String saveCommodity(@Valid @ModelAttribute("commodity") CommodityRequest commodityRequest, BindingResult bindingResult, Model model) {
+    public String saveCommodity(@Valid @ModelAttribute("commodity") CommodityDto commodityDto, BindingResult bindingResult, Model model) {
         return handleRequest(() -> {
-            commodityService.create(commodityRequest);
+            commodityService.create(commodityDto);
         }, "redirect:/commodity", "commodity-add-new-page", model, bindingResult);
     }
 
@@ -59,9 +57,10 @@ public class CommodityController extends BaseController {
     }
 
     @PostMapping("/commodity/{id}/edit")
-    public String updateCommodity(@PathVariable("id") long id, @Valid @ModelAttribute("commodity") CommodityRequest commodityRequest, BindingResult bindingResult, Model model) {
+    public String updateCommodity(@PathVariable("id") long id, @Valid @ModelAttribute("commodity") CommodityDto commodityDto,
+                                  BindingResult bindingResult, Model model) {
         return handleRequest(() -> {
-            commodityService.updateById(id, commodityRequest);
+            commodityService.updateById(id, commodityDto);
         }, "redirect:/commodity", "commodity-edit-page", model, bindingResult);
     }
 

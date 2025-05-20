@@ -2,7 +2,6 @@ package lv.pakit.service;
 
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.CommodityDto;
-import lv.pakit.dto.request.CommodityRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Commodity;
 import lv.pakit.repo.ICommodityRepo;
@@ -16,8 +15,8 @@ public class CommodityService {
 
     private final ICommodityRepo commodityRepo;
 
-    public void create(CommodityRequest commodityRequest) {
-        Commodity commodity = mapToCommodity(commodityRequest);
+    public void create(CommodityDto commodityDto) {
+        Commodity commodity = mapToCommodity(commodityDto);
         commodityRepo.save(commodity);
     }
 
@@ -33,11 +32,11 @@ public class CommodityService {
                 .toList();
     }
 
-    public void updateById(long id, CommodityRequest commodityRequest) {
+    public void updateById(long id, CommodityDto commodityDto) {
         Commodity commodity = requireCommodityById(id);
 
-        commodity.setCommodityCode(commodityRequest.getCommodityCode());
-        commodity.setDescription(commodityRequest.getDescription());
+        commodity.setCommodityCode(commodityDto.getCommodityCode());
+        commodity.setDescription(commodityDto.getDescription());
 
         commodityRepo.save(commodity);
     }
@@ -55,10 +54,10 @@ public class CommodityService {
                 .build();
     }
 
-    private Commodity mapToCommodity(CommodityRequest commodityRequest) {
+    private Commodity mapToCommodity(CommodityDto commodityDto) {
         return Commodity.builder()
-                .commodityCode(commodityRequest.getCommodityCode())
-                .description(commodityRequest.getDescription())
+                .commodityCode(commodityDto.getCommodityCode())
+                .description(commodityDto.getDescription())
                 .build();
     }
 
