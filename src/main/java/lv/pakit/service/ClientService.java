@@ -2,9 +2,8 @@ package lv.pakit.service;
 
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.ClientDto;
-import lv.pakit.dto.request.ClientCreateRequest;
-import lv.pakit.dto.request.ClientUpdateRequest;
 import lv.pakit.exception.NotFoundException;
+import lv.pakit.exception.PakItException;
 import lv.pakit.model.Client;
 import lv.pakit.repo.IClientRepo;
 import org.springframework.stereotype.Service;
@@ -17,8 +16,8 @@ public class ClientService {
 
     private final IClientRepo clientRepo;
 
-    public void create(ClientCreateRequest clientCreateRequest) {
-        Client client = mapToClient(clientCreateRequest);
+    public void create(ClientDto clientDto) {
+        Client client = mapToClient(clientDto);
         clientRepo.save(client);
     }
 
@@ -34,12 +33,12 @@ public class ClientService {
                 .toList();
     }
 
-    public void updateById(long id, ClientUpdateRequest clientUpdateRequest) {
+    public void updateById(long id, ClientDto clientDto) {
         Client client = requireClientById(id);
 
-        client.setEmail(clientUpdateRequest.getEmail());
-        client.setPhoneNumber(clientUpdateRequest.getPhoneNumber());
-        client.setFullName(clientUpdateRequest.getFullName());
+        client.setEmail(clientDto.getEmail());
+        client.setPhoneNumber(clientDto.getPhoneNumber());
+        client.setFullName(clientDto.getFullName());
 
         clientRepo.save(client);
     }
@@ -60,13 +59,13 @@ public class ClientService {
                 .build();
     }
 
-    private Client mapToClient(ClientCreateRequest clientCreateRequest) {
+    private Client mapToClient(ClientDto clientDto) {
         return Client.builder()
-                .username(clientCreateRequest.getUsername())
-                .password(clientCreateRequest.getPassword())
-                .email(clientCreateRequest.getEmail())
-                .phoneNumber(clientCreateRequest.getPhoneNumber())
-                .fullName(clientCreateRequest.getFullName())
+                .username(clientDto.getUsername())
+                .password(clientDto.getPassword())
+                .email(clientDto.getEmail())
+                .phoneNumber(clientDto.getPhoneNumber())
+                .fullName(clientDto.getFullName())
                 .build();
     }
 

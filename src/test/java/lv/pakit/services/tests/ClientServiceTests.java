@@ -1,7 +1,6 @@
 package lv.pakit.services.tests;
 
 import lv.pakit.dto.ClientDto;
-import lv.pakit.dto.request.ClientUpdateRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Client;
 import lv.pakit.repo.IClientRepo;
@@ -128,11 +127,15 @@ public class ClientServiceTests {
                 .fullName("Miķelis Testeris")
                 .build();
 
-        ClientUpdateRequest request = new ClientUpdateRequest("mikelis@gmail.com", "12345678", "Jānis Testeris");
+        ClientDto clientDto = ClientDto.builder()
+                .email("mikelis@gmail.com")
+                .phoneNumber("12345678")
+                .fullName("Jānis Testeris")
+                .build();
 
         when(clientRepo.findById(12345L)).thenReturn(Optional.of(client));
 
-        clientService.updateById(12345L, request);
+        clientService.updateById(12345L, clientDto);
 
         ClientDto dto = clientService.retrieveById(12345L);
 

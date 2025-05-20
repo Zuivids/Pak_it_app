@@ -98,6 +98,10 @@
         </table>
     </div>
 
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
     <div class="d-flex gap-3 mb-4">
         <form th:action="|/client/${client.clientId}/delete|" method="post">
             <button type="submit" class="btn btn-danger">Delete</button>

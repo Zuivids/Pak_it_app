@@ -106,6 +106,10 @@
         </table>
     </div>
 
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
     <form th:action="@{/backoffice}" method="get" class="mt-4">
         <button type="submit" class="btn btn-secondary">Back</button>
     </form>
