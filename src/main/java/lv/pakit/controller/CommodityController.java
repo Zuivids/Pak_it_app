@@ -3,7 +3,6 @@ package lv.pakit.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.CommodityDto;
-import lv.pakit.model.Commodity;
 import lv.pakit.service.CommodityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +22,6 @@ public class CommodityController extends BaseController {
         return handleRequest(() -> {
             CommodityDto commodityDto = commodityService.retrieveById(id);
             model.addAttribute("commodity", commodityDto);
-
         }, "commodity-show-one-page", "commodity-show-one-page", model);
     }
 
@@ -42,7 +40,8 @@ public class CommodityController extends BaseController {
     }
 
     @PostMapping("/commodity")
-    public String saveCommodity(@Valid @ModelAttribute("commodity") CommodityDto commodityDto, BindingResult bindingResult, Model model) {
+    public String saveCommodity(@Valid @ModelAttribute("commodity") CommodityDto commodityDto,
+                                BindingResult bindingResult, Model model) {
         return handleRequest(() -> {
             commodityService.create(commodityDto);
         }, "redirect:/commodity", "commodity-add-new-page", model, bindingResult);

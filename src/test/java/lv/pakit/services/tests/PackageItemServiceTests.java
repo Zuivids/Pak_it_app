@@ -1,7 +1,7 @@
 package lv.pakit.services.tests;
 
+import lv.pakit.dto.CommodityDto;
 import lv.pakit.dto.PackageItemDto;
-import lv.pakit.dto.request.PackageItemRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Commodity;
 import lv.pakit.model.Declaration;
@@ -38,9 +38,16 @@ public class PackageItemServiceTests {
 
     @Test
     void packageItemCreateTest() {
-        PackageItemRequest request = new PackageItemRequest(123L, 321L, 10, 1.5D, 100D, false);
+        PackageItemDto packageItemDto = PackageItemDto.builder()
+                .packageItemId(123L)
+                .declarationId(321L)
+                .quantity(10)
+                .netWeight(1.5D)
+                .value(100D)
+                .used(false)
+                .build();
 
-        packageItemService.create(request);
+        packageItemService.create(packageItemDto);
 
         verify(packageItemRepo, times(1)).save(any(PackageItem.class));
     }
@@ -165,18 +172,30 @@ public class PackageItemServiceTests {
                                 .commodityCode("1234567891")
                                 .description("Test Description")
                                 .build()
-                ).declaration(Declaration.builder().declarationId(333L).build())
+                )
+                .declaration(Declaration.builder().declarationId(333L).build())
                 .quantity(1)
                 .netWeight(20D)
                 .value(10.99D)
                 .used(true)
                 .build();
         //TODO add possibility to change commodityCode or Description
-        PackageItemRequest request = new PackageItemRequest(222L, 333L, 99, 100.99D, 2000.99D, false);
-
+        PackageItemDto packageItemDto = PackageItemDto.builder()
+                .packageItemId(111L)
+                .commodity(CommodityDto.builder()
+                        .commodityId(222L)
+                        .commodityCode("UPDATED-CODE")
+                        .description("Updated Description")
+                        .build())
+                .declarationId(333L)
+                .quantity(99)
+                .netWeight(100.99D)
+                .value(2000.99D)
+                .used(false)
+                .build();
         when(packageItemRepo.findById(111L)).thenReturn(Optional.of(packageItem));
 
-        packageItemService.updateById(111L, request);
+        packageItemService.updateById(111L, packageItemDto);
 
         //TODO add commodity and declaration verification
         assertEquals(99, packageItem.getQuantity());

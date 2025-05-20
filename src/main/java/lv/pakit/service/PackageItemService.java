@@ -1,7 +1,6 @@
 package lv.pakit.service;
 
 import lombok.RequiredArgsConstructor;
-import lv.pakit.dto.request.PackageItemRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.dto.PackageItemDto;
 import lv.pakit.model.PackageItem;
@@ -17,8 +16,8 @@ public class PackageItemService {
     private final IPackageItemRepo packageItemRepo;
     private final CommodityService commodityService;
 
-    public void create(PackageItemRequest packageItemRequest) {
-        PackageItem item = mapToPackageItem(packageItemRequest);
+    public void create(PackageItemDto packageItemDto) {
+        PackageItem item = mapToPackageItem(packageItemDto);
         packageItemRepo.save(item);
     }
 
@@ -40,13 +39,13 @@ public class PackageItemService {
                 .toList();
     }
 
-    public void updateById(long id, PackageItemRequest packageItemRequest) {
+    public void updateById(long id, PackageItemDto packageItemDto) {
         PackageItem item = requirePackageItemById(id);
 
-        item.setQuantity(packageItemRequest.getQuantity());
-        item.setNetWeight(packageItemRequest.getNetWeight());
-        item.setValue(packageItemRequest.getValue());
-        item.setUsed(packageItemRequest.getUsed());
+        item.setQuantity(packageItemDto.getQuantity());
+        item.setNetWeight(packageItemDto.getNetWeight());
+        item.setValue(packageItemDto.getValue());
+        item.setUsed(packageItemDto.isUsed());
 
         packageItemRepo.save(item);
     }
@@ -68,12 +67,12 @@ public class PackageItemService {
                 .build();
     }
 
-    private PackageItem mapToPackageItem(PackageItemRequest packageItemRequest) {
+    private PackageItem mapToPackageItem(PackageItemDto packageItemDto) {
         return PackageItem.builder()
-                .quantity(packageItemRequest.getQuantity())
-                .netWeight(packageItemRequest.getNetWeight())
-                .value(packageItemRequest.getValue())
-                .used(packageItemRequest.getUsed())
+                .quantity(packageItemDto.getQuantity())
+                .netWeight(packageItemDto.getNetWeight())
+                .value(packageItemDto.getValue())
+                .used(packageItemDto.isUsed())
                 .build();
     }
 
