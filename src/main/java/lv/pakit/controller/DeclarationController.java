@@ -30,19 +30,19 @@ public class DeclarationController extends BaseController {
     @GetMapping("/declaration/{id}")
     public String getDeclarationById(@PathVariable long id, Model model) {
         return handleRequest(() -> {
-        DeclarationDto declarationDto = declarationService.retriveById(id);
-        List<PackageItemDto> packageItemDtos = packageItemService.retrieveByDeclarationId(id);
+            DeclarationDto declarationDto = declarationService.retriveById(id);
+            List<PackageItemDto> packageItemDtos = packageItemService.retrieveByDeclarationId(id);
 
-        model.addAttribute("declaration", declarationDto);
-        model.addAttribute("packageItems", packageItemDtos);
+            model.addAttribute("declaration", declarationDto);
+            model.addAttribute("packageItems", packageItemDtos);
         }, "declaration-show-one-page", "declaration-show-one-page", model);
     }
 
     @GetMapping("/declaration")
     public String searchDeclarations(DeclarationSearchRequest request, Model model) {
         return handleRequest(() -> {
-        List<DeclarationDto> results = declarationService.search(request);
-        model.addAttribute("declarations", results);
+            List<DeclarationDto> results = declarationService.search(request);
+            model.addAttribute("declarations", results);
         }, "declaration-show-many-page", "declaration-show-many-page", model);
     }
 
@@ -50,15 +50,11 @@ public class DeclarationController extends BaseController {
     public String showDeclarationForm(Model model) {
         return handleRequest(() -> {
             DeclarationDto declaration = new DeclarationDto();
-            List<PackageItemDto> items = new ArrayList<>();
-            for (int i = 0; i < 3; i++) {
-                items.add(new PackageItemDto());
-            }
-            declaration.setPackageItemDtoList(items);
+            declaration.setPackageItemDtoList(new ArrayList<>());
+
             model.addAttribute("declaration", declaration);
-//        model.addAttribute("declaration", new DeclarationDto());
-        model.addAttribute("commodities", commodityService.retrieveAll());
-        model.addAttribute("clients", clientService.retrieveAll());
+            model.addAttribute("commodities", commodityService.retrieveAll());
+            model.addAttribute("clients", clientService.retrieveAll());
 
 
         }, "declaration-add-new-page", "declaration-add-new-page", model);
@@ -68,15 +64,15 @@ public class DeclarationController extends BaseController {
     public String saveDeclaration(@Valid @ModelAttribute("declaration") DeclarationDto declarationDto,
                                   BindingResult bindingResult, Model model) {
         return handleRequest(() -> {
-        declarationService.create(declarationDto);
+            declarationService.create(declarationDto);
         }, "redirect:/declaration", "declaration-add-new-page", model, bindingResult);
     }
 
     @GetMapping("/declaration/{id}/edit")
     public String editDeclaration(@PathVariable("id") long id, Model model) {
         return handleRequest(() -> {
-        DeclarationDto declarationDto = declarationService.retriveById(id);
-        model.addAttribute("declaration", declarationDto);
+            DeclarationDto declarationDto = declarationService.retriveById(id);
+            model.addAttribute("declaration", declarationDto);
         }, "declaration-edit-page", "declaration-edit-page", model);
     }
 
@@ -84,7 +80,7 @@ public class DeclarationController extends BaseController {
     public String updateDeclaration(@PathVariable("id") long id, @Valid @ModelAttribute("declaration") DeclarationDto declarationDto,
                                     BindingResult bindingResult, Model model) {
         return handleRequest(() -> {
-        declarationService.updateById(id, declarationDto);
+            declarationService.updateById(id, declarationDto);
         }, "redirect:/declaration", "declaration-edit-page", model, bindingResult);
     }
 
@@ -92,15 +88,15 @@ public class DeclarationController extends BaseController {
     public String deleteDeclaration(@PathVariable("id") long id, Model model) {
         //TODO soft
         return handleRequest(() -> {
-        DeclarationDto declarationDto = declarationService.retriveById(id);
-        model.addAttribute("declaration", declarationDto);
+            DeclarationDto declarationDto = declarationService.retriveById(id);
+            model.addAttribute("declaration", declarationDto);
         }, "declaration-delete-page", "declaration-delete-page", model);
     }
 
     @PostMapping("/declaration/{id}/delete")
     public String deletedDeclaration(@PathVariable("id") long id, Model model) {
         return handleRequest(() -> {
-        declarationService.deleteById(id);
+            declarationService.deleteById(id);
         }, "redirect:/declaration", "declaration-delete-page", model);
     }
 }
