@@ -2,9 +2,9 @@ package lv.pakit.service;
 
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.DeclarationDto;
-import lv.pakit.dto.request.DeclarationRequest;
 import lv.pakit.dto.request.DeclarationSearchRequest;
 import lv.pakit.exception.NotFoundException;
+import lv.pakit.exception.PakItException;
 import lv.pakit.model.Declaration;
 import lv.pakit.repo.IDeclarationRepo;
 import org.springframework.stereotype.Service;
@@ -18,8 +18,8 @@ public class DeclarationService {
     private final IDeclarationRepo declarationRepo;
     private final ClientService clientService;
 
-    public void create(DeclarationRequest declarationRequest) {
-        Declaration declaration = mapToDeclaration(declarationRequest);
+    public void create(DeclarationDto declarationDto) {
+        Declaration declaration = mapToDeclaration(declarationDto);
         declarationRepo.save(declaration);
     }
 
@@ -79,20 +79,20 @@ public class DeclarationService {
                 .build();
     }
 
-    public Declaration mapToDeclaration(DeclarationRequest declarationRequest) {
+    public Declaration mapToDeclaration(DeclarationDto declarationDto) {
         return Declaration.builder()
-                .identifierCode(declarationRequest.getIdentifier_code())
-                .senderName(declarationRequest.getSenderName())
-                .senderAddress(declarationRequest.getSenderAddress())
-                .senderCountryCode(declarationRequest.getSenderCountryCode())
-                .senderPhoneNumber(declarationRequest.getSenderPhoneNumber())
-                .receiverName(declarationRequest.getReceiverName())
-                .receiverAddress(declarationRequest.getReceiverAddress())
-                .receiverCountryCode(declarationRequest.getReceiverCountryCode())
-                .receiverPhoneNumber(declarationRequest.getReceiverPhoneNumber())
-                .totalWeight(declarationRequest.getTotalWeight())
-                .totalValue(declarationRequest.getTotalValue())
-                .date(declarationRequest.getDate())
+                .identifierCode(declarationDto.getIdentifierCode())
+                .senderName(declarationDto.getSenderName())
+                .senderAddress(declarationDto.getSenderAddress())
+                .senderCountryCode(declarationDto.getSenderCountryCode())
+                .senderPhoneNumber(declarationDto.getSenderPhoneNumber())
+                .receiverName(declarationDto.getReceiverName())
+                .receiverAddress(declarationDto.getReceiverAddress())
+                .receiverCountryCode(declarationDto.getReceiverCountryCode())
+                .receiverPhoneNumber(declarationDto.getReceiverPhoneNumber())
+                .totalWeight(declarationDto.getTotalWeight())
+                .totalValue(declarationDto.getTotalValue())
+                .date(declarationDto.getDate())
                 .build();
     }
 
@@ -102,7 +102,6 @@ public class DeclarationService {
     }
 
     public List<DeclarationDto> search(DeclarationSearchRequest request) {
-
         if (request.getIdentifierCode() != null && !request.getIdentifierCode().isBlank()) {
             return declarationRepo.findByIdentifierCodeContainingIgnoreCase(request.getIdentifierCode())
                     .stream().map(this::mapToDto).toList();

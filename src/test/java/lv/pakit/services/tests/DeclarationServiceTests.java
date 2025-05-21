@@ -2,7 +2,6 @@ package lv.pakit.services.tests;
 
 import lv.pakit.dto.ClientDto;
 import lv.pakit.dto.DeclarationDto;
-import lv.pakit.dto.request.DeclarationRequest;
 import lv.pakit.dto.request.DeclarationSearchRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Client;
@@ -45,8 +44,8 @@ public class DeclarationServiceTests {
 
     @Test
     void declarationCreateTest() {
-        DeclarationRequest request = DeclarationRequest.builder()
-                .identifier_code("MAR25")
+        DeclarationDto declarationDto = DeclarationDto.builder()
+                .identifierCode("MAR25")
                 .senderName("Sender")
                 .senderAddress("Sender Street")
                 .senderPhoneNumber("LV")
@@ -60,7 +59,7 @@ public class DeclarationServiceTests {
                 .date(LocalDate.now().toString())
                 .build();
 
-        declarationService.create(request);
+        declarationService.create(declarationDto);
 
         verify(declarationRepo, times(1)).save(any(Declaration.class));
     }
