@@ -1,13 +1,17 @@
 package lv.pakit.service;
 
 import lombok.RequiredArgsConstructor;
+import lv.pakit.dto.ClientDto;
 import lv.pakit.dto.DeclarationDto;
+import lv.pakit.dto.PackageItemDto;
 import lv.pakit.dto.request.DeclarationSearchRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Declaration;
 import lv.pakit.repo.IDeclarationRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,6 +20,29 @@ public class DeclarationService {
 
     private final IDeclarationRepo declarationRepo;
     private final ClientService clientService;
+    public DeclarationDto defaultDeclaration(){
+
+        DeclarationDto declarationDto = DeclarationDto.builder()
+                .senderName("")
+                .senderPhoneNumber("")
+                .senderAddress("")
+                .senderCountryCode("")
+
+                .receiverName("")
+                .receiverPhoneNumber("")
+                .receiverAddress("")
+                .receiverCountryCode("")
+
+                .packageItemDtoList(new ArrayList<PackageItemDto>())
+                .client(ClientDto.builder().build())
+                .date(LocalDate.now().toString())
+                .identifierCode(String.valueOf(LocalDate.now().getMonth()) + String.valueOf(LocalDate.now().getYear()))
+                .totalValue(100)
+                .totalWeight(2000)
+                .build();
+
+        return declarationDto;
+    }
 
     public void create(DeclarationDto declarationDto) {
         Declaration declaration = mapToDeclaration(declarationDto);
@@ -168,4 +195,5 @@ public class DeclarationService {
 
         return declarationRepo.findAll().stream().map(this::mapToDto).toList();
     }
+
 }
