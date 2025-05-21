@@ -27,18 +27,16 @@ public class DeclarationService {
                 .senderPhoneNumber("")
                 .senderAddress("")
                 .senderCountryCode("")
-
                 .receiverName("")
                 .receiverPhoneNumber("")
                 .receiverAddress("")
                 .receiverCountryCode("")
-
                 .packageItemDtoList(new ArrayList<PackageItemDto>())
                 .client(ClientDto.builder().build())
                 .date(LocalDate.now().toString())
                 .identifierCode(String.valueOf(LocalDate.now().getMonth()) + String.valueOf(LocalDate.now().getYear()))
-                .totalValue(100)
-                .totalWeight(2000)
+                .totalValue(0)
+                .totalWeight(0)
                 .build();
 
         return declarationDto;
