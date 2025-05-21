@@ -124,6 +124,7 @@
                     <tr>
                         <th>Commodity Code</th>
                         <th>Commodity Description</th>
+                        <th>New Commodity Description</th>
                         <th>Quantity</th>
                         <th>Net Weight</th>
                         <th>Value</th>
@@ -134,22 +135,23 @@
                     </thead>
                     <tbody id="package-items-body">
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <select th:field="*{packageItemDtoList[0].commodity}" class="form-select">
-                                <option th:each="c : ${commodities}" th:value="${c}" th:text="${c.commodityCode}"></option>
+                                <option th:each="c : ${commodities}"
+                                        th:value="${c}"
+                                        th:text="${c.commodityCode + ' - ' + c.description}">
+                                </option>
                             </select>
                         </td>
                         <td>
-                            <select th:field="*{packageItemDtoList[0].commodity}" class="form-select">
-                                <option th:each="c : ${commodities}" th:value="${c}" th:text="${c.description}"></option>
-                            </select>
+                            <input type="text" th:field="*{packageItemDtoList[0].commodity.newCommodityDescription}" class="form-control" placeholder="Optional new description"/>
                         </td>
                         <td><input type="number" th:field="*{packageItemDtoList[0].quantity}" class="form-control"/></td>
-                        <td><input type="number" step="0.01" th:field="*{packageItemDtoList[0].netWeight}" class="form-control"/></td>
-                        <td><input type="number" step="0.01" th:field="*{packageItemDtoList[0].value}" class="form-control"/></td>
+                        <td><input type="number" step="0.01" th:field="*{packageItemDtoList[0].netWeight}" class="form-control net-weight"/></td>
+                        <td><input type="number" step="0.01" th:field="*{packageItemDtoList[0].value}" class="form-control item-value"/></td>
                         <td><input type="checkbox" th:field="*{packageItemDtoList[0].used}" /></td>
                         <td><button type="button" class="btn btn-success" onclick="addPackageItemRow()">+</button></td>
-                        <td><button type="button" class="btn btn-danger" onclick="removepacakgeItemRow()">-</button></td>
+                        <td><button type="button" class="btn btn-danger" onclick="removePacakgeItemRow()">-</button></td>
                     </tr>
                     </tbody>
                 </table>
@@ -175,10 +177,12 @@
                 </div>
 
                 <div class="col-md-2 bg-light rounded mb-1 ms-auto">
-                    <p><strong>Total gross weight:</strong> <span th:text="${declaration.totalWeight}"></span></p>
+<!--                    <p><strong>Total gross weight:</strong> <span th:text="${declaration.totalWeight}"></span></p>-->
+                    <p><strong>Total gross weight:</strong> <span id="totalWeight">0</span></p>
                 </div>
                 <div class="col-md-2 bg-light rounded mb-1">
-                    <p><strong>Total value:</strong> <span th:text="${declaration.totalValue}"></span></p>
+<!--                    <p><strong>Total value:</strong> <span th:text="${declaration.totalValue}"></span></p>-->
+                    <p><strong>Total value:</strong> <span id="totalValue">0</span></p>
                 </div>
             </div>
         </div>
@@ -201,6 +205,8 @@
     <p>&copy; 2025 SIA Pak It. All rights reserved.</p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="..." crossorigin="anonymous"></script>
+
 <script th:inline="javascript">
     function addPackageItemRow() {
         const tbody = document.getElementById('package-items-body');
@@ -208,49 +214,69 @@
 
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
-             <td>
-                <select th:field="packageItemDtoList[${index}].commodity.commodityId" class="form-select">
-                    ${getCommodityCode()}
+            <td colspan="2">
+                <select name="packageItemDtoList[${index}].commodity.commodityId" class="form-select">
+                    ${getCombinedCommodityOptions()}
                 </select>
             </td>
             <td>
-                <select th:field="packageItemDtoList[${index}].commodity.commodityId" class="form-select">
-                    ${getCommodityDescription()}
-                </select>
+                <input type="text" name="packageItemDtoList[${index}].commodity.newCommodityDescription" class="form-control" placeholder="Optional new description"/>
             </td>
-            <td><input type="number" th:field="packageItemDtoList[${index}].quantity" class="form-control"/></td>
-            <td><input type="number" step="0.01" th:field="packageItemDtoList[${index}].netWeight" class="form-control"/></td>
-            <td><input type="number" step="0.01" th:field="packageItemDtoList[${index}].value" class="form-control"/></td>
-            <td><input type="checkbox" th:field="packageItemDtoList[${index}].used" /></td>
+            <td><input type="number" name="packageItemDtoList[${index}].quantity" class="form-control"/></td>
+            <td><input type="number" step="0.01" name="packageItemDtoList[${index}].netWeight" class="form-control net-weight"/></td>
+            <td><input type="number" step="0.01" name="packageItemDtoList[${index}].value" class="form-control item-value"/></td>
+            <td><input type="checkbox" name="packageItemDtoList[${index}].used"/></td>
             <td><button type="button" class="btn btn-success" onclick="addPackageItemRow()">+</button></td>
-            <td><button type="button" class="btn btn-danger" onclick="removePackageItemRow()">-</button></td>
+            <td><button type="button" class="btn btn-danger" onclick="removePackageItemRow(this)">-</button></td>
         `;
         tbody.appendChild(newRow);
     }
 
-    function getCommodityCode() {
+    function removePackageItemRow(button) {
+        const row = button.closest('tr');
+        if (row) {
+            row.remove();
+        }
+    }
+
+    function getCombinedCommodityOptions() {
         const commodities = /*[[${commodities}]]*/ [];
         let options = '';
 
         for (let i = 0; i < commodities.length; i++) {
             const c = commodities[i];
-            options += `<option value="${c.commodityId}">${c.commodityCode}</option>`;
+            options += `<option value="${c.commodityId}">${c.commodityCode} - ${c.description}</option>`;
         }
 
         return options;
     }
 
-    function getCommodityDescription() {
-        const commodities = /*[[${commodities}]]*/ [];
-        let options = '';
+    function recalculateTotals() {
+        let totalWeight = 0;
+        let totalValue = 0;
 
-        for (let i = 0; i < commodities.length; i++) {
-            const c = commodities[i];
-            options += `<option value="${c.commodityId}">${c.description}</option>`;
-        }
+        document.querySelectorAll('.net-weight').forEach(input => {
+            const val = parseFloat(input.value);
+            if (!isNaN(val)) totalWeight += val;
+        });
 
-        return options;
+        document.querySelectorAll('.item-value').forEach(input => {
+            const val = parseFloat(input.value);
+            if (!isNaN(val)) totalValue += val;
+        });
+
+        document.getElementById('totalWeight').textContent = totalWeight.toFixed(2);
+        document.getElementById('totalValue').textContent = totalValue.toFixed(2);
     }
+
+    document.addEventListener('input', function (e) {
+        if (e.target.classList.contains('net-weight') || e.target.classList.contains('item-value')) {
+            recalculateTotals();
+        }
+    });
+
+    window.addEventListener('DOMContentLoaded', recalculateTotals);
+
 </script>
 
 

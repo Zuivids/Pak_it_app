@@ -19,4 +19,6 @@ public class CommodityDto {
     @NotBlank(message = "Description cannot be blank")
     @Pattern(regexp = ".*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*", message = "Description must contain at least 3 letters")
     private String description;
+
+    private String newCommodityDescription;
 }
