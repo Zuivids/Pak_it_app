@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -15,6 +16,8 @@ public class DeclarationDto {
 
     private long declarationId;
     private ClientDto client;
+    private List<CommodityDto> commodityDtoList = new ArrayList<>();
+//    private List<PackageItemDto> packageItemDtoList; TODO
     private String identifierCode;
     private String senderName;
     private String senderAddress;

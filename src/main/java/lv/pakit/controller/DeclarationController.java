@@ -7,6 +7,7 @@ import lv.pakit.dto.DeclarationDto;
 import lv.pakit.dto.PackageItemDto;
 import lv.pakit.dto.request.DeclarationSearchRequest;
 import lv.pakit.service.ClientService;
+import lv.pakit.service.CommodityService;
 import lv.pakit.service.DeclarationService;
 import lv.pakit.service.PackageItemService;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ public class DeclarationController extends BaseController {
     private final DeclarationService declarationService;
     private final PackageItemService packageItemService;
     private final ClientService clientService;
+    private final CommodityService commodityService;
 
     @GetMapping("/declaration/{id}")
     public String getDeclarationById(@PathVariable long id, Model model) {
@@ -47,9 +49,8 @@ public class DeclarationController extends BaseController {
     public String showDeclarationForm(Model model) {
         return handleRequest(() -> {
         model.addAttribute("declaration", new DeclarationDto());
-        model.addAttribute("packageItem", new PackageItemDto());
-        model.addAttribute("commodity", new CommodityDto());
-        model.addAttribute("client", clientService.retrieveAll());
+        model.addAttribute("commodities", commodityService.retrieveAll());
+        model.addAttribute("clients", clientService.retrieveAll());
         }, "declaration-add-new-page", "declaration-add-new-page", model);
     }
 

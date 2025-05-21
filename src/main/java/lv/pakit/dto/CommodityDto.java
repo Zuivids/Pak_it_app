@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "commodityId")
 public class CommodityDto {
 
     private long commodityId;

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.DeclarationDto;
 import lv.pakit.dto.request.DeclarationSearchRequest;
 import lv.pakit.exception.NotFoundException;
-import lv.pakit.exception.PakItException;
 import lv.pakit.model.Declaration;
 import lv.pakit.repo.IDeclarationRepo;
 import org.springframework.stereotype.Service;
