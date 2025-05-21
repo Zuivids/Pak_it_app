@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -48,9 +49,18 @@ public class DeclarationController extends BaseController {
     @GetMapping("/declaration/new")
     public String showDeclarationForm(Model model) {
         return handleRequest(() -> {
-        model.addAttribute("declaration", new DeclarationDto());
+            DeclarationDto declaration = new DeclarationDto();
+            List<PackageItemDto> items = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                items.add(new PackageItemDto());
+            }
+            declaration.setPackageItemDtoList(items);
+            model.addAttribute("declaration", declaration);
+//        model.addAttribute("declaration", new DeclarationDto());
         model.addAttribute("commodities", commodityService.retrieveAll());
         model.addAttribute("clients", clientService.retrieveAll());
+
+
         }, "declaration-add-new-page", "declaration-add-new-page", model);
     }
 

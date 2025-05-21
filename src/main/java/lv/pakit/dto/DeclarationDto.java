@@ -1,23 +1,21 @@
 package lv.pakit.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeclarationDto {
 
     private long declarationId;
-    private ClientDto client;
+    private ClientDto client; // TODO add option to choose from
     private List<CommodityDto> commodityDtoList = new ArrayList<>();
-//    private List<PackageItemDto> packageItemDtoList; TODO
+    private List<PackageItemDto> packageItemDtoList;
     private String identifierCode;
     private String senderName;
     private String senderAddress;

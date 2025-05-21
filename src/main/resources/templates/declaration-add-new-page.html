@@ -130,6 +130,44 @@
                 </select>
             </div>
 
+            <div class="mb-3">
+                <label for="client" class="form-label"><strong>Clients:</strong></label>
+                <select th:field="*{client}" class="form-select" id="client">
+                    <option th:each="client : ${clients}"
+                            th:value="${client}"
+                            th:text="${client.fullName}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <h4>Package Items</h4>
+                <div id="package-items-list">
+                    <div th:each="item, iterStat : *{packageItemDtoList}">
+                        <div class="border p-3 mb-3 bg-white text-dark rounded">
+                            <label>Quantity</label>
+                            <input type="number" th:field="*{packageItemDtoList[__${iterStat.index}__].quantity}" class="form-control"/>
+
+                            <label>Net weight</label>
+                            <input type="number" step="0.01" th:field="*{packageItemDtoList[__${iterStat.index}__].netWeight}" class="form-control"/>
+
+                            <label>Value</label>
+                            <input type="number" step="0.01" th:field="*{packageItemDtoList[__${iterStat.index}__].value}" class="form-control"/>
+
+                            <label>Used</label>
+                            <input type="checkbox" th:field="*{packageItemDtoList[__${iterStat.index}__].used}" />
+
+                            <label>Commodity</label>
+                            <select th:field="*{packageItemDtoList[__${iterStat.index}__].commodity}" class="form-select">
+                                <option th:each="c : ${commodities}" th:value="${c}" th:text="${c.commodityCode + ' - ' + c.description}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- Button to add new items using JS -->
+                <button type="button" class="btn btn-sm btn-outline-light mt-2" onclick="addPackageItem()">Add Package Item</button>
+            </div>
+
             <div class="row text-dark">
                 <div class="col-md-2 bg-light rounded mb-1">
                     <p><strong>ID kods:</strong> <span th:text="${declaration.identifierCode}"></span></p>
@@ -164,6 +202,32 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous">
+
+    function addPackageItem() {
+    const container = document.getElementById('package-items-list');
+    const count = container.children.length;
+
+    const html = `
+        <div class="border p-3 mb-3 bg-white text-dark rounded">
+            <label>Quantity</label>
+            <input type="number" name="packageItemDtoList[${count}].quantity" class="form-control"/>
+
+            <label>Net weight</label>
+            <input type="number" step="0.01" name="packageItemDtoList[${count}].netWeight" class="form-control"/>
+
+            <label>Value</label>
+            <input type="number" step="0.01" name="packageItemDtoList[${count}].value" class="form-control"/>
+
+            <label>Used</label>
+            <input type="checkbox" name="packageItemDtoList[${count}].used"/>
+
+            <label>Commodity</label>
+            <select name="packageItemDtoList[${count}].commodity.commodityId" class="form-select">
+                <!-- This needs to be dynamically populated via JS or server-side template (requires duplication of the list) -->
+            </select>
+        </div>
+    `;
+
 </script>
 
 
