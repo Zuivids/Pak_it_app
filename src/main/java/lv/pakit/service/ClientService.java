@@ -1,9 +1,10 @@
 package lv.pakit.service;
 
 import lombok.RequiredArgsConstructor;
-import lv.pakit.dto.ClientDto;
+import lv.pakit.dto.request.client.ClientCreateRequest;
+import lv.pakit.dto.request.client.ClientUpdateRequest;
+import lv.pakit.dto.response.ClientResponse;
 import lv.pakit.exception.NotFoundException;
-import lv.pakit.exception.PakItException;
 import lv.pakit.model.Client;
 import lv.pakit.repo.IClientRepo;
 import org.springframework.stereotype.Service;
@@ -16,40 +17,44 @@ public class ClientService {
 
     private final IClientRepo clientRepo;
 
-    public void create(ClientDto clientDto) {
-        Client client = mapToClient(clientDto);
-        clientRepo.save(client);
+    public ClientResponse fetchById(long id) {
+        return mapToDto(requireById(id));
     }
 
-    public ClientDto retrieveById(long id) {
-        Client client = requireClientById(id);
-
-        return mapToDto(client);
-    }
-
-    public List<ClientDto> retrieveAll() {
+    public List<ClientResponse> fetchAll() {
         return clientRepo.findAll().stream()
                 .map(this::mapToDto)
                 .toList();
     }
 
-    public void updateById(long id, ClientDto clientDto) {
-        Client client = requireClientById(id);
+    public void create(ClientCreateRequest request) {
+        Client client = Client.builder()
+                .username(request.getUsername())
+                .password(request.getPassword())
+                .email(request.getEmail())
+                .phoneNumber(request.getPhoneNumber())
+                .fullName(request.getFullName())
+                .build();
 
-        client.setEmail(clientDto.getEmail());
-        client.setPhoneNumber(clientDto.getPhoneNumber());
-        client.setFullName(clientDto.getFullName());
+        clientRepo.save(client);
+    }
+
+    public void updateById(long id, ClientUpdateRequest request) {
+        Client client = requireById(id);
+
+        client.setEmail(request.getEmail());
+        client.setPhoneNumber(request.getPhoneNumber());
+        client.setFullName(request.getFullName());
 
         clientRepo.save(client);
     }
 
     public void deleteById(long id) {
-        requireClientById(id);
         clientRepo.deleteById(id);
     }
 
-    public ClientDto mapToDto(Client client) {
-        return ClientDto.builder()
+    public ClientResponse mapToDto(Client client) {
+        return ClientResponse.builder()
                 .clientId(client.getClientId())
                 .username(client.getUsername())
                 .password(client.getPassword())
@@ -59,17 +64,7 @@ public class ClientService {
                 .build();
     }
 
-    private Client mapToClient(ClientDto clientDto) {
-        return Client.builder()
-                .username(clientDto.getUsername())
-                .password(clientDto.getPassword())
-                .email(clientDto.getEmail())
-                .phoneNumber(clientDto.getPhoneNumber())
-                .fullName(clientDto.getFullName())
-                .build();
-    }
-
-    private Client requireClientById(long id) {
+    private Client requireById(long id) {
         return clientRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Client with id (" + id + ") not found!"));
     }
