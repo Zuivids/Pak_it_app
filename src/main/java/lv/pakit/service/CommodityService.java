@@ -3,6 +3,7 @@ package lv.pakit.service;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.CommodityDto;
 import lv.pakit.exception.NotFoundException;
+import lv.pakit.exception.PakItException;
 import lv.pakit.model.Commodity;
 import lv.pakit.repo.ICommodityRepo;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,10 @@ public class CommodityService {
     private final ICommodityRepo commodityRepo;
 
     public void create(CommodityDto commodityDto) {
+        if (commodityRepo.existsByCommodityCode(commodityDto.getCommodityCode())) {
+            throw new PakItException("Commodity with code '" + commodityDto.getCommodityCode() + "' already exists.");
+        }
+
         Commodity commodity = mapToCommodity(commodityDto);
         commodityRepo.save(commodity);
     }

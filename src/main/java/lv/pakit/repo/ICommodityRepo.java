@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ICommodityRepo extends JpaRepository<Commodity, Long> {
     List<Commodity> findByCommodityCodeContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String commodityCode, String description);
+
+    boolean existsByCommodityCode(String commodityCode);
 }
