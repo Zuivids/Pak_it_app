@@ -1,4 +1,4 @@
-package lv.pakit.dto;
+package lv.pakit.dto.response;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientDto {
+public class ClientResponse {
 
     private long clientId;
     private String username;
