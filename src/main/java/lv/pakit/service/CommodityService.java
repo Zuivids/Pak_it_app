@@ -1,7 +1,8 @@
 package lv.pakit.service;
 
 import lombok.RequiredArgsConstructor;
-import lv.pakit.dto.CommodityDto;
+import lv.pakit.dto.response.CommodityResponse;
+import lv.pakit.dto.request.commodity.CommodityRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.exception.PakItException;
 import lv.pakit.model.Commodity;
@@ -16,66 +17,39 @@ public class CommodityService {
 
     private final ICommodityRepo commodityRepo;
 
-    public void create(CommodityDto commodityDto) {
-        if (commodityRepo.existsByCommodityCode(commodityDto.getCommodityCode())) {
-            throw new PakItException("Commodity with code '" + commodityDto.getCommodityCode() + "' already exists.");
+    public void create(CommodityRequest request) {
+        if (commodityRepo.existsByCommodityCode(request.getCommodityCode())) {
+            throw new PakItException("Commodity with code '" + request.getCommodityCode() + "' already exists.");
         }
 
-        Commodity commodity = mapToCommodity(commodityDto);
+        Commodity commodity = Commodity.builder()
+                .commodityCode(request.getCommodityCode())
+                .description(request.getDescription())
+                .build();
+
         commodityRepo.save(commodity);
     }
 
-    public CommodityDto retrieveById(long id) {
-        Commodity commodity = requireCommodityById(id);
+    public void updateById(long id, CommodityRequest request) {
+        Commodity commodity = requireById(id);
 
-        return mapToDto(commodity);
-    }
-
-    public List<CommodityDto> retrieveAll() {
-        return commodityRepo.findAll().stream()
-                .map(this::mapToDto)
-                .toList();
-    }
-
-    public void updateById(long id, CommodityDto commodityDto) {
-        Commodity commodity = requireCommodityById(id);
-
-        commodity.setCommodityCode(commodityDto.getCommodityCode());
-        commodity.setDescription(commodityDto.getDescription());
+        commodity.setCommodityCode(request.getCommodityCode());
+        commodity.setDescription(request.getDescription());
 
         commodityRepo.save(commodity);
     }
 
     public void deleteById(long id) {
-        requireCommodityById(id);
         commodityRepo.deleteById(id);
     }
 
-    public CommodityDto mapToDto(Commodity commodity) {
-        return CommodityDto.builder()
-                .commodityId(commodity.getCommodityId())
-                .commodityCode(commodity.getCommodityCode())
-                .description(commodity.getDescription())
-                .build();
+    public CommodityResponse fetchById(long id) {
+        return mapToDto(requireById(id));
     }
 
-    private Commodity mapToCommodity(CommodityDto commodityDto) {
-        return Commodity.builder()
-                .commodityCode(commodityDto.getCommodityCode())
-                .description(commodityDto.getDescription())
-                .build();
-    }
-
-    private Commodity requireCommodityById(long id) {
-        return commodityRepo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Commodity with id (" + id + ") not found!"));
-    }
-
-    public List<CommodityDto> search(String query) {
+    public List<CommodityResponse> fetchByQuery(String query) {
         if (query == null || query.isEmpty()) {
-            return commodityRepo.findAll().stream()
-                    .map(this::mapToDto)
-                    .toList();
+            return fetchAll();
         }
 
         List<Commodity> commodities = commodityRepo
@@ -84,5 +58,24 @@ public class CommodityService {
         return commodities.stream()
                 .map(this::mapToDto)
                 .toList();
+    }
+
+    public List<CommodityResponse> fetchAll() {
+        return commodityRepo.findAll().stream()
+                .map(this::mapToDto)
+                .toList();
+    }
+
+    private Commodity requireById(long id) {
+        return commodityRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Commodity with id (" + id + ") not found!"));
+    }
+
+    private CommodityResponse mapToDto(Commodity commodity) {
+        return CommodityResponse.builder()
+                .commodityId(commodity.getCommodityId())
+                .commodityCode(commodity.getCommodityCode())
+                .description(commodity.getDescription())
+                .build();
     }
 }
