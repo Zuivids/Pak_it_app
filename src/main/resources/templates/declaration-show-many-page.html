@@ -116,7 +116,7 @@
             </tr>
 
             <tr th:each="declaration : ${declarations}">
-                <td th:text="${declaration.client.fullName}">Client Name</td>
+                <td th:text="${declaration.client?.fullName}">Client Name</td>
                 <td th:text="${declaration.identifierCode}">Identifier Code</td>
                 <td th:text="${declaration.senderName}">Sender Name</td>
                 <td th:text="${declaration.senderAddress}">Sender Address</td>

@@ -3,7 +3,6 @@ package lv.pakit.service;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.ClientDto;
 import lv.pakit.dto.DeclarationDto;
-import lv.pakit.dto.PackageItemDto;
 import lv.pakit.dto.request.DeclarationSearchRequest;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Declaration;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,18 +23,9 @@ public class DeclarationService {
     public DeclarationDto defaultDeclaration(){
 
         DeclarationDto declarationDto = DeclarationDto.builder()
-                .senderName("")
-                .senderPhoneNumber("")
-                .senderAddress("")
-                .senderCountryCode("")
-                .receiverName("")
-                .receiverPhoneNumber("")
-                .receiverAddress("")
-                .receiverCountryCode("")
-                .packageItemDtoList(new ArrayList<PackageItemDto>())
-                .client(ClientDto.builder().build())
+                .packageItemDtoList(new ArrayList<>())
                 .date(LocalDate.now().toString())
-                .identifierCode(String.valueOf(LocalDate.now().getMonth()) + String.valueOf(LocalDate.now().getYear()))
+                .identifierCode("%s %s".formatted(LocalDate.now().getMonth(), LocalDate.now().getYear()))
                 .totalValue(0)
                 .totalWeight(0)
                 .build();
@@ -84,10 +75,14 @@ public class DeclarationService {
     }
 
     public DeclarationDto mapToDto(Declaration declaration) {
+        ClientDto client = Optional.ofNullable(declaration.getClient())
+                .map(clientService::mapToDto)
+                .orElse(null);
+
 
         return DeclarationDto.builder()
                 .declarationId(declaration.getDeclarationId())
-                .client(clientService.mapToDto(declaration.getClient()))
+                .client(client)
                 .identifierCode(declaration.getIdentifierCode())
                 .senderName(declaration.getSenderName())
                 .senderAddress(declaration.getSenderAddress())

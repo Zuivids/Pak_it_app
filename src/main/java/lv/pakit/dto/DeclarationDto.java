@@ -1,8 +1,8 @@
 package lv.pakit.dto;
 
+import jakarta.validation.Valid;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -13,8 +13,8 @@ import java.util.List;
 public class DeclarationDto {
 
     private long declarationId;
-    private ClientDto client; // TODO add option to choose from
-    private List<CommodityDto> commodityDtoList = new ArrayList<>();
+    private ClientDto client;
+    @Valid
     private List<PackageItemDto> packageItemDtoList;
     private String identifierCode;
     private String senderName;

@@ -14,7 +14,7 @@ public class PackageItemDto {
     private double netWeight;
     private double value;
     private boolean used;
-
+    private String newCommodityDescription;
     private CommodityDto commodity;
     private long declarationId;
 }

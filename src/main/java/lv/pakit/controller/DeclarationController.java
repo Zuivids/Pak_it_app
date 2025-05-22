@@ -2,7 +2,6 @@ package lv.pakit.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lv.pakit.dto.CommodityDto;
 import lv.pakit.dto.DeclarationDto;
 import lv.pakit.dto.PackageItemDto;
 import lv.pakit.dto.request.DeclarationSearchRequest;
@@ -15,8 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -59,6 +56,8 @@ public class DeclarationController extends BaseController {
     @PostMapping("/declaration")
     public String saveDeclaration(@Valid @ModelAttribute("declaration") DeclarationDto declarationDto,
                                   BindingResult bindingResult, Model model) {
+        model.addAttribute("commodities", commodityService.retrieveAll());
+        model.addAttribute("clients", clientService.retrieveAll());
         return handleRequest(() -> {
             declarationService.create(declarationDto);
         }, "redirect:/declaration", "declaration-add-new-page", model, bindingResult);
