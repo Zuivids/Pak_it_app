@@ -16,7 +16,38 @@ public class DeclarationPageController {
     private final DeclarationService declarationService;
 
     @GetMapping("/declaration")
-    public String getAllDeclarations(@RequestParam(required = false) DeclarationSearchRequest request, Model model) {
+    public String getAllDeclarations(
+            @RequestParam(required = false) String identifierCode,
+            @RequestParam(required = false) String clientName,
+            @RequestParam(required = false) String senderName,
+            @RequestParam(required = false) String senderAddress,
+            @RequestParam(required = false) String senderCountryCode,
+            @RequestParam(required = false) String senderPhoneNumber,
+            @RequestParam(required = false) String receiverName,
+            @RequestParam(required = false) String receiverAddress,
+            @RequestParam(required = false) String receiverCountryCode,
+            @RequestParam(required = false) String receiverPhoneNumber,
+            @RequestParam(required = false) Double totalWeight,
+            @RequestParam(required = false) Double totalValue,
+            @RequestParam(required = false) String date,
+            Model model
+    ) {
+        DeclarationSearchRequest request = DeclarationSearchRequest.builder()
+                .identifierCode(identifierCode)
+                .clientName(clientName)
+                .senderName(senderName)
+                .senderAddress(senderAddress)
+                .senderCountryCode(senderCountryCode)
+                .senderPhoneNumber(senderPhoneNumber)
+                .receiverName(receiverName)
+                .receiverAddress(receiverAddress)
+                .receiverCountryCode(receiverCountryCode)
+                .receiverPhoneNumber(receiverPhoneNumber)
+                .totalWeight(totalWeight)
+                .totalValue(totalValue)
+                .date(date)
+                .build();
+
         model.addAttribute("declarations", declarationService.search(request));
         return "declaration-show-many-page";
     }
