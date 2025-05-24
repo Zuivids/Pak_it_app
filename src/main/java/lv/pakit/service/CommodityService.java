@@ -3,8 +3,8 @@ package lv.pakit.service;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.response.CommodityResponse;
 import lv.pakit.dto.request.commodity.CommodityRequest;
+import lv.pakit.exception.FieldErrorException;
 import lv.pakit.exception.NotFoundException;
-import lv.pakit.exception.PakItException;
 import lv.pakit.model.Commodity;
 import lv.pakit.repo.ICommodityRepo;
 import org.springframework.stereotype.Service;
@@ -18,9 +18,7 @@ public class CommodityService {
     private final ICommodityRepo commodityRepo;
 
     public void create(CommodityRequest request) {
-        if (commodityRepo.existsByCommodityCode(request.getCommodityCode())) {
-            throw new PakItException("Commodity with code '" + request.getCommodityCode() + "' already exists.");
-        }
+        checkCommodityCodeIsUnique(request);
 
         Commodity commodity = Commodity.builder()
                 .commodityCode(request.getCommodityCode())
@@ -33,10 +31,25 @@ public class CommodityService {
     public void updateById(long id, CommodityRequest request) {
         Commodity commodity = requireById(id);
 
+        if (commmodityCodeChanged(commodity, request)) {
+            checkCommodityCodeIsUnique(request);
+        }
+
         commodity.setCommodityCode(request.getCommodityCode());
         commodity.setDescription(request.getDescription());
 
         commodityRepo.save(commodity);
+    }
+
+    private boolean commmodityCodeChanged(Commodity commodity, CommodityRequest request) {
+        return !request.getCommodityCode().equals(commodity.getCommodityCode());
+    }
+
+    private void checkCommodityCodeIsUnique(CommodityRequest request) {
+        if (commodityRepo.findByCommodityCode(request.getCommodityCode()).isPresent()) {
+            String errorMsg = "Commodity with code '" + request.getCommodityCode() + "' already exists.";
+            throw new FieldErrorException("commodityCode", errorMsg);
+        }
     }
 
     public void deleteById(long id) {
