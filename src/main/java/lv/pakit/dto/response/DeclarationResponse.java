@@ -1,7 +1,10 @@
 package lv.pakit.dto.response;
 
 import lombok.*;
+import lv.pakit.dto.request.packageItem.PackageItemRequest;
 import lv.pakit.model.Client;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,7 +15,8 @@ import lv.pakit.model.Client;
 public class DeclarationResponse {
 
     private long declarationId;
-    private Client client;
+    private List<PackageItemRequest> packageItems;
+    private ClientResponse client;
     private String identifierCode;
     private String senderName;
     private String senderAddress;

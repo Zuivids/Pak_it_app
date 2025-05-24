@@ -64,7 +64,7 @@ public class ClientService {
                 .build();
     }
 
-    private Client requireById(long id) {
+    public Client requireById(long id) {
         return clientRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Client with id (" + id + ") not found!"));
     }

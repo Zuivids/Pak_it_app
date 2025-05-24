@@ -29,6 +29,10 @@ public class PackageItemService {
         packageItemRepo.save(packageItem);
     }
 
+    public void saveAll(List<PackageItem> items) {
+        packageItemRepo.saveAll(items);
+    }
+
     public void updateById(long id, PackageItemRequest packageItemRequest) {
         PackageItem packageItem = requirePackageItemById(id);
 

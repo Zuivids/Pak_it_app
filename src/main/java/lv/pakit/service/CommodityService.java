@@ -79,7 +79,7 @@ public class CommodityService {
                 .toList();
     }
 
-    private Commodity requireById(long id) {
+    public Commodity requireById(long id) {
         return commodityRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Commodity with id (" + id + ") not found!"));
     }
