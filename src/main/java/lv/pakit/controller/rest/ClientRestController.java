@@ -23,8 +23,8 @@ public class ClientRestController {
         clientService.updateById(id, request);
     }
 
-    @DeleteMapping("/client/{id}")
-    public void deleteClient(@PathVariable("id") long id, @Valid @RequestBody ClientUpdateRequest request) {
+    @DeleteMapping("/client/{id}/delete")
+    public void deleteClient(@PathVariable("id") long id) {
         clientService.deleteById(id);
     }
 }
