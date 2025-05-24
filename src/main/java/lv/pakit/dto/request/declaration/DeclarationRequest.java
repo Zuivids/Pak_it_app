@@ -3,7 +3,6 @@ package lv.pakit.dto.request.declaration;
 import lombok.Getter;
 import lombok.Setter;
 import lv.pakit.dto.request.packageItem.PackageItemRequest;
-import lv.pakit.model.Client;
 
 import java.util.List;
 

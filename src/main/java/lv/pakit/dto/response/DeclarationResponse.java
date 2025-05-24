@@ -1,8 +1,6 @@
 package lv.pakit.dto.response;
 
 import lombok.*;
-import lv.pakit.dto.request.packageItem.PackageItemRequest;
-import lv.pakit.model.Client;
 
 import java.util.List;
 
@@ -15,7 +13,7 @@ import java.util.List;
 public class DeclarationResponse {
 
     private long declarationId;
-    private List<PackageItemRequest> packageItems;
+    private List<PackageItemResponse> packageItems;
     private ClientResponse client;
     private String identifierCode;
     private String senderName;
