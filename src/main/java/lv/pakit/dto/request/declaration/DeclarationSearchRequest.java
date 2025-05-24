@@ -1,4 +1,4 @@
-package lv.pakit.dto.request;
+package lv.pakit.dto.request.declaration;
 
 import lombok.Builder;
 import lombok.Getter;
