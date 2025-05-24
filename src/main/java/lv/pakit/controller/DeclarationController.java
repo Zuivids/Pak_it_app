@@ -5,7 +5,7 @@
 //import lv.pakit.controller.page.BasePageController;
 //import lv.pakit.dto.DeclarationDto;
 //import lv.pakit.dto.PackageItemDto;
-//import lv.pakit.dto.request.DeclarationSearchRequest;
+//import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
 //import lv.pakit.service.ClientService;
 //import lv.pakit.service.CommodityService;
 //import lv.pakit.service.DeclarationService;

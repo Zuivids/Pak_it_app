@@ -2,7 +2,7 @@
 //
 //import lv.pakit.dto.ClientDto;
 //import lv.pakit.dto.DeclarationDto;
-//import lv.pakit.dto.request.DeclarationSearchRequest;
+//import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
 //import lv.pakit.exception.NotFoundException;
 //import lv.pakit.model.Client;
 //import lv.pakit.model.Declaration;
