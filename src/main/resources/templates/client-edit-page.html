@@ -77,42 +77,27 @@
 
 <main class="container py-5">
     <h1 class="mb-4">Edit Client</h1>
-    <form id="editClientForm" th:action="|/client/${client.clientId}/edit|" method="post">
+    <form id="editClientForm" th:action="|/client/${client.clientId}|" method="post">
         <div class="container">
-            <input type="text" th:field="*{clientId}" id="clientId" hidden/>
-            <div class="row mb-3">
-                <label for="username" class="col-sm-2 col-form-label">Username</label>
-                <span id="username-error" class="text-danger"></span>
-                <div class="col-sm-10">
-                    <input type="text" th:field="*{username}" class="form-control" id="username" readonly/>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="password" class="col-sm-2 col-form-label">Password</label>
-                <span id="password-error" class="text-danger"></span>
-                <div class="col-sm-10">
-                    <input type="text" th:field="*{password}" class="form-control" id="password" readonly/>
-                </div>
-            </div>
             <div class="row mb-3">
                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                 <span id="email-error" class="text-danger"></span>
                 <div class="col-sm-10">
-                    <input type="text" th:field="*{email}" class="form-control" id="email" required/>
+                    <input type="text" th:value="${email}" class="form-control" id="email" required/>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="phoneNumber" class="col-sm-2 col-form-label">Phone Number</label>
                 <span id="phoneNumber-error" class="text-danger"></span>
                 <div class="col-sm-10">
-                    <input type="text" th:field="*{phoneNumber}" class="form-control" id="phoneNumber" required/>
+                    <input type="text" th:value="${phoneNumber}" class="form-control" id="phoneNumber" required/>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="fullName" class="col-sm-2 col-form-label">Full Name</label>
                 <span id="fullName-error" class="text-danger"></span>
                 <div class="col-sm-10">
-                    <input type="text" th:field="*{fullName}" class="form-control" id="fullName" required/>
+                    <input type="text" th:value="${fullName}" class="form-control" id="fullName" required/>
                 </div>
             </div>
 
@@ -141,9 +126,8 @@
     const editClient = () => {
         const url = $("#editClientForm").attr('action');
         const request = {
-            username: $("#username").val(),
-            password: $("#password").val(),
             email: $("#email").val(),
+            phoneNumber: $("#phoneNumber").val(),
             fullName: $("#fullName").val()
         };
 
@@ -184,6 +168,7 @@
     const handleErrorMessage = (errorMessage) => {
         $("#errorMessage").text(errorMessage);
     };
+
 </script>
 </body>
 </html>
