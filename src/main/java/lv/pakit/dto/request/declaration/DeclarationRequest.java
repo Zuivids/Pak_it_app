@@ -1,7 +1,11 @@
 package lv.pakit.dto.request.declaration;
 
+import lombok.Getter;
+import lombok.Setter;
 import lv.pakit.model.Client;
 
+@Getter
+@Setter
 public class DeclarationRequest {
 
     private Client client;
