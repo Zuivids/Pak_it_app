@@ -5,14 +5,13 @@ import lv.pakit.exception.FieldErrorException;
 import lv.pakit.exception.PakItException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice(basePackages = "lv.pakit.controller.rest")
 public class RestControllerErrorHandler {
@@ -44,7 +43,13 @@ public class RestControllerErrorHandler {
     }
 
     private Map<String, String> mapFieldErrors(BindingResult bindingResult) {
-        return bindingResult.getFieldErrors().stream()
-                .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+        Map<String, String> fieldErrors = new HashMap<>();
+
+        bindingResult.getFieldErrors().forEach(fieldError -> {
+            fieldErrors.putIfAbsent(fieldError.getField(),
+                    fieldError.getDefaultMessage());
+        });
+
+        return fieldErrors;
     }
 }
