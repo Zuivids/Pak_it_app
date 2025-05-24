@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface IPackageItemRepo extends JpaRepository<PackageItem, Long> {
 
-    List<PackageItem> findByDeclaration_DeclarationId(long declarationId);
+    List<PackageItem> findByDeclarationDeclarationId(long declarationId);
 }
