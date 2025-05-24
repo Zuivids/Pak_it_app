@@ -39,4 +39,11 @@ public class CommodityPageController {
 
         return "commodity-edit-page";
     }
+
+    @GetMapping("/commodity/{id}/delete")
+    public String showCommodityDeleteForm(@PathVariable("id") long id, Model model) {
+
+        model.addAttribute("commodity", commodityService.fetchById(id));
+        return "commodity-delete-page";
+    }
 }

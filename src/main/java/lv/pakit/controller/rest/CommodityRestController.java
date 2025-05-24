@@ -22,7 +22,7 @@ public class CommodityRestController {
         commodityService.updateById(id, commodityRequest);
     }
 
-    @DeleteMapping("/commodity/{id}")
+    @DeleteMapping("/commodity/{id}/delete")
     public void deleteCommodity(@PathVariable("id") long id) {
         commodityService.deleteById(id);
     }
