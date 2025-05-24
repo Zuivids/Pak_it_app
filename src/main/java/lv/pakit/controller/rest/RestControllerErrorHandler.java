@@ -1,6 +1,7 @@
 package lv.pakit.controller.rest;
 
 import lv.pakit.dto.response.RestErrorResponse;
+import lv.pakit.exception.FieldErrorException;
 import lv.pakit.exception.PakItException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,14 @@ import java.util.stream.Collectors;
 @RestControllerAdvice(basePackages = "lv.pakit.controller.rest")
 public class RestControllerErrorHandler {
 
+    @ExceptionHandler(PakItException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public RestErrorResponse processPakItException(PakItException e) {
+        return RestErrorResponse.builder()
+                .errorMessage(e.getMessage())
+                .build();
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public RestErrorResponse processValidationErrors(MethodArgumentNotValidException e) {
@@ -25,11 +34,12 @@ public class RestControllerErrorHandler {
                 .build();
     }
 
-    @ExceptionHandler(PakItException.class)
+    @ExceptionHandler(FieldErrorException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public RestErrorResponse processPakItException(PakItException e) {
+    public RestErrorResponse processFieldErrorException(FieldErrorException e) {
         return RestErrorResponse.builder()
                 .errorMessage(e.getMessage())
+                .fieldErrors(e.getFieldErrors())
                 .build();
     }
 
