@@ -12,6 +12,7 @@ import lv.pakit.model.Commodity;
 import lv.pakit.model.Declaration;
 import lv.pakit.model.PackageItem;
 import lv.pakit.repo.IDeclarationRepo;
+import lv.pakit.repo.IPackageItemRepo;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,9 +25,12 @@ import java.util.Optional;
 public class DeclarationService {
 
     private final IDeclarationRepo declarationRepo;
+    private final IPackageItemRepo packageItemRepo;
+
     private final CommodityService commodityService;
     private final ClientService clientService;
     private final PackageItemService packageItemService;
+
 
     public DeclarationRequest  defaultDeclaration() {
         return DeclarationRequest.builder()
@@ -112,6 +116,9 @@ public class DeclarationService {
     }
 
     public void deleteById(long id) {
+        packageItemRepo.findByDeclarationDeclarationId(id);
+        declarationRepo.deleteById(id);
+
         requireDeclarationById(id);
         declarationRepo.deleteById(id);
     }
