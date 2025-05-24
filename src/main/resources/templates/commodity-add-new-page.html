@@ -19,7 +19,7 @@
 
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #6e0101">
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #6e0101">
     <div class="container">
         <a class="navbar-brand" href="#">
             <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
@@ -37,10 +37,8 @@
                         Declaration Options
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                        <li><a class="dropdown-item" href="http://localhost:8080/declaration">View all declarations</a>
-                        </li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/declaration/new">Add new
-                            declaration</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/declaration">View all declarations</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/declaration/new">Add new declaration</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -50,10 +48,8 @@
                         Commodity Options
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                        <li><a class="dropdown-item" href="http://localhost:8080/commodity">View all commodities</a>
-                        </li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/commodity/new">Add new commodity</a>
-                        </li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/commodity">View all commodities</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/commodity/new">Add new commodity</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -68,7 +64,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark px-3 py-2 rounded bg-light" href="http://localhost:8080/ ">Log out</a>
+                    <a class="nav-link text-dark px-3 py-2 rounded bg-light" href="http://localhost:8080/">Log out</a>
                 </li>
             </ul>
         </div>
@@ -79,12 +75,11 @@
     <h1 class="mb-4">Insert New Commodity</h1>
     <form id="createCommodityForm" action="/commodity" method="post">
         <div class="container">
-
             <div class="row mb-3">
                 <label for="commodityCode" class="col-sm-2 col-form-label">Code</label>
                 <span id="commodityCode-error" class="text-danger"></span>
                 <div class="col-sm-10">
-                    <input id="commodityCode" th:field="*{commodityCode}" type="text" class="form-control" required />
+                    <input id="commodityCode" name="commodityCode" th:value="${commodityCode}" type="text" class="form-control" required/>
                 </div>
             </div>
 
@@ -92,13 +87,11 @@
                 <label for="description" class="col-sm-2 col-form-label">Description</label>
                 <span id="description-error" class="text-danger"></span>
                 <div class="col-sm-10">
-                    <input id="description" th:field="*{description}" type="text" class="form-control" required/>
+                    <input id="description" name="description" th:value="${description}" type="text" class="form-control" required/>
                 </div>
             </div>
 
-            <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
-                <span th:text="${errorMessage}"></span>
-            </div>
+            <span id="errorMessage" class="text-danger"></span>
 
             <div class="row mb-3 text-center">
                 <div class="col">
@@ -113,7 +106,6 @@
             <button type="submit" class="btn btn-secondary">Back</button>
         </div>
     </form>
-
 </main>
 
 <footer class="text-white text-center py-4 mt-5" style="background-color: #6e0101">
@@ -133,14 +125,36 @@
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(request)
+            body: JSON.stringify(request),
         })
-        .then(() => {
-            window.location.href = '/commodity';
+        .then(response => {
+            if (!response.ok) {
+                response.json().then(handleErrorResponse);
+            } else {
+                window.location.href = '/commodity';
+            }
         })
-        .catch(function(error) {
+        .catch(error => {
             console.log(error);
         });
+    };
+
+    const handleErrorResponse = (errorResponse) => {
+        if (errorResponse.fieldErrors) {
+            handleFieldErrors(errorResponse.fieldErrors);
+        } else {
+            handleErrorMessage(errorResponse.errorMessage);
+        }
+    };
+
+    const handleFieldErrors = (fieldErrors) => {
+        for (let field in fieldErrors) {
+            $(`#${field}-error`).text(fieldErrors[field]);
+        }
+    };
+
+    const handleErrorMessage = (errorMessage) => {
+        $("#errorMessage").text(errorMessage);
     };
 </script>
 
