@@ -7,59 +7,47 @@
     <title>Insert New Declaration</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
 </head>
+
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #6e0101">
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #6e0101">
     <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="#"><img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Declaration Options
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                        <li><a class="dropdown-item" href="http://localhost:8080/declaration">View all declarations</a>
-                        </li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/declaration/new">Add new
-                            declaration</a></li>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Declaration Options</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/declaration">View all declarations</a></li>
+                        <li><a class="dropdown-item" href="/declaration/new">Add new declaration</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Commodity Options
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                        <li><a class="dropdown-item" href="http://localhost:8080/commodity">View all commodities</a>
-                        </li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/commodity/new">Add new commodity</a>
-                        </li>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Commodity Options</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/commodity">View all commodities</a></li>
+                        <li><a class="dropdown-item" href="/commodity/new">Add new commodity</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Client Options
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                        <li><a class="dropdown-item" href="http://localhost:8080/client">View all clients</a></li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/client/new">Add new client</a></li>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Client Options</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/client">View all clients</a></li>
+                        <li><a class="dropdown-item" href="/client/new">Add new client</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark px-3 py-2 rounded bg-light" href="http://localhost:8080/ ">Log out</a>
+                    <a class="nav-link text-dark px-3 py-2 rounded bg-light" href="/">Log out</a>
                 </li>
             </ul>
         </div>
@@ -67,137 +55,107 @@
 </nav>
 
 <main class="container py-5">
-    <h1>Insert New Declaration</h1>
+    <h1 class="mb-4">Insert New Declaration</h1>
 
-    <form th:action="@{/declaration}" th:object="${declaration}" method="post">
-        <div class="container my-4 p-4 rounded" style="background-color: #4b0c0c; color: white;">
-            <div class="row mb-4 justify-content-center">
-                <div class="col-md-4 bg-light text-dark rounded mb-1 mb-md-0 p-3">
-                    <div class="mb-1">
-                        <label for="senderName" class="form-label"><strong>Sender Name:</strong></label>
-                        <input type="text" th:field="*{senderName}" id="senderName" class="form-control"/>
-                    </div>
-                    <div class="mb-1">
-                        <label for="senderPhoneNumber" class="form-label"><strong>Sender phone number:</strong></label>
-                        <input type="text" th:field="*{senderPhoneNumber}" id="senderPhoneNumber" class="form-control"/>
-                    </div>
-                    <div class="mb-1">
-                        <label for="senderAddress" class="form-label"><strong>Sender address:</strong></label>
-                        <input type="text" th:field="*{senderAddress}" id="senderAddress" class="form-control"/>
-                    </div>
-                    <div class="mb-1">
-                        <label for="senderCountryCode" class="form-label"><strong>Sender country code:</strong></label>
-                        <input type="text" th:field="*{senderCountryCode}" id="senderCountryCode" class="form-control"/>
-                    </div>
-                </div>
-
-                <div class="col-md-1">
-                </div>
-                <div class="col-md-4 bg-light text-dark rounded mb-1 mb-md-0 p-3">
-                    <div class="mb-1">
-                        <label for="receiverName" class="form-label"><strong>Receiver Name:</strong></label>
-                        <input type="text" th:field="*{receiverName}" id="receiverName" class="form-control"/>
-                    </div>
-                    <div class="mb-1">
-                        <label for="receiverPhoneNumber" class="form-label"><strong>Receiver phone
-                            number:</strong></label>
-                        <input type="text" th:field="*{receiverPhoneNumber}" id="receiverPhoneNumber"
-                               class="form-control"/>
-                    </div>
-                    <div class="mb-1">
-                        <label for="receiverAddress" class="form-label"><strong>Receiver address:</strong></label>
-                        <input type="text" th:field="*{receiverAddress}" id="receiverAddress" class="form-control"/>
-                    </div>
-                    <div class="mb-1">
-                        <label for="receiverCountryCode" class="form-label"><strong>Receiver country
-                            code:</strong></label>
-                        <input type="text" th:field="*{receiverCountryCode}" id="receiverCountryCode"
-                               class="form-control"/>
-                    </div>
-                </div>
-
+    <form id="createDeclarationForm" action="/declaration">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <h5>Sender Info</h5>
+                <label for="senderName" class="form-label">Name</label>
+                <input type="text" id="senderName" name="senderName" th:value="${senderName}" class="form-control"/>
+                <label for="senderPhoneNumber" class="form-label mt-2">Phone</label>
+                <input type="text" id="senderPhoneNumber" name="senderPhoneNumber" th:value="${senderPhoneNumber}" class="form-control"/>
+                <label for="senderAddress" class="form-label mt-2">Address</label>
+                <input type="text" id="senderAddress" name="senderAddress" th:value="${senderAddress}" class="form-control"/>
+                <label for="senderCountryCode" class="form-label mt-2">Country Code</label>
+                <input type="text" id="senderCountryCode" name="senderCountryCode" th:value="${senderCountryCode}" class="form-control"/>
             </div>
 
-            <div class="mb-3 ">
-                <table class="table table-bordered table-light  text-dark " id="package-items-table">
-                    <thead>
-                    <tr>
-                        <th>Commodity Code</th>
-                        <th>Commodity Description</th>
-                        <th>New Commodity Description</th>
-                        <th>Quantity</th>
-                        <th>Net Weight</th>
-                        <th>Value</th>
-                        <th>Used</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody id="package-items-body">
-                    <tr>
-                        <td colspan="2">
-                            <select th:field="*{packageItemDtoList[0].commodity}" class="form-select">
-                                <option th:each="c : ${commodities}"
-                                        th:value="${c}"
-                                        th:text="${c.commodityCode + ' - ' + c.description}">
-                                </option>
-                            </select>
-                        </td>
-                        <td>
-                            <input type="text" th:field="*{packageItemDtoList[0].newCommodityDescription}" class="form-control" placeholder="Optional new description"/>
-                        </td>
-                        <td><input type="number" th:field="*{packageItemDtoList[0].quantity}" class="form-control"/></td>
-                        <td><input type="number" step="0.01" th:field="*{packageItemDtoList[0].netWeight}" class="form-control net-weight"/></td>
-                        <td><input type="number" step="0.01" th:field="*{packageItemDtoList[0].value}" class="form-control item-value"/></td>
-                        <td><input type="checkbox" th:field="*{packageItemDtoList[0].used}" /></td>
-                        <td><button type="button" class="btn btn-success" onclick="addPackageItemRow()">+</button></td>
-                        <td><button type="button" class="btn btn-danger" onclick="removePackageItemRow()">-</button></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="row text-dark">
-                <div class="col-md-2 bg-light rounded mb-1">
-                    <p><strong>ID kods:</strong> <span th:text="${declaration.identifierCode}"></span></p>
-                </div>
-                <div class="col-md-2 bg-light rounded mb-1">
-                    <p><strong>Date:</strong> <span th:text="${declaration.date}"></span></p>
-                </div>
-
-
-                <div class="col-md-2 bg-light rounded mb-1">
-                    <label for="client" class="form-label"><strong>Clients:</strong></label>
-                    <select th:field="*{client}" class="form-select" id="client">
-                        <option th:each="client : ${clients}"
-                                th:value="${client.clientId}"
-                                th:text="${client.fullName}">
-                        </option>
-                    </select>
-                </div>
-
-                <div class="col-md-2 bg-light rounded mb-1 ms-auto">
-<!--                    <p><strong>Total gross weight:</strong> <span th:text="${declaration.totalWeight}"></span></p>-->
-                    <p><strong>Total gross weight:</strong> <span id="totalWeight">0</span></p>
-                </div>
-                <div class="col-md-2 bg-light rounded mb-1">
-<!--                    <p><strong>Total value:</strong> <span th:text="${declaration.totalValue}"></span></p>-->
-                    <p><strong>Total value:</strong> <span id="totalValue">0</span></p>
-                </div>
+            <div class="col-md-6">
+                <h5>Receiver Info</h5>
+                <label for="receiverName" class="form-label">Name</label>
+                <input type="text" id="receiverName" name="receiverName" th:value="${receiverName}" class="form-control"/>
+                <label for="receiverPhoneNumber" class="form-label mt-2">Phone</label>
+                <input type="text" id="receiverPhoneNumber" name="receiverPhoneNumber" th:value="${receiverPhoneNumber}" class="form-control"/>
+                <label for="receiverAddress" class="form-label mt-2">Address</label>
+                <input type="text" id="receiverAddress" name="receiverAddress" th:value="${receiverAddress}" class="form-control"/>
+                <label for="receiverCountryCode" class="form-label mt-2">Country Code</label>
+                <input type="text" id="receiverCountryCode" name="receiverCountryCode" th:value="${receiverCountryCode}" class="form-control"/>
             </div>
         </div>
 
-        <div class="text-center mt-3">
-            <button type="submit" class="btn btn-primary">Submit Declaration</button>
+        <div class="mb-3">
+            <h5>Package Items</h5>
+            <table class="table table-bordered table-light text-dark" id="package-items-table">
+                <thead>
+                <tr>
+                    <th>Commodity</th>
+                    <th>Quantity</th>
+                    <th>Net Weight</th>
+                    <th>Value</th>
+                    <th>Used</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="package-items-body">
+                <!-- Hidden template row -->
+                <tr id="template-row" class="d-none">
+                    <td>
+                        <select class="form-select commodity-select">
+                            <option value="">Select</option>
+                            <option th:each="c : ${commodities}"
+                                    th:value="${c.commodityId}"
+                                    th:text="${c.commodityCode + ' - ' + c.description}"></option>
+                        </select>
+                    </td>
+                    <td><input type="number" class="form-control quantity-input"/></td>
+                    <td><input type="number" step="0.01" class="form-control net-weight"/></td>
+                    <td><input type="number" step="0.01" class="form-control item-value"/></td>
+                    <td><input type="checkbox" class="used-checkbox"/></td>
+                    <td>
+                        <button type="button" class="btn btn-success" onclick="addPackageItemRow()">+</button>
+                        <button type="button" class="btn btn-danger" onclick="removePackageItemRow(this)">-</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary mt-2" onclick="addPackageItemRow()">Add Item</button>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-2">
+                <strong>ID Code:</strong> <span th:text="${identifierCode}"></span>
+                <input type="text" id="identifierCode" name="identifierCode" th:value="${identifierCode}" class="form-control"/>
+            </div>
+            <div class="col-md-2">
+                <strong>Date:</strong> <span th:text="${date}"></span>
+                <input type="text" id="date" name="date" th:value="${date}" class="form-control"/>
+            </div>
+            <div class="col-md-4">
+                <label for="clientId" class="form-label mt-2">Client ID:</label>
+                <input type="text" id="clientId" name="clientId" th:value="${clientId}" class="form-control"/>
+            </div>
+            <div class="col-md-2">
+                <strong>Total Weight:</strong>
+                <input type="text" id="totalWeight" name="totalWeight" th:value="${totalWeight}" class="form-control"/>
+            </div>
+            <div class="col-md-2">
+                <strong>Total Value:</strong>
+                <input type="text" id="totalValue" name="totalValue" th:value="${totalValue}" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" onclick="createDeclarationForm()">Submit Declaration</button>
         </div>
     </form>
 
-    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
-        <span th:text="${errorMessage}"></span>
-    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger mt-3" th:text="${errorMessage}"></div>
 
-    <form th:action="@{/declaration}" method="get" class="mt-4">
-        <button type="submit" class="btn btn-secondary">Back</button>
+    <form th:action="@{/declaration}" method="get" class="mt-3">
+        <div class="text-center">
+            <button type="submit" class="btn btn-secondary">Back</button>
+        </div>
     </form>
 </main>
 
@@ -205,80 +163,121 @@
     <p>&copy; 2025 SIA Pak It. All rights reserved.</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="..." crossorigin="anonymous"></script>
-
-<script th:inline="javascript">
+<script>
     function addPackageItemRow() {
         const tbody = document.getElementById('package-items-body');
-        const index = tbody.rows.length;
+        const template = document.getElementById('template-row');
+        const newRow = template.cloneNode(true);
 
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td colspan="2">
-                <select name="packageItemDtoList[${index}].commodity.commodityId" class="form-select">
-                    ${getCombinedCommodityOptions()}
-                </select>
-            </td>
-            <td>
-                <input type="text" name="packageItemDtoList[${index}].newCommodityDescription" class="form-control" placeholder="Optional new description"/>
-            </td>
-            <td><input type="number" name="packageItemDtoList[${index}].quantity" class="form-control"/></td>
-            <td><input type="number" step="0.01" name="packageItemDtoList[${index}].netWeight" class="form-control net-weight"/></td>
-            <td><input type="number" step="0.01" name="packageItemDtoList[${index}].value" class="form-control item-value"/></td>
-            <td><input type="checkbox" name="packageItemDtoList[${index}].used"/></td>
-            <td><button type="button" class="btn btn-success" onclick="addPackageItemRow()">+</button></td>
-            <td><button type="button" class="btn btn-danger" onclick="removePackageItemRow(this)">-</button></td>
-        `;
+        newRow.classList.remove('d-none');
+        newRow.removeAttribute('id');
+
         tbody.appendChild(newRow);
+        updatePackageItemNames();
     }
 
     function removePackageItemRow(button) {
         const row = button.closest('tr');
-        if (row) {
-            row.remove();
-        }
+        row.remove();
+        updatePackageItemNames();
     }
 
-    function getCombinedCommodityOptions() {
-        const commodities = /*[[${commodities}]]*/ [];
-        let options = '';
-
-        for (let i = 0; i < commodities.length; i++) {
-            const c = commodities[i];
-            options += `<option value="${c.commodityId}">${c.commodityCode} - ${c.description}</option>`;
-        }
-
-        return options;
+    function updatePackageItemNames() {
+        const rows = document.querySelectorAll('#package-items-body tr:not(#template-row)');
+        rows.forEach((row, index) => {
+            row.querySelectorAll('select, input').forEach(input => {
+                if (input.classList.contains('commodity-select')) {
+                    input.name = `packageItems[${index}].commodity.commodityId`;
+                } else if (input.classList.contains('quantity-input')) {
+                    input.name = `packageItems[${index}].quantity`;
+                } else if (input.classList.contains('net-weight')) {
+                    input.name = `packageItems[${index}].netWeight`;
+                } else if (input.classList.contains('item-value')) {
+                    input.name = `packageItems[${index}].value`;
+                } else if (input.classList.contains('used-checkbox')) {
+                    input.name = `packageItems[${index}].used`;
+                }
+            });
+        });
     }
 
-    function recalculateTotals() {
-        let totalWeight = 0;
-        let totalValue = 0;
+    const createDeclarationForm = () => {
+        const url = $("#createDeclarationForm").attr('action');
 
-        document.querySelectorAll('.net-weight').forEach(input => {
-            const val = parseFloat(input.value);
-            if (!isNaN(val)) totalWeight += val;
+        const packageItems = [];
+        $("#package-items-body tr").not("#template-row").each(function () {
+            const row = $(this);
+            const item = {
+                commodity: {
+                    commodityId: row.find(".commodity-select").val()
+                },
+                quantity: parseFloat(row.find(".quantity-input").val()) || 0,
+                netWeight: parseFloat(row.find(".net-weight").val()) || 0,
+                value: parseFloat(row.find(".item-value").val()) || 0,
+                used: row.find(".used-checkbox").is(":checked")
+            };
+            packageItems.push(item);
         });
 
-        document.querySelectorAll('.item-value').forEach(input => {
-            const val = parseFloat(input.value);
-            if (!isNaN(val)) totalValue += val;
+        const request = {
+            senderName: $("#senderName").val(),
+            senderPhoneNumber: $("#senderPhoneNumber").val(),
+            senderAddress: $("#senderAddress").val(),
+            senderCountryCode: $("#senderCountryCode").val(),
+            receiverName: $("#receiverName").val(),
+            receiverPhoneNumber: $("#receiverPhoneNumber").val(),
+            receiverAddress: $("#receiverAddress").val(),
+            receiverCountryCode: $("#receiverCountryCode").val(),
+            packageItems: packageItems,
+            identifierCode: $("#identifierCode").val(),
+            clientId: $("#clientId").val(),
+            totalWeight: $("#totalWeight").val(),
+            totalValue: $("#totalValue").val()
+        };
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(request),
+        })
+        .then(response => {
+            if (!response.ok) {
+                // If response is not OK, parse JSON to get error details
+                response.json().then(handleErrorResponse);
+            } else {
+                // On success, redirect to the declaration list page
+                window.location.href = '/declaration';
+            }
+        })
+        .catch(error => {
+            // Log any network or unexpected errors
+            console.error("Fetch error:", error);
         });
+    };
 
-        document.getElementById('totalWeight').textContent = totalWeight.toFixed(2);
-        document.getElementById('totalValue').textContent = totalValue.toFixed(2);
-    }
-
-    document.addEventListener('input', function (e) {
-        if (e.target.classList.contains('net-weight') || e.target.classList.contains('item-value')) {
-            recalculateTotals();
+    const handleErrorResponse = (errorResponse) => {
+        if (errorResponse.fieldErrors) {
+            handleFieldErrors(errorResponse.fieldErrors);
+        } else {
+            handleErrorMessage(errorResponse.errorMessage);
         }
-    });
+    };
 
-    window.addEventListener('DOMContentLoaded', recalculateTotals);
+    const handleFieldErrors = (fieldErrors) => {
+        // Clear previous errors first (optional, but good practice)
+        $(".error-message").text("");
+        for (let field in fieldErrors) {
+            $(`#${field}-error`).text(fieldErrors[field]);
+        }
+    };
+
+    const handleErrorMessage = (errorMessage) => {
+        $("#errorMessage").text(errorMessage);
+    };
 
 </script>
-
 
 </body>
 </html>

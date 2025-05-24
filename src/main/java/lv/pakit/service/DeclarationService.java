@@ -28,17 +28,13 @@ public class DeclarationService {
     private final ClientService clientService;
     private final PackageItemService packageItemService;
 
-//    public DeclarationResponse defaultDeclaration(){
-//
-//        DeclarationResponse declarationDto = DeclarationResponse.builder()
-//                .date(LocalDate.now().toString())
-//                .identifierCode("%s %s".formatted(LocalDate.now().getMonth(), LocalDate.now().getYear()))
-//                .totalValue(0)
-//                .totalWeight(0)
-//                .build();
-//
-//        return declarationDto;
-//    }
+    public DeclarationRequest  defaultDeclaration() {
+        return DeclarationRequest.builder()
+                .identifierCode("%s %s".formatted(LocalDate.now().getMonth(), LocalDate.now().getYear()))
+                .date(LocalDate.now().toString())
+                .packageItems(List.of(new PackageItemRequest()))
+                .build();
+    }
 
     public void create(DeclarationRequest request) {
 

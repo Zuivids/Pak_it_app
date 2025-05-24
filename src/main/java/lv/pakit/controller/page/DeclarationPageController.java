@@ -2,6 +2,8 @@ package lv.pakit.controller.page;
 
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
+import lv.pakit.service.ClientService;
+import lv.pakit.service.CommodityService;
 import lv.pakit.service.DeclarationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class DeclarationPageController {
 
     private final DeclarationService declarationService;
+    private final CommodityService commodityService;
+    private final ClientService clientService;
 
     @GetMapping("/declaration")
     public String getAllDeclarations(
@@ -59,7 +63,11 @@ public class DeclarationPageController {
     }
 
     @GetMapping("/declaration/new")
-    public String showDeclarationCreateForm() {
+    public String showDeclarationCreateForm(Model model) {
+        model.addAttribute("declaration", declarationService.defaultDeclaration());
+        model.addAttribute("commodities", commodityService.fetchAll());
+//        model.addAttribute("clients", clientService.fetchAll()); //TODO add dropdown button for clientsFullName
+
         return "declaration-add-new-page";
     }
 

@@ -1,5 +1,6 @@
 package lv.pakit.dto.request.declaration;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lv.pakit.dto.request.packageItem.PackageItemRequest;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 public class DeclarationRequest {
 
     private long clientId;
