@@ -98,7 +98,6 @@
                 </tr>
                 </thead>
                 <tbody id="package-items-body">
-                <!-- Hidden template row -->
                 <tr id="template-row" class="d-none">
                     <td>
                         <select class="form-select commodity-select">
@@ -266,7 +265,6 @@
     };
 
     const handleFieldErrors = (fieldErrors) => {
-        // Clear previous errors first (optional, but good practice)
         $(".error-message").text("");
         for (let field in fieldErrors) {
             $(`#${field}-error`).text(fieldErrors[field]);
