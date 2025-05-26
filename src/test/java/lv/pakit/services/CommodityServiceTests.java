@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class CommodityServiceTests {
+class CommodityServiceTests {
 
     @Autowired
     private CommodityService commodityService;
