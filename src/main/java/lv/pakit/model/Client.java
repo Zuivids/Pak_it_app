@@ -18,9 +18,18 @@ public class Client {
     @Setter(value = AccessLevel.NONE)
     private long clientId;
 
+    @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String phoneNumber;
+
+    @Column(nullable = false)
     private String fullName;
 }
