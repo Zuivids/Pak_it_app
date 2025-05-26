@@ -7,6 +7,7 @@ import lv.pakit.dto.response.ClientResponse;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Client;
 import lv.pakit.repo.IClientRepo;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ClientService {
 
     private final IClientRepo clientRepo;
+    private final PasswordEncoder passwordEncoder;
 
     public ClientResponse fetchById(long id) {
         return mapToDto(requireById(id));
@@ -30,7 +32,7 @@ public class ClientService {
     public void create(ClientCreateRequest request) {
         Client client = Client.builder()
                 .username(request.getUsername())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .email(request.getEmail())
                 .phoneNumber(request.getPhoneNumber())
                 .fullName(request.getFullName())
