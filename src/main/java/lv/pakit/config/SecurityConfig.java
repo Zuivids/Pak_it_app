@@ -29,6 +29,9 @@ public class SecurityConfig {
                         //TODO
                         .requestMatchers("/", "/login", "/auth/login", "/css/**", "/img/**").permitAll()
                         .requestMatchers("/backoffice/**").authenticated()
+                        .requestMatchers("/declaration/**").authenticated()
+                        .requestMatchers("/commodity/**").authenticated()
+                        .requestMatchers("/client/**").authenticated()
                 )
                 .formLogin().disable()
                 .sessionManagement(session -> session
