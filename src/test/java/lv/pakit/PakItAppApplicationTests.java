@@ -8,6 +8,7 @@ class PakItAppApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// For SonarCube: this test ensures that the Spring application context loads successfully.
 	}
 
 }

@@ -58,7 +58,7 @@ public class DeclarationPageController {
 
     @GetMapping("/declaration/{id}")
     public String getDeclarationById(@PathVariable long id, Model model) {
-        model.addAttribute("declaration", declarationService.fetchById(id));
+        addDeclarationToModel(id, model);
         return "declaration-show-one-page";
     }
 
@@ -73,13 +73,17 @@ public class DeclarationPageController {
 
     @GetMapping("/declaration/{id}/edit")
     public String showDeclarationEditForm(@PathVariable("id") long id, Model model) {
-        model.addAttribute("declaration", declarationService.fetchById(id));
+        addDeclarationToModel(id, model);
         return "declaration-edit-page";
     }
 
     @GetMapping("/declaration/{id}/delete")
     public String showDeclarationDeleteForm(@PathVariable("id") long id, Model model) {
-        model.addAttribute("declaration", declarationService.fetchById(id));
+        addDeclarationToModel(id, model);
         return "declaration-delete-page";
+    }
+
+    private void addDeclarationToModel(long id, Model model) {
+        model.addAttribute("declaration", declarationService.fetchById(id));
     }
 }

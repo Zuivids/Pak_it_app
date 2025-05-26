@@ -13,13 +13,6 @@ public class ClientPageController {
 
     private final ClientService clientService;
 
-    @GetMapping("/client/{id}")
-    public String getClientById(@PathVariable long id, Model model) {
-        model.addAttribute("client", clientService.fetchById(id));
-
-        return "client-show-one-page";
-    }
-
     @GetMapping("client")
     public String getAllClients(Model model) {
         model.addAttribute("clients", clientService.fetchAll());

@@ -21,13 +21,6 @@ public class CommodityPageController {
         return "commodity-show-many-page";
     }
 
-    @GetMapping("/commodity/{id}")
-    public String getCommodityById(@PathVariable long id, Model model) {
-        model.addAttribute("commodity", commodityService.fetchById(id));
-
-        return "commodity-show-one-page";
-    }
-
     @GetMapping("/commodity/new")
     public String showCommodityCreateForm() {
         return "commodity-add-new-page";

@@ -8,7 +8,6 @@ import lv.pakit.model.Client;
 import lv.pakit.repo.IClientRepo;
 import lv.pakit.service.ClientService;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
