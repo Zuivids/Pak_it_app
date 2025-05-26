@@ -41,4 +41,11 @@ public class AuthRestController {
         }
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletRequest request) {
+        request.getSession(false).invalidate();
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.ok().build();
+    }
+
 }

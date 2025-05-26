@@ -26,7 +26,6 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
-                        //TODO
                         .requestMatchers("/", "/login", "/auth/login", "/css/**", "/img/**").permitAll()
                         .requestMatchers("/backoffice/**").authenticated()
                         .requestMatchers("/declaration/**").authenticated()
@@ -37,7 +36,15 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
-                .httpBasic().disable();
+                .httpBasic().disable()
+                .logout(logout -> logout
+                        .logoutUrl("/auth/logout")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .logoutSuccessUrl("/")
+                        .permitAll()
+                );
+
         return http.build();
     }
 
