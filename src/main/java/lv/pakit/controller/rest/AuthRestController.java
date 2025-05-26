@@ -27,13 +27,13 @@ public class AuthRestController {
 
         if (optionalClient.isEmpty() ||
                 !passwordEncoder.matches(request.getPassword(), optionalClient.get().getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new LoginResponse("Nepareizs lietotājvārds vai parole.", null));
         }
 
         Client client = optionalClient.get();
 
         LoginResponse response = new LoginResponse("Login successful", client.getUsername());
-
         return ResponseEntity.ok(response);
     }
 }
