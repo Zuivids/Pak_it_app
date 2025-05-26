@@ -1,155 +1,162 @@
-//package lv.pakit.services.tests;
-//
-//import lv.pakit.exception.NotFoundException;
-//import lv.pakit.model.Commodity;
-//import lv.pakit.repo.ICommodityRepo;
-//import lv.pakit.service.CommodityService;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.mockito.MockitoAnnotations;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.test.context.bean.override.mockito.MockitoBean;
-//
-//import java.util.List;
-//import java.util.Optional;
-//
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.mockito.Mockito.*;
-//
-//@SpringBootTest
-//public class CommodityServiceTests {
-//
-//    @Autowired
-//    private CommodityService commodityService;
-//    @MockitoBean
-//    private ICommodityRepo commodityRepo;
-//
-//    @BeforeEach
-//    void setUp() {
-//        MockitoAnnotations.openMocks(this);
-//    }
-//
-//    @Test
-//    void commodityCreateTest() {
-//        CommodityDto commodityDto = new CommodityDto(1L,"12345678", "Test Commodity");
-//
-//        commodityService.create(commodityDto);
-//
-//        verify(commodityRepo, times(1)).save(any(Commodity.class));
-//    }
-//
-//    @Test
-//    void commodityRetrieveById_ValidTest() {
-//        Commodity commodity = Commodity.builder()
-//                .commodityId(123L)
-//                .commodityCode("87654321")
-//                .description("Test commodity")
-//                .build();
-//
-//        when(commodityRepo.findById(123L)).thenReturn(Optional.of(commodity));
-//
-//        CommodityDto dto = commodityService.retrieveById(123L);
-//
-//        assertEquals("87654321", dto.getCommodityCode());
-//        assertEquals("Test commodity", dto.getDescription());
-//    }
-//
-//    @Test
-//    void commodityRetrieveByID_InvalidTest() {
-//        when(commodityRepo.findById(1L)).thenReturn(Optional.empty());
-//
-//        assertThrows(NotFoundException.class, () -> commodityService.retrieveById(1L));
-//    }
-//
-//    @Test
-//    void commodityRetrieveAllTest() {
-//        List<Commodity> commodities = List.of(
-//                Commodity.builder().commodityId(123L).commodityCode("1234567891").description("Glue").build(),
-//                Commodity.builder().commodityId(1234L).commodityCode("1234567892").description("Table").build(),
-//                Commodity.builder().commodityId(12345L).commodityCode("1234567893").description("Light bulb").build());
-//
-//        when(commodityRepo.findAll()).thenReturn(commodities);
-//
-//        List<CommodityDto> commodityDtoList = commodityService.retrieveAll();
-//
-//        assertEquals(3, commodityDtoList.size());
-//        assertEquals("Table", commodityDtoList.get(1).getDescription());
-//        assertEquals("1234567893", commodityDtoList.get(2).getCommodityCode());
-//    }
-//
-//    @Test
-//    void commodityUpdateById_ValidTest() {
-//        Commodity commodity = Commodity.builder()
-//                .commodityId(123L)
-//                .commodityCode("12345678")
-//                .description("Keyboard")
-//                .build();
-//
-//        CommodityDto commodityDto = CommodityDto.builder()
-//                .commodityId(123L)
-//                .commodityCode("87654321")
-//                .description("Monitor")
-//                .build();
-//
-//        when(commodityRepo.findById(123L)).thenReturn(Optional.of(commodity));
-//
-//        commodityService.updateById(123L, commodityDto);
-//
-//        assertEquals("87654321", commodity.getCommodityCode());
-//        assertEquals("Monitor", commodity.getDescription());
-//        verify(commodityRepo).save(commodity);
-//    }
-//
-//    @Test
-//    void commodityDeleteByIdTest() {
-//        Commodity commodity = Commodity.builder().commodityId(123L).build();
-//        when(commodityRepo.findById(1L)).thenReturn(Optional.of(commodity));
-//
-//        commodityService.deleteById(1L);
-//
-//        verify(commodityRepo).deleteById(1L);
-//    }
-//
-//    @Test
-//    void commoditySearchNullTest() {
-//        List<Commodity> commodities = List.of(Commodity.builder().commodityId(123L).commodityCode("1234567894").description("Closet").build());
-//        when(commodityRepo.findAll()).thenReturn(commodities);
-//
-//        List<CommodityDto> commodityDtoList = commodityService.search(null);
-//
-//        assertEquals(1,commodities.size());
-//    }
-//
-//    @Test
-//    void commodityCommodityCodeSearchTest () {
-//        List<Commodity> commodities = List.of(
-//                Commodity.builder().commodityId(123L).commodityCode("1234567895").description("Spoon").build(),
-//                Commodity.builder().commodityId(1234L).commodityCode("1234567896").description("Fork").build(),
-//                Commodity.builder().commodityId(12345L).commodityCode("1234567897").description("Knife").build()
-//        );
-//        when(commodityRepo.findByCommodityCodeContainingIgnoreCaseOrDescriptionContainingIgnoreCase("1234567896","1234567896")).thenReturn(commodities);
-//
-//        List<CommodityDto> commodityDtoList = commodityService.search("1234567896");
-//
-//        assertEquals(3,commodities.size());
-//        assertEquals("1234567896", commodityDtoList.get(1).getCommodityCode());
-//    }
-//
-//    @Test
-//    void commodityDescriptionSearchTest () {
-//        List<Commodity> commodities = List.of(
-//                Commodity.builder().commodityId(123L).commodityCode("3234567895").description("Sock").build(),
-//                Commodity.builder().commodityId(12345L).commodityCode("3234567897").description("Sandal").build()
-//        );
-//        when(commodityRepo.findByCommodityCodeContainingIgnoreCaseOrDescriptionContainingIgnoreCase("Sandal","Sandal")).thenReturn(commodities);
-//
-//        List<CommodityDto> commodityDtoList = commodityService.search("Sandal");
-//
-//        assertEquals(2,commodities.size());
-//        assertEquals("Sandal", commodityDtoList.get(1).getDescription());
-//    }
-//
-//}
+package lv.pakit.services;
+
+import lv.pakit.dto.request.commodity.CommodityRequest;
+import lv.pakit.dto.response.CommodityResponse;
+import lv.pakit.exception.FieldErrorException;
+import lv.pakit.exception.NotFoundException;
+import lv.pakit.model.Commodity;
+import lv.pakit.repo.ICommodityRepo;
+import lv.pakit.service.CommodityService;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@SpringBootTest
+public class CommodityServiceTests {
+
+    @Autowired
+    private CommodityService commodityService;
+
+    @MockitoBean
+    private ICommodityRepo commodityRepo;
+
+    private CommodityRequest buildRequest(String code, String desc) {
+        CommodityRequest request = new CommodityRequest();
+        request.setCommodityCode(code);
+        request.setDescription(desc);
+        return request;
+    }
+
+    private Commodity buildCommodity(Long id, String code, String desc) {
+        return Commodity.builder()
+                .commodityId(id)
+                .commodityCode(code)
+                .description(desc)
+                .build();
+    }
+
+    @Test
+    void createShouldSaveNewCommodity() {
+        CommodityRequest request = buildRequest("1234567891", "Table");
+
+        when(commodityRepo.findByCommodityCode("1234567891")).thenReturn(Optional.empty());
+
+        commodityService.create(request);
+
+        verify(commodityRepo).save(any(Commodity.class));
+    }
+
+    @Test
+    void createShouldThrowWhenDuplicateCode() {
+        CommodityRequest request = buildRequest("1234567891", "Chair");
+
+        when(commodityRepo.findByCommodityCode("1234567891"))
+                .thenReturn(Optional.of(buildCommodity(1L, "1234567891", "Table")));
+
+        assertThrows(FieldErrorException.class, () -> commodityService.create(request));
+    }
+
+    @Test
+    void updateShouldUpdateAndSave() {
+        Commodity existing = buildCommodity(123L, "1111155555", "Old monitor");
+        CommodityRequest updated = buildRequest("5555511111", "New monitor");
+
+        when(commodityRepo.findById(123L)).thenReturn(Optional.of(existing));
+        when(commodityRepo.findByCommodityCode("5555511111")).thenReturn(Optional.empty());
+
+        commodityService.updateById(123L, updated);
+
+        verify(commodityRepo).save(existing);
+        assertEquals("5555511111", existing.getCommodityCode());
+        assertEquals("New monitor", existing.getDescription());
+    }
+
+    @Test
+    void updateShouldSkipCheckIfCodeUnchanged() {
+        Commodity existing = buildCommodity(1234L, "1987654321", "Old keyboard");
+        CommodityRequest updated = buildRequest("1987654321", "Updated keyboard");
+
+        when(commodityRepo.findById(1234L)).thenReturn(Optional.of(existing));
+
+        commodityService.updateById(1234L, updated);
+
+        verify(commodityRepo).save(existing);
+        verify(commodityRepo, never()).findByCommodityCode(anyString());
+        assertEquals("Updated keyboard", existing.getDescription());
+    }
+
+    @Test
+    void deleteShouldInvokeRepoDelete() {
+        commodityService.deleteById(777L);
+        verify(commodityRepo).deleteById(777L);
+    }
+
+    @Test
+    void fetchByIdShouldReturnMappedDto() {
+        Commodity commodity = buildCommodity(444L, "3333322222", "Rock");
+
+        when(commodityRepo.findById(444L)).thenReturn(Optional.of(commodity));
+
+        CommodityResponse result = commodityService.fetchById(444L);
+
+        assertEquals("3333322222", result.getCommodityCode());
+        assertEquals("Rock", result.getDescription());
+        assertEquals(444L, result.getCommodityId());
+    }
+
+    @Test
+    void fetchByIdShouldThrowIfNotFound() {
+        when(commodityRepo.findById(404L)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> commodityService.fetchById(404L));
+    }
+
+    @Test
+    void fetchByQueryShouldSearchWithQuery() {
+        String query = "fragile";
+        List<Commodity> result = List.of(buildCommodity(666L, "6666666666", "Fragile Glass"));
+
+        when(commodityRepo.findByCommodityCodeContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query))
+                .thenReturn(result);
+
+        List<CommodityResponse> response = commodityService.fetchByQuery(query);
+
+        assertEquals(1, response.size());
+        assertEquals("6666666666", response.get(0).getCommodityCode());
+    }
+
+    @Test
+    void fetchByQueryShouldReturnAll_whenQueryEmpty() {
+        List<Commodity> all = List.of(
+                buildCommodity(888L, "8888811111", "Mobile Charger"),
+                buildCommodity(777L, "7777711111", "Earphones Charger"),
+                buildCommodity(555L, "5555511111", "Laptop Charger"));
+        when(commodityRepo.findAll()).thenReturn(all);
+
+        List<CommodityResponse> response = commodityService.fetchByQuery("");
+
+        assertEquals(3, response.size());
+    }
+
+    @Test
+    void fetchAll_shouldReturnAllMapped() {
+        List<Commodity> all = List.of(
+                buildCommodity(123L, "1212121212", "Boots"),
+                buildCommodity(321L, "2323232323", "Used Boots")
+        );
+
+        when(commodityRepo.findAll()).thenReturn(all);
+
+        List<CommodityResponse> result = commodityService.fetchAll();
+
+        assertEquals(2, result.size());
+        assertEquals("1212121212", result.get(0).getCommodityCode());
+    }
+}
