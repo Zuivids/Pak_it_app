@@ -14,7 +14,8 @@ public class DeclarationResponse {
 
     private long declarationId;
     private List<PackageItemResponse> packageItems;
-    private ClientResponse client;
+    private long clientId;
+    private String clientFullName;
     private String identifierCode;
     private String senderName;
     private String senderAddress;
