@@ -130,7 +130,7 @@
                             <th></th>
                             <th>Code</th>
                             <th>Description</th>
-                            <th>Qty</th>
+                            <th>Quantity</th>
                             <th>Net Weight</th>
                             <th>Value</th>
                             <th>Used</th>
@@ -139,7 +139,7 @@
                         <tbody>
                         <tr th:each="item, iterStat : ${packageItems}">
                             <td th:text="${iterStat.index + 1}"></td>
-                            <input type="text" class="form-control" th:name="|packageItems[${iterStat.index}].commodity.commodityCode|" th:value="${item.commodity.commodityCode}" /></td>
+                            <td><input type="text" class="form-control" th:name="|packageItems[${iterStat.index}].commodity.commodityCode|" th:value="${item.commodity.commodityCode}" /></td>
                             <td><input type="text" class="form-control" th:name="|packageItems[${iterStat.index}].commodity.description|" th:value="${item.commodity.description}" /></td>
                             <td><input type="number" class="form-control" th:name="|packageItems[${iterStat.index}].quantity|" th:value="${item.quantity}" /></td>
                             <td><input type="number" step="any" class="form-control" th:name="|packageItems[${iterStat.index}].netWeight|" th:value="${item.netWeight}" /></td>
@@ -195,7 +195,9 @@
         </form>
 
         <form action="/declaration" method="get" class="mt-3 text-center">
-            <button type="submit" class="btn btn-secondary">Back</button>
+            <div class="text-start">
+                <button type="submit" class="btn btn-secondary">Back</button>
+            </div>
         </form>
     </div>
 </main>
