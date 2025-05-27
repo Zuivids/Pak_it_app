@@ -17,12 +17,12 @@ public class DeclarationRestController {
         declarationService.create(declarationRequest);
     }
 
-//    @PutMapping("/declaration/{id}")
-//    public void updateDeclaration(@PathVariable("id") long id, @Valid @RequestBody DeclarationRequest declarationRequest) {
-//        declarationService.updateById(id, declarationRequest);
-//    }
+    @PutMapping("/declaration/{id}")
+    public void updateDeclaration(@PathVariable("id") long id, @Valid @RequestBody DeclarationRequest declarationRequest) {
+        declarationService.updateById(id, declarationRequest);
+    }
 
-    @DeleteMapping("/declaration/{id}/delete")
+    @DeleteMapping("/declaration/{id}")
     public void deleteDeclaration(@PathVariable("id") long id) {
         declarationService.deleteById(id);
     }
