@@ -6,22 +6,17 @@ import org.springframework.validation.BindingResult;
 
 public abstract class BasePageController {
 
-    protected String handleErrors(Runnable runnable, String successPage, String errorPage, Model model) {
-        return handleErrors(runnable, successPage, errorPage, model, null);
-    }
-
-    protected String handleErrors(Runnable runnable, String successPage, String errorPage, Model model, BindingResult bindingResult) {
+    protected String handleErrors(Runnable runnable, String page, Model model, BindingResult bindingResult) {
         if (bindingResult != null && bindingResult.hasErrors()) {
-            return errorPage;
+            return page;
         }
 
         try {
             runnable.run();
         } catch (PakItException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return errorPage;
         }
 
-        return successPage;
+        return page;
     }
 }
