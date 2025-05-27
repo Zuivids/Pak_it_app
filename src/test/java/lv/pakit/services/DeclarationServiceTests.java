@@ -27,7 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class DeclarationServiceTests {
+class DeclarationServiceTests {
 
     @Autowired
     private DeclarationService declarationService;
@@ -142,7 +142,7 @@ public class DeclarationServiceTests {
         declarationService.updateById(id, request);
 
         verify(declarationRepo).save(any(Declaration.class));
-        verify(packageItemService).createAll(eq(id), eq(Collections.emptyList()));
+        verify(packageItemService).createAll(id, Collections.emptyList());
     }
 
     @Test

@@ -1,7 +1,6 @@
 package lv.pakit.dto.response;
 
 import lombok.*;
-import lv.pakit.model.Commodity;
 
 @Getter
 @Setter

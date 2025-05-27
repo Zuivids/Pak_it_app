@@ -42,7 +42,7 @@ public class DeclarationService {
     }
 
     private Declaration mapExampleDeclaration(DeclarationSearchRequest request) {
-        Declaration declarationExample = Declaration.builder()
+        return Declaration.builder()
                 .identifierCode(blankToNull(request.getIdentifierCode()))
                 .senderName(blankToNull(request.getSenderName()))
                 .senderAddress(blankToNull(request.getSenderAddress()))
@@ -55,8 +55,6 @@ public class DeclarationService {
                 .totalWeight(Optional.ofNullable(request.getTotalWeight()).orElse(0d))
                 .totalValue(Optional.ofNullable(request.getTotalValue()).orElse(0d))
                 .build();
-
-        return declarationExample;
     }
 
     private ExampleMatcher mapExampleMatcher(DeclarationSearchRequest request) {
@@ -119,10 +117,8 @@ public class DeclarationService {
     }
 
     private Declaration.DeclarationBuilder mapFromDto(DeclarationRequest request) {
-        Client client = clientService.requireById(request.getClientId());
-
         return Declaration.builder()
-                .client(client)
+                .client(clientService.requireById(request.getClientId()))
                 .identifierCode(request.getIdentifierCode())
                 .senderName(request.getSenderName())
                 .senderAddress(request.getSenderAddress())
