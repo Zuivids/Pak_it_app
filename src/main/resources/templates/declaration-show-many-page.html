@@ -92,20 +92,20 @@
                 <th colspan="3"></th>
             </tr>
             <tr>
-                <form th:action="@{/declaration}" method="get">
-                    <th><input type="text" name="identifierCode" class="form-control" th:value="${param.identifierCode}" placeholder="Identifier Code"></th>
-                    <th><input type="text" name="clientName" class="form-control" th:value="${param.clientName}" placeholder="Client Name"></th>
-                    <th><input type="text" name="senderName" class="form-control" th:value="${param.senderName}" placeholder="Sender Name"></th>
-                    <th><input type="text" name="senderAddress" class="form-control" th:value="${param.senderAddress}" placeholder="Sender Address"></th>
-                    <th><input type="text" name="senderCountryCode" class="form-control" th:value="${param.senderCountryCode}" placeholder="Sender Country"></th>
-                    <th><input type="text" name="senderPhoneNumber" class="form-control" th:value="${param.senderPhoneNumber}" placeholder="Sender Phone"></th>
-                    <th><input type="text" name="receiverName" class="form-control" th:value="${param.receiverName}" placeholder="Receiver Name"></th>
-                    <th><input type="text" name="receiverAddress" class="form-control" th:value="${param.receiverAddress}" placeholder="Receiver Address"></th>
-                    <th><input type="text" name="receiverCountryCode" class="form-control" th:value="${param.receiverCountryCode}" placeholder="Receiver Country"></th>
-                    <th><input type="text" name="receiverPhoneNumber" class="form-control" th:value="${param.receiverPhoneNumber}" placeholder="Receiver Phone"></th>
-                    <th><input type="text" name="totalWeight" class="form-control" th:value="${param.totalWeight}" placeholder="Weight"></th>
-                    <th><input type="text" name="totalValue" class="form-control" th:value="${param.totalValue}" placeholder="Value"></th>
-                    <th><input type="text" name="date" class="form-control" th:value="${param.date}" placeholder="Date"></th>
+                <form th:object="${query}" th:action="@{/declaration}" method="get">
+                    <th><input type="text" class="form-control" th:field="*{identifierCode}"/></th>
+                    <th><input type="text" class="form-control" th:field="*{clientName}"></th>
+                    <th><input type="text" class="form-control" th:field="*{senderName}"></th>
+                    <th><input type="text" class="form-control" th:field="*{senderAddress}"></th>
+                    <th><input type="text" class="form-control" th:field="*{senderCountryCode}"></th>
+                    <th><input type="text" class="form-control" th:field="*{senderPhoneNumber}"></th>
+                    <th><input type="text" class="form-control" th:field="*{receiverName}"></th>
+                    <th><input type="text" class="form-control" th:field="*{receiverAddress}"></th>
+                    <th><input type="text" class="form-control" th:field="*{receiverCountryCode}"></th>
+                    <th><input type="text" class="form-control" th:field="*{receiverPhoneNumber}"></th>
+                    <th><input type="text" class="form-control" th:field="*{totalWeight}"></th>
+                    <th><input type="text" class="form-control" th:field="*{totalValue}"></th>
+                    <th><input type="text" class="form-control" th:field="*{date}"></th>
                     <th colspan="3">
                         <button type="submit" class="btn btn-outline-primary w-100">Search</button>
                     </th>
@@ -115,7 +115,7 @@
             <tbody>
             <tr th:each="declaration : ${declarations}">
                 <td th:text="${declaration.identifierCode}"></td>
-                <td th:text="${declaration.client?.fullName}"></td>
+                <td th:text="${declaration.clientFullName}"></td>
                 <td th:text="${declaration.senderName}"></td>
                 <td th:text="${declaration.senderAddress}"></td>
                 <td th:text="${declaration.senderCountryCode}"></td>
