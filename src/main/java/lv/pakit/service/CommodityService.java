@@ -84,7 +84,7 @@ public class CommodityService {
                 .orElseThrow(() -> new NotFoundException("Commodity with id (" + id + ") not found!"));
     }
 
-    private CommodityResponse mapToDto(Commodity commodity) {
+    public CommodityResponse mapToDto(Commodity commodity) {
         return CommodityResponse.builder()
                 .commodityId(commodity.getCommodityId())
                 .commodityCode(commodity.getCommodityCode())
