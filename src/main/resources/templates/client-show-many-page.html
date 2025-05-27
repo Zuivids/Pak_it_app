@@ -75,23 +75,18 @@
         <table class="table table-bordered table-striped align-middle">
             <thead class="table-danger">
             <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Password</th>
+                <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone Number</th>
-                <th>Full Name</th>
                 <th></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="client : ${clients}">
-                <td th:text="${client.username}">Username</td>
-                <td th:text="${client.password}">Password</td>
+                <td th:text="${client.fullName}">Full Name</td>
                 <td th:text="${client.email}">Email</td>
                 <td th:text="${client.phoneNumber}">Phone Number</td>
-                <td th:text="${client.fullName}">Full Name</td>
                 <td class="text-center">
                     <form th:action="|/client/${client.clientId}/edit|" method="get" class="d-inline">
                         <button type="submit" class="btn btn-primary btn-sm">Edit</button>
