@@ -1,5 +1,8 @@
 package lv.pakit.services;
 
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import lv.pakit.dto.request.client.ClientCreateRequest;
 import lv.pakit.dto.request.client.ClientUpdateRequest;
 import lv.pakit.dto.response.ClientResponse;
@@ -7,9 +10,11 @@ import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Client;
 import lv.pakit.repo.IClientRepo;
 import lv.pakit.service.ClientService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
@@ -26,6 +31,17 @@ class ClientServiceTests {
 
     @MockitoBean
     private IClientRepo clientRepo;
+
+    @MockitoBean
+    private PasswordEncoder passwordEncoder;
+
+    private Validator validator;
+
+    @BeforeEach
+    void setUpValidator() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+    }
 
     private Client buildClient(Long id) {
         return Client.builder()
@@ -61,7 +77,7 @@ class ClientServiceTests {
     }
 
     @Test
-    void createShouldSaveNewClient() {
+    void clientCreateShouldSaveNewClient() {
         ClientCreateRequest request = new ClientCreateRequest();
         request.setUsername("jaunais");
         request.setPassword("VeryStrongPassword1!");
@@ -70,11 +86,28 @@ class ClientServiceTests {
         request.setFullName("Jaunais Testeris");
 
         Client dummySavedClient = new Client();
+        when(passwordEncoder.encode("VeryStrongPassword1!")).thenReturn("encodedPassword123");
         when(clientRepo.save(any(Client.class))).thenReturn(dummySavedClient);
 
         clientService.create(request);
 
+        verify(passwordEncoder, times(1)).encode("VeryStrongPassword1!");
         verify(clientRepo, times(1)).save(any(Client.class));
+    }
+
+    @Test
+    void clientCreateShouldFailValidationOnInvalidFields() {
+        ClientCreateRequest request = new ClientCreateRequest();
+        request.setUsername("??");
+        request.setPassword("neder");
+        request.setEmail("nav-epasts");
+        request.setPhoneNumber("abcd");
+        request.setFullName("12345");
+
+        var violations = validator.validate(request);
+
+        assertFalse(violations.isEmpty(), "Expected validation to fail for invalid input");
+        assertEquals(7, violations.size());
     }
 
     @Test
