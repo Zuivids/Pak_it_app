@@ -12,4 +12,6 @@ public interface IPackageItemRepo extends JpaRepository<PackageItem, Long> {
     List<PackageItem> findByDeclarationDeclarationId(long declarationId);
 
     List<PackageItem> findByDeclarationId(long declarationId);
+
+    void deleteByDeclarationId(long declarationId);
 }

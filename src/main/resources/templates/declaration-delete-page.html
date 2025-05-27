@@ -147,7 +147,7 @@
 <script>
     const deleteDeclaration = () => {
         const declarationId = $("button[onclick='deleteDeclaration()']").data("id");
-        const url = `/declaration/${declarationId}/delete`;
+        const url = `/declaration/${declarationId}`;
 
         fetch(url, {
             method: "DELETE"

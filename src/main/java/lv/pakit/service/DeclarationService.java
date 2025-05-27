@@ -9,6 +9,7 @@ import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Client;
 import lv.pakit.model.Declaration;
 import lv.pakit.repo.IDeclarationRepo;
+import lv.pakit.repo.IPackageItemRepo;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class DeclarationService {
     private final ClientService clientService;
     private final PackageItemService packageItemService;
     private final IDeclarationRepo declarationRepo;
+    private final IPackageItemRepo packageItemRepo;
 
     public DeclarationResponse fetchById(long declarationId) {
         Declaration declaration = requireById(declarationId);
@@ -89,7 +91,9 @@ public class DeclarationService {
         packageItemService.createAll(declarationId, request.getPackageItems());
     }
 
+    @Transactional
     public void deleteById(long declarationId) {
+        packageItemRepo.deleteByDeclarationId(declarationId);
         declarationRepo.deleteById(declarationId);
     }
 
