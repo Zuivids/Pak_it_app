@@ -26,9 +26,12 @@ public class DeclarationPageController extends BasePageController {
     @GetMapping("/declaration")
     public String getAllDeclarations(@Valid @ModelAttribute(value = "query") DeclarationSearchRequest request,
                                      BindingResult bindingResult, Model model) {
-        return handleErrors(() -> {
-            model.addAttribute("declarations", declarationService.search(request));
-        }, "declaration-show-many-page", model, bindingResult);
+        return handleErrors(
+            () -> model.addAttribute("declarations", declarationService.search(request)),
+            "declaration-show-many-page",
+            model,
+            bindingResult
+        );
     }
 
     @GetMapping("/declaration/{id}")

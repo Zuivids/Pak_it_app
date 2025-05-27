@@ -45,10 +45,9 @@ public class RestControllerErrorHandler {
     private Map<String, String> mapFieldErrors(BindingResult bindingResult) {
         Map<String, String> fieldErrors = new HashMap<>();
 
-        bindingResult.getFieldErrors().forEach(fieldError -> {
-            fieldErrors.putIfAbsent(fieldError.getField(),
-                    fieldError.getDefaultMessage());
-        });
+        bindingResult.getFieldErrors().forEach(fieldError ->
+                fieldErrors.putIfAbsent(fieldError.getField(), fieldError.getDefaultMessage())
+        );
 
         return fieldErrors;
     }

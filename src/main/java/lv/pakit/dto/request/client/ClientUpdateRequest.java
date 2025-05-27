@@ -17,7 +17,7 @@ public class ClientUpdateRequest {
 
     @NotBlank(message = "Phone number cannot be blank")
     @Pattern(
-            regexp = "^\\+?[0-9]{8,20}$",
+            regexp = "^\\+?\\d{8,20}$",
             message = "Phone number must be valid and contain only digits (optionally starting with +)"
     )
     private String phoneNumber;
