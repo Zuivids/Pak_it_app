@@ -100,21 +100,23 @@
                     <tr>
                         <th>Commodity code</th>
                         <th>Description</th>
-                        <th>Used</th>
                         <th>Quantity</th>
                         <th>Net weight</th>
                         <th>Value</th>
+                        <th>Used</th>
                     </tr>
                     </thead>
                     <tbody>
-                            <tr th:each="packageItem : ${packageItems}">
-                                <td th:text="${packageItem.commodity.commodityCode}"></td>
-                                <td th:text="${packageItem.commodity.description}"></td>
-                                <td th:text="${packageItem.used}"></td>
-                                <td th:text="${packageItem.quantity}"></td>
-                                <td th:text="${packageItem.netWeight}"></td>
-                                <td th:text="${packageItem.value}"></td>
-                            </tr>
+                    <tr th:each="item : ${declaration.packageItems}">
+                        <td th:text="${item.commodity.commodityCode}"></td>
+                        <td th:text="${item.commodity.description}"></td>
+                        <td th:text="${item.quantity}"></td>
+                        <td th:text="${item.netWeight}"></td>
+                        <td th:text="${item.value}"></td>
+                        <td>
+                            <input type="checkbox" th:checked="${item.used}" disabled />
+                        </td>
+                    </tr>
                         </tbody>
                     </tbody>
                 </table>
