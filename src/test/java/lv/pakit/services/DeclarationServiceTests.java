@@ -1,191 +1,175 @@
-//package lv.pakit.services.tests;
-//
-//import lv.pakit.dto.ClientDto;
-//import lv.pakit.dto.DeclarationDto;
-//import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
-//import lv.pakit.exception.NotFoundException;
-//import lv.pakit.model.Client;
-//import lv.pakit.model.Declaration;
-//import lv.pakit.repo.IDeclarationRepo;
-//import lv.pakit.service.ClientService;
-//import lv.pakit.service.DeclarationService;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.mockito.MockitoAnnotations;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.test.context.bean.override.mockito.MockitoBean;
-//
-//import java.time.LocalDate;
-//import java.util.List;
-//import java.util.Optional;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.mockito.Mockito.*;
-//
-//@SpringBootTest
-//public class DeclarationServiceTests {
-//
-//    @Autowired
-//    private DeclarationService declarationService;
-//
-//    @MockitoBean
-//    private IDeclarationRepo declarationRepo;
-//
-//    @MockitoBean
-//    private ClientService clientService;
-//
-//    @BeforeEach
-//    void setUp() {
-//        MockitoAnnotations.openMocks(this);
-//    }
-//
-//
-//    @Test
-//    void declarationCreateTest() {
-//        DeclarationDto declarationDto = DeclarationDto.builder()
-//                .identifierCode("MAR25")
-//                .senderName("Sender")
-//                .senderAddress("Sender Street")
-//                .senderPhoneNumber("LV")
-//                .senderCountryCode("12345678")
-//                .receiverName("Receiver")
-//                .receiverAddress("Receiver Street")
-//                .receiverPhoneNumber("UK")
-//                .receiverCountryCode("87654321")
-//                .totalWeight(12.5)
-//                .totalValue(99.99)
-//                .date(LocalDate.now().toString())
-//                .build();
-//
-//        declarationService.create(declarationDto);
-//
-//        verify(declarationRepo, times(1)).save(any(Declaration.class));
-//    }
-//
-//    @Test
-//    void declarationRetrieveById_ValidTest() {
-//        Declaration declaration = Declaration.builder()
-//                .declarationId(1L)
-//                .client(Client.builder().clientId(10L).build())
-//                .identifierCode("MAR25")
-//                .senderName("Sender")
-//                .senderAddress("Sender Street")
-//                .senderPhoneNumber("LV")
-//                .senderCountryCode("12345678")
-//                .receiverName("Receiver")
-//                .receiverAddress("Receiver Street")
-//                .receiverPhoneNumber("UK")
-//                .receiverCountryCode("87654321")
-//                .totalWeight(12.5D)
-//                .totalValue(99.99D)
-//                .date(LocalDate.now().toString())
-//                .build();
-//
-//        when(declarationRepo.findById(1L)).thenReturn(Optional.of(declaration));
-//        when(clientService.mapToDto(any())).thenReturn(ClientDto.builder().clientId(10L).build());
-//
-//        DeclarationDto dto = declarationService.retriveById(1L);
-//
-//        assertEquals("MAR25", dto.getIdentifierCode());
-//        assertEquals("Receiver", dto.getReceiverName());
-//        assertEquals(10L, dto.getClient().getClientId());
-//    }
-//
-//    @Test
-//    void declarationRetrieveById_InvalidTest() {
-//        when(declarationRepo.findById(99L)).thenReturn(Optional.empty());
-//
-//        assertThrows(NotFoundException.class, () -> declarationService.retriveById(99L));
-//    }
-//
-//    @Test
-//    void declarationRetrieveAllTest() {
-//        List<Declaration> declarations = List.of(
-//                Declaration.builder().declarationId(1L).identifierCode("APR25").client(new Client()).build(),
-//                Declaration.builder().declarationId(2L).identifierCode("MAR25").client(new Client()).build()
-//        );
-//
-//        when(declarationRepo.findAll()).thenReturn(declarations);
-//        when(clientService.mapToDto(any())).thenReturn(ClientDto.builder().build());
-//
-//        List<DeclarationDto> list = declarationService.retriveAll();
-//
-//        assertEquals(2, list.size());
-//    }
-//
-//    @Test
-//    void declarationUpdateById_ValidTest() {
-//        Declaration existing = Declaration.builder()
-//                .declarationId(1L)
-//                .identifierCode("OLD")
-//                .build();
-//
-//        DeclarationDto updated = DeclarationDto.builder()
-//                .identifierCode("NEW")
-//                .senderName("Sender")
-//                .senderAddress("Sender Address")
-//                .senderPhoneNumber("123")
-//                .senderCountryCode("UK")
-//                .receiverName("Receiver")
-//                .receiverAddress("Receiver  Address")
-//                .receiverCountryCode("LV")
-//                .receiverPhoneNumber("456")
-//                .totalWeight(10.0)
-//                .totalValue(200.0)
-//                .date(LocalDate.now().toString())
-//                .build();
-//
-//        when(declarationRepo.findById(1L)).thenReturn(Optional.of(existing));
-//
-//        declarationService.updateById(1L, updated);
-//
-//        assertEquals("NEW", existing.getIdentifierCode());
-//        assertEquals("Sender", existing.getSenderName());
-//        assertEquals("Receiver", existing.getReceiverName());
-//        verify(declarationRepo).save(existing);
-//    }
-//
-//    @Test
-//    void declarationDeleteById_ValidTest() {
-//        Declaration declaration = Declaration.builder().declarationId(1L).build();
-//        when(declarationRepo.findById(1L)).thenReturn(Optional.of(declaration));
-//
-//        declarationService.deleteById(1L);
-//
-//        verify(declarationRepo).deleteById(1L);
-//    }
-//
-//    @Test
-//    void declarationSearch_NullIdentifierCodeTest() {
-//        List<Declaration> declarations = List.of(
-//                Declaration.builder().declarationId(1L).identifierCode("MAY25").client(new Client()).build()
-//        );
-//        when(declarationRepo.findAll()).thenReturn(declarations);
-//        when(clientService.mapToDto(any())).thenReturn(ClientDto.builder().build());
-//
-//        List<DeclarationDto> list = declarationService.search(DeclarationSearchRequest.builder().build());
-//
-//        assertEquals(1, list.size());
-//    }
-//
-//    @Test
-//    void declarationSearch_ByIdentifierCodeTest() {
-//        List<Declaration> declarations = List.of(
-//                Declaration.builder().declarationId(1L).identifierCode("JUN25").client(new Client()).build(),
-//                Declaration.builder().declarationId(2L).identifierCode("JUN19").client(new Client()).build()
-//        );
-//
-//        when(declarationRepo.findByIdentifierCodeContainingIgnoreCase("JUN")).thenReturn(declarations);
-//        when(clientService.mapToDto(any())).thenReturn(ClientDto.builder().build());
-//
-//        DeclarationSearchRequest request = DeclarationSearchRequest.builder().identifierCode("JUN").build();
-//
-//        List<DeclarationDto> result = declarationService.search(request);
-//
-//        assertEquals(2, result.size());
-//        assertTrue(result.stream().anyMatch(dto -> dto.getIdentifierCode().startsWith("JUN")));
-//    }
-//
-//}
+package lv.pakit.services;
+
+import lv.pakit.dto.request.declaration.DeclarationRequest;
+import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
+import lv.pakit.dto.request.packageItem.PackageItemRequest;
+import lv.pakit.dto.response.DeclarationResponse;
+import lv.pakit.exception.NotFoundException;
+import lv.pakit.model.Client;
+import lv.pakit.model.Declaration;
+import lv.pakit.repo.IDeclarationRepo;
+import lv.pakit.service.ClientService;
+import lv.pakit.service.DeclarationService;
+import lv.pakit.service.PackageItemService;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+@SpringBootTest
+public class DeclarationServiceTests {
+
+    @Autowired
+    private DeclarationService declarationService;
+    @MockitoBean
+    private PackageItemService packageItemService;
+
+    @MockitoBean
+    private IDeclarationRepo declarationRepo;
+
+    @MockitoBean
+    private ClientService clientService;
+
+    @Test
+    void fetchByIdShouldReturnMappedResponse() {
+        Client client = Client.builder().clientId(123L).fullName("Tests Testeris").build();
+        Declaration declaration = Declaration.builder()
+                .declarationId(1L)
+                .client(client)
+                .identifierCode("MAY321")
+                .senderName("Sender")
+                .senderAddress("333 iela")
+                .senderCountryCode("LV")
+                .senderPhoneNumber("12345678")
+                .receiverName("Receiver")
+                .receiverAddress("222 St")
+                .receiverCountryCode("UK")
+                .receiverPhoneNumber("87654321")
+                .totalWeight(1.1)
+                .totalValue(2.2)
+                .date("2025-05-27")
+                .build();
+
+        when(declarationRepo.findById(1L)).thenReturn(Optional.of(declaration));
+        when(packageItemService.fetchByDeclarationId(1L)).thenReturn(Collections.emptyList());
+
+        DeclarationResponse response = declarationService.fetchById(1L);
+
+        assertEquals(1L, response.getDeclarationId());
+        assertEquals("Tests Testeris", response.getClientFullName());
+        assertEquals("MAY321", response.getIdentifierCode());
+        assertEquals(0, response.getPackageItems().size());
+    }
+
+    @Test
+    void fetchByIdShouldThrowWhenNotFound() {
+        when(declarationRepo.findById(999L)).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> declarationService.fetchById(999L));
+    }
+
+    @Test
+    void createShouldSaveDeclarationAndCreatePackageItems() {
+        PackageItemRequest itemRequest = new PackageItemRequest();
+        itemRequest.setCommodityId(1L);
+        itemRequest.setQuantity(1);
+        itemRequest.setNetWeight(1.0);
+        itemRequest.setValue(100.0);
+        itemRequest.setUsed(false);
+
+        DeclarationRequest request = DeclarationRequest.builder()
+                .clientId(1L)
+                .identifierCode("MAY123")
+                .senderName("Sender")
+                .senderAddress("123 Iela")
+                .senderCountryCode("LV")
+                .senderPhoneNumber("12345678")
+                .receiverName("Receiver")
+                .receiverAddress("321 St")
+                .receiverCountryCode("UK")
+                .receiverPhoneNumber("87654321")
+                .date("2025-05-27")
+                .packageItems(List.of(itemRequest))
+                .build();
+
+        Client client = Client.builder().clientId(1L).build();
+
+        when(clientService.requireById(1L)).thenReturn(client);
+        when(packageItemService.calculateTotalWeight(any())).thenReturn(1.0);
+        when(packageItemService.calculateTotalValue(any())).thenReturn(100.0);
+        when(declarationRepo.save(any())).thenReturn(
+                Declaration.builder().declarationId(123L).client(client).build()
+        );
+
+        declarationService.create(request);
+
+        verify(declarationRepo).save(any(Declaration.class));
+        verify(packageItemService).createAll(123L, request.getPackageItems());
+    }
+
+    @Test
+    void updateByIdShouldOverwriteDeclaration() {
+        long id = 99L;
+        DeclarationRequest request = DeclarationRequest.builder()
+                .clientId(1L)
+                .identifierCode("DEF456")
+                .senderName("Sender")
+                .senderAddress("123 St")
+                .senderCountryCode("LV")
+                .senderPhoneNumber("12345678")
+                .receiverName("Receiver")
+                .receiverAddress("321 St")
+                .receiverCountryCode("EE")
+                .receiverPhoneNumber("87654321")
+                .date("2024-01-01")
+                .packageItems(Collections.emptyList())
+                .build();
+
+        when(declarationRepo.findById(id)).thenReturn(Optional.of(new Declaration()));
+        when(clientService.requireById(1L)).thenReturn(Client.builder().clientId(1L).build());
+        when(packageItemService.calculateTotalWeight(any())).thenReturn(0.0);
+        when(packageItemService.calculateTotalValue(any())).thenReturn(0.0);
+
+        declarationService.updateById(id, request);
+
+        verify(declarationRepo).save(any(Declaration.class));
+        verify(packageItemService).createAll(eq(id), eq(Collections.emptyList()));
+    }
+
+    @Test
+    void deleteByIdShouldInvokeRepoDelete() {
+        declarationService.deleteById(777L);
+        verify(declarationRepo).deleteById(777L);
+    }
+
+    @Test
+    void searchShouldReturnMatchingResults() {
+        DeclarationSearchRequest request = DeclarationSearchRequest.builder()
+                .senderName("TestSender")
+                .build();
+
+        Declaration declaration = Declaration.builder()
+                .declarationId(1L)
+                .senderName("TestSender")
+                .client(Client.builder().clientId(1L).fullName("Test Client").build())
+                .build();
+
+        when(declarationRepo.findAll(ArgumentMatchers.<Example<Declaration>>any()))
+                .thenReturn(List.of(declaration));
+        when(packageItemService.fetchByDeclarationId(1L)).thenReturn(Collections.emptyList());
+
+        var result = declarationService.search(request);
+
+        assertEquals(1, result.size());
+        assertEquals("TestSender", result.get(0).getSenderName());
+    }
+}
