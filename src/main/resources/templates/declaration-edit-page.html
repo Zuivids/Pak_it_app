@@ -85,76 +85,79 @@
             <div class="mb-3">
                 <label for="senderName" class="form-label">Sender Name</label>
                 <span id="senderName-error" class="text-danger"></span>
-                <input type="text" class="form-control" id="senderName" th:value="${declaration.senderName}" required>
+                <input type="text" class="form-control" id="senderName" th:value="${declaration.senderName}">
             </div>
             <div class="mb-3">
                 <label for="senderPhoneNumber" class="form-label">Sender Phone</label>
                 <span id="senderPhoneNumber-error" class="text-danger"></span>
-                <input type="text" class="form-control" id="senderPhoneNumber" th:value="${declaration.senderPhoneNumber}" required>
+                <input type="text" class="form-control" id="senderPhoneNumber" th:value="${declaration.senderPhoneNumber}">
             </div>
             <div class="mb-3">
                 <label for="senderAddress" class="form-label">Sender Address</label>
                 <span id="senderAddress-error" class="text-danger"></span>
-                <input type="text" class="form-control" id="senderAddress" th:value="${declaration.senderAddress}" required>
+                <input type="text" class="form-control" id="senderAddress" th:value="${declaration.senderAddress}">
             </div>
             <div class="mb-3">
                 <label for="senderCountryCode" class="form-label">Sender Country</label>
                 <span id="senderCountryCode-error" class="text-danger"></span>
-                <input type="text" class="form-control" id="senderCountryCode" th:value="${declaration.senderCountryCode}" required>
+                <input type="text" class="form-control" id="senderCountryCode" th:value="${declaration.senderCountryCode}">
             </div>
 
             <div class="mb-3">
                 <label for="receiverName" class="form-label">Reciever Name</label>
                 <span id="receiverName-error" class="text-danger"></span>
-                <input type="text" class="form-control" id="receiverName" th:value="${declaration.receiverName}" required>
+                <input type="text" class="form-control" id="receiverName" th:value="${declaration.receiverName}">
             </div>
             <div class="mb-3">
                 <label for="receiverPhoneNumber" class="form-label">Reciever Phone</label>
                 <span id="receiverPhoneNumber-error" class="text-danger"></span>
-                <input type="text" class="form-control" id="receiverPhoneNumber" th:value="${declaration.receiverPhoneNumber}" required>
+                <input type="text" class="form-control" id="receiverPhoneNumber" th:value="${declaration.receiverPhoneNumber}">
             </div>
             <div class="mb-3">
                 <label for="receiverAddress" class="form-label">Reciever Address</label>
                 <span id="receiverAddress-error" class="text-danger"></span>
-                <input type="text" class="form-control" id="receiverAddress" th:value="${declaration.receiverAddress}" required>
+                <input type="text" class="form-control" id="receiverAddress" th:value="${declaration.receiverAddress}">
             </div>
             <div class="mb-3">
                 <label for="receiverCountryCode" class="form-label">Reciever Country</label>
                 <span id="receiverCountryCode-error" class="text-danger"></span>
-                <input type="text" class="form-control" id="receiverCountryCode" th:value="${declaration.receiverCountryCode}" required>
+                <input type="text" class="form-control" id="receiverCountryCode" th:value="${declaration.receiverCountryCode}">
             </div>
 
-
+            <!-- PackageItems-->
 
             <div class="mb-3">
                 <label for="identifierCode" class="form-label">ID Code</label>
                 <span id="identifierCode-error" class="text-danger"></span>
                 <div>
-                    <input id="identifierCode" th:value="${declaration.identifierCode}" type="text" class="form-control"  required>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="totalWeight" class="form-label">Total Weight</label>
-                <span id="totalWeight-error" class="text-danger"></span>
-                <div>
-                    <input id="totalWeight" th:value="${declaration.totalWeight}" type="text" class="form-control"  required>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="totalValue" class="form-label">Total Value</label>
-                <span id="totalValue-error" class="text-danger"></span>
-                <div>
-                    <input id="totalValue" th:value="${declaration.totalValue}" type="text" class="form-control"  required>
+                    <input id="identifierCode" th:value="${declaration.identifierCode}" type="text" class="form-control">
                 </div>
             </div>
             <div class="mb-3">
                 <label for="declarationDate" class="form-label">Date</label>
                 <span id="declarationDate-error" class="text-danger"></span>
                 <div>
-                    <input id="declarationDate" th:value="${declaration.date}" type="text" class="form-control"  required>
+                    <input id="declarationDate" th:value="${declaration.date}" type="text" class="form-control">
                 </div>
             </div>
-
+            <div class="mb-3">
+                <label for="clientId" class="form-label">Client ID:</label>
+                <input id="clientId" th:value="${declaration.clientId}" type="text"  class="form-control"/>
+            </div>
+            <div class="mb-3">
+                <label for="totalWeight" class="form-label">Total Weight</label>
+                <span id="totalWeight-error" class="text-danger"></span>
+                <div>
+                    <input id="totalWeight" th:value="${declaration.totalWeight}" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="totalValue" class="form-label">Total Value</label>
+                <span id="totalValue-error" class="text-danger"></span>
+                <div>
+                    <input id="totalValue" th:value="${declaration.totalValue}" type="text" class="form-control">
+                </div>
+            </div>
 
             <div id="errorMessage" class="text-danger mb-3"></div>
 
@@ -187,7 +190,13 @@
             declarationReceiverAddress: $("#receiverAddress").val(),
             declarationReceiverCountryCode: $("#receiverCountryCode").val(),
 
-            declarationDate: $("#declarationDate").val()
+            <!--PackgeItems-->
+
+            declarationIdentifierCode: $("#identifierCode").val(),
+            declarationDate: $("#date").val(),
+            declarationClientId: $("#clientId").val(),
+            declarationTotalWeight: $("#totalWeight").val(),
+            declarationTotalValue: $("#totalValue").val()
         };
 
         fetch(url, {
