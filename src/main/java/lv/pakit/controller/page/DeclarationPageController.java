@@ -6,6 +6,7 @@ import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
 import lv.pakit.service.ClientService;
 import lv.pakit.service.CommodityService;
 import lv.pakit.service.DeclarationService;
+import lv.pakit.service.PackageItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ public class DeclarationPageController extends BasePageController {
     private final DeclarationService declarationService;
     private final CommodityService commodityService;
     private final ClientService clientService;
+    private final PackageItemService packageItemService;
 
     @GetMapping("/declaration")
     public String getAllDeclarations(@Valid @ModelAttribute(value = "query") DeclarationSearchRequest request,
@@ -46,8 +48,7 @@ public class DeclarationPageController extends BasePageController {
     @GetMapping("/declaration/{id}/edit")
     public String showDeclarationEditForm(@PathVariable("id") long id, Model model) {
         addDeclarationToModel(id, model);
-//        model.addAttribute("commodities", ); // TODO
-//        model.addAttribute("clients", ); //TODO
+        model.addAttribute("packageItems", packageItemService.fetchByDeclarationId(id));
         return "declaration-edit-page";
     }
 

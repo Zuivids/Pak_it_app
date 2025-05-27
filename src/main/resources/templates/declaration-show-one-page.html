@@ -81,6 +81,7 @@
             <table class="table table-bordered table-light">
                 <thead class="table-secondary text-center">
                 <tr>
+                    <td></td>
                     <th>Commodity Code</th>
                     <th>Description</th>
                     <th>Quantity</th>
@@ -90,7 +91,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${declaration.packageItems}">
+                <tr th:each="item, iterStat : ${declaration.packageItems}">
+                    <td th:text="${iterStat.index + 1}"></td>
                     <td th:text="${item.commodity.commodityCode}"></td>
                     <td th:text="${item.commodity.description}"></td>
                     <td th:text="${item.quantity}"></td>
