@@ -147,7 +147,7 @@
         </div>
 
         <div class="text-center">
-            <button type="button" class="btn btn-primary" onclick="createDeclarationForm()">Submit Declaration</button>
+            <button type="button" class="btn btn-primary" onclick="createDeclaration()">Submit Declaration</button>
         </div>
     </form>
 
@@ -188,7 +188,7 @@
         rows.forEach((row, index) => {
             row.querySelectorAll('select, input').forEach(input => {
                 if (input.classList.contains('commodity-select')) {
-                    input.name = `packageItems[${index}].commodity.commodityId`;
+                    input.name = `packageItems[${index}].commodityId`;
                 } else if (input.classList.contains('quantity-input')) {
                     input.name = `packageItems[${index}].quantity`;
                 } else if (input.classList.contains('net-weight')) {
@@ -202,19 +202,17 @@
         });
     }
 
-    const createDeclarationForm = () => {
+    const createDeclaration = () => {
         const url = $("#createDeclarationForm").attr('action');
 
         const packageItems = [];
-        $("#package-items-body tr").not("#template-row").each(function () {
+        $("#package-items-body tr").not("#template-row").each(function() {
             const row = $(this);
             const item = {
-                commodity: {
-                    commodityId: row.find(".commodity-select").val()
-                },
-                quantity: parseFloat(row.find(".quantity-input").val()) || 0,
-                netWeight: parseFloat(row.find(".net-weight").val()) || 0,
-                value: parseFloat(row.find(".item-value").val()) || 0,
+                commodityId: row.find(".commodity-select").val(),
+                quantity: parseFloat(row.find(".quantity-input").val()),
+                netWeight: parseFloat(row.find(".net-weight").val()),
+                value: parseFloat(row.find(".item-value").val()),
                 used: row.find(".used-checkbox").is(":checked")
             };
             packageItems.push(item);
@@ -233,7 +231,8 @@
             identifierCode: $("#identifierCode").val(),
             clientId: $("#clientId").val(),
             totalWeight: $("#totalWeight").val(),
-            totalValue: $("#totalValue").val()
+            totalValue: $("#totalValue").val(),
+            date: $("#date").val()
         };
 
         fetch(url, {
