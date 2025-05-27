@@ -46,6 +46,8 @@ public class DeclarationPageController extends BasePageController {
     @GetMapping("/declaration/{id}/edit")
     public String showDeclarationEditForm(@PathVariable("id") long id, Model model) {
         addDeclarationToModel(id, model);
+//        model.addAttribute("commodities", ); // TODO
+//        model.addAttribute("clients", ); //TODO
         return "declaration-edit-page";
     }
 
