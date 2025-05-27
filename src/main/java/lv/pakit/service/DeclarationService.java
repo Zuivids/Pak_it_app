@@ -1,21 +1,19 @@
 package lv.pakit.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.request.declaration.DeclarationRequest;
 import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
-import lv.pakit.dto.request.packageItem.PackageItemRequest;
-import lv.pakit.dto.response.ClientResponse;
 import lv.pakit.dto.response.DeclarationResponse;
 import lv.pakit.exception.NotFoundException;
 import lv.pakit.model.Client;
-import lv.pakit.model.Commodity;
 import lv.pakit.model.Declaration;
-import lv.pakit.model.PackageItem;
 import lv.pakit.repo.IDeclarationRepo;
-import lv.pakit.repo.IPackageItemRepo;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,114 +22,86 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DeclarationService {
 
-    private final IDeclarationRepo declarationRepo;
-    private final IPackageItemRepo packageItemRepo;
-
-    private final CommodityService commodityService;
     private final ClientService clientService;
     private final PackageItemService packageItemService;
+    private final IDeclarationRepo declarationRepo;
 
-
-    public DeclarationRequest  defaultDeclaration() {
-        return DeclarationRequest.builder()
-                .identifierCode("%s %s".formatted(LocalDate.now().getMonth(), LocalDate.now().getYear()))
-                .date(LocalDate.now().toString())
-                .packageItems(List.of(new PackageItemRequest()))
-                .build();
-    }
-
-    public void create(DeclarationRequest request) {
-
-        Client client = clientService.requireById(request.getClientId());
-
-        Declaration declaration = Declaration.builder()
-                .client(client)
-                .identifierCode(request.getIdentifierCode())
-                .senderName(request.getSenderName())
-                .senderAddress(request.getSenderAddress())
-                .senderCountryCode(request.getSenderCountryCode())
-                .senderPhoneNumber(request.getSenderPhoneNumber())
-                .receiverName(request.getReceiverName())
-                .receiverAddress(request.getReceiverAddress())
-                .receiverCountryCode(request.getReceiverCountryCode())
-                .receiverPhoneNumber(request.getReceiverPhoneNumber())
-                .totalWeight(request.getTotalWeight())
-                .totalValue(request.getTotalValue())
-                .date(request.getDate())
-                .build();
-
-        declarationRepo.save(declaration);
-
-        List<PackageItem> packageItems = new ArrayList<>();
-        for (PackageItemRequest itemRequest : request.getPackageItems()) {
-            Commodity commodity = commodityService.requireById(itemRequest.getCommodity().getCommodityId());
-
-            PackageItem item = PackageItem.builder()
-                    .declaration(declaration)
-                    .commodity(commodity)
-                    .quantity(itemRequest.getQuantity())
-                    .netWeight(itemRequest.getNetWeight())
-                    .value(itemRequest.getValue())
-                    .used(itemRequest.isUsed())
-                    .build();
-
-            packageItems.add(item);
-        }
-
-        packageItemService.saveAll(packageItems);
-    }
-
-//    public void updateById(long id, DeclarationRequest request) {
-//        Declaration declaration = requireDeclarationById(id);
-//
-//        //TODO check if same declaration does not exist
-//
-//        declaration.setClient(request.getClient());
-//        declaration.setIdentifierCode(request.getIdentifierCode());
-//        declaration.setSenderName(request.getSenderName());
-//        declaration.setSenderAddress(request.getSenderAddress());
-//        declaration.setSenderCountryCode(request.getSenderCountryCode());
-//        declaration.setSenderPhoneNumber(request.getSenderPhoneNumber());
-//        declaration.setReceiverName(request.getReceiverName());
-//        declaration.setReceiverAddress(request.getReceiverAddress());
-//        declaration.setReceiverCountryCode(request.getReceiverCountryCode());
-//        declaration.setReceiverPhoneNumber(request.getReceiverPhoneNumber());
-//        declaration.setTotalWeight(request.getTotalWeight());
-//        declaration.setTotalValue(request.getTotalValue());
-//        declaration.setDate(request.getDate());
-//
-//        declarationRepo.save(declaration);
-//    }
-
-    public DeclarationResponse fetchById(long id) {
-        Declaration declaration = requireDeclarationById(id);
+    public DeclarationResponse fetchById(long declarationId) {
+        Declaration declaration = requireById(declarationId);
 
         return mapToDto(declaration);
     }
 
-    public List<DeclarationResponse> retriveAll() {
-        return declarationRepo.findAll().stream()
+    public List<DeclarationResponse> search(DeclarationSearchRequest request) {
+        Declaration declarationExample = mapExampleDeclaration(request);
+        ExampleMatcher exampleMatcher = mapExampleMatcher(request);
+
+        return declarationRepo.findAll(Example.of(declarationExample, exampleMatcher)).stream()
                 .map(this::mapToDto)
                 .toList();
     }
 
-    public void deleteById(long id) {
-        packageItemRepo.findByDeclarationDeclarationId(id);
-        declarationRepo.deleteById(id);
+    private Declaration mapExampleDeclaration(DeclarationSearchRequest request) {
+        Declaration declarationExample = Declaration.builder()
+                .identifierCode(blankToNull(request.getIdentifierCode()))
+                .senderName(blankToNull(request.getSenderName()))
+                .senderAddress(blankToNull(request.getSenderAddress()))
+                .senderCountryCode(blankToNull(request.getSenderCountryCode()))
+                .senderPhoneNumber(blankToNull(request.getSenderPhoneNumber()))
+                .receiverName(blankToNull(request.getReceiverName()))
+                .receiverAddress(blankToNull(request.getReceiverAddress()))
+                .receiverCountryCode(blankToNull(request.getReceiverCountryCode()))
+                .receiverPhoneNumber(blankToNull(request.getReceiverPhoneNumber()))
+                .totalWeight(Optional.ofNullable(request.getTotalWeight()).orElse(0d))
+                .totalValue(Optional.ofNullable(request.getTotalValue()).orElse(0d))
+                .build();
 
-        requireDeclarationById(id);
-        declarationRepo.deleteById(id);
+        return declarationExample;
+    }
+
+    private ExampleMatcher mapExampleMatcher(DeclarationSearchRequest request) {
+        List<String> ignoredPaths = new ArrayList<>(List.of("declarationId", "clientId"));
+
+        if (request.getTotalWeight() == null) {
+            ignoredPaths.add("totalWeight");
+        }
+        if (request.getTotalValue() == null) {
+            ignoredPaths.add("totalValue");
+        }
+
+        return ExampleMatcher.matching()
+                .withIgnorePaths(ignoredPaths.toArray(String[]::new));
+    }
+
+    @Transactional
+    public void create(DeclarationRequest request) {
+        Declaration declaration = declarationRepo.save(mapFromDto(request).build());
+
+        packageItemService.createAll(declaration.getDeclarationId(), request.getPackageItems());
+    }
+
+    @Transactional
+    public void updateById(long declarationId, DeclarationRequest request) {
+        requireById(declarationId);
+        Declaration declaration = mapFromDto(request)
+                .declarationId(declarationId)
+                .build();
+
+        declarationRepo.save(declaration);
+        packageItemService.createAll(declarationId, request.getPackageItems());
+    }
+
+    public void deleteById(long declarationId) {
+        declarationRepo.deleteById(declarationId);
     }
 
     public DeclarationResponse mapToDto(Declaration declaration) {
-        ClientResponse client = Optional.ofNullable(declaration.getClient())
-                .map(clientService::mapToDto)
-                .orElse(null);
-
+        Client client = declaration.getClient();
 
         return DeclarationResponse.builder()
                 .declarationId(declaration.getDeclarationId())
-                .client(client)
+                .clientId(client.getClientId())
+                .clientFullName(client.getFullName())
                 .identifierCode(declaration.getIdentifierCode())
                 .senderName(declaration.getSenderName())
                 .senderAddress(declaration.getSenderAddress())
@@ -144,81 +114,35 @@ public class DeclarationService {
                 .totalWeight(declaration.getTotalWeight())
                 .totalValue(declaration.getTotalValue())
                 .date(declaration.getDate())
+                .packageItems(packageItemService.fetchByDeclarationId(declaration.getDeclarationId()))
                 .build();
     }
 
-    private Declaration requireDeclarationById(long id) {
+    private Declaration.DeclarationBuilder mapFromDto(DeclarationRequest request) {
+        Client client = clientService.requireById(request.getClientId());
+
+        return Declaration.builder()
+                .client(client)
+                .identifierCode(request.getIdentifierCode())
+                .senderName(request.getSenderName())
+                .senderAddress(request.getSenderAddress())
+                .senderCountryCode(request.getSenderCountryCode())
+                .senderPhoneNumber(request.getSenderPhoneNumber())
+                .receiverName(request.getReceiverName())
+                .receiverAddress(request.getReceiverAddress())
+                .receiverCountryCode(request.getReceiverCountryCode())
+                .receiverPhoneNumber(request.getReceiverPhoneNumber())
+                .date(request.getDate())
+                .totalWeight(packageItemService.calculateTotalWeight(request.getPackageItems()))
+                .totalValue(packageItemService.calculateTotalValue(request.getPackageItems()));
+    }
+
+    public Declaration requireById(long id) {
         return declarationRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Declaration with id (" + id + ") not found!"));
     }
 
-    public List<DeclarationResponse> search(DeclarationSearchRequest request) {
-        if (request.getIdentifierCode() != null && !request.getIdentifierCode().isBlank()) {
-            return declarationRepo.findByIdentifierCodeContainingIgnoreCase(request.getIdentifierCode())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        if (request.getClientName() != null && !request.getClientName().isBlank()) {
-            return declarationRepo.findByClientFullNameContainingIgnoreCase(request.getClientName())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        if (request.getSenderName() != null && !request.getSenderName().isBlank()) {
-            return declarationRepo.findBySenderNameContainingIgnoreCase(request.getSenderName())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        if (request.getSenderAddress() != null && !request.getSenderAddress().isBlank()) {
-            return declarationRepo.findBySenderAddressContainingIgnoreCase(request.getSenderAddress())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        if (request.getSenderCountryCode() != null && !request.getSenderCountryCode().isBlank()) {
-            return declarationRepo.findBySenderCountryCodeContainingIgnoreCase(request.getSenderCountryCode())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        if (request.getSenderPhoneNumber() != null && !request.getSenderPhoneNumber().isBlank()) {
-            return declarationRepo.findBySenderPhoneNumberContainingIgnoreCase(request.getSenderPhoneNumber())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        if (request.getReceiverName() != null && !request.getReceiverName().isBlank()) {
-            return declarationRepo.findByReceiverNameContainingIgnoreCase(request.getReceiverName())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        if (request.getReceiverAddress() != null && !request.getReceiverAddress().isBlank()) {
-            return declarationRepo.findByReceiverAddressContainingIgnoreCase(request.getReceiverAddress())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        if (request.getReceiverCountryCode() != null && !request.getReceiverCountryCode().isBlank()) {
-            return declarationRepo.findByReceiverCountryCodeContainingIgnoreCase(request.getReceiverCountryCode())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        if (request.getReceiverPhoneNumber() != null && !request.getReceiverPhoneNumber().isBlank()) {
-            return declarationRepo.findByReceiverPhoneNumberContainingIgnoreCase(request.getReceiverPhoneNumber())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        if (request.getTotalWeight() != null && !request.getTotalWeight().isNaN()) {
-            return declarationRepo.findByTotalWeight(request.getTotalWeight())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        if (request.getTotalValue() != null && !request.getTotalValue().isNaN()) {
-            return declarationRepo.findByTotalValue(request.getTotalValue())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        if (request.getDate() != null && !request.getDate().isBlank()) {
-            return declarationRepo.findByDateContainingIgnoreCase(request.getDate())
-                    .stream().map(this::mapToDto).toList();
-        }
-
-        return declarationRepo.findAll().stream().map(this::mapToDto).toList();
+    private String blankToNull(String value) {
+        return StringUtils.hasLength(value) ? value : null;
     }
-
 }
