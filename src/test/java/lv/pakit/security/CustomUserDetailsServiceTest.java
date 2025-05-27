@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class CustomUserDetailsServiceTest {
+class CustomUserDetailsServiceTest {
 
     @Autowired
     private CustomUserDetailsService service;
@@ -22,7 +22,7 @@ public class CustomUserDetailsServiceTest {
     private IClientRepo clientRepo;
 
     @Test
-    public void shouldLoadUserByUsername() {
+    void shouldLoadUserByUsername() {
         Client client = new Client();
         client.setUsername("Valids");
         client.setPassword("hashed-password");
@@ -36,7 +36,7 @@ public class CustomUserDetailsServiceTest {
     }
 
     @Test
-    public void shouldThrowIfUserNotFound() {
+    void shouldThrowIfUserNotFound() {
         when(clientRepo.findByUsername("Testeris")).thenReturn(Optional.empty());
 
         assertThrows(UsernameNotFoundException.class, () -> {
