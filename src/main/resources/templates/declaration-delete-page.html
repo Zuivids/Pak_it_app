@@ -62,31 +62,32 @@
     <h2 class="mb-3">Confirm Delete</h2>
     <p class="mb-4">Are you sure you want to delete the following declaration?</p>
 
-    <div class="container my-4 p-4 rounded" style="background-color: #4b0c0c; color: white;">
-        <div class="row mb-4 justify-content-center">
-            <div class="col-md-4 bg-light text-dark rounded mb-3 mb-md-0">
+    <div class="bg-white p-4 rounded shadow-sm">
+        <div class="row mb-4">
+            <div class="col-md-6">
                 <h5>Sender Info</h5>
-                <p><strong>Sender name:</strong> <span th:text="${declaration.senderName}"></span></p>
-                <p><strong>Sender phone number:</strong> <span th:text="${declaration.senderPhoneNumber}"></span></p>
-                <p><strong>Sender address:</strong> <span th:text="${declaration.senderAddress}"></span></p>
-                <p><strong>Sender country code:</strong> <span th:text="${declaration.senderCountryCode}"></span></p>
+                <p><strong>Name:</strong> <span th:text="${declaration.senderName}"></span></p>
+                <p><strong>Phone:</strong> <span th:text="${declaration.senderPhoneNumber}"></span></p>
+                <p><strong>Address:</strong> <span th:text="${declaration.senderAddress}"></span></p>
+                <p><strong>Country Code:</strong> <span th:text="${declaration.senderCountryCode}"></span></p>
             </div>
-            <div class="col-md-1"></div>
-            <div class="col-md-4 bg-light text-dark rounded">
+            <div class="col-md-6">
                 <h5>Receiver Info</h5>
-                <p><strong>Receiver name:</strong> <span th:text="${declaration.receiverName}"></span></p>
-                <p><strong>Receiver phone number:</strong> <span th:text="${declaration.receiverPhoneNumber}"></span></p>
-                <p><strong>Receiver address:</strong> <span th:text="${declaration.receiverAddress}"></span></p>
-                <p><strong>Receiver country code:</strong> <span th:text="${declaration.receiverCountryCode}"></span></p>
+                <p><strong>Name:</strong> <span th:text="${declaration.receiverName}"></span></p>
+                <p><strong>Phone:</strong> <span th:text="${declaration.receiverPhoneNumber}"></span></p>
+                <p><strong>Address:</strong> <span th:text="${declaration.receiverAddress}"></span></p>
+                <p><strong>Country Code:</strong> <span th:text="${declaration.receiverCountryCode}"></span></p>
             </div>
         </div>
 
-        <div class="mb-4">
-            <h5>Package Items</h5>
-            <table class="table table-bordered table-light text-dark">
-                <thead>
+        <h5 class="mt-3">Package Items</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered table-light">
+                <thead class="table-secondary text-center">
                 <tr>
-                    <th>Commodity</th>
+                    <td></td>
+                    <th>Commodity Code</th>
+                    <th>Description</th>
                     <th>Quantity</th>
                     <th>Net Weight</th>
                     <th>Value</th>
@@ -94,40 +95,48 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${packageItems}">
-                    <td th:text="${item.commodity.commodityCode + ' - ' + item.commodity.description}"></td>
+                <tr th:each="item, iterStat : ${declaration.packageItems}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${item.commodity.commodityCode}"></td>
+                    <td th:text="${item.commodity.description}"></td>
                     <td th:text="${item.quantity}"></td>
                     <td th:text="${item.netWeight}"></td>
                     <td th:text="${item.value}"></td>
-                    <td>
-                        <input type="checkbox" th:checked="${item.used}" disabled>
+                    <td class="text-center">
+                        <input type="checkbox" th:checked="${item.used}" disabled />
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="row text-dark">
-            <div class="col-md-2 bg-light rounded mb-1">
-                <p><strong>ID code:</strong> <span th:text="${declaration.identifierCode}"></span></p>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <p><strong>ID Code:</strong> <span th:text="${declaration.identifierCode}"></span></p>
             </div>
-            <div class="col-md-2 bg-light rounded mb-1">
+            <div class="col-md-4">
                 <p><strong>Date:</strong> <span th:text="${declaration.date}"></span></p>
             </div>
-            <div class="col-md-2 bg-light rounded mb-1 ms-auto">
-                <p><strong>Total gross weight:</strong> <span th:text="${declaration.totalWeight}"></span></p>
-            </div>
-            <div class="col-md-2 bg-light rounded mb-1">
-                <p><strong>Total value:</strong> <span th:text="${declaration.totalValue}"></span></p>
+            <div class="col-md-4">
+                <p><strong>Client ID:</strong> <span th:text="${declaration.clientId}"></span></p>
             </div>
         </div>
-    </div>
 
-    <div id="errorMessage" class="text-danger mb-3"></div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <p><strong>Total Weight:</strong> <span th:text="${declaration.totalWeight}"></span></p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Total Value:</strong> <span th:text="${declaration.totalValue}"></span></p>
+            </div>
+        </div>
 
-    <div class="d-flex gap-3 mb-4">
-        <button type="button" class="btn btn-danger" onclick="deleteDeclaration()" th:data-id="${declaration.declarationId}">Delete</button>
-        <a th:href="@{/declaration}" class="btn btn-outline-secondary">Cancel</a>
+        <div id="errorMessage" class="text-danger mb-3"></div>
+
+        <div class="d-flex gap-3 mt-4">
+            <button type="button" class="btn btn-danger" onclick="deleteDeclaration()" th:data-id="${declaration.declarationId}">Delete</button>
+            <a th:href="@{/declaration}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
     </div>
 </main>
 
