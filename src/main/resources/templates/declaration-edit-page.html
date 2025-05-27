@@ -141,16 +141,39 @@
                     <tbody>
                     <tr th:each="item, iterStat : ${packageItems}">
                         <td th:text="${iterStat.index + 1}"></td>
-                        <td th:text="${item.commodity.commodityCode}"></td>
-                        <td th:text="${item.commodity.description}"></td>
-                        <td th:text="${item.quantity}"></td>
-                        <td th:text="${item.netWeight}"></td>
-                        <td th:text="${item.value}"></td>
+                        <td>
+                            <input type="text" class="form-control"
+                                   th:name="|packageItems[${iterStat.index}].commodity.commodityCode|"
+                                   th:value="${item.commodity.commodityCode}" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control"
+                                   th:name="|packageItems[${iterStat.index}].commodity.description|"
+                                   th:value="${item.commodity.description}" />
+                        </td>
+                        <td>
+                            <input type="number" class="form-control"
+                                   th:name="|packageItems[${iterStat.index}].quantity|"
+                                   th:value="${item.quantity}" />
+                        </td>
+                        <td>
+                            <input type="number" step="any" class="form-control"
+                                   th:name="|packageItems[${iterStat.index}].netWeight|"
+                                   th:value="${item.netWeight}" />
+                        </td>
+                        <td>
+                            <input type="number" step="any" class="form-control"
+                                   th:name="|packageItems[${iterStat.index}].value|"
+                                   th:value="${item.value}" />
+                        </td>
                         <td class="text-center">
-                            <input type="checkbox" th:checked="${item.used}" />
+                            <input type="hidden" th:name="|packageItems[${iterStat.index}].used|" value="false" />
+                            <input type="checkbox" class="form-check-input"
+                                   th:name="|packageItems[${iterStat.index}].used|"
+                                   value="true" th:checked="${item.used}" />
                         </td>
                     </tr>
-                    <tr th:if="${packageItems.isEmpty()}">
+                    <tr th:if="${packageItems == null || packageItems.isEmpty()}">
                         <td colspan="7" class="text-center">No package items found.</td>
                     </tr>
                     </tbody>
@@ -210,6 +233,29 @@
 <script>
     const editDeclaration = () => {
         const url = $("#editDeclarationForm").attr('action');
+        const packageItems = [];
+        $("tbody tr").each(function () {
+            const row = $(this);
+            const commodityCode = row.find("input[name*='commodity.commodityCode']").val();
+            const description = row.find("input[name*='commodity.description']").val();
+            const quantity = row.find("input[name*='quantity']").val();
+            const netWeight = row.find("input[name*='netWeight']").val();
+            const value = row.find("input[name*='value']").val();
+            const used = row.find("input[type='checkbox']").prop("checked");
+
+            if (commodityCode !== undefined) {
+                packageItems.push({
+                    commodity: {
+                        commodityCode: commodityCode,
+                        description: description
+                    },
+                    quantity: parseFloat(quantity),
+                    netWeight: parseFloat(netWeight),
+                    value: parseFloat(value),
+                    used: used
+                });
+            }
+        });
         const request = {
             declarationSenderName: $("#senderName").val(),
             declarationSenderPhoneNumber: $("#senderPhoneNumber").val(),
@@ -221,7 +267,7 @@
             declarationReceiverAddress: $("#receiverAddress").val(),
             declarationReceiverCountryCode: $("#receiverCountryCode").val(),
 
-            <!--PackgeItems-->
+            packageItems: packageItems,
 
             declarationIdentifierCode: $("#identifierCode").val(),
             declarationDate: $("#date").val(),
