@@ -133,7 +133,7 @@ class CommodityServiceTests {
     }
 
     @Test
-    void fetchByQueryShouldReturnAll_whenQueryEmpty() {
+    void fetchByQueryShouldReturnAllWhenQueryEmpty() {
         List<Commodity> all = List.of(
                 buildCommodity(888L, "8888811111", "Mobile Charger"),
                 buildCommodity(777L, "7777711111", "Earphones Charger"),
@@ -146,7 +146,7 @@ class CommodityServiceTests {
     }
 
     @Test
-    void fetchAll_shouldReturnAllMapped() {
+    void fetchAllShouldReturnAllMapped() {
         List<Commodity> all = List.of(
                 buildCommodity(123L, "1212121212", "Boots"),
                 buildCommodity(321L, "2323232323", "Used Boots")
