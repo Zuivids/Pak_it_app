@@ -1,18 +1,20 @@
 package lv.pakit.dto.request.packageItem;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import lv.pakit.model.Commodity;
-import lv.pakit.model.Declaration;
 
 @Getter
 @Setter
 public class PackageItemRequest {
 
-    private Commodity commodity;
-    private Declaration declarationId;
-    private int quantity;
-    private double netWeight;
-    private double value;
+    @NotNull
+    private Long commodityId;
+    @NotNull
+    private Integer quantity;
+    @NotNull
+    private Double netWeight;
+    @NotNull
+    private Double value;
     private boolean used;
 }

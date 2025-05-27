@@ -10,4 +10,6 @@ import java.util.List;
 public interface IPackageItemRepo extends JpaRepository<PackageItem, Long> {
 
     List<PackageItem> findByDeclarationDeclarationId(long declarationId);
+
+    List<PackageItem> findByDeclarationId(long declarationId);
 }

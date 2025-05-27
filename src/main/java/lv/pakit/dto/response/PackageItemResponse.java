@@ -12,7 +12,7 @@ import lv.pakit.model.Commodity;
 public class PackageItemResponse {
 
     private long packageItemId;
-    private Commodity commodity;
+    private CommodityResponse commodity;
     private long declarationId;
     private int quantity;
     private double netWeight;
