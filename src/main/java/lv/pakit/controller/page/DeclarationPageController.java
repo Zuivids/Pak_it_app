@@ -21,7 +21,6 @@ public class DeclarationPageController extends BasePageController {
     private final DeclarationService declarationService;
     private final CommodityService commodityService;
     private final ClientService clientService;
-    private final PackageItemService packageItemService;
 
     @GetMapping("/declaration")
     public String getAllDeclarations(@Valid @ModelAttribute(value = "query") DeclarationSearchRequest request,
@@ -51,7 +50,8 @@ public class DeclarationPageController extends BasePageController {
     @GetMapping("/declaration/{id}/edit")
     public String showDeclarationEditForm(@PathVariable("id") long id, Model model) {
         addDeclarationToModel(id, model);
-        model.addAttribute("packageItems", packageItemService.fetchByDeclarationId(id));
+        model.addAttribute("commodities", commodityService.fetchAll());
+        model.addAttribute("clients", clientService.fetchAll());
         return "declaration-edit-page";
     }
 

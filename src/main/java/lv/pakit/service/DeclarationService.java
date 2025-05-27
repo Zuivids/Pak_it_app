@@ -1,5 +1,6 @@
 package lv.pakit.service;
 
+import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.request.declaration.DeclarationRequest;
@@ -10,14 +11,11 @@ import lv.pakit.model.Client;
 import lv.pakit.model.Declaration;
 import lv.pakit.repo.IDeclarationRepo;
 import lv.pakit.repo.IPackageItemRepo;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,42 +33,50 @@ public class DeclarationService {
     }
 
     public List<DeclarationResponse> search(DeclarationSearchRequest request) {
-        Declaration declarationExample = mapExampleDeclaration(request);
-        ExampleMatcher exampleMatcher = mapExampleMatcher(request);
-
-        return declarationRepo.findAll(Example.of(declarationExample, exampleMatcher)).stream()
+        return declarationRepo.findAll(matchesSearchRequest(request)).stream()
                 .map(this::mapToDto)
                 .toList();
     }
 
-    private Declaration mapExampleDeclaration(DeclarationSearchRequest request) {
-        return Declaration.builder()
-                .identifierCode(blankToNull(request.getIdentifierCode()))
-                .senderName(blankToNull(request.getSenderName()))
-                .senderAddress(blankToNull(request.getSenderAddress()))
-                .senderCountryCode(blankToNull(request.getSenderCountryCode()))
-                .senderPhoneNumber(blankToNull(request.getSenderPhoneNumber()))
-                .receiverName(blankToNull(request.getReceiverName()))
-                .receiverAddress(blankToNull(request.getReceiverAddress()))
-                .receiverCountryCode(blankToNull(request.getReceiverCountryCode()))
-                .receiverPhoneNumber(blankToNull(request.getReceiverPhoneNumber()))
-                .totalWeight(Optional.ofNullable(request.getTotalWeight()).orElse(0d))
-                .totalValue(Optional.ofNullable(request.getTotalValue()).orElse(0d))
-                .build();
+    private Specification<Declaration> matchesSearchRequest(DeclarationSearchRequest request) {
+        return (root, cq, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            addValueLike(predicates, root, cb, "identifierCode", request.getIdentifierCode());
+            addValueLike(predicates, root, cb, "senderName", request.getSenderName());
+            addValueLike(predicates, root, cb, "senderAddress", request.getSenderAddress());
+            addValueLike(predicates, root, cb, "senderCountryCode", request.getSenderCountryCode());
+            addValueLike(predicates, root, cb, "senderPhoneNumber", request.getSenderPhoneNumber());
+            addValueLike(predicates, root, cb, "receiverName", request.getReceiverName());
+            addValueLike(predicates, root, cb, "receiverAddress", request.getReceiverAddress());
+            addValueLike(predicates, root, cb, "receiverCountryCode", request.getReceiverCountryCode());
+            addValueLike(predicates, root, cb, "receiverPhoneNumber", request.getReceiverPhoneNumber());
+            addValueEqualTo(predicates, root, cb, "totalWeight", request.getTotalWeight());
+            addValueEqualTo(predicates, root, cb, "totalValue", request.getTotalValue());
+            addValueLike(predicates, root, cb, "date", request.getDate());
+            addClientNameLike(predicates, root, cb, request);
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
     }
 
-    private ExampleMatcher mapExampleMatcher(DeclarationSearchRequest request) {
-        List<String> ignoredPaths = new ArrayList<>(List.of("declarationId", "clientId"));
-
-        if (request.getTotalWeight() == null) {
-            ignoredPaths.add("totalWeight");
+    private void addClientNameLike(List<Predicate> predicates, Root<Declaration> root, CriteriaBuilder cb, DeclarationSearchRequest request) {
+        if (request.getClientName() != null) {
+            Join<Declaration, Client> declarationClient = root.join("client");
+            predicates.add(cb.like(declarationClient.get("fullName"), "%" + request.getClientName() + "%"));
         }
-        if (request.getTotalValue() == null) {
-            ignoredPaths.add("totalValue");
-        }
+    }
 
-        return ExampleMatcher.matching()
-                .withIgnorePaths(ignoredPaths.toArray(String[]::new));
+    private void addValueEqualTo(List<Predicate> predicates, Root<Declaration> root, CriteriaBuilder cb, String field, Object value) {
+        if (value != null) {
+            predicates.add(cb.equal(root.get(field), value));
+        }
+    }
+
+    private void addValueLike(List<Predicate> predicates, Root<Declaration> root, CriteriaBuilder cb, String field, String value) {
+        if (value != null) {
+            predicates.add(cb.like(root.get(field), "%" + value + "%"));
+        }
     }
 
     @Transactional
@@ -140,9 +146,5 @@ public class DeclarationService {
     public Declaration requireById(long id) {
         return declarationRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Declaration with id (" + id + ") not found!"));
-    }
-
-    private String blankToNull(String value) {
-        return StringUtils.hasLength(value) ? value : null;
     }
 }
