@@ -61,7 +61,7 @@ public class DeclarationService {
     }
 
     private void addClientNameLike(List<Predicate> predicates, Root<Declaration> root, CriteriaBuilder cb, DeclarationSearchRequest request) {
-        if (request.getClientName() != null) {
+        if (request.getClientName() != null && !request.getClientName().isEmpty()) {
             Join<Declaration, Client> declarationClient = root.join("client");
             predicates.add(cb.like(declarationClient.get("fullName"), "%" + request.getClientName() + "%"));
         }
@@ -74,7 +74,7 @@ public class DeclarationService {
     }
 
     private void addValueLike(List<Predicate> predicates, Root<Declaration> root, CriteriaBuilder cb, String field, String value) {
-        if (value != null) {
+        if (value != null && !value.isEmpty()) {
             predicates.add(cb.like(root.get(field), "%" + value + "%"));
         }
     }

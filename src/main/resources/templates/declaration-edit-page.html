@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="fragments/layout :: headerFragment">
+<head th:insert="~{fragments/layout :: headerFragment}">
 </head>
 
 <body class="bg-light">
@@ -114,33 +114,61 @@
                     <table class="table table-bordered table-light">
                         <thead class="table-secondary text-center">
                         <tr>
-                            <th></th>
-                            <th>Code</th>
-                            <th>Description</th>
+                            <th>Commodity</th>
                             <th>Quantity</th>
                             <th>Net Weight</th>
                             <th>Value</th>
                             <th>Used</th>
+                            <th></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr th:each="item, iterStat : ${packageItems}">
-                            <td th:text="${iterStat.index + 1}"></td>
-                            <td><input type="text" class="form-control" th:name="|packageItems[${iterStat.index}].commodity.commodityCode|" th:value="${item.commodity.commodityCode}" /></td>
-                            <td><input type="text" class="form-control" th:name="|packageItems[${iterStat.index}].commodity.description|" th:value="${item.commodity.description}" /></td>
+                        <tbody id="package-items-body">
+                        <tr id="template-row" class="d-none">
+                            <td>
+                                <select class="form-select commodity-select">
+                                    <option value="">Select</option>
+                                    <option th:each="c : ${commodities}"
+                                            th:value="${c.commodityId}"
+                                            th:text="${c.commodityCode + ' - ' + c.description}"></option>
+                                </select>
+                            </td>
+                            <td><input type="number" class="form-control quantity-input"/></td>
+                            <td><input type="number" step="0.01" class="form-control net-weight"/></td>
+                            <td><input type="number" step="0.01" class="form-control item-value"/></td>
+                            <td class="text-center"><input type="checkbox" class="form-check-input used-checkbox"/></td>
+                            <td>
+                                <button type="button" class="btn btn-success" onclick="addPackageItemRow()">+</button>
+                                <button type="button" class="btn btn-danger" onclick="removePackageItemRow(this)">-</button>
+                            </td>
+                        </tr>
+                        <tr th:each="item, iterStat : ${declaration.packageItems}">
+                            <td>
+                                <select class="form-select" th:name="|packageItems[${iterStat.index}].commodityId|" th:value="${item.commodity.commodityId}">
+                                    <option value="">Select</option>
+                                    <option th:each="c : ${commodities}"
+                                            th:value="${c.commodityId}"
+                                            th:selected="${item.commodity.commodityId} == ${c.commodityId}"
+                                            th:text="${c.commodityCode + ' - ' + c.description}">
+                                    </option>
+                                </select>
+                            </td>
                             <td><input type="number" class="form-control" th:name="|packageItems[${iterStat.index}].quantity|" th:value="${item.quantity}" /></td>
                             <td><input type="number" step="any" class="form-control" th:name="|packageItems[${iterStat.index}].netWeight|" th:value="${item.netWeight}" /></td>
                             <td><input type="number" step="any" class="form-control" th:name="|packageItems[${iterStat.index}].value|" th:value="${item.value}" /></td>
                             <td class="text-center">
-                                <input type="hidden" th:name="|packageItems[${iterStat.index}].used|" value="false" />
                                 <input type="checkbox" class="form-check-input" th:name="|packageItems[${iterStat.index}].used|" value="true" th:checked="${item.used}" />
                             </td>
+                            <td>
+                                <button type="button" class="btn btn-success" onclick="addPackageItemRow()">+</button>
+                                <button type="button" class="btn btn-danger" onclick="removePackageItemRow(this)">-</button>
+                            </td>
                         </tr>
-                        <tr th:if="${packageItems == null || packageItems.isEmpty()}">
+                        <tr id="no-items-found-row" th:if="${declaration.packageItems == null || declaration.packageItems.isEmpty()}">
                             <td colspan="7" class="text-center">No package items found.</td>
                         </tr>
                         </tbody>
                     </table>
+                    <button type="button" class="btn btn-primary mt-2" onclick="addPackageItemRow()">Add Item</button>
                 </div>
             </div>
 
@@ -156,9 +184,10 @@
                     <input type="text" id="declarationDate" class="form-control" th:value="${declaration.date}">
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Client ID</label>
-                    <span id="clientId-error" class="text-danger"></span>
-                    <input type="text" id="clientId" class="form-control" th:value="${declaration.clientId}">
+                    <label class="form-label">Client</label>
+                    <span id="clientFullName-error" class="text-danger"></span>
+                    <input type="text" id="clientFullName" class="form-control" th:value="${declaration.clientFullName}" >
+                    <input type="hidden" name="clientId" th:value="${declaration.clientId}" />
                 </div>
             </div>
             <div class="row mb-3">
@@ -194,52 +223,77 @@
 </footer>
 
 <script>
+    function addPackageItemRow() {
+        const tbody = document.getElementById('package-items-body');
+        const template = document.getElementById('template-row');
+        const newRow = template.cloneNode(true);
+
+        newRow.classList.remove('d-none');
+        newRow.removeAttribute('id');
+
+        tbody.appendChild(newRow);
+        updatePackageItemNames();
+        $("#no-items-found-row").hide();
+    }
+
+    function removePackageItemRow(button) {
+        const row = button.closest('tr');
+        row.remove();
+        updatePackageItemNames();
+    }
+
+    function updatePackageItemNames() {
+        const rows = $("#package-items-body tr").not("#template-row").not("#no-items-found-row");
+        rows.forEach((row, index) => {
+            row.querySelectorAll('select, input').forEach(input => {
+                if (input.classList.contains('commodity-select')) {
+                    input.name = `packageItems[${index}].commodityId`;
+                } else if (input.classList.contains('quantity-input')) {
+                    input.name = `packageItems[${index}].quantity`;
+                } else if (input.classList.contains('net-weight')) {
+                    input.name = `packageItems[${index}].netWeight`;
+                } else if (input.classList.contains('item-value')) {
+                    input.name = `packageItems[${index}].value`;
+                } else if (input.classList.contains('used-checkbox')) {
+                    input.name = `packageItems[${index}].used`;
+                }
+            });
+        });
+    }
+
     const editDeclaration = () => {
         const url = $("#editDeclarationForm").attr('action');
         const csrfHeader = $("meta[name='_csrf_header']").attr("content");
         const csrfValue = $("meta[name='_csrf']").attr("content");
 
         const packageItems = [];
-        $("tbody tr").each(function () {
+        const rows = $("#package-items-body tr").not("#template-row").not("#no-items-found-row");
+        rows.each(function () {
             const row = $(this);
-            const commodityCode = row.find("input[name*='commodity.commodityCode']").val();
-            const description = row.find("input[name*='commodity.description']").val();
-            const quantity = row.find("input[name*='quantity']").val();
-            const netWeight = row.find("input[name*='netWeight']").val();
-            const value = row.find("input[name*='value']").val();
-            const used = row.find("input[type='checkbox']").prop("checked");
-
-            if (commodityCode !== undefined) {
-                packageItems.push({
-                    commodity: {
-                        commodityCode: commodityCode,
-                        description: description
-                    },
-                    quantity: parseFloat(quantity),
-                    netWeight: parseFloat(netWeight),
-                    value: parseFloat(value),
-                    used: used
-                });
-            }
+            packageItems.push({
+                commodityId: parseInt(row.find("select[name*='commodityId']").val()),
+                quantity: parseFloat(row.find("input[name*='quantity']").val()),
+                netWeight: parseFloat(row.find("input[name*='netWeight']").val()),
+                value: parseFloat(row.find("input[name*='value']").val()),
+                used: row.find("input[type='checkbox']").prop("checked")
+            });
         });
         const request = {
-            declarationSenderName: $("#senderName").val(),
-            declarationSenderPhoneNumber: $("#senderPhoneNumber").val(),
-            declarationSenderAddress: $("#senderAddress").val(),
-            declarationSenderCountryCode: $("#senderCountryCode").val(),
+            senderName: $("#senderName").val(),
+            senderPhoneNumber: $("#senderPhoneNumber").val(),
+            senderAddress: $("#senderAddress").val(),
+            senderCountryCode: $("#senderCountryCode").val(),
 
-            declarationReceiverName: $("#receiverName").val(),
-            declarationReceiverPhoneNumber: $("#receiverPhoneNumber").val(),
-            declarationReceiverAddress: $("#receiverAddress").val(),
-            declarationReceiverCountryCode: $("#receiverCountryCode").val(),
+            receiverName: $("#receiverName").val(),
+            receiverPhoneNumber: $("#receiverPhoneNumber").val(),
+            receiverAddress: $("#receiverAddress").val(),
+            receiverCountryCode: $("#receiverCountryCode").val(),
 
             packageItems: packageItems,
 
-            declarationIdentifierCode: $("#identifierCode").val(),
-            declarationDate: $("#date").val(),
-            declarationClientId: $("#clientId").val(),
-            declarationTotalWeight: $("#totalWeight").val(),
-            declarationTotalValue: $("#totalValue").val()
+            identifierCode: $("#identifierCode").val(),
+            date: $("#declarationDate").val(),
+            clientId: $("#clientId").val()
         };
 
         fetch(url, {
