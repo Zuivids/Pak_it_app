@@ -1,7 +1,7 @@
 package lv.pakit.security;
 
-import lv.pakit.model.Client;
-import lv.pakit.repo.IClientRepo;
+import lv.pakit.model.User;
+import lv.pakit.repo.IUserRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,15 +19,15 @@ class CustomUserDetailsServiceTest {
     @Autowired
     private CustomUserDetailsService service;
     @MockitoBean
-    private IClientRepo clientRepo;
+    private IUserRepo userRepo;
 
     @Test
     void shouldLoadUserByUsername() {
-        Client client = new Client();
-        client.setUsername("Valids");
-        client.setPassword("hashed-password");
+        User user = new User();
+        user.setUsername("Valids");
+        user.setPassword("hashed-password");
 
-        when(clientRepo.findByUsername("Valids")).thenReturn(Optional.of(client));
+        when(userRepo.findByUsername("Valids")).thenReturn(Optional.of(user));
 
         var userDetails = service.loadUserByUsername("Valids");
 
@@ -37,7 +37,7 @@ class CustomUserDetailsServiceTest {
 
     @Test
     void shouldThrowIfUserNotFound() {
-        when(clientRepo.findByUsername("Testeris")).thenReturn(Optional.empty());
+        when(userRepo.findByUsername("Testeris")).thenReturn(Optional.empty());
 
         assertThrows(UsernameNotFoundException.class, () -> {
             service.loadUserByUsername("Testeris");
