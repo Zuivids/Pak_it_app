@@ -9,15 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequiredArgsConstructor
-public class ClientPageController extends BasePageController {
+public class ClientPageController {
 
     private final ClientService clientService;
 
     @GetMapping("client")
     public String getAllClients(Model model) {
-        return handleErrors(() ->
-                        model.addAttribute("clients", clientService.fetchAll()),
-                "client-show-many-page", "client-show-many-page", model);
+        model.addAttribute("clients", clientService.fetchAll());
+        return "client-show-many-page";
     }
 
     @GetMapping("client/new")
@@ -27,15 +26,15 @@ public class ClientPageController extends BasePageController {
 
     @GetMapping("client/{id}/edit")
     public String editClient(@PathVariable("id") long id, Model model) {
-        return handleErrors(() ->
-                        model.addAttribute("client", clientService.fetchById(id)),
-                "client-edit-page", "client-edit-page", model);
+        model.addAttribute("client", clientService.fetchById(id));
+
+        return "client-edit-page";
     }
 
     @GetMapping("/client/{id}/delete")
     public String deleteClient(@PathVariable("id") long id, Model model) {
-        return handleErrors(() ->
-                        model.addAttribute("client", clientService.fetchById(id)),
-                "client-delete-page", "client-delete-page", model);
+        model.addAttribute("client", clientService.fetchById(id));
+
+        return "client-delete-page";
     }
 }
