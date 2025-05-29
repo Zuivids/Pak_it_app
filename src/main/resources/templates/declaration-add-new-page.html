@@ -126,9 +126,15 @@
                 <input type="text" id="date" name="date" th:value="${date}" class="form-control" />
             </div>
             <div class="col-md-4">
-                <label for="clientId" class="form-label fw-bold">Client ID</label>
+                <label for="clientId" class="form-label fw-bold">Client</label>
                 <span id="clientId-error" class="text-danger"></span>
-                <input type="text" id="clientId" name="clientId" th:value="${clientId}" class="form-control" />
+                <select id="clientId" name="clientId" class="form-select">
+                    <option value="">Select a client</option>
+                    <option th:each="client : ${clients}"
+                            th:value="${client.clientId}"
+                            th:text="${client.fullName}">
+                    </option>
+                </select>
             </div>
         </div>
 

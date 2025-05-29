@@ -184,10 +184,16 @@
                     <input type="text" id="declarationDate" class="form-control" th:value="${declaration.date}">
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Client</label>
-                    <span id="clientFullName-error" class="text-danger"></span>
-                    <input type="text" id="clientFullName" class="form-control" th:value="${declaration.clientFullName}" >
-                    <input type="hidden" name="clientId" th:value="${declaration.clientId}" />
+                    <label for="clientId" class="form-label fw-bold">Client</label>
+                    <span id="clientId-error" class="text-danger"></span>
+                    <select id="clientId" name="clientId" class="form-select">
+                        <option value="">Select a client</option>
+                        <option th:each="client : ${clients}"
+                                th:value="${client.clientId}"
+                                th:text="${client.fullName}"
+                                th:selected="${client.clientId} == ${declaration.clientId}">
+                        </option>
+                    </select>
                 </div>
             </div>
             <div class="row mb-3">
