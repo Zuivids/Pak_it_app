@@ -6,7 +6,6 @@ import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
 import lv.pakit.service.ClientService;
 import lv.pakit.service.CommodityService;
 import lv.pakit.service.DeclarationService;
-import lv.pakit.service.PackageItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,17 +25,22 @@ public class DeclarationPageController extends BasePageController {
     public String getAllDeclarations(@Valid @ModelAttribute(value = "query") DeclarationSearchRequest request,
                                      BindingResult bindingResult, Model model) {
         return handleErrors(
-            () -> model.addAttribute("declarations", declarationService.search(request)),
-            "declaration-show-many-page",
-            model,
-            bindingResult
+                () -> model.addAttribute("declarations", declarationService.search(request)),
+                "declaration-show-many-page",
+                "declaration-show-many-page",
+                model,
+                bindingResult
         );
     }
 
     @GetMapping("/declaration/{id}")
     public String getDeclarationById(@PathVariable long id, Model model) {
-        addDeclarationToModel(id, model);
-        return "declaration-show-one-page";
+        return handleErrors(
+                () -> addDeclarationToModel(id, model),
+                "declaration-show-one-page",
+                "declaration-show-one-page",
+                model
+        );
     }
 
     @GetMapping("/declaration/new")
@@ -49,16 +53,22 @@ public class DeclarationPageController extends BasePageController {
 
     @GetMapping("/declaration/{id}/edit")
     public String showDeclarationEditForm(@PathVariable("id") long id, Model model) {
-        addDeclarationToModel(id, model);
-        model.addAttribute("commodities", commodityService.fetchAll());
-        model.addAttribute("clients", clientService.fetchAll());
-        return "declaration-edit-page";
+        return handleErrors(
+                () -> {
+                    addDeclarationToModel(id, model);
+                    model.addAttribute("commodities", commodityService.fetchAll());
+                    model.addAttribute("clients", clientService.fetchAll());
+                }, "declaration-edit-page", "declaration-edit-page", model);
     }
 
     @GetMapping("/declaration/{id}/delete")
     public String showDeclarationDeleteForm(@PathVariable("id") long id, Model model) {
-        addDeclarationToModel(id, model);
-        return "declaration-delete-page";
+        return handleErrors(
+                () -> addDeclarationToModel(id, model),
+                "declaration-delete-page",
+                "declaration-delete-page",
+                model
+        );
     }
 
     private void addDeclarationToModel(long id, Model model) {
