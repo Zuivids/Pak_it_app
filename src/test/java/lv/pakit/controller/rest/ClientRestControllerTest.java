@@ -28,7 +28,8 @@ class ClientRestControllerTest {
     @MockitoBean
     private ClientService clientService;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     void saveClientShouldReturn200() throws Exception {
@@ -49,6 +50,17 @@ class ClientRestControllerTest {
     }
 
     @Test
+    void saveClientShouldReturn400WhenInvalid() throws Exception {
+        var request = new ClientCreateRequest();
+
+        mockMvc.perform(post("/client")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void editClientShouldReturn200() throws Exception {
         var request = new ClientUpdateRequest();
         request.setFullName("John Doe");
@@ -65,10 +77,29 @@ class ClientRestControllerTest {
     }
 
     @Test
+    void editClientShouldReturn400WhenInvalid() throws Exception {
+        var request = new ClientUpdateRequest();
+
+        mockMvc.perform(put("/client/1")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void deleteClientShouldReturn200() throws Exception {
-        mockMvc.perform(delete("/client/1/delete").with(csrf()))
+        mockMvc.perform(delete("/client/1/delete")
+                        .with(csrf()))
                 .andExpect(status().isOk());
 
         Mockito.verify(clientService).deleteById(1L);
+    }
+
+    @Test
+    void deleteClientShouldReturn400WhenInvalidId() throws Exception {
+        mockMvc.perform(delete("/client/invalid-id/delete")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest());
     }
 }

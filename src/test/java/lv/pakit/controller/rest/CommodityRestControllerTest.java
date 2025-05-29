@@ -46,6 +46,16 @@ class CommodityRestControllerTest {
     }
 
     @Test
+    void saveCommodityWithInvalidInputShouldReturn400() throws Exception {
+        var request = new CommodityRequest();
+
+        mockMvc.perform(post("/commodity")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+    @Test
     void editCommodityShouldReturn200() throws Exception {
         var request = new CommodityRequest();
         request.setCommodityCode("4444411111");
@@ -59,6 +69,16 @@ class CommodityRestControllerTest {
 
         verify(commodityService).updateById(Mockito.eq(44L), Mockito.refEq(request));
     }
+    @Test
+    void editCommodityWithInvalidInputShouldReturn400() throws Exception {
+        var request = new CommodityRequest();
+
+        mockMvc.perform(put("/commodity/44")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
 
     @Test
     void deleteCommodityShouldReturn200() throws Exception {
@@ -67,5 +87,12 @@ class CommodityRestControllerTest {
                 .andExpect(status().isOk());
 
         verify(commodityService).deleteById(7L);
+    }
+
+    @Test
+    void deleteCommodityWithInvalidIdShouldReturn400() throws Exception {
+        mockMvc.perform(delete("/commodity/invalid-id/delete")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest());
     }
 }

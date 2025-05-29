@@ -21,6 +21,7 @@ public class DeclarationPageController extends BasePageController {
     private final CommodityService commodityService;
     private final ClientService clientService;
 
+    @GetMapping("/declaration")
     public String getAllDeclarations(@Valid @ModelAttribute(value = "query") DeclarationSearchRequest request,
                                      BindingResult bindingResult, Model model) {
         return handleErrors(
