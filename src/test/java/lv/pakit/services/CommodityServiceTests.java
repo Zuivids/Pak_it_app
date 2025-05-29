@@ -146,6 +146,19 @@ class CommodityServiceTests {
     }
 
     @Test
+    void fetchByQueryShouldReturnAllWhenQueryIsNull() {
+        List<Commodity> all = List.of(
+                buildCommodity(888L, "8888811111", "Mobile Charger"),
+                buildCommodity(777L, "7777711111", "Earphones Charger"),
+                buildCommodity(555L, "5555511111", "Laptop Charger"));
+        when(commodityRepo.findAll()).thenReturn(all);
+
+        List<CommodityResponse> response = commodityService.fetchByQuery(null);
+
+        assertEquals(3, response.size());
+    }
+
+    @Test
     void fetchAllShouldReturnAllMapped() {
         List<Commodity> all = List.of(
                 buildCommodity(123L, "1212121212", "Boots"),
