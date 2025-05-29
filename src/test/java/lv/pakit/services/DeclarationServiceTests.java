@@ -12,10 +12,9 @@ import lv.pakit.service.ClientService;
 import lv.pakit.service.DeclarationService;
 import lv.pakit.service.PackageItemService;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Example;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.Collections;
@@ -163,7 +162,7 @@ class DeclarationServiceTests {
                 .client(Client.builder().clientId(1L).fullName("Test Client").build())
                 .build();
 
-        when(declarationRepo.findAll(ArgumentMatchers.<Example<Declaration>>any()))
+        when(declarationRepo.findAll(any(Specification.class)))
                 .thenReturn(List.of(declaration));
         when(packageItemService.fetchByDeclarationId(1L)).thenReturn(Collections.emptyList());
 

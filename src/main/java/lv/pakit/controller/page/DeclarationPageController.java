@@ -21,7 +21,6 @@ public class DeclarationPageController extends BasePageController {
     private final CommodityService commodityService;
     private final ClientService clientService;
 
-    @GetMapping("/declaration")
     public String getAllDeclarations(@Valid @ModelAttribute(value = "query") DeclarationSearchRequest request,
                                      BindingResult bindingResult, Model model) {
         return handleErrors(
@@ -58,7 +57,11 @@ public class DeclarationPageController extends BasePageController {
                     addDeclarationToModel(id, model);
                     model.addAttribute("commodities", commodityService.fetchAll());
                     model.addAttribute("clients", clientService.fetchAll());
-                }, "declaration-edit-page", "declaration-edit-page", model);
+                },
+                "declaration-edit-page",
+                "declaration-edit-page",
+                model
+        );
     }
 
     @GetMapping("/declaration/{id}/delete")

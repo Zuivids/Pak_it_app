@@ -15,9 +15,9 @@ public class ClientPageController extends BasePageController {
 
     @GetMapping("client")
     public String getAllClients(Model model) {
-        return handleErrors(() -> {
-            model.addAttribute("clients", clientService.fetchAll());
-        }, "client-show-many-page", "client-show-many-page", model);
+        return handleErrors(() ->
+                        model.addAttribute("clients", clientService.fetchAll()),
+                "client-show-many-page", "client-show-many-page", model);
     }
 
     @GetMapping("client/new")
@@ -27,15 +27,15 @@ public class ClientPageController extends BasePageController {
 
     @GetMapping("client/{id}/edit")
     public String editClient(@PathVariable("id") long id, Model model) {
-        return handleErrors(() -> {
-            model.addAttribute("client", clientService.fetchById(id));
-        }, "client-edit-page", "client-edit-page", model);
+        return handleErrors(() ->
+                        model.addAttribute("client", clientService.fetchById(id)),
+                "client-edit-page", "client-edit-page", model);
     }
 
     @GetMapping("/client/{id}/delete")
     public String deleteClient(@PathVariable("id") long id, Model model) {
-        return handleErrors(() -> {
-            model.addAttribute("client", clientService.fetchById(id));
-        }, "client-delete-page", "client-delete-page", model);
+        return handleErrors(() ->
+                        model.addAttribute("client", clientService.fetchById(id)),
+                "client-delete-page", "client-delete-page", model);
     }
 }
