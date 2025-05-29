@@ -9,6 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
 
 @Configuration
 public class SecurityConfig {
@@ -19,27 +20,25 @@ public class SecurityConfig {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        XorCsrfTokenRequestAttributeHandler csrfRequestHandler = new XorCsrfTokenRequestAttributeHandler();
+        csrfRequestHandler.setCsrfRequestAttributeName(null);
+
         http
-                .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/auth/login", "/css/**", "/img/**").permitAll()
-                        .requestMatchers("/backoffice/**").authenticated()
-                        .requestMatchers("/declaration/**").authenticated()
-                        .requestMatchers("/commodity/**").authenticated()
-                        .requestMatchers("/client/**").authenticated()
+                        .anyRequest().authenticated()
                 )
-                .formLogin().disable()
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
-                .httpBasic().disable()
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .logoutSuccessUrl("/")
                         .permitAll()
-                );
+                )
+                .csrf((csrf) -> csrf.csrfTokenRequestHandler(csrfRequestHandler));
 
         return http.build();
     }
