@@ -43,8 +43,6 @@ class ClientPageControllerTest {
     void editClientShouldReturnEditPage() throws Exception {
         var dummyClient = ClientResponse.builder()
                 .clientId(321L)
-                .username("testeris")
-                .password("StrongPassword1!")
                 .email("testeris@inbox.lv")
                 .phoneNumber("+37211113333")
                 .fullName("Tests Testeris")
@@ -62,8 +60,6 @@ class ClientPageControllerTest {
     void deleteClientShouldReturnDeletePage() throws Exception {
         var mockClient = ClientResponse.builder()
                 .clientId(123L)
-                .username("testeris2")
-                .password("StrongPassword2!")
                 .email("navinbox@inbox.com")
                 .phoneNumber("+372111122222")
                 .fullName("Janis Testeris")

@@ -34,8 +34,6 @@ class ClientRestControllerTest {
     @Test
     void saveClientShouldReturn200() throws Exception {
         var request = new ClientCreateRequest();
-        request.setUsername("testuser");
-        request.setPassword("Pass123!");
         request.setEmail("testuser@example.com");
         request.setPhoneNumber("+37211113333");
         request.setFullName("John Doe");
