@@ -1,8 +1,8 @@
 package lv.pakit.security;
 
-import lv.pakit.model.Client;
-import lv.pakit.repo.IClientRepo;
+import lv.pakit.model.User;
 import lombok.RequiredArgsConstructor;
+import lv.pakit.repo.IUserRepo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final IClientRepo clientRepo;
+    private final IUserRepo userRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Client client = clientRepo.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Client not found: " + username));
-        return new CustomUserDetails(client);
+        User user = userRepo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+        return new CustomUserDetails(user);
     }
 }

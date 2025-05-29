@@ -1,6 +1,6 @@
 package lv.pakit.security;
 
-import lv.pakit.model.Client;
+import lv.pakit.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,14 +9,14 @@ import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
 
-    private final Client client;
+    private final User user;
 
-    public CustomUserDetails(Client client) {
-        this.client = client;
+    public CustomUserDetails(User user) {
+        this.user = user;
     }
 
-    public Client getClient() {
-        return client;
+    public User getUser() {
+        return user;
     }
 
     @Override
@@ -27,12 +27,12 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return client.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return client.getUsername();
+        return user.getUsername();
     }
 
     @Override

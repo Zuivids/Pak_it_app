@@ -31,8 +31,6 @@ public class ClientService {
 
     public void create(ClientCreateRequest request) {
         Client client = Client.builder()
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
                 .email(request.getEmail())
                 .phoneNumber(request.getPhoneNumber())
                 .fullName(request.getFullName())
@@ -58,8 +56,6 @@ public class ClientService {
     public ClientResponse mapToDto(Client client) {
         return ClientResponse.builder()
                 .clientId(client.getClientId())
-                .username(client.getUsername())
-                .password(client.getPassword())
                 .email(client.getEmail())
                 .phoneNumber(client.getPhoneNumber())
                 .fullName(client.getFullName())
