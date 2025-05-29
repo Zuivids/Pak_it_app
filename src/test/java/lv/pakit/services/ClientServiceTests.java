@@ -14,7 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
@@ -32,9 +31,6 @@ class ClientServiceTests {
     @MockitoBean
     private IClientRepo clientRepo;
 
-    @MockitoBean
-    private PasswordEncoder passwordEncoder;
-
     private Validator validator;
 
     @BeforeEach
@@ -46,8 +42,6 @@ class ClientServiceTests {
     private Client buildClient(Long id) {
         return Client.builder()
                 .clientId(id)
-                .username("testeris")
-                .password("StrongPassword1!")
                 .email("testeris@inbox.lv")
                 .phoneNumber("+37129292929")
                 .fullName("Tests Testeris")
@@ -61,8 +55,9 @@ class ClientServiceTests {
 
         ClientResponse result = clientService.fetchById(123L);
 
-        assertEquals("testeris", result.getUsername());
         assertEquals("testeris@inbox.lv", result.getEmail());
+        assertEquals("+37129292929", result.getPhoneNumber());
+        assertEquals("Tests Testeris", result.getFullName());
     }
 
     @Test
@@ -73,41 +68,34 @@ class ClientServiceTests {
         List<ClientResponse> result = clientService.fetchAll();
 
         assertEquals(2, result.size());
-        assertEquals("testeris", result.get(0).getUsername());
+        assertEquals("testeris@inbox.lv", result.get(0).getEmail());
     }
 
     @Test
     void clientCreateShouldSaveNewClient() {
         ClientCreateRequest request = new ClientCreateRequest();
-        request.setUsername("jaunais");
-        request.setPassword("VeryStrongPassword1!");
         request.setEmail("istais@inbox.lv");
         request.setPhoneNumber("+37129292999");
         request.setFullName("Jaunais Testeris");
 
-        Client dummySavedClient = new Client();
-        when(passwordEncoder.encode("VeryStrongPassword1!")).thenReturn("encodedPassword123");
-        when(clientRepo.save(any(Client.class))).thenReturn(dummySavedClient);
+        when(clientRepo.save(any(Client.class))).thenReturn(new Client());
 
         clientService.create(request);
 
-        verify(passwordEncoder, times(1)).encode("VeryStrongPassword1!");
         verify(clientRepo, times(1)).save(any(Client.class));
     }
 
     @Test
     void clientCreateShouldFailValidationOnInvalidFields() {
         ClientCreateRequest request = new ClientCreateRequest();
-        request.setUsername("??");
-        request.setPassword("neder");
         request.setEmail("nav-epasts");
         request.setPhoneNumber("abcd");
-        request.setFullName("12345");
+        request.setFullName("123");
 
         var violations = validator.validate(request);
 
         assertFalse(violations.isEmpty(), "Expected validation to fail for invalid input");
-        assertEquals(7, violations.size());
+        assertEquals(3, violations.size());
     }
 
     @Test
@@ -123,6 +111,8 @@ class ClientServiceTests {
         clientService.updateById(123L, update);
 
         assertEquals("neinbox@gmail.com", existing.getEmail());
+        assertEquals("+37129292777", existing.getPhoneNumber());
+        assertEquals("Uzlabotais Testeris", existing.getFullName());
         verify(clientRepo).save(existing);
     }
 
@@ -138,8 +128,6 @@ class ClientServiceTests {
         ClientResponse dto = clientService.mapToDto(client);
 
         assertEquals(client.getClientId(), dto.getClientId());
-        assertEquals(client.getUsername(), dto.getUsername());
-        assertEquals(client.getPassword(), dto.getPassword());
         assertEquals(client.getEmail(), dto.getEmail());
         assertEquals(client.getPhoneNumber(), dto.getPhoneNumber());
         assertEquals(client.getFullName(), dto.getFullName());
