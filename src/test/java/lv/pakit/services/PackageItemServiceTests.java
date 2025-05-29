@@ -113,6 +113,12 @@ class PackageItemServiceTests {
     }
 
     @Test
+    void createAllShouldDeletePreviousItems() {
+        packageItemService.createAll(123L, List.of());
+        verify(packageItemRepo).deleteByDeclarationId(123L);
+    }
+
+    @Test
     void calculateTotalWeightShouldSumCorrectly() {
         PackageItemRequest packageItem1 = new PackageItemRequest();
         packageItem1.setNetWeight(1.5);

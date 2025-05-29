@@ -159,4 +159,14 @@ class CommodityServiceTests {
         assertEquals(2, result.size());
         assertEquals("1212121212", result.get(0).getCommodityCode());
     }
+
+    @Test
+    void mapToDtoShouldCorrectlyMapFields() {
+        Commodity commodity = buildCommodity(999L, "9999999999", "Used Boots");
+        CommodityResponse response = commodityService.mapToDto(commodity);
+
+        assertEquals(999L, response.getCommodityId());
+        assertEquals("9999999999", response.getCommodityCode());
+        assertEquals("Used Boots", response.getDescription());
+    }
 }

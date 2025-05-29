@@ -133,6 +133,19 @@ class ClientServiceTests {
     }
 
     @Test
+    void mapToDtoShouldCorrectlyMapFields() {
+        Client client = buildClient(777L);
+        ClientResponse dto = clientService.mapToDto(client);
+
+        assertEquals(client.getClientId(), dto.getClientId());
+        assertEquals(client.getUsername(), dto.getUsername());
+        assertEquals(client.getPassword(), dto.getPassword());
+        assertEquals(client.getEmail(), dto.getEmail());
+        assertEquals(client.getPhoneNumber(), dto.getPhoneNumber());
+        assertEquals(client.getFullName(), dto.getFullName());
+    }
+
+    @Test
     void requireByIdShouldThrowWhenNotFound() {
         when(clientRepo.findById(99L)).thenReturn(Optional.empty());
 
