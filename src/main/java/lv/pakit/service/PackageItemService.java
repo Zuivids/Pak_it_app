@@ -25,6 +25,8 @@ public class PackageItemService {
     }
 
     public void createAll(long declarationId, List<PackageItemRequest> requests) {
+        packageItemRepo.deleteByDeclarationId(declarationId);
+
         List<PackageItem> packageItems = requests.stream()
                 .map((packageItemRequest -> mapFromDto(declarationId, packageItemRequest)))
                 .toList();
