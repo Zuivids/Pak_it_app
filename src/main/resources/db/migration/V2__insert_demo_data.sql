@@ -5,9 +5,9 @@ VALUES
   ('valids.ozolins@inbox.lv', 'Valdis Ozolins', '+37133338888'),
   ('karlis.kalnins@inbox.lv', 'Kārlis Kalniņš', '+37122228888');
 
-INSERT INTO `user` (username, password, phone_number, email)
+INSERT INTO `user` (username, password,  email)
 VALUES
-  ('admin', 'password', '+37111111111','admin@admin.lv');
+  ('admin', 'password', 'admin@admin.lv');
 
 INSERT INTO commodity (commodity_code, description)
 VALUES
