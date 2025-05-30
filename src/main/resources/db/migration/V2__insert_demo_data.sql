@@ -7,7 +7,7 @@ VALUES
 
 INSERT INTO `user` (username, password,  email)
 VALUES
-  ('admin', 'password', 'admin@admin.lv');
+  ('admin', '$2a$10$4Y.gamervmN3N7kKsKSzo.ZIJKL.kbUZVbceGRk3fCvp/ylGGPDrm', 'admin@admin.lv');
 
 INSERT INTO commodity (commodity_code, description)
 VALUES
