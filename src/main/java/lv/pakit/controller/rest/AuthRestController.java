@@ -30,30 +30,24 @@ public class AuthRestController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request, HttpServletRequest httpRequest) {
         try {
-            // Authenticate username + password
             Authentication rawAuth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
 
-            // Get the authenticated user (your UserDetails implementation)
             CustomUserDetails userDetails = (CustomUserDetails) rawAuth.getPrincipal();
 
-            // Get role from DB and wrap it in SimpleGrantedAuthority
-            String role = userDetails.getUser().getRole(); // ex: "ADMIN" or "USER"
+            String role = userDetails.getUser().getRole();
             List<GrantedAuthority> authorities = List.of(
                     new SimpleGrantedAuthority(role)
             );
 
-            // Create a new Authentication object with roles
             Authentication fullAuth = new UsernamePasswordAuthenticationToken(
                     userDetails, userDetails.getPassword(), authorities
             );
 
-            // Save auth into the security context
             SecurityContextHolder.getContext().setAuthentication(fullAuth);
             httpRequest.getSession().setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 
-            // Return role in response
             return ResponseEntity.ok(new LoginResponse("Pieslēgšanās veiksmīga!", userDetails.getUsername(), role));
 
         } catch (BadCredentialsException ex) {
