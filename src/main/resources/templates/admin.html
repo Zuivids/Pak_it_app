@@ -8,7 +8,7 @@
 
 <nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #6e0101">
     <div class="container">
-        <a class="navbar-brand" href="http://localhost:8080/admin">
+        <a class="navbar-brand" href="#">
             <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -66,102 +66,30 @@
 </nav>
 
 <main class="container py-5">
-    <h1 class="mb-4">Insert New Client</h1>
-    <form id="createClientForm" action="/client">
-        <div class="container">
-            <div class="row mb-3">
-                <label for="email" class="col-sm-2 col-form-label">Email</label>
-                <span id="email-error" class="text-danger"></span>
-                <div class="col-sm-10">
-                    <input  id="email" type="text" name="email" th:value="${email}" class="form-control" required/>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="phoneNumber" class="col-sm-2 col-form-label">Phone Number</label>
-                <span id="phoneNumber-error" class="text-danger"></span>
-                <div class="col-sm-10">
-                    <input  id="phoneNumber" type="text" name="phoneNumber" th:value="${phoneNumber}" class="form-control" required/>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="fullName" class="col-sm-2 col-form-label">Full Name</label>
-                <span id="fullName-error" class="text-danger"></span>
-                <div class="col-sm-10">
-                    <input  id="fullName" type="text" name="fullName" th:value="${fullName}" class="form-control" required/>
-                </div>
-            </div>
-
-            <span id="errorMessage" class="text-danger"></span>
-
-            <div class="row mb-3 text-center">
-                <div class="col">
-                    <button type="button" onClick="createClient()" class="btn btn-primary">Save Client</button>
-                </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="mb-4">Admin Panel</h3>
+            <div class="list-group">
+                <a href="http://localhost:8080/declaration" class="list-group-item list-group-item-action">View All
+                    Declarations</a>
+                <a href="http://localhost:8080/declaration/new" class="list-group-item list-group-item-action">Add New
+                    Declaration</a>
+                <a href="http://localhost:8080/commodity" class="list-group-item list-group-item-action">View All
+                    Commodities</a>
+                <a href="http://localhost:8080/commodity/new" class="list-group-item list-group-item-action">Add New
+                    Commodity</a>
+                <a href="http://localhost:8080/client" class="list-group-item list-group-item-action">View All
+                    Clients</a>
+                <a href="http://localhost:8080/client/new" class="list-group-item list-group-item-action">Add New
+                    Client</a>
             </div>
         </div>
-    </form>
-
-    <form th:action="@{/admin}" method="get" class="mt-4">
-        <div class="text-center">
-            <button type="submit" class="btn btn-secondary">Back</button>
-        </div>
-    </form>
-
+    </div>
 </main>
 
 <footer class="text-white text-center py-4 mt-5" style="background-color: #6e0101">
     <p>&copy; 2025 SIA Pak It. All rights reserved.</p>
 </footer>
 
-<script>
-    const createClient = () => {
-        const url = $("#createClientForm").attr('action');
-        const csrfHeader = $("meta[name='_csrf_header']").attr("content");
-        const csrfValue = $("meta[name='_csrf']").attr("content");
-
-        const request = {
-            email: $("#email").val(),
-            phoneNumber: $("#phoneNumber").val(),
-            fullName: $("#fullName").val()
-        };
-
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                [csrfHeader]: csrfValue
-            },
-            body: JSON.stringify(request),
-        })
-        .then(response => {
-            if (!response.ok) {
-                response.json().then(handleErrorResponse);
-            } else {
-                window.location.href = '/client';
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    };
-
-    const handleErrorResponse = (errorResponse) => {
-        if (errorResponse.fieldErrors) {
-            handleFieldErrors(errorResponse.fieldErrors);
-        } else {
-            handleErrorMessage(errorResponse.errorMessage);
-        }
-    };
-
-    const handleFieldErrors = (fieldErrors) => {
-        for (let field in fieldErrors) {
-            $(`#${field}-error`).text(fieldErrors[field]);
-        }
-    };
-
-    const handleErrorMessage = (errorMessage) => {
-        $("#errorMessage").text(errorMessage);
-    };
-</script>
 </body>
 </html>

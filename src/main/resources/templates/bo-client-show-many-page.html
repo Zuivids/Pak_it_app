@@ -8,7 +8,7 @@
 
 <nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #006400">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="http://localhost:8080/backoffice">
             <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -50,8 +50,8 @@
                         Client Options
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                        <li><a class="dropdown-item" href="http://localhost:8080/backoffice/client">View all clients</a></li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/backoffice/client/new">Add new client</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/client">View all clients</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/client/new">Add new client</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -66,25 +66,33 @@
 </nav>
 
 <main class="container py-5">
-    <div class="row">
-        <div class="col-md-12">
-            <h3 class="mb-4">BackOffice</h3>
-            <div class="list-group">
-                <a href="http://localhost:8080/declaration" class="list-group-item list-group-item-action">View All
-                    Declarations</a>
-                <a href="http://localhost:8080/declaration/new" class="list-group-item list-group-item-action">Add New
-                    Declaration</a>
-                <a href="http://localhost:8080/commodity" class="list-group-item list-group-item-action">View All
-                    Commodities</a>
-                <a href="http://localhost:8080/commodity/new" class="list-group-item list-group-item-action">Add New
-                    Commodity</a>
-                <a href="http://localhost:8080/backoffice/client" class="list-group-item list-group-item-action">View All
-                    Clients</a>
-                <a href="http://localhost:8080/backoffice/client/new" class="list-group-item list-group-item-action">Add New
-                    Client</a>
-            </div>
-        </div>
+    <h1 class="mb-4">Client List</h1>
+    <div class="table-responsive rounded">
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-danger">
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="client : ${clients}">
+                <td th:text="${client.fullName}">Full Name</td>
+                <td th:text="${client.email}">Email</td>
+                <td th:text="${client.phoneNumber}">Phone Number</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <form th:action="@{/backoffice}" method="get" class="mt-4">
+        <button type="submit" class="btn btn-secondary">Back</button>
+    </form>
 </main>
 
 <footer class="text-white text-center py-4 mt-5" style="background-color: #006400">

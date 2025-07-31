@@ -16,4 +16,9 @@ public class HomeController {
         return "backoffice";
     }
 
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
+
 }

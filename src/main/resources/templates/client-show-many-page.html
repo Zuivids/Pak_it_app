@@ -8,7 +8,7 @@
 
 <nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #6e0101">
     <div class="container">
-        <a class="navbar-brand" href="http://localhost:8080/backoffice">
+        <a class="navbar-brand" href="http://localhost:8080/admin">
             <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -102,7 +102,7 @@
         <span th:text="${errorMessage}"></span>
     </div>
 
-    <form th:action="@{/backoffice}" method="get" class="mt-4">
+    <form th:action="@{/admin}" method="get" class="mt-4">
         <button type="submit" class="btn btn-secondary">Back</button>
     </form>
 </main>

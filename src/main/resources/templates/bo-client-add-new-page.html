@@ -6,9 +6,9 @@
 
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #6e0101">
+<nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #006400">
     <div class="container">
-        <a class="navbar-brand" href="http://localhost:8080/admin">
+        <a class="navbar-brand" href="http://localhost:8080/backoffice">
             <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -50,8 +50,8 @@
                         Client Options
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                        <li><a class="dropdown-item" href="http://localhost:8080/client">View all clients</a></li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/client/new">Add new client</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/backoffice/client">View all clients</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/backoffice/client/new">Add new client</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -101,7 +101,7 @@
         </div>
     </form>
 
-    <form th:action="@{/admin}" method="get" class="mt-4">
+    <form th:action="@{/backoffice}" method="get" class="mt-4">
         <div class="text-center">
             <button type="submit" class="btn btn-secondary">Back</button>
         </div>
@@ -109,7 +109,7 @@
 
 </main>
 
-<footer class="text-white text-center py-4 mt-5" style="background-color: #6e0101">
+<footer class="text-white text-center py-4 mt-5" style="background-color: #006400">
     <p>&copy; 2025 SIA Pak It. All rights reserved.</p>
 </footer>
 
@@ -137,7 +137,7 @@
             if (!response.ok) {
                 response.json().then(handleErrorResponse);
             } else {
-                window.location.href = '/client';
+                window.location.href = '/backoffice/client';
             }
         })
         .catch(error => {
