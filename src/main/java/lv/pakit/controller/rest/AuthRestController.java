@@ -5,15 +5,19 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.request.auth.LoginRequest;
 import lv.pakit.dto.response.LoginResponse;
+import lv.pakit.security.CustomUserDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,18 +30,35 @@ public class AuthRestController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request, HttpServletRequest httpRequest) {
         try {
-            Authentication auth = authenticationManager.authenticate(
+            // Authenticate username + password
+            Authentication rawAuth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
 
-            SecurityContextHolder.getContext().setAuthentication(auth);
+            // Get the authenticated user (your UserDetails implementation)
+            CustomUserDetails userDetails = (CustomUserDetails) rawAuth.getPrincipal();
 
+            // Get role from DB and wrap it in SimpleGrantedAuthority
+            String role = userDetails.getUser().getRole(); // ex: "ADMIN" or "USER"
+            List<GrantedAuthority> authorities = List.of(
+                    new SimpleGrantedAuthority(role)
+            );
+
+            // Create a new Authentication object with roles
+            Authentication fullAuth = new UsernamePasswordAuthenticationToken(
+                    userDetails, userDetails.getPassword(), authorities
+            );
+
+            // Save auth into the security context
+            SecurityContextHolder.getContext().setAuthentication(fullAuth);
             httpRequest.getSession().setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 
-            return ResponseEntity.ok(new LoginResponse("Pieslēgšanās veiksmīga!", request.getUsername()));
+            // Return role in response
+            return ResponseEntity.ok(new LoginResponse("Pieslēgšanās veiksmīga!", userDetails.getUsername(), role));
+
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new LoginResponse("Nepareizs lietotājvārds vai parole.", null));
+                    .body(new LoginResponse("Nepareizs lietotājvārds vai parole.", null, null));
         }
     }
 
