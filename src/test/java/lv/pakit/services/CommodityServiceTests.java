@@ -2,8 +2,8 @@ package lv.pakit.services;
 
 import lv.pakit.dto.request.commodity.CommodityRequest;
 import lv.pakit.dto.response.CommodityResponse;
-import lv.pakit.exception.FieldErrorException;
-import lv.pakit.exception.NotFoundException;
+import lv.pakit.exception.http.FieldErrorException;
+import lv.pakit.exception.http.NotFoundException;
 import lv.pakit.model.Commodity;
 import lv.pakit.repo.ICommodityRepo;
 import lv.pakit.service.CommodityService;

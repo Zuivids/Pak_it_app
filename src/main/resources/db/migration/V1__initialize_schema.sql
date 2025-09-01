@@ -12,6 +12,8 @@ CREATE TABLE `user` (
     username VARCHAR(255) NULL,
     password VARCHAR(255) NULL,
     email VARCHAR(255) NULL,
+    totp_secret VARCHAR(255) NULL,
+    totp_confirmed BOOLEAN NULL,
     PRIMARY KEY (user_id)
 );
 

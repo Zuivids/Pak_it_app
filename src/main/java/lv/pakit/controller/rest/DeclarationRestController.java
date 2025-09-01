@@ -8,21 +8,22 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/declaration")
 public class DeclarationRestController {
 
     private final DeclarationService declarationService;
 
-    @PostMapping("/declaration")
+    @PostMapping
     public void saveDeclaration(@Valid @RequestBody DeclarationRequest declarationRequest) {
         declarationService.create(declarationRequest);
     }
 
-    @PutMapping("/declaration/{id}")
+    @PutMapping("/{id}")
     public void updateDeclaration(@PathVariable("id") long id, @Valid @RequestBody DeclarationRequest declarationRequest) {
         declarationService.updateById(id, declarationRequest);
     }
 
-    @DeleteMapping("/declaration/{id}")
+    @DeleteMapping("/{id}")
     public void deleteDeclaration(@PathVariable("id") long id) {
         declarationService.deleteById(id);
     }

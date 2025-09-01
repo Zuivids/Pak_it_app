@@ -9,21 +9,22 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/client")
 public class ClientRestController {
 
     private final ClientService clientService;
 
-    @PostMapping("/client")
+    @PostMapping
     public void saveClient(@Valid @RequestBody ClientCreateRequest request) {
         clientService.create(request);
     }
 
-    @PutMapping("/client/{id}")
+    @PutMapping("/{id}")
     public void editClient(@PathVariable("id") long id, @Valid @RequestBody ClientUpdateRequest request) {
         clientService.updateById(id, request);
     }
 
-    @DeleteMapping("/client/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     public void deleteClient(@PathVariable("id") long id) {
         clientService.deleteById(id);
     }

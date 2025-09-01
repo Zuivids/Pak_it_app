@@ -8,21 +8,22 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/commodity")
 public class CommodityRestController {
 
     private final CommodityService commodityService;
 
-    @PostMapping("/commodity")
+    @PostMapping
     public void saveCommodity(@Valid @RequestBody CommodityRequest commodityRequest) {
         commodityService.create(commodityRequest);
     }
 
-    @PutMapping("/commodity/{id}")
+    @PutMapping("/{id}")
     public void updateCommodity(@PathVariable("id") long id, @Valid @RequestBody CommodityRequest commodityRequest) {
         commodityService.updateById(id, commodityRequest);
     }
 
-    @DeleteMapping("/commodity/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     public void deleteCommodity(@PathVariable("id") long id) {
         commodityService.deleteById(id);
     }

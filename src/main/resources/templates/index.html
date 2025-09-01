@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{fragments/layout :: headerFragment}">
+<head th:replace="fragments/layout :: header(~{})">>
 
 </head>
 <style>
@@ -204,14 +204,19 @@
                     <div class="mb-3">
                         <label for="username" class="form-label">Lietotājvārds</label>
                         <input type="text" class="form-control" id="username" name="username" required>
-                        <span id="username-error" class="text-danger"></span>
+                        <span id="username-error" class="error-message text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Parole</label>
                         <input type="password" class="form-control" id="password" name="password" required>
-                        <span id="password-error" class="text-danger"></span>
+                        <span id="password-error" class="error-message text-danger"></span>
                     </div>
-                    <span id="errorMessage" class="text-danger mb-2 d-block"></span>
+                    <div class="mb-3">
+                        <label for="totp" class="form-label">Authenticator code</label>
+                        <input type="text" class="form-control w-25" id="totp" name="totp">
+                        <span id="totp-error" class="error-message text-danger"></span>
+                    </div>
+                    <span id="errorMessage" class="error-message text-danger mb-2 d-block"></span>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-success">Ieiet</button>
                     </div>
@@ -229,20 +234,23 @@
             const csrfHeader = $("meta[name='_csrf_header']").attr("content");
             const csrfValue = $("meta[name='_csrf']").attr("content");
 
-            const username = $("#username").val();
-            const password = $("#password").val();
+            const request = {
+                username: $("#username").val() || null,
+                password: $("#password").val() || null,
+                totp: $("#totp").val() || null
+            };
 
-            fetch("/auth/login", {
+            fetch("/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     [csrfHeader]: csrfValue
                 },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify(request),
             })
             .then(response => {
                 if (!response.ok) {
-                    handleErrorResponse(response);
+                    response.json().then(handleErrorResponse);
                 } else {
                     alert("Pieslēgšanās veiksmīga!");
                     window.location.href = "/backoffice";
@@ -252,12 +260,24 @@
                 console.log(error);
             });
 
-            const handleErrorResponse = (httpResponse) => {
-                if (httpResponse.status === 401) {
-                    $("#errorMessage").text("Nepareizs lietotājvārds vai parole.");
+            const handleErrorResponse = (errorResponse) => {
+                $(".error-message").text("");
+
+                if (errorResponse.fieldErrors) {
+                    handleFieldErrors(errorResponse.fieldErrors);
                 } else {
-                    $("#errorMessage").text("Nezināma kļūda.");
+                    handleErrorMessage(errorResponse.errorMessage);
                 }
+            };
+
+            const handleFieldErrors = (fieldErrors) => {
+                for (let field in fieldErrors) {
+                    $(`#${field}-error`).text(fieldErrors[field]);
+                }
+            };
+
+            const handleErrorMessage = (errorMessage) => {
+                $("#errorMessage").text(errorMessage);
             };
         });
     });

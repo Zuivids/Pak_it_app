@@ -1,9 +1,12 @@
-package lv.pakit.controller.rest;
+package lv.pakit.controller.rest.error;
 
+import lombok.extern.slf4j.Slf4j;
 import lv.pakit.dto.response.RestErrorResponse;
-import lv.pakit.exception.FieldErrorException;
 import lv.pakit.exception.PakItException;
+import lv.pakit.exception.http.HttpStatusException;
+import lv.pakit.exception.http.InternalErrorException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,15 +16,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice(basePackages = "lv.pakit.controller.rest")
 public class RestControllerErrorHandler {
 
-    @ExceptionHandler(PakItException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public RestErrorResponse processPakItException(PakItException e) {
+    @ExceptionHandler({PakItException.class, InternalErrorException.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public RestErrorResponse processInternalErrorException(PakItException e) {
+        log.error("An internal error occurred", e);
+
         return RestErrorResponse.builder()
-                .errorMessage(e.getMessage())
+                .errorMessage("An internal error occurred")
                 .build();
+    }
+
+    @ExceptionHandler(HttpStatusException.class)
+    public ResponseEntity<RestErrorResponse> processHttpStatusException(HttpStatusException e) {
+        return ResponseEntity.status(e.getHttpStatus()).body(e.getRestErrorResponse());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -33,16 +44,7 @@ public class RestControllerErrorHandler {
                 .build();
     }
 
-    @ExceptionHandler(FieldErrorException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public RestErrorResponse processFieldErrorException(FieldErrorException e) {
-        return RestErrorResponse.builder()
-                .errorMessage(e.getMessage())
-                .fieldErrors(e.getFieldErrors())
-                .build();
-    }
-
-    private Map<String, String> mapFieldErrors(BindingResult bindingResult) {
+    private static Map<String, String> mapFieldErrors(BindingResult bindingResult) {
         Map<String, String> fieldErrors = new HashMap<>();
 
         bindingResult.getFieldErrors().forEach(fieldError ->
