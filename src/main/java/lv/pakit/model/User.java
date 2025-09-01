@@ -2,6 +2,7 @@ package lv.pakit.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lv.pakit.model.converter.CryptoConverter;
 
 import java.io.Serializable;
 
@@ -30,4 +31,15 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private String email;
+
+    @Column
+    @Convert(converter = CryptoConverter.class)
+    private String totpSecret;
+
+    @Column
+    private Boolean totpConfirmed;
+
+    public boolean isTotp() {
+        return totpSecret != null && Boolean.TRUE.equals(totpConfirmed);
+    }
 }

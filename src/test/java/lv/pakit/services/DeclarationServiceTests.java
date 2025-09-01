@@ -4,7 +4,7 @@ import lv.pakit.dto.request.declaration.DeclarationRequest;
 import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
 import lv.pakit.dto.request.packageItem.PackageItemRequest;
 import lv.pakit.dto.response.DeclarationResponse;
-import lv.pakit.exception.NotFoundException;
+import lv.pakit.exception.http.NotFoundException;
 import lv.pakit.model.Client;
 import lv.pakit.model.Declaration;
 import lv.pakit.repo.IDeclarationRepo;

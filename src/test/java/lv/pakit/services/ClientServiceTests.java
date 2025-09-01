@@ -6,7 +6,7 @@ import jakarta.validation.ValidatorFactory;
 import lv.pakit.dto.request.client.ClientCreateRequest;
 import lv.pakit.dto.request.client.ClientUpdateRequest;
 import lv.pakit.dto.response.ClientResponse;
-import lv.pakit.exception.NotFoundException;
+import lv.pakit.exception.http.NotFoundException;
 import lv.pakit.model.Client;
 import lv.pakit.repo.IClientRepo;
 import lv.pakit.service.ClientService;

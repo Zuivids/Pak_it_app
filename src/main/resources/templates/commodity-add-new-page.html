@@ -1,69 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{fragments/layout :: headerFragment}">
+<head th:replace="fragments/layout :: header(~{})">>
 </head>
 
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #6e0101">
-    <div class="container">
-        <a class="navbar-brand" href="http://localhost:8080/backoffice">
-            <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Declaration Options
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                        <li><a class="dropdown-item" href="http://localhost:8080/declaration">View all declarations</a></li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/declaration/new">Add new declaration</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Commodity Options
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                        <li><a class="dropdown-item" href="http://localhost:8080/commodity">View all commodities</a></li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/commodity/new">Add new commodity</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Client Options
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                        <li><a class="dropdown-item" href="http://localhost:8080/client">View all clients</a></li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/client/new">Add new client</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <form method="post" action="/auth/logout">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <button type="submit" class="btn btn-light">Log out</button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <main class="container py-5">
     <h1 class="mb-4">Insert New Commodity</h1>
-    <form id="createCommodityForm" action="/commodity">
+    <form id="createCommodityForm" action="/api/commodity">
         <div class="container">
             <div class="row mb-3">
                 <label for="commodityCode" class="col-sm-2 col-form-label">Code</label>
