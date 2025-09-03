@@ -14,6 +14,7 @@ CREATE TABLE `user` (
     email VARCHAR(255) NULL,
     totp_secret VARCHAR(255) NULL,
     totp_confirmed BOOLEAN NULL,
+    role VARCHAR(255) NULL,
     PRIMARY KEY (user_id)
 );
 
@@ -21,7 +22,8 @@ CREATE TABLE commodity (
     commodity_id BIGINT NOT NULL AUTO_INCREMENT,
     commodity_code VARCHAR(255) NULL,
     description VARCHAR(255) NULL,
-    PRIMARY KEY (commodity_id)
+    PRIMARY KEY (commodity_id),
+    INDEX commodity_code_idx (commodity_code)
 );
 
 CREATE TABLE declaration (
@@ -40,7 +42,9 @@ CREATE TABLE declaration (
     total_value DOUBLE NOT NULL,
     total_weight DOUBLE NOT NULL,
     PRIMARY KEY (declaration_id),
-    FOREIGN KEY (client_id) REFERENCES client(client_id)
+    FOREIGN KEY (client_id) REFERENCES client(client_id),
+    INDEX identifier_code_idx (identifier_code),
+    INDEX date_idx (`date`)
 );
 
 CREATE TABLE package_item (

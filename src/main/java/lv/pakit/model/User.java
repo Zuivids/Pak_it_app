@@ -39,6 +39,10 @@ public class User implements Serializable {
     @Column
     private Boolean totpConfirmed;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
     public boolean isTotp() {
         return totpSecret != null && Boolean.TRUE.equals(totpConfirmed);
     }

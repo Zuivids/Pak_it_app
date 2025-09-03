@@ -8,6 +8,7 @@ import lv.pakit.dto.response.LoginResponse;
 import lv.pakit.exception.http.BadRequestException;
 import lv.pakit.exception.http.FieldErrorException;
 import lv.pakit.model.User;
+import lv.pakit.model.UserRole;
 import lv.pakit.security.CustomUserDetails;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,6 +17,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Stream;
+
+import static lv.pakit.model.UserRole.ADMIN;
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 @Service
@@ -30,6 +34,18 @@ public class AuthService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         return getUserFromAuthentication(authentication);
+    }
+
+    public boolean hasRole(UserRole... roles) {
+        final User user = getAuthenticatedUser();
+
+        return Stream.of(roles).anyMatch(role -> role.equals(user.getRole()));
+    }
+
+    public boolean isAdmin() {
+        final User user = getAuthenticatedUser();
+
+        return ADMIN.equals(user.getRole());
     }
 
     public LoginResponse login(LoginRequest request, HttpServletRequest httpRequest) {
