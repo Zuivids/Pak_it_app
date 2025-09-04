@@ -4,11 +4,11 @@
 <head th:replace="~{fragments/layout :: header(~{})}">
 </head>
 
-<body class="bg-light">
+<body class="bg-light d-flex flex-column min-vh-100">
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<main class="container py-5">
+<main class="container py-5 flex-fill">
     <h1 class="mb-4">Commodity List</h1>
 
     <form th:action="@{/commodity}" method="get" class="mb-4 d-flex">
@@ -18,12 +18,13 @@
 
     <div class="table-responsive rounded">
         <table class="table table-bordered table-striped align-middle">
-            <thead class="table-danger">
+            <thead th:class="${@authService.isAdmin()} ? 'table-danger' : 'table-success'">
+            <tr>
             <tr>
                 <th>Code</th>
                 <th>Description</th>
                 <th style="width: 80px;"></th>
-                <th style="width: 80px;"></th>
+                <th style="width: 80px;" th:if="${@authService.isAdmin()}"></th>
             </tr>
             </thead>
             <tbody>
@@ -35,8 +36,8 @@
                         <button type="submit" class="btn btn-primary btn-sm">Edit</button>
                     </form>
                 </td>
-                <td class="text-center">
-                    <form th:action="|/commodity/${commodity.commodityId}/delete|" method="get" class="d-inline">
+                <td class="text-center" th:if="${@authService.isAdmin()}">
+                    <form class="d-inline" method="get" th:action="|/commodity/${commodity.commodityId}/delete|">
                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
                 </td>
@@ -58,9 +59,7 @@
     </form>
 </main>
 
-<footer class="text-white text-center py-4 mt-5" style="background-color: #6e0101">
-    <p>&copy; 2025 SIA Pak It. All rights reserved.</p>
-</footer>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
 
 </body>
 </html>

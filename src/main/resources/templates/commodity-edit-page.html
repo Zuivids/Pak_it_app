@@ -4,11 +4,11 @@
 <head th:replace="~{fragments/layout :: header(~{})}">
 </head>
 
-<body class="bg-light">
+<body class="bg-light d-flex flex-column min-vh-100">
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<main class="container py-5">
+<main class="container py-5 flex-fill">
     <h1 class="mb-4">Edit Commodity</h1>
     <form id="editCommodityForm" th:action="|/api/commodity/${commodity.commodityId}|">
         <div class="container">
@@ -45,9 +45,7 @@
     </form>
 </main>
 
-<footer class="text-white text-center py-4 mt-5" style="background-color: #6e0101">
-    <p>&copy; 2025 SIA Pak It. All rights reserved.</p>
-</footer>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
 
 <script>
     const editCommodity = () => {
