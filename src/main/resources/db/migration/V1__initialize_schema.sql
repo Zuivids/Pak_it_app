@@ -43,6 +43,8 @@ CREATE TABLE declaration (
     receiver_phone_number VARCHAR(255) NULL,
     total_value DOUBLE NOT NULL,
     total_weight DOUBLE NOT NULL,
+    created_by VARCHAR(255) NULL,
+    created_date_time DATETIME NULL,
     PRIMARY KEY (declaration_id),
     FOREIGN KEY (client_id) REFERENCES client(client_id),
     INDEX identifier_code_idx (identifier_code),

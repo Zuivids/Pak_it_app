@@ -2,6 +2,7 @@ package lv.pakit.dto.response;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -28,4 +29,6 @@ public class DeclarationResponse {
     private double totalWeight;
     private double totalValue;
     private String date;
+    private String createdBy;
+    private LocalDateTime createdDateTime;
 }

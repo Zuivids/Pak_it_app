@@ -3,6 +3,8 @@ package lv.pakit.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -33,6 +35,8 @@ public class Declaration {
     private double totalWeight;
     private double totalValue;
     private String date;
+    private String createdBy;
+    private LocalDateTime createdDateTime;
 
 
 }
