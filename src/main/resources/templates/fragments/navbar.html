@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<nav th:fragment="navbar" class="navbar navbar-expand-sm navbar-dark " style="background-color: #6e0101">
+<nav th:fragment="navbar" class="navbar navbar-expand-sm navbar-dark "
+     th:style="${@authService.isAdmin()} ? 'background-color:#6e0101' : 'background-color:#016e01'">
     <div class="container">
         <a class="navbar-brand" href="http://localhost:8080/backoffice">
             <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">

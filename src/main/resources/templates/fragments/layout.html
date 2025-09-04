@@ -20,7 +20,8 @@
     <div th:insert="${children} ?: ''"></div>
 </head>
 
-<footer th:fragment="footer" class="text-white text-center py-4 mt-5" style="background-color: #6e0101">
+<footer class="text-white text-center py-4 mt-auto"
+        th:style="${@authService.isAdmin()} ? 'background-color:#6e0101' : 'background-color:#016e01'">
     <p>&copy; 2025 SIA Pak It. All rights reserved.</p>
 </footer>
 
