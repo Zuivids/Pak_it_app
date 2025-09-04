@@ -13,21 +13,21 @@
         <div class="col-md-12">
             <h3 class="mb-4">Admin Panel</h3>
             <div class="list-group">
-                <a href="http://localhost:8080/declaration" class="list-group-item list-group-item-action">View All
+                <a href="/declaration" class="list-group-item list-group-item-action">View All
                     Declarations</a>
-                <a href="http://localhost:8080/declaration/new" class="list-group-item list-group-item-action">Add New
+                <a href="/declaration/new" class="list-group-item list-group-item-action">Add New
                     Declaration</a>
-                <a href="http://localhost:8080/commodity" class="list-group-item list-group-item-action">View All
+                <a href="/commodity" class="list-group-item list-group-item-action">View All
                     Commodities</a>
-                <a href="http://localhost:8080/commodity/new" class="list-group-item list-group-item-action">Add New
+                <a href="/commodity/new" class="list-group-item list-group-item-action">Add New
                     Commodity</a>
-                <a href="http://localhost:8080/client" class="list-group-item list-group-item-action">View All
+                <a href="/client" class="list-group-item list-group-item-action">View All
                     Clients</a>
-                <a href="http://localhost:8080/client/new" class="list-group-item list-group-item-action">Add New
+                <a href="/client/new" class="list-group-item list-group-item-action">Add New
                     Client</a>
-                <a th:if="${@authService.isAdmin()}" href="http://localhost:8080/user" class="list-group-item list-group-item-action">View All
+                <a th:if="${@authService.isAdmin()}" href="/user" class="list-group-item list-group-item-action">View All
                     Users</a>
-                <a th:if="${@authService.isAdmin()}" href="http://localhost:8080/user/new" class="list-group-item list-group-item-action">Add New
+                <a th:if="${@authService.isAdmin()}" href="/user/new" class="list-group-item list-group-item-action">Add New
                     User</a>
             </div>
         </div>
