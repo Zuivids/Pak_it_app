@@ -12,6 +12,32 @@
     <h1 class="mb-4">Insert New Declaration</h1>
 
     <form id="createDeclarationForm" action="/api/declaration">
+
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="identifierCode" class="form-label fw-bold">ID Code</label>
+                <span id="identifierCode-error" class="text-danger"></span>
+                <input type="text" id="identifierCode" name="identifierCode" th:value="${identifierCode}" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label for="date" class="form-label fw-bold">Date</label>
+                <span id="date-error" class="text-danger"></span>
+                <input type="text" id="date" name="date" th:value="${date}" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label for="clientId" class="form-label fw-bold">Client</label>
+                <span id="clientId-error" class="text-danger"></span>
+                <select id="clientId" name="clientId" class="form-select">
+                    <option value="">Select a client</option>
+                    <option th:each="client : ${clients}"
+                            th:value="${client.clientId}"
+                            th:text="${client.fullName}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
         <div class="row mb-3">
             <div class="col-md-6">
                 <h5>Sender Info</h5>
@@ -38,65 +64,44 @@
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-4">
             <h5>Package Items</h5>
-            <table class="table table-bordered table-light text-dark" id="package-items-table">
-                <thead>
-                <tr>
-                    <th>Commodity</th>
-                    <th>Quantity</th>
-                    <th>Net Weight</th>
-                    <th>Value</th>
-                    <th>Used</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody id="package-items-body">
-                <tr id="template-row" class="d-none">
-                    <td>
-                        <select class="form-select commodity-select">
-                            <option value="">Select</option>
-                            <option th:each="c : ${commodities}"
-                                    th:value="${c.commodityId}"
-                                    th:text="${c.commodityCode + ' - ' + c.description}"></option>
-                        </select>
-                    </td>
-                    <td><input type="number" class="form-control quantity-input"/></td>
-                    <td><input type="number" step="0.01" class="form-control net-weight"/></td>
-                    <td><input type="number" step="0.01" class="form-control item-value"/></td>
-                    <td><input type="checkbox" class="used-checkbox"/></td>
-                    <td>
-                        <button type="button" class="btn btn-success" onclick="addPackageItemRow()">+</button>
-                        <button type="button" class="btn btn-danger" onclick="removePackageItemRow(this)">-</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered table-light text-dark align-middle" id="package-items-table">
+                    <thead class="table-secondary">
+                    <tr>
+                        <th style="min-width: 250px;">Commodity</th>
+                        <th style="width:100px;">Quantity</th>
+                        <th style="width:120px;">Net Weight</th>
+                        <th style="width:120px;">Value</th>
+                        <th style="width:70px;">Used</th>
+                        <th style="width:110px;"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="package-items-body">
+                    <tr id="template-row" class="d-none">
+                        <td class="d-flex gap-2">
+                            <select class="form-select commodity-select flex-grow-1">
+                                <option value="">Select</option>
+                                <option th:each="c : ${commodities}"
+                                        th:value="${c.commodityId}"
+                                        th:text="${c.commodityCode + ' - ' + c.description}"></option>
+                            </select>
+                            <input type="text" class="form-control commodity-search flex-grow-1" placeholder="Search code or name"/>
+                        </td>
+                        <td><input type="number" class="form-control quantity-input"/></td>
+                        <td><input type="number" step="0.01" class="form-control net-weight"/></td>
+                        <td><input type="number" step="0.01" class="form-control item-value"/></td>
+                        <td class="text-center"><input type="checkbox" class="used-checkbox"/></td>
+                        <td class="d-flex gap-2">
+                            <button type="button" class="btn btn-success btn-sm flex-fill" onclick="addPackageItemRow()">+</button>
+                            <button type="button" class="btn btn-danger btn-sm flex-fill" onclick="removePackageItemRow(this)">-</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
             <button type="button" class="btn btn-primary mt-2" onclick="addPackageItemRow()">Add Item</button>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-md-4">
-                <label for="identifierCode" class="form-label fw-bold">ID Code</label>
-                <span id="identifierCode-error" class="text-danger"></span>
-                <input type="text" id="identifierCode" name="identifierCode" th:value="${identifierCode}" class="form-control" />
-            </div>
-            <div class="col-md-4">
-                <label for="date" class="form-label fw-bold">Date</label>
-                <span id="date-error" class="text-danger"></span>
-                <input type="text" id="date" name="date" th:value="${date}" class="form-control" />
-            </div>
-            <div class="col-md-4">
-                <label for="clientId" class="form-label fw-bold">Client</label>
-                <span id="clientId-error" class="text-danger"></span>
-                <select id="clientId" name="clientId" class="form-select">
-                    <option value="">Select a client</option>
-                    <option th:each="client : ${clients}"
-                            th:value="${client.clientId}"
-                            th:text="${client.fullName}">
-                    </option>
-                </select>
-            </div>
         </div>
 
         <div class="row mb-3">
@@ -129,6 +134,50 @@
 <footer th:replace="~{fragments/layout :: footer}"></footer>
 
 <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const idInput = document.getElementById('identifierCode');
+    if (idInput && !idInput.value) {
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const yy = String(yyyy).slice(-2);
+        const monthNames = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+        const mmm = monthNames[now.getMonth()];
+        const dd = String(now.getDate()).padStart(2,'0');
+        const hh = String(now.getHours()).padStart(2,'0');
+        const mm = String(now.getMinutes()).padStart(2,'0');
+
+        idInput.value = `${yy}${mmm}${dd}_${hh}${mm}`;
+    }
+});
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const dateInput = document.getElementById('date');
+        if (dateInput && !dateInput.value) {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            dateInput.value = `${yyyy}-${mm}-${dd}`;
+        }
+    });
+
+    document.addEventListener('input', function(e) {
+        if (!e.target.classList.contains('commodity-search')) return;
+
+        const input = e.target;
+        const query = input.value.toLowerCase();
+        const select = input.closest('td').querySelector('.commodity-select');
+
+        Array.from(select.options).forEach(option => {
+            const text = option.text.toLowerCase();
+            option.hidden = text.indexOf(query) === -1;
+        });
+
+        const firstVisible = Array.from(select.options).find(opt => !opt.hidden);
+        if (firstVisible) select.value = firstVisible.value;
+    });
+
     function addPackageItemRow() {
         const tbody = document.getElementById('package-items-body');
         const template = document.getElementById('template-row');
