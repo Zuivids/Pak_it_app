@@ -2,10 +2,13 @@ package lv.pakit.controller.rest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lv.pakit.annotations.RequiresRole;
 import lv.pakit.dto.request.client.ClientCreateRequest;
 import lv.pakit.dto.request.client.ClientUpdateRequest;
 import lv.pakit.service.ClientService;
 import org.springframework.web.bind.annotation.*;
+
+import static lv.pakit.model.UserRole.ADMIN;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,6 +28,7 @@ public class ClientRestController {
     }
 
     @DeleteMapping("/{id}/delete")
+    @RequiresRole(ADMIN)
     public void deleteClient(@PathVariable("id") long id) {
         clientService.deleteById(id);
     }

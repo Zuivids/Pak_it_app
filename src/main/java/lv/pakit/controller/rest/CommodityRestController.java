@@ -2,9 +2,12 @@ package lv.pakit.controller.rest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lv.pakit.annotations.RequiresRole;
 import lv.pakit.dto.request.commodity.CommodityRequest;
 import lv.pakit.service.CommodityService;
 import org.springframework.web.bind.annotation.*;
+
+import static lv.pakit.model.UserRole.ADMIN;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +27,7 @@ public class CommodityRestController {
     }
 
     @DeleteMapping("/{id}/delete")
+    @RequiresRole(ADMIN)
     public void deleteCommodity(@PathVariable("id") long id) {
         commodityService.deleteById(id);
     }
