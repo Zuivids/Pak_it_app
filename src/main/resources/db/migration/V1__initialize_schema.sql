@@ -11,6 +11,8 @@ CREATE TABLE `user` (
     user_id BIGINT NOT NULL AUTO_INCREMENT,
     username VARCHAR(255) NULL,
     password VARCHAR(255) NULL,
+    first_name VARCHAR(255) NULL,
+    last_name VARCHAR(255) NULL,
     email VARCHAR(255) NULL,
     totp_secret VARCHAR(255) NULL,
     totp_confirmed BOOLEAN NULL,

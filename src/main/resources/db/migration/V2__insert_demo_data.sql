@@ -5,9 +5,10 @@ VALUES
     ('valids.ozolins@inbox.lv', 'Valdis Ozolins', '+37133338888'),
     ('karlis.kalnins@inbox.lv', 'Kārlis Kalniņš', '+37122228888');
 
-INSERT INTO `user` (username, password, email, role)
+INSERT INTO `user` (username, password, email, role, first_name, last_name)
 VALUES
-    ('admin', '$2a$10$4Y.gamervmN3N7kKsKSzo.ZIJKL.kbUZVbceGRk3fCvp/ylGGPDrm', 'admin@admin.lv', 'ADMIN');
+    ('admin', '$2a$10$4Y.gamervmN3N7kKsKSzo.ZIJKL.kbUZVbceGRk3fCvp/ylGGPDrm', 'admin@admin.lv', 'ADMIN','Jānis','Administrators'),
+    ('driver', '$2a$10$4Y.gamervmN3N7kKsKSzo.ZIJKL.kbUZVbceGRk3fCvp/ylGGPDrm', 'driver@driver.lv', 'DRIVER','Pēteris','Šoferis');
 
 INSERT INTO commodity (commodity_code, description)
 VALUES

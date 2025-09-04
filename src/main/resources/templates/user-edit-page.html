@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/layout :: header(~{})}">
+<head th:replace="fragments/layout :: header(~{})">
 </head>
 
 <body class="bg-light">
@@ -9,22 +9,35 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <main class="container py-5">
-    <h1 class="mb-4">Edit Commodity</h1>
-    <form id="editCommodityForm" th:action="|/api/commodity/${commodity.commodityId}|">
+    <h1 class="mb-4">Edit User</h1>
+    <form id="editUserForm" th:action="|/api/user/${user.userId}|" method="post">
         <div class="container">
             <div class="row mb-3">
-                <label for="commodityCode" class="col-sm-2 col-form-label">Code</label>
-                <span id="commodityCode-error" class="text-danger"></span>
+                <label for="username" class="col-sm-2 col-form-label">UserName</label>
+                <span id="username-error" class="text-danger"></span>
                 <div class="col-sm-10">
-                    <input id="commodityCode" th:value="${commodity.commodityCode}" type="text" class="form-control" required />
+                    <input type="text" th:value="${user.username}" class="form-control" id="username" required/>
                 </div>
             </div>
-
             <div class="row mb-3">
-                <label for="description" class="col-sm-2 col-form-label">Description</label>
-                <span id="description-error" class="text-danger"></span>
+                <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+                <span id="firstName-error" class="text-danger"></span>
                 <div class="col-sm-10">
-                    <input id="description" th:value="${commodity.description}" type="text" class="form-control" required/>
+                    <input type="text" th:value="${user.firstName}" class="form-control" id="firstName" required/>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+                <span id="lastName-error" class="text-danger"></span>
+                <div class="col-sm-10">
+                    <input type="text" th:value="${user.lastName}" class="form-control" id="lastName" required/>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                <span id="email-error" class="text-danger"></span>
+                <div class="col-sm-10">
+                    <input type="text" th:value="${user.email}" class="form-control" id="email" required/>
                 </div>
             </div>
 
@@ -32,13 +45,13 @@
 
             <div class="row mb-3 text-center">
                 <div class="col">
-                    <button type="button" onClick="editCommodity()" class="btn btn-success">Update Commodity</button>
+                    <button type="button" onClick="editUser()" class="btn btn-success">Update User</button>
                 </div>
             </div>
         </div>
     </form>
 
-    <form action="/commodity" method="get" class="mt-4">
+    <form th:action="@{/user}" method="get" class="mt-4">
         <div class="text-center">
             <button type="submit" class="btn btn-secondary">Back</button>
         </div>
@@ -50,13 +63,15 @@
 </footer>
 
 <script>
-    const editCommodity = () => {
-        const url = $("#editCommodityForm").attr('action');
+    const editUser = () => {
+        const url = $("#editUserForm").attr('action');
         const csrfHeader = $("meta[name='_csrf_header']").attr("content");
         const csrfValue = $("meta[name='_csrf']").attr("content");
         const request = {
-            commodityCode: $("#commodityCode").val(),
-            description: $("#description").val()
+            username: $("#username").val(),
+            firstName: $("#firstName").val(),
+            lastName: $("#lastName").val(),
+            email: $("#email").val()
         };
 
         fetch(url, {
@@ -71,7 +86,7 @@
             if (!response.ok) {
                 response.json().then(handleErrorResponse);
             } else {
-                window.location.href = '/commodity';
+                window.location.href = '/user';
             }
         })
         .catch(error => {
@@ -97,7 +112,7 @@
     const handleErrorMessage = (errorMessage) => {
         $("#errorMessage").text(errorMessage);
     };
-</script>
 
+</script>
 </body>
 </html>
