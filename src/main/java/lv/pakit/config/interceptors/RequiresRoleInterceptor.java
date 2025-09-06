@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.annotations.RequiresRole;
 import lv.pakit.exception.http.BadRequestException;
-import lv.pakit.model.UserRole;
 import lv.pakit.service.AuthService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -20,22 +19,22 @@ public class RequiresRoleInterceptor implements HandlerInterceptor {
     private final AuthService authService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod handlerMethod)) {
             return true;
         }
 
         Method method = handlerMethod.getMethod();
         RequiresRole annotation = method.getAnnotation(RequiresRole.class);
-        if (annotation == null) {
+        if (annotation == null || authService.hasRole(annotation.value())) {
             return true;
         }
 
-        final UserRole[] requiredRoles = annotation.value();
-        if (!authService.hasRole(requiredRoles)) {
-            throw new BadRequestException("Action not authorized");
+        if (annotation.page()) {
+            response.sendRedirect("/backoffice");
+            return false;
         }
 
-        return true;
+        throw new BadRequestException("Action not authorized");
     }
 }
