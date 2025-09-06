@@ -1,9 +1,13 @@
 package lv.pakit.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lv.pakit.dto.response.CommodityResponse;
 import lv.pakit.dto.request.commodity.CommodityRequest;
+import lv.pakit.exception.http.BadRequestException;
 import lv.pakit.exception.http.FieldErrorException;
+import lv.pakit.exception.http.InternalErrorException;
 import lv.pakit.exception.http.NotFoundException;
 import lv.pakit.model.Commodity;
 import lv.pakit.repo.ICommodityRepo;
@@ -18,6 +22,7 @@ import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CommodityService {
 
     private final ICommodityRepo commodityRepo;
@@ -97,55 +102,66 @@ public class CommodityService {
                 .build();
     }
 
-    public void importFromExcel(MultipartFile file) {
+    @Transactional
+    public void uploadCommodities(MultipartFile file) {
         if (file.isEmpty()) {
-            throw new IllegalArgumentException("Uploaded file is empty");
+            throw new BadRequestException("Uploaded file is empty");
         }
 
         try (Workbook workbook = WorkbookFactory.create(file.getInputStream())) {
-            DataFormatter formatter = new DataFormatter(Locale.US);
-            FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
-
-            for (int s = 0; s < workbook.getNumberOfSheets(); s++) {
-                Sheet sheet = workbook.getSheetAt(s);
-                if (sheet == null) continue;
-
-                int rowNum = 0;
-                for (Row row : sheet) {
-                    rowNum++;
-                    if (rowNum == 1) continue;
-
-                    Cell codeCell = row.getCell(0); // commodity code
-                    Cell descCell = row.getCell(5); // description
-
-                    String code = readCommodityCode(codeCell, formatter, evaluator);
-                    String description = readCellAsString(descCell, formatter, evaluator);
-
-                    if (code.isEmpty() || description.isEmpty()) {
-                        continue;
-                    }
-
-                    if (!code.matches("\\d{10}")) {
-                        System.err.println("Skipping row " + rowNum + " in sheet '" + sheet.getSheetName() +
-                                "': invalid commodity code '" + code + "'");
-                        continue;
-                    }
-
-                    CommodityRequest req = new CommodityRequest();
-                    req.setCommodityCode(code);
-                    req.setDescription(description);
-
-                    try {
-                        create(req);
-                    } catch (Exception e) {
-                        System.err.println("Skipping row " + rowNum + " in sheet '" + sheet.getSheetName() +
-                                "', code " + code + ": " + e.getMessage());
-                    }
-                }
-            }
+            parseCommodityFile(workbook);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to parse Excel file", e);
+            throw new InternalErrorException(e);
         }
+    }
+
+    private void parseCommodityFile(Workbook workbook) {
+        DataFormatter formatter = new DataFormatter(Locale.US);
+        FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+
+        for (int s = 0; s < workbook.getNumberOfSheets(); s++) {
+            Sheet sheet = workbook.getSheetAt(s);
+            if (sheet == null) {
+                continue;
+            }
+
+            parseCommoditySheet(sheet, formatter, evaluator);
+        }
+    }
+
+    private void parseCommoditySheet(Sheet sheet, DataFormatter formatter, FormulaEvaluator evaluator) {
+        for (Row row : sheet) {
+            if (row.getRowNum() == 0) {
+                continue;
+            }
+
+            try {
+                parseCommodityRow(row, formatter, evaluator);
+            } catch (Exception e) {
+                log.error("Failed to parse commodity row {}", row.getRowNum(), e);
+            }
+        }
+    }
+
+    private void parseCommodityRow(Row row, DataFormatter formatter, FormulaEvaluator evaluator) {
+        final Cell codeCell = row.getCell(0); // commodity code
+        final Cell descCell = row.getCell(5); // description
+        final String code = readCommodityCode(codeCell, formatter, evaluator);
+        final String description = readCellAsString(descCell, formatter, evaluator);
+
+        if (code.isEmpty() || description.isEmpty()) {
+            log.error("Skipping commodity row {} due to missing values", row.getRowNum());
+            return;
+        }
+        if (!code.matches("\\d{10}")) {
+            log.error("Skipping commodity row {} due to malformed commodity code {}", row.getRowNum(), code);
+            return;
+        }
+
+        commodityRepo.save(Commodity.builder()
+                .commodityCode(code)
+                .description(description)
+                .build());
     }
 
     private String readCommodityCode(Cell cell, DataFormatter formatter, FormulaEvaluator evaluator) {
@@ -165,7 +181,7 @@ public class CommodityService {
 
     private String readCellAsString(Cell cell, DataFormatter formatter, FormulaEvaluator evaluator) {
         if (cell == null) return "";
+
         return formatter.formatCellValue(cell, evaluator).trim();
     }
-
 }

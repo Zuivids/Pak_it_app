@@ -30,7 +30,7 @@ public class CommodityRestController {
     }
 
     @PostMapping("/upload")
-    public void uploadCommoditiesFromExcel(@RequestParam("file") MultipartFile file) {
-        commodityService.importFromExcel(file);
+    public void uploadCommodities(@RequestParam("file") MultipartFile file) {
+        commodityService.uploadCommodities(file);
     }
 }
