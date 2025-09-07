@@ -7,8 +7,8 @@ VALUES
 
 INSERT INTO `user` (username, password, email, role, first_name, last_name)
 VALUES
-    ('admin', '$2a$10$4Y.gamervmN3N7kKsKSzo.ZIJKL.kbUZVbceGRk3fCvp/ylGGPDrm', 'admin@admin.lv', 'ADMIN','Jānis','Administrators'),
-    ('driver', '$2a$10$4Y.gamervmN3N7kKsKSzo.ZIJKL.kbUZVbceGRk3fCvp/ylGGPDrm', 'driver@driver.lv', 'DRIVER','Pēteris','Šoferis');
+    ('admin', '$2a$10$viORhhnxctleVfbi34Lzze6wILfSPCNTDN8avnFz6g0TjhTrJ0jK2', 'admin@admin.lv', 'ADMIN','Jānis','Administrators'),
+    ('driver', '$2a$10$3esPXDIknJf0r6vQXU2ENulN5B4uEeQAcDk8TQ5oUEvu4Yro1x07S', 'driver@driver.lv', 'DRIVER','Pēteris','Šoferis');
 
 INSERT INTO commodity (commodity_code, description)
 VALUES
