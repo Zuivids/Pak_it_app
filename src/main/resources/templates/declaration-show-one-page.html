@@ -12,6 +12,28 @@
     <h1 class="mb-4">Declaration Details</h1>
 
     <div class="bg-white p-4 rounded shadow-sm">
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <p><strong>Created by:</strong> <span th:text="${declaration.createdBy}"></span></p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Created at:</strong> <span th:text="${declaration.createdAt}"></span></p>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <p><strong>ID Code:</strong> <span th:text="${declaration.identifierCode}"></span></p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Date:</strong> <span th:text="${declaration.date}"></span></p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Client Full Name:</strong> <span th:text="${declaration.clientFullName}"></span></p>
+            </div>
+        </div>
+
         <div class="row mb-4">
             <div class="col-md-6">
                 <h5>Sender Info</h5>
@@ -57,18 +79,6 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-md-4">
-                <p><strong>ID Code:</strong> <span th:text="${declaration.identifierCode}"></span></p>
-            </div>
-            <div class="col-md-4">
-                <p><strong>Date:</strong> <span th:text="${declaration.date}"></span></p>
-            </div>
-            <div class="col-md-4">
-                <p><strong>Client Full Name:</strong> <span th:text="${declaration.clientFullName}"></span></p>
-            </div>
         </div>
 
         <div class="row mb-3">

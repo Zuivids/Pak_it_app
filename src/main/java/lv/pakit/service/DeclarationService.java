@@ -12,8 +12,12 @@ import lv.pakit.model.Declaration;
 import lv.pakit.repo.IDeclarationRepo;
 import lv.pakit.repo.IPackageItemRepo;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +27,7 @@ public class DeclarationService {
 
     private final ClientService clientService;
     private final PackageItemService packageItemService;
+    private final AuthService authService;
     private final IDeclarationRepo declarationRepo;
     private final IPackageItemRepo packageItemRepo;
 
@@ -122,11 +127,16 @@ public class DeclarationService {
                 .totalWeight(declaration.getTotalWeight())
                 .totalValue(declaration.getTotalValue())
                 .date(declaration.getDate())
+                .createdBy(declaration.getCreatedBy())
+                .createdAt(declaration.getCreatedAt())
                 .packageItems(packageItemService.fetchByDeclarationId(declaration.getDeclarationId()))
                 .build();
     }
 
     private Declaration.DeclarationBuilder mapFromDto(DeclarationRequest request) {
+
+        String createdByFullName = authService.getAuthenticatedUser().getFirstName() + " " + authService.getAuthenticatedUser().getLastName();
+
         return Declaration.builder()
                 .client(clientService.requireById(request.getClientId()))
                 .identifierCode(request.getIdentifierCode())
@@ -140,7 +150,9 @@ public class DeclarationService {
                 .receiverPhoneNumber(request.getReceiverPhoneNumber())
                 .date(request.getDate())
                 .totalWeight(packageItemService.calculateTotalWeight(request.getPackageItems()))
-                .totalValue(packageItemService.calculateTotalValue(request.getPackageItems()));
+                .totalValue(packageItemService.calculateTotalValue(request.getPackageItems()))
+                .createdBy(createdByFullName)
+                .createdAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
     }
 
     public Declaration requireById(long id) {

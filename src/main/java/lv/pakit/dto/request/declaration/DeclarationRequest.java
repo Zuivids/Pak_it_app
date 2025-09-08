@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lv.pakit.dto.request.packageItem.PackageItemRequest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -41,4 +42,7 @@ public class DeclarationRequest {
     private String receiverPhoneNumber;
     @NotNull
     private String date;
+
+    private String createdBy;
+    private LocalDateTime createdAt;
 }
