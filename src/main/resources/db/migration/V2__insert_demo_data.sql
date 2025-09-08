@@ -1,6 +1,7 @@
 
 INSERT INTO client (email, full_name, phone_number)
 VALUES
+    ('', '', ''),
     ('janis.berzins@inbox.lv', 'Jānis Berzins', '+37144448888'),
     ('valids.ozolins@inbox.lv', 'Valdis Ozolins', '+37133338888'),
     ('karlis.kalnins@inbox.lv', 'Kārlis Kalniņš', '+37122228888');
