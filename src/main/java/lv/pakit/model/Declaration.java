@@ -36,7 +36,7 @@ public class Declaration {
     private double totalValue;
     private String date;
     private String createdBy;
-    private LocalDateTime createdDateTime;
+    private LocalDateTime createdAt;
 
 
 }

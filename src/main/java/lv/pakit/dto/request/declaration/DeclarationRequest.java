@@ -44,5 +44,5 @@ public class DeclarationRequest {
     private String date;
 
     private String createdBy;
-    private LocalDateTime createdDateTime;
+    private LocalDateTime createdAt;
 }

@@ -27,6 +27,7 @@ public class DeclarationService {
 
     private final ClientService clientService;
     private final PackageItemService packageItemService;
+    private final AuthService authService;
     private final IDeclarationRepo declarationRepo;
     private final IPackageItemRepo packageItemRepo;
 
@@ -127,13 +128,14 @@ public class DeclarationService {
                 .totalValue(declaration.getTotalValue())
                 .date(declaration.getDate())
                 .createdBy(declaration.getCreatedBy())
-                .createdDateTime(declaration.getCreatedDateTime())
+                .createdAt(declaration.getCreatedAt())
                 .packageItems(packageItemService.fetchByDeclarationId(declaration.getDeclarationId()))
                 .build();
     }
 
     private Declaration.DeclarationBuilder mapFromDto(DeclarationRequest request) {
-        String username = getCurrentUsername();
+
+        String createdByFullName = authService.getAuthenticatedUser().getFirstName() + " " + authService.getAuthenticatedUser().getLastName();
 
         return Declaration.builder()
                 .client(clientService.requireById(request.getClientId()))
@@ -149,13 +151,8 @@ public class DeclarationService {
                 .date(request.getDate())
                 .totalWeight(packageItemService.calculateTotalWeight(request.getPackageItems()))
                 .totalValue(packageItemService.calculateTotalValue(request.getPackageItems()))
-                .createdBy(username)
-                .createdDateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
-    }
-
-    private String getCurrentUsername() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return (auth != null) ? auth.getName() : "SYSTEM";
+                .createdBy(createdByFullName)
+                .createdAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
     }
 
     public Declaration requireById(long id) {
