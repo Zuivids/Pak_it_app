@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<nav th:fragment="navbar" class="navbar navbar-expand-sm navbar-dark "
-     th:style="${@authService.isAdmin()} ? 'background-color:#6e0101' : 'background-color:#016e01'">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark"
+     th:style="${@authService.isAdmin()} ? 'background-color:#6e0101' : 'background-color:#016e01'">>
     <div class="container">
         <a class="navbar-brand" href="/backoffice">
             <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
@@ -14,7 +14,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto flex-wrap">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
                        data-bs-toggle="dropdown"
