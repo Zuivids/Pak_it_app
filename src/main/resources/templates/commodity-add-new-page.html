@@ -4,7 +4,7 @@
 <head th:replace="~{fragments/layout :: header(~{})}">
 </head>
 
-<body class="bg-light d-flex flex-column min-vh-100">
+<body class="bg-light">
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
@@ -38,8 +38,24 @@
         </div>
     </form>
 
+    <h2 class="mt-5">Upload from Excel</h2>
+    <form id="uploadExcelForm" enctype="multipart/form-data" action="/api/commodity/upload" method="post">
+        <div class="row mb-3">
+            <div class="col-sm-10">
+                <input type="file" id="excelFile" name="file" class="form-control" accept=".xlsx,.xls" required/>
+            </div>
+        </div>
+
+        <div class="row mb-3 text-center">
+            <div class="col">
+                <button type="button" onClick="uploadExcel()" class="btn btn-primary">Upload File</button>
+            </div>
+        </div>
+        <span id="uploadError" class="text-danger"></span>
+    </form>
+
     <form action="/backoffice" method="get" class="mt-4">
-        <div class="text-center">
+        <div class="text-start">
             <button type="submit" class="btn btn-secondary">Back</button>
         </div>
     </form>
@@ -72,8 +88,34 @@
                 window.location.href = '/commodity';
             }
         })
+        .catch(error => console.log(error));
+    };
+
+    const uploadExcel = () => {
+        const form = document.getElementById("uploadExcelForm");
+        const url = form.getAttribute("action");
+        const formData = new FormData(form);
+        const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        const csrfValue = $("meta[name='_csrf']").attr("content");
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                [csrfHeader]: csrfValue
+            },
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) {
+                response.json().then(data => {
+                    $("#uploadError").text(data.errorMessage || "Upload failed");
+                });
+            } else {
+                window.location.href = '/commodity';
+            }
+        })
         .catch(error => {
-            console.log(error);
+            $("#uploadError").text("Unexpected error: " + error);
         });
     };
 

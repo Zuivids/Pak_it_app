@@ -6,6 +6,7 @@ import lv.pakit.annotations.RequiresRole;
 import lv.pakit.dto.request.commodity.CommodityRequest;
 import lv.pakit.service.CommodityService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import static lv.pakit.model.UserRole.ADMIN;
 
@@ -30,5 +31,10 @@ public class CommodityRestController {
     @RequiresRole(ADMIN)
     public void deleteCommodity(@PathVariable("id") long id) {
         commodityService.deleteById(id);
+    }
+
+    @PostMapping("/upload")
+    public void uploadCommodities(@RequestParam("file") MultipartFile file) {
+        commodityService.uploadCommodities(file);
     }
 }
