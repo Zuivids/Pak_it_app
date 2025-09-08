@@ -158,6 +158,11 @@ public class CommodityService {
             return;
         }
 
+        if (commodityRepo.findByCommodityCode(code).isPresent()) {
+            log.warn("Skipping duplicate commodity code: {}", code);
+            return;
+        }
+
         commodityRepo.save(Commodity.builder()
                 .commodityCode(code)
                 .description(description)
