@@ -138,12 +138,31 @@ public class DeclarationPageController {
         // 5. Totals row (Total Weight | Total Value)
         PdfPCell totalWeightCell = new PdfPCell(new Paragraph("Total Weight: " + declaration.getTotalWeight(), FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
         totalWeightCell.setColspan(2);
+        totalWeightCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         outerTable.addCell(totalWeightCell);
 
         PdfPCell totalValueCell = new PdfPCell(new Paragraph("Total Value: " + declaration.getTotalValue(), FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
         totalValueCell.setColspan(2);
+        totalValueCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         outerTable.addCell(totalValueCell);
 
+        // 6. Consignment | date
+        PdfPCell Consignment = new PdfPCell(new Paragraph("I certify that the particulars given in this Consignment Note and Customs Declaration are correct and that above listed items do not contain any dangerous article or articles prohibited by legislation or by postal or customs regulations."));
+        Consignment.setColspan(2);
+        outerTable.addCell(Consignment);
+
+        PdfPCell date = new PdfPCell(new Paragraph("Date: " + declaration.getDate()));
+        date.setColspan(2);
+        outerTable.addCell(date);
+
+        // 7. ConsignmentPakIt | sendersSignature
+        PdfPCell ConsignmentPakIt = new PdfPCell(new Paragraph("I instruct “SIA PaKit” and its legal representative to act on my behalf in connection with the presentation and completion of all documents (including those for customs purposes) relating to the movement and declaration of the items listed above." + declaration.getTotalValue(), FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+        ConsignmentPakIt.setColspan(2);
+        outerTable.addCell(ConsignmentPakIt);
+
+        PdfPCell sendersSignature = new PdfPCell(new Paragraph("Sender’s signature:"));
+        sendersSignature.setColspan(2);
+        outerTable.addCell(sendersSignature);
 
         document.add(outerTable);
         document.close();
