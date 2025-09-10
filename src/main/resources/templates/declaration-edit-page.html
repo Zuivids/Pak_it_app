@@ -62,42 +62,46 @@
                 </div>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Package Items</label>
+            <div class="mb-4">
+                <h5>Package Items</h5>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-light">
-                        <thead class="table-secondary text-center">
+                    <table class="table table-bordered table-light text-dark align-middle" id="package-items-table">
+                        <thead class="table-secondary">
                         <tr>
-                            <th>Commodity</th>
-                            <th>Quantity</th>
-                            <th>Net Weight</th>
-                            <th>Value</th>
-                            <th>Used</th>
-                            <th></th>
+                            <th style="min-width: 250px;">Commodity</th>
+                            <th style="width:100px;">Quantity</th>
+                            <th style="width:120px;">Net Weight</th>
+                            <th style="width:120px;">Value</th>
+                            <th style="width:70px;">Used</th>
+                            <th style="width:110px;"></th>
                         </tr>
                         </thead>
                         <tbody id="package-items-body">
                         <tr id="template-row" class="d-none">
-                            <td>
-                                <select class="form-select commodity-select">
+                            <td class="d-flex gap-2">
+                                <select class="form-select commodity-select flex-grow-1">
                                     <option value="">Select</option>
                                     <option th:each="c : ${commodities}"
                                             th:value="${c.commodityId}"
                                             th:text="${c.commodityCode + ' - ' + c.description}"></option>
                                 </select>
+                                <input type="text" class="form-control commodity-search flex-grow-1" placeholder="Search code or name"/>
                             </td>
                             <td><input type="number" class="form-control quantity-input"/></td>
                             <td><input type="number" step="0.01" class="form-control net-weight"/></td>
                             <td><input type="number" step="0.01" class="form-control item-value"/></td>
-                            <td class="text-center"><input type="checkbox" class="form-check-input used-checkbox"/></td>
-                            <td>
-                                <button type="button" class="btn btn-success" onclick="addPackageItemRow()">+</button>
-                                <button type="button" class="btn btn-danger" onclick="removePackageItemRow(this)">-</button>
+                            <td class="text-center"><input type="checkbox" class="used-checkbox"/></td>
+                            <td class="d-flex gap-2">
+                                <button type="button" class="btn btn-success btn-sm flex-fill" onclick="addPackageItemRow()">+</button>
+                                <button type="button" class="btn btn-danger btn-sm flex-fill" onclick="removePackageItemRow(this)">-</button>
                             </td>
                         </tr>
+
                         <tr th:each="item, iterStat : ${declaration.packageItems}">
-                            <td>
-                                <select class="form-select" th:name="|packageItems[${iterStat.index}].commodityId|" th:value="${item.commodity.commodityId}">
+                            <td class="d-flex gap-2">
+                                <select class="form-select commodity-select flex-grow-1"
+                                        th:name="|packageItems[${iterStat.index}].commodityId|"
+                                        th:value="${item.commodity.commodityId}">
                                     <option value="">Select</option>
                                     <option th:each="c : ${commodities}"
                                             th:value="${c.commodityId}"
@@ -105,25 +109,27 @@
                                             th:text="${c.commodityCode + ' - ' + c.description}">
                                     </option>
                                 </select>
+                                <input type="text" class="form-control commodity-search flex-grow-1" placeholder="Search code or name"/>
                             </td>
-                            <td><input type="number" class="form-control" th:name="|packageItems[${iterStat.index}].quantity|" th:value="${item.quantity}" /></td>
-                            <td><input type="number" step="any" class="form-control" th:name="|packageItems[${iterStat.index}].netWeight|" th:value="${item.netWeight}" /></td>
-                            <td><input type="number" step="any" class="form-control" th:name="|packageItems[${iterStat.index}].value|" th:value="${item.value}" /></td>
+                            <td><input type="number" class="form-control quantity-input" th:name="|packageItems[${iterStat.index}].quantity|" th:value="${item.quantity}" /></td>
+                            <td><input type="number" step="0.01" class="form-control net-weight" th:name="|packageItems[${iterStat.index}].netWeight|" th:value="${item.netWeight}" /></td>
+                            <td><input type="number" step="0.01" class="form-control item-value" th:name="|packageItems[${iterStat.index}].value|" th:value="${item.value}" /></td>
                             <td class="text-center">
-                                <input type="checkbox" class="form-check-input" th:name="|packageItems[${iterStat.index}].used|" value="true" th:checked="${item.used}" />
+                                <input type="checkbox" class="used-checkbox" th:name="|packageItems[${iterStat.index}].used|" value="true" th:checked="${item.used}" />
                             </td>
-                            <td>
-                                <button type="button" class="btn btn-success" onclick="addPackageItemRow()">+</button>
-                                <button type="button" class="btn btn-danger" onclick="removePackageItemRow(this)">-</button>
+                            <td class="d-flex gap-2">
+                                <button type="button" class="btn btn-success btn-sm flex-fill" onclick="addPackageItemRow()">+</button>
+                                <button type="button" class="btn btn-danger btn-sm flex-fill" onclick="removePackageItemRow(this)">-</button>
                             </td>
                         </tr>
+
                         <tr id="no-items-found-row" th:if="${declaration.packageItems == null || declaration.packageItems.isEmpty()}">
-                            <td colspan="7" class="text-center">No package items found.</td>
+                            <td colspan="6" class="text-center">No package items found.</td>
                         </tr>
                         </tbody>
                     </table>
-                    <button type="button" class="btn btn-primary mt-2" onclick="addPackageItemRow()">Add Item</button>
                 </div>
+                <button type="button" class="btn btn-primary mt-2" onclick="addPackageItemRow()">Add Item</button>
             </div>
 
             <div class="row mb-3">
@@ -192,28 +198,51 @@
         tbody.appendChild(newRow);
         updatePackageItemNames();
         $("#no-items-found-row").hide();
+
+        recalcTotals();
     }
 
     function removePackageItemRow(button) {
         const row = button.closest('tr');
         row.remove();
         updatePackageItemNames();
+
+        recalcTotals();
     }
+
+    document.addEventListener('input', function(e) {
+        if (!e.target.classList.contains('commodity-search')) return;
+
+        const input = e.target;
+        const query = input.value.toLowerCase();
+        const select = input.closest('td').querySelector('.commodity-select');
+
+        Array.from(select.options).forEach(option => {
+            const text = option.text.toLowerCase();
+            option.hidden = text.indexOf(query) === -1;
+        });
+
+        const firstVisible = Array.from(select.options).find(opt => !opt.hidden);
+        if (firstVisible) select.value = firstVisible.value;
+    });
 
     function updatePackageItemNames() {
         const rows = $("#package-items-body tr").not("#template-row").not("#no-items-found-row");
-        rows.forEach((row, index) => {
-            row.querySelectorAll('select, input').forEach(input => {
-                if (input.classList.contains('commodity-select')) {
-                    input.name = `packageItems[${index}].commodityId`;
-                } else if (input.classList.contains('quantity-input')) {
-                    input.name = `packageItems[${index}].quantity`;
-                } else if (input.classList.contains('net-weight')) {
-                    input.name = `packageItems[${index}].netWeight`;
-                } else if (input.classList.contains('item-value')) {
-                    input.name = `packageItems[${index}].value`;
-                } else if (input.classList.contains('used-checkbox')) {
-                    input.name = `packageItems[${index}].used`;
+        rows.each(function (index) {
+            const row = $(this);
+            row.find('select, input').each(function () {
+                const input = $(this);
+
+                if (input.hasClass('commodity-select')) {
+                    input.attr('name', `packageItems[${index}].commodityId`);
+                } else if (input.hasClass('quantity-input')) {
+                    input.attr('name', `packageItems[${index}].quantity`);
+                } else if (input.hasClass('net-weight')) {
+                    input.attr('name', `packageItems[${index}].netWeight`);
+                } else if (input.hasClass('item-value')) {
+                    input.attr('name', `packageItems[${index}].value`);
+                } else if (input.hasClass('used-checkbox')) {
+                    input.attr('name', `packageItems[${index}].used`);
                 }
             });
         });
@@ -292,6 +321,31 @@
     const handleErrorMessage = (errorMessage) => {
         $("#errorMessage").text(errorMessage);
     };
+
+    function recalcTotals() {
+        let totalWeight = 0;
+        let totalValue = 0;
+
+        const rows = $("#package-items-body tr").not("#template-row").not("#no-items-found-row");
+        rows.each(function () {
+            const row = $(this);
+
+            const qty = parseFloat(row.find(".quantity-input").val()) || 0;
+            const weight = parseFloat(row.find(".net-weight").val()) || 0;
+            const value = parseFloat(row.find(".item-value").val()) || 0;
+
+            totalWeight += weight * qty;
+            totalValue += value * qty;
+        });
+
+        $("#totalWeight").val(totalWeight.toFixed(2));
+        $("#totalValue").val(totalValue.toFixed(2));
+    }
+
+    $(document).on("input", ".quantity-input, .net-weight, .item-value", function () {
+        recalcTotals();
+    });
+
 </script>
 
 </body>
