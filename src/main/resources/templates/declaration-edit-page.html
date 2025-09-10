@@ -209,35 +209,38 @@
     }
 
     document.addEventListener('input', function(e) {
-    if (!e.target.classList.contains('commodity-search')) return;
+        if (!e.target.classList.contains('commodity-search')) return;
 
-    const input = e.target;
-    const query = input.value.toLowerCase();
-    const select = input.closest('td').querySelector('.commodity-select');
+        const input = e.target;
+        const query = input.value.toLowerCase();
+        const select = input.closest('td').querySelector('.commodity-select');
 
-    Array.from(select.options).forEach(option => {
-        const text = option.text.toLowerCase();
-        option.hidden = text.indexOf(query) === -1;
+        Array.from(select.options).forEach(option => {
+            const text = option.text.toLowerCase();
+            option.hidden = text.indexOf(query) === -1;
+        });
+
+        const firstVisible = Array.from(select.options).find(opt => !opt.hidden);
+        if (firstVisible) select.value = firstVisible.value;
     });
-
-    const firstVisible = Array.from(select.options).find(opt => !opt.hidden);
-    if (firstVisible) select.value = firstVisible.value;
-});
 
     function updatePackageItemNames() {
         const rows = $("#package-items-body tr").not("#template-row").not("#no-items-found-row");
-        rows.forEach((row, index) => {
-            row.querySelectorAll('select, input').forEach(input => {
-                if (input.classList.contains('commodity-select')) {
-                    input.name = `packageItems[${index}].commodityId`;
-                } else if (input.classList.contains('quantity-input')) {
-                    input.name = `packageItems[${index}].quantity`;
-                } else if (input.classList.contains('net-weight')) {
-                    input.name = `packageItems[${index}].netWeight`;
-                } else if (input.classList.contains('item-value')) {
-                    input.name = `packageItems[${index}].value`;
-                } else if (input.classList.contains('used-checkbox')) {
-                    input.name = `packageItems[${index}].used`;
+        rows.each(function (index) {
+            const row = $(this);
+            row.find('select, input').each(function () {
+                const input = $(this);
+
+                if (input.hasClass('commodity-select')) {
+                    input.attr('name', `packageItems[${index}].commodityId`);
+                } else if (input.hasClass('quantity-input')) {
+                    input.attr('name', `packageItems[${index}].quantity`);
+                } else if (input.hasClass('net-weight')) {
+                    input.attr('name', `packageItems[${index}].netWeight`);
+                } else if (input.hasClass('item-value')) {
+                    input.attr('name', `packageItems[${index}].value`);
+                } else if (input.hasClass('used-checkbox')) {
+                    input.attr('name', `packageItems[${index}].used`);
                 }
             });
         });
