@@ -334,9 +334,7 @@
             const weight = parseFloat(row.find(".net-weight").val()) || 0;
             const value = parseFloat(row.find(".item-value").val()) || 0;
 
-            // weight is per-item weight * qty
             totalWeight += weight * qty;
-            // value is per-item value * qty
             totalValue += value * qty;
         });
 
