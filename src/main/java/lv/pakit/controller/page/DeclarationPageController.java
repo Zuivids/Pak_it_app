@@ -73,17 +73,7 @@ public class DeclarationPageController {
 
     @GetMapping("/declaration/{id}/pdf")
     public void downloadPdf(@PathVariable long id, HttpServletResponse response) {
-        byte[] pdf = declarationService.generatePdf(id);
-
-        response.setContentType("application/pdf");
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=declaration_" + id + ".pdf");
-
-        try (var os = response.getOutputStream()) {
-            os.write(pdf);
-            os.flush();
-        } catch (IOException e) {
-            throw new InternalErrorException("Failed to write PDF to response");
-        }
+        declarationService.getDeclarationPdf(id, response);
     }
 
 }

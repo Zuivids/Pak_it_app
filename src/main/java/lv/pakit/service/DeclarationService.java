@@ -1,11 +1,14 @@
 package lv.pakit.service;
 
 import jakarta.persistence.criteria.*;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lv.pakit.dto.request.declaration.DeclarationRequest;
 import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
 import lv.pakit.dto.response.DeclarationResponse;
+import lv.pakit.exception.PakItException;
 import lv.pakit.exception.http.InternalErrorException;
 import lv.pakit.exception.http.NotFoundException;
 import lv.pakit.model.Client;
@@ -17,8 +20,10 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -26,6 +31,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DeclarationService {
 
     private final ClientService clientService;
@@ -163,7 +169,19 @@ public class DeclarationService {
                 .orElseThrow(() -> new NotFoundException("Declaration with id (" + id + ") not found!"));
     }
 
-    public byte[] generatePdf(long declarationId) {
+    public void getDeclarationPdf(long declarationId, HttpServletResponse httpResponse) {
+        try {
+            byte[] pdfBytes = generatePdf(declarationId);
+            writePdfResponse(pdfBytes, httpResponse, declarationId);
+        } catch (PakItException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("Failed to generate PDF for declaration: id={}", declarationId, e);
+            throw new InternalErrorException("Failed to generate PDF for declaration ");
+        }
+    }
+
+    public byte[] generatePdf(long declarationId) throws Exception {
         var declaration = requireById(declarationId);
 
         try (var baos = new java.io.ByteArrayOutputStream()) {
@@ -176,8 +194,16 @@ public class DeclarationService {
 
             document.close();
             return baos.toByteArray();
-        } catch (Exception e) {
-            throw new InternalErrorException("Failed to generate PDF for declaration " + declarationId);
+        }
+    }
+
+    public void writePdfResponse(byte[] pdfBytes, HttpServletResponse response, long declarationId) throws IOException {
+        response.setContentType("application/pdf");
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=declaration_" + declarationId + ".pdf");
+
+        try (var os = response.getOutputStream()) {
+            os.write(pdfBytes);
+            os.flush();
         }
     }
 
