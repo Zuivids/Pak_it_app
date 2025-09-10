@@ -97,7 +97,6 @@
                             </td>
                         </tr>
 
-                        <!-- Existing items -->
                         <tr th:each="item, iterStat : ${declaration.packageItems}">
                             <td class="d-flex gap-2">
                                 <select class="form-select commodity-select flex-grow-1"
@@ -124,7 +123,6 @@
                             </td>
                         </tr>
 
-                        <!-- Empty state -->
                         <tr id="no-items-found-row" th:if="${declaration.packageItems == null || declaration.packageItems.isEmpty()}">
                             <td colspan="6" class="text-center">No package items found.</td>
                         </tr>
@@ -200,12 +198,16 @@
         tbody.appendChild(newRow);
         updatePackageItemNames();
         $("#no-items-found-row").hide();
+
+        recalcTotals();
     }
 
     function removePackageItemRow(button) {
         const row = button.closest('tr');
         row.remove();
         updatePackageItemNames();
+
+        recalcTotals();
     }
 
     document.addEventListener('input', function(e) {
@@ -319,6 +321,33 @@
     const handleErrorMessage = (errorMessage) => {
         $("#errorMessage").text(errorMessage);
     };
+
+    function recalcTotals() {
+        let totalWeight = 0;
+        let totalValue = 0;
+
+        const rows = $("#package-items-body tr").not("#template-row").not("#no-items-found-row");
+        rows.each(function () {
+            const row = $(this);
+
+            const qty = parseFloat(row.find(".quantity-input").val()) || 0;
+            const weight = parseFloat(row.find(".net-weight").val()) || 0;
+            const value = parseFloat(row.find(".item-value").val()) || 0;
+
+            // weight is per-item weight * qty
+            totalWeight += weight * qty;
+            // value is per-item value * qty
+            totalValue += value * qty;
+        });
+
+        $("#totalWeight").val(totalWeight.toFixed(2));
+        $("#totalValue").val(totalValue.toFixed(2));
+    }
+
+    $(document).on("input", ".quantity-input, .net-weight, .item-value", function () {
+        recalcTotals();
+    });
+
 </script>
 
 </body>
