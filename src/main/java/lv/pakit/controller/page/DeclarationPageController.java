@@ -1,5 +1,12 @@
 package lv.pakit.controller.page;
 
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfWriter;
+import jakarta.servlet.http.HttpServletResponse;
+import lv.pakit.exception.http.InternalErrorException;
+import org.springframework.http.HttpHeaders;
+import com.lowagie.text.pdf.PdfPTable;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
 import lv.pakit.service.ClientService;
@@ -11,6 +18,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -61,4 +70,10 @@ public class DeclarationPageController {
     private void addDeclarationToModel(long id, Model model) {
         model.addAttribute("declaration", declarationService.fetchById(id));
     }
+
+    @GetMapping("/declaration/{id}/pdf")
+    public void downloadPdf(@PathVariable long id, HttpServletResponse response) {
+        declarationService.getDeclarationPdf(id, response);
+    }
+
 }
