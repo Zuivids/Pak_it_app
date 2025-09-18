@@ -330,12 +330,11 @@
         rows.each(function () {
             const row = $(this);
 
-            const qty = parseFloat(row.find(".quantity-input").val()) || 0;
             const weight = parseFloat(row.find(".net-weight").val()) || 0;
             const value = parseFloat(row.find(".item-value").val()) || 0;
 
-            totalWeight += weight * qty;
-            totalValue += value * qty;
+            totalWeight += weight;
+            totalValue += value;
         });
 
         $("#totalWeight").val(totalWeight.toFixed(2));
