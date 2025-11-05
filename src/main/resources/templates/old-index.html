@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: header(~{})}">
+
+</head>
+<style>
+    .zoom-on-hover:hover {
+        transform: scale(1.05);
+    }
+
+    .contact-link {
+        transition: color 0.3s, font-weight 0.3s, transform 0.3s;
+        display: inline-block;
+    }
+
+    .contact-link:hover {
+        color: green !important;
+        font-weight: bold;
+        transform: scale(1.05);
+    }
+</style>
+<body class="bg-success-subtle">
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-success fixed-top shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item me-2">
+                    <a class="nav-link text-black bg-light px-3 py-2 rounded" href="#AboutUs">Par mums</a>
+                </li>
+                <li class="nav-item me-2">
+                    <a class="nav-link text-black bg-light px-3 py-2 rounded" href="#Contacts">Kontakti</a>
+                </li>
+                <li class="nav-item me-2">
+                    <a class="nav-link text-black bg-light px-3 py-2 rounded" href="#MakeOrder">Pieteikt pasūtījumu</a>
+                </li>
+                <li class="nav-item me-2">
+                    <a class="nav-link text-white px-3 py-2 rounded" href="#" data-bs-toggle="modal"
+                       data-bs-target="#loginModal" style="background-color: #07300c">Pieslēgties</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container py-5 mt-5">
+    <div data-bs-spy="scroll" data-bs-target="#navbarNav" data-bs-smooth-scroll="true"
+         class="scrollspy-example bg-white rounded-3 shadow-sm p-4" tabindex="0">
+        <div id="AboutUs" class="mb-5">
+            <div class="card border-0 mx-auto mb-4 shadow-sm" style="max-width: 80%;">
+                <img src="/img/About_us.png" class="card-img-top rounded" alt="Par mums attēls">
+            </div>
+
+            <h2 class="h4 mb-4 text-success fw-semibold border-bottom pb-2">Par mums</h2>
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item">SIA PaKit īsteno vietējos un starptautiskos kravu pārvadājumus <strong>ātri, ērti un droši.</strong></li>
+                <li class="list-group-item">Mūsu Moto ir <strong>"Keep moving forward!"</strong></li>
+                <li class="list-group-item">Vairāk kā 10 gados uzkrātā darba pieredze ir ļāvusi secināt, ka ar mūsu profesionālo komandu un pieejamo autoparku varam atrast ātrus un efektīvus risinājumus jebkurā loģistikas jautājumā nodrošinot pilnu piegādes ķēdes servisu, uzglabāšanu un dokumentu formalitātes.
+                    Kopā ar mūsu uzticamajiem sadarbības partneriem ik dienu nodrošinām visa veida kravu pārvadājumus gan uzņēmumiem gan privātpersonām Eiropā, Lielbritānijā kā arī Baltijas valstīs.
+                    Mums ir svarīgs ikkatrs klients, tāpēc mēs piedāvājam pilnīgu atbalstu, nodrošinot visaptverošus transporta un loģistikas pakalpojumus, ļaujot jums optimizēt pārvadājumu izmaksas un koncentrēties uz ražošanu!</li>
+            </ul>
+
+            <h4 class="h4 text-success fw-semibold">Pakalpojumi</h4>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Vietējie pārvadājumi Latvijas ietvaros.</li>
+                <li class="list-group-item">Starptautiskie pārvadājumi uz Lielbritāniju.</li>
+                <li class="list-group-item">FTL – pilnas kravas, LTL – daļējas kravas, ekspress piegādes.</li>
+            </ul>
+        </div>
+
+        <div id="Contacts" class="mb-5">
+            <h4 class="h4 text-success fw-semibold">Kontakti</h4>
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Kristaps</h5>
+                            <div class="overflow-hidden d-inline-block" style="width: 80%; transition: transform 0.3s;">
+                                <img src="/img/Kristaps.png" class="img-fluid rounded mb-3 zoom-on-hover" style="width: 100%; height: auto; transition: transform 0.3s;">
+                            </div>
+                            <div><strong>Uzņēmuma vadītājs</strong></div>
+                            <p class="mb-3">
+                                Kristaps ar savu izcilo stratēģisko un analītisko domāšanu atbild par autotransporta tehniskajiem un mehāniskajiem jautājumiem.
+                            </p>
+                            <p class="mb-3">
+                                Par dzīves moto uzskata, ka <strong>"Vienmēr visam ir risinājums"</strong>
+                            </p>
+                            <div><strong>E-pasts:   </strong><a href="mailto:kristaps.varpins@pakit.lv" class="text-decoration-none text-dark contact-link"> kristaps.varpins@pakit.lv</a></div>
+                            <div><strong>Telefons:  </strong><a href="tel:26646962" class="text-decoration-none text-dark contact-link"> 26646962 </a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Paula</h5>
+                            <div class="overflow-hidden d-inline-block" style="width: 80%; transition: transform 0.3s;">
+                                <img src="/img/Paula.png" class="img-fluid rounded mb-3 zoom-on-hover" style="width: 100%; height: auto; transition: transform 0.3s;">
+                            </div>
+                            <div><strong>Uzņēmuma vadītāja</strong></div>
+                            <p class="mb-3">
+                                Paula apvienojot profesionalitāti un cilvēcīgumu vada uzņēmuma loģistikas pienākumus uzturot labu sadarbību ar partneriem un piedāvajot klientiem optimālus risinājumus preču piegādei.
+                            </p>
+                            <p class="mb-3">
+                                Par dzīves moto uzskata, ka <strong>"Attieksme ir puse no uzvaras"</strong>
+                            </p>
+                            <div><strong>E-pasts:   </strong><a href="mailto:paula.varpina@pakit.lv" class="text-decoration-none text-dark contact-link"> paula.varpina@pakit.lv</a></div>
+                            <div><strong>Telefons:  </strong><a href="tel:28376343" class="text-decoration-none text-dark contact-link"> 28376343</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="MakeOrder" class="mb-5">
+            <h4 class="h4 text-success fw-semibold">Pieteikt pasūtījumu</h4>
+
+            <form action="https://formsubmit.co/paula.varpina@pakit.lv" method="POST">
+                <input type="hidden" name="_subject" value="Jauns sūtījuma pieteikums!">
+                <input type="hidden" name="_captcha" value="false">
+
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">Vārds, Uzvārds</label>
+                    <input type="text" class="form-control" id="fullName" name="Vards Uzvards" placeholder="Ievadiet savu vārdu un uzvārdu" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Telefons</label>
+                    <input type="tel" class="form-control" id="phone" name="Telefons" placeholder="Ievadiet savu telefona numuru" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Epasts</label>
+                    <input type="email" class="form-control" id="email" name="Epasts" placeholder="Ievadiet savu epastu" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Sūtījuma apraksts</label>
+                    <textarea class="form-control" id="description" name="Sutijuma apraksts" rows="4" placeholder="Aprakstiet savu sūtījumu" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success">Pieteikt sūtījumu</button>
+            </form>
+        </div>
+
+    </div>
+</main>
+
+<footer class="bg-success text-center text-md-start mt-5 border-top">
+    <div class="container py-4">
+        <div class="row align-items-stretch">
+            <div class="col-md-6 d-flex flex-column">
+                <h5 class="text-uppercase mb-3 text-white">Atrašanās vieta</h5>
+                <div class="ratio flex-grow-1" style="--bs-aspect-ratio: 50%;">
+                    <iframe
+                            src="https://www.google.com/maps?q=Jelgavas+iela+69A,+Jaunjelgava,+Aizkraukles+Novads,+LV-5125&output=embed"
+                            allowfullscreen
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            class="rounded border w-100 h-100">
+                    </iframe>
+                </div>
+            </div>
+
+            <div class="col-md-6 d-flex flex-column">
+                <h5 class="text-uppercase text-white mb-3">Juridiskie dati</h5>
+                <ul class="list-unstyled bg-white text-black p-3 rounded flex-grow-1 mb-0 text-start">
+                    <li><strong>Tel:</strong> 26568372</li>
+                    <li><strong>Reģistrācijas numurs:</strong> 45403044671</li>
+                    <li><strong>PVN numurs:</strong> LV45403044671</li>
+                    <li><strong>Banka:</strong> Swedbank</li>
+                    <li><strong>Bankas konts:</strong> LV37HABA0551041111928</li>
+                    <li><strong>Juridiskā adrese:</strong> Draudzības iela 22, Skrīveri, Skrīveru pagasts, Aizkraukles novads, LV-5125</li>
+                    <li><strong>Noliktavas adrese:</strong> Jelgavas iela 69A, Jaunjelgava, Aizkraukles Novads, LV-5125</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="text-center pt-3 mt-4">
+            <p class="text-white mb-0"><strong>&copy; 2025 SIA Pak It. All rights reserved.</strong></p>
+        </div>
+    </div>
+</footer>
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="loginModalLabel">Pieslēgties</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Aizvērt"></button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm" method="POST" action="/login">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Lietotājvārds</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                        <span id="username-error" class="error-message text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Parole</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                        <span id="password-error" class="error-message text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="totp" class="form-label">Authenticator code</label>
+                        <input type="text" class="form-control w-25" id="totp" name="totp">
+                        <span id="totp-error" class="error-message text-danger"></span>
+                    </div>
+                    <span id="errorMessage" class="error-message text-danger mb-2 d-block"></span>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">Ieiet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#loginForm").on("submit", function (e) {
+            e.preventDefault();
+
+            const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+            const csrfValue = $("meta[name='_csrf']").attr("content");
+
+            const request = {
+                username: $("#username").val() || null,
+                password: $("#password").val() || null,
+                totp: $("#totp").val() || null
+            };
+
+            fetch("/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    [csrfHeader]: csrfValue
+                },
+                body: JSON.stringify(request),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    response.json().then(handleErrorResponse);
+                } else {
+                    alert("Pieslēgšanās veiksmīga!");
+                    window.location.href = "/backoffice";
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+            const handleErrorResponse = (errorResponse) => {
+                $(".error-message").text("");
+
+                if (errorResponse.fieldErrors) {
+                    handleFieldErrors(errorResponse.fieldErrors);
+                } else {
+                    handleErrorMessage(errorResponse.errorMessage);
+                }
+            };
+
+            const handleFieldErrors = (fieldErrors) => {
+                for (let field in fieldErrors) {
+                    $(`#${field}-error`).text(fieldErrors[field]);
+                }
+            };
+
+            const handleErrorMessage = (errorMessage) => {
+                $("#errorMessage").text(errorMessage);
+            };
+        });
+    });
+</script>
+</body>
+</html>
