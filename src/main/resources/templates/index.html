@@ -1,283 +1,210 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shrinking Navbar Fixed</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: black;
-            color: white;
-            height: 2000px; /* to show scrolling */
-        }
-
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 60px;
-            transition: padding 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: black;
-            transition: font-size 0.3s ease, opacity 0.3s ease;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: black;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: red;
-        }
-
-        .burger {
-            display: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: black;
-        }
-
-        /* Default navbar (top of page) */
-        header.top .logo {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        header.top .nav-links {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Scrolled navbar (after scrolling) */
-        header.scrolled {
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        header.scrolled nav {
-            padding: 10px 60px;
-        }
-
-        header.scrolled .logo {
-            font-size: 1.2rem;
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        header.scrolled .nav-links {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        main {
-            padding-top: 120px;
-            text-align: center;
-        }
-
-        .info-links {
-  display: flex;
-  gap: 30px;
-  align-items: center;
-  background-color: #1e2a3b; /* dark blue background like in screenshot */
-  padding: 10px 30px;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  color: white;
-}
-
-.info-links a {
-  display: flex;
-  align-items: center;
-  color: white;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.info-links a:hover {
-  color: #ff4b4b; /* subtle red hover */
-}
-
-.info-links .icon {
-  margin-right: 8px;
-  font-size: 16px;
-}
-
-/* Special style for email */
-.email-link {
-  background-color: #1a2a4a;
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-weight: 600;
-}
-
-/* Button style like on the right */
-.btn-request {
-  margin-left: auto;
-  background-color: #4a72d8;
-  padding: 8px 20px;
-  border-radius: 25px;
-  font-weight: 600;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-
-.btn-request:hover {
-  background-color: #3a5cc8;
-}
-
-
-        @media (max-width: 720px) {
-    .nav-links {
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%) scaleY(0); /* start collapsed from middle */
-        transform-origin: top center;
-        background-color: rgba(255, 255, 255, 0.9);
-        flex-direction: column;
-        width: 200px;
-        padding: 10px;
-        gap: 10px;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    .nav-links.show {
-        opacity: 1;
-        pointer-events: auto;
-        transform: translateX(-50%) scaleY(1); /* expand smoothly from middle */
-    }
-
-    .burger {
-        display: block;
-    }
-
-    nav {
-        justify-content: space-between;
-    }
-}
-    </style>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>PaK it</title>
+    <meta name="description"
+          content="End-to-end logistics, real-time tracking, and optimized freight solutions for businesses."/>
 </head>
 <body>
-
-<header class="top" id="mainHeader">
-    <nav>
-        <img src="/img/PaK_it_logo.png" class="logo d-inline-block rounded" width="70" height="35">
-        <div class="nav-links">
-            <a href="#">Sākums</a>
-            <a href="#">Par mums</a>
-            <a href="#">Pakalpojumi</a>
-            <a href="#">Kontakti</a>
-            <a href="#">Rekvizīti</a>
-        </div>
-        <div class="burger" id="burger">&#9776;</div>
-        <div class="login" id="login">&#128274;</div>
-    </nav>
-</header>
-
-<main>
-    <div class="info-links">
-        <a href="https://goo.gl/maps/..." target="_blank" class="info-item">
-            <span class="icon">📍</span> Strādājam visā Eiropā
-        </a>
-        <a href="javascript:void(0)" class="info-item">
-            <span class="icon">⏰</span> Pr. - Pk. : 09:00 - 17:00
-        </a>
-        <a href="tel:+37126568372" class="info-item">
-            <span class="icon">📞</span> +371 26568372
-        </a>
-        <a href="mailto:pakit@gmail.com" class="info-item email-link">
-            <span class="icon">✉️</span> pakit@gmail.com
-        </a>
-        <a href="#" class="btn-request">
-            Saņemt piedāvājumu
+<!-- SITE HEADER -->
+<header id="site-header">
+    <div id="brand">
+        <a href="/" aria-label="PaK It Logistics home">
+            <!-- Placeholder logo text; replace with SVG or image later -->
+            <strong>PaK it</strong>
         </a>
     </div>
 
-    <h1>Scroll Down</h1>
-    <p>The navbar will appear and become interactive after you scroll down.</p>
-    <h1>Scroll Down</h1>
-    <p>The navbar will appear and become interactive after you scroll down.</p>
-    <h1>Scroll Down</h1>
-    <p>The navbar will appear and become interactive after you scroll down.</p>
-    <h1>Scroll Down</h1>
-    <p>The navbar will appear and become interactive after you scroll down.</p>
-    <h1>Scroll Down</h1>
-    <p>The navbar will appear and become interactive after you scroll down.</p>
-    <h1>Scroll Down</h1>
-    <p>The navbar will appear and become interactive after you scroll down.</p><h1>Scroll Down</h1>
-    <p>The navbar will appear and become interactive after you scroll down.</p>
-    <h1>Scroll Down</h1>
-    <p>The navbar will appear and become interactive after you scroll down.</p>
-    <h1>Scroll Down</h1>
-    <p>The navbar will appear and become interactive after you scroll down.</p><h1>Scroll Down</h1>
-    <p>The navbar will appear and become interactive after you scroll down.</p>
-    <h1>Scroll Down</h1>
-    <p>The navbar will appear and become interactive after you scroll down.</p>
+    <nav id="main-nav" aria-label="Primary navigation">
+        <!-- On mobile you'll likely collapse this into a hamburger -->
+        <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#how-it-works">How it works</a></li>
+            <li><a href="#testimonials">Clients</a></li>
+            <li><a href="#about-us">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- HERO / ABOVE THE FOLD -->
+<main>
+    <section id="hero" aria-labelledby="hero-heading">
+        <h1 id="hero-heading">Get your goods moving — faster, safer, smarter.</h1>
+        <p id="hero-sub">Nationwide freight, real-time tracking, and tailored logistics solutions for growing
+            businesses.</p>
+
+        <!-- Primary CTA (keep form light on mobile) -->
+        <form id="quick-quote" action="/quote" method="post" aria-label="Request a quick quote">
+            <label for="qq-origin" class="visually-hidden">Origin</label>
+            <input id="qq-origin" name="origin" type="text" placeholder="Origin city or zip" required/>
+
+            <label for="qq-destination" class="visually-hidden">Destination</label>
+            <input id="qq-destination" name="destination" type="text" placeholder="Destination city or zip" required/>
+
+            <label for="qq-weight" class="visually-hidden">Weight (kg)</label>
+            <input id="qq-weight" name="weight" type="number" placeholder="Weight (kg)" min="1" required/>
+
+            <button type="submit">Get a Quote</button>
+        </form>
+
+        <!-- Secondary CTA -->
+        <p>
+            <a href="#contact" aria-label="Contact sales">Contact sales</a>
+            <span>•</span>
+            <a href="#how-it-works" aria-label="See how it works">How it works</a>
+        </p>
+    </section>
+
+    <!-- SERVICES / OFFERINGS -->
+    <section id="services" aria-labelledby="services-heading">
+        <h2 id="services-heading">Services</h2>
+        <ul>
+            <li>
+                <h3>Full Truckload (FTL)</h3>
+                <p>Direct routes, guaranteed capacity for large shipments.</p>
+            </li>
+            <li>
+                <h3>Less-than-Truckload (LTL)</h3>
+                <p>Cost efficient consolidation for smaller loads.</p>
+            </li>
+            <li>
+                <h3>International Freight</h3>
+                <p>Air, ocean, and cross-border solutions with customs support.</p>
+            </li>
+            <li>
+                <h3>Warehousing & Fulfillment</h3>
+                <p>Short- and long-term storage + pick & pack services.</p>
+            </li>
+        </ul>
+    </section>
+
+    <!-- WHY CHOOSE US / DIFFERENTIATORS -->
+    <section id="why" aria-labelledby="why-heading">
+        <h2 id="why-heading">Why choose PaK it</h2>
+        <ul>
+            <li>
+                <h4>Real-time tracking</h4>
+                <p>Live GPS & ETA updates for every shipment.</p>
+            </li>
+            <li>
+                <h4>Transparent pricing</h4>
+                <p>No hidden fees—clear quotes and invoices.</p>
+            </li>
+            <li>
+                <h4>Guaranteed capacity</h4>
+                <p>Priority lanes and partner network to meet tight SLAs.</p>
+            </li>
+        </ul>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works" aria-labelledby="how-heading">
+        <h2 id="how-heading">How it works</h2>
+        <ol>
+            <li>
+                <strong>Request</strong>
+                <p>Quick quote from origin to destination.</p>
+            </li>
+            <li>
+                <strong>Book</strong>
+                <p>Confirm pickup, get assigned carrier and ETA.</p>
+            </li>
+            <li>
+                <strong>Track</strong>
+                <p>Live updates to your dashboard and mobile.</p>
+            </li>
+            <li>
+                <strong>Deliver</strong>
+                <p>Proof of delivery and automated invoicing.</p>
+            </li>
+        </ol>
+    </section>
+
+    <!-- TESTIMONIALS / TRUST -->
+    <section id="testimonials" aria-labelledby="testimonials-heading">
+        <h2 id="testimonials-heading">Trusted by</h2>
+
+        <!-- client logos are often images; placeholder list -->
+        <div id="client-logos" aria-hidden="false">
+            <p>Client Logo 1 • Client Logo 2 • Client Logo 3</p>
+        </div>
+
+        <blockquote>
+            <p>"PaK it reduced our transit time by 22% and simplified billing." — Supply Chain Manager, RetailCo</p>
+        </blockquote>
+    </section>
+
+    <!-- PRIMARY CTA / REINFORCE ACTION -->
+    <section id="cta" aria-labelledby="cta-heading">
+        <h2 id="cta-heading">Ready to move?</h2>
+        <p>Start with a quote or talk to an account rep.</p>
+        <div>
+            <a href="#quick-quote" role="button">Get a Quote</a>
+            <a href="#contact" role="button">Talk to Sales</a>
+        </div>
+    </section>
+
+    <!-- ABOUT US -->
+    <section id="about-us" aria-labelledby="about-heading">
+        <h2 id="about-heading">About Us</h2>
+        <p><strong>SIA PaK it</strong> provides local and international freight transport — fast, reliable, and
+            efficient.</p>
+        <p>Our motto: <em>"Keep moving forward!"</em></p>
+        <p>
+            With over a decade of hands-on experience, our professional team and modern vehicle fleet enable us to
+            deliver quick, effective solutions for any logistics challenge.
+            We offer a full range of services across the entire supply chain — from transport and warehousing to
+            documentation and customs formalities.
+        </p>
+        <p>
+            Together with our trusted partners, we handle all types of freight daily for both businesses and private
+            clients across Europe, the United Kingdom, and the Baltic states.
+            Every client matters to us, which is why we provide complete support and end-to-end logistics solutions that
+            help you cut transport costs and stay focused on your core business.
+        </p>
+    </section>
 
 
 </main>
 
+<!-- CONTACT / FOOTER -->
+<footer id="contact" aria-labelledby="contact-heading">
+    <h2 id="contact-heading">Contact</h2>
+    <address>
+        <p>PaK it logistic services</p>
+        <p>123 Shipping Ave, Riga</p>
+        <p><a href="tel:+37112345678">+371 123 45678</a></p>
+        <p><a href="mailto:sales@pakit.example">sales@pakit.example</a></p>
+    </address>
+
+    <!-- Full contact form for detailed leads -->
+    <form id="lead-form" action="/leads" method="post" aria-label="Contact form">
+        <label for="name">Full name</label>
+        <input id="name" name="name" type="text" required/>
+
+        <label for="company">Company</label>
+        <input id="company" name="company" type="text" required/>
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required/>
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="4" placeholder="Tell us about your shipment or needs"></textarea>
+
+        <button type="submit">Send</button>
+    </form>
+
+    <small>&copy; <span id="year"></span> PaK it Logistics. All rights reserved.</small>
+</footer>
 <script>
-    const header = document.getElementById('mainHeader');
-    const burger = document.getElementById('burger');
-    const navLinks = document.querySelector('.nav-links');
-
-    // Shrinking navbar on scroll
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-            header.classList.remove('top');
-        } else {
-            header.classList.add('top');
-            header.classList.remove('scrolled');
-        }
-    });
-
-    // Burger toggle
-    burger.addEventListener('click', () => {
-        navLinks.classList.toggle('show');
-    });
+    (function(){
+     var y = new Date().getFullYear();
+     var el = document.getElementById('year');
+     if(el) el.textContent = y;
+    }());
 </script>
-
 </body>
 </html>
