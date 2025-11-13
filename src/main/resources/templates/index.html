@@ -4,7 +4,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <title>PaK it</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
 
     <style>
         /* --- RESET & BASE --- */
@@ -74,46 +75,52 @@
         }
 
         @media (max-width: 767px) {
-          #main-nav ul {
-            position: fixed;
-            top: 69px;
-            right: 0;
-            background: rgba(0, 51, 0, 0.5); /* dark green, 50% transparent */
-            flex-direction: column;
-            width: 220px;
-            padding: 1rem;
-            border-radius: 0 0 0 8px;
-            display: none;
-            box-shadow: -2px 0 10px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease;
-            transform: translateX(100%);
-          }
 
-          #main-nav ul.open {
-            display: flex;
-            transform: translateX(0);
-          }
+        #main-nav ul {
+        position: fixed;
+        top: 69px;
+        right: 0;
+        background: rgba(0, 51, 0, 0.5);
+        flex-direction: column;
+        width: 220px;
+        padding: 1rem;
+        border-radius: 0 0 0 8px;
+        box-shadow: -2px 0 10px rgba(0,0,0,0.3);
 
-          #main-nav li {
-            margin: 0.5rem 0;
-          }
+        /* Keep menu in DOM always, slide it off-screen */
+        transform: translateX(100%);
+        transition: transform 0.4s ease;
+        z-index: 100;
+    }
 
-          #main-nav a {
-            color: #fff;
-            font-weight: 600;
-            padding: 0.5rem;
-            border-radius: 4px;
-            transition: background 0.2s;
-          }
+    #main-nav ul.open {
+        transform: translateX(0); /* slide in */
+    }
 
-          #main-nav a:hover {
-            background: rgba(255, 255, 255, 0.15);
-          }
+    #main-nav li {
+        margin: 0.5rem 0;
+    }
 
-          .menu-toggle {
-            display: flex;
-            z-index: 101;
-          }
+    #main-nav a {
+        text-decoration: none;
+        color: #fff;
+        padding: 0.5rem;
+        border-radius: 4px;
+        display: block;
+        transition: background 0.2s, color 0.2s;
+    }
+
+    #main-nav a:hover,
+    #main-nav a:focus {
+        color: #006400;
+        background: rgba(255,255,255,0.1);
+    }
+
+    .menu-toggle {
+        display: flex;
+        z-index: 101;
+    }
+}
 
         /* --- REMAINING LAYOUT (shortened for clarity) --- */
         section { padding: 2rem 1rem; max-width: 1200px; margin: 0 auto; width: 100%; }
@@ -333,14 +340,24 @@
 <script>
     const menuToggle = document.getElementById('menu-toggle');
     const navMenu = document.querySelector('#main-nav ul');
+
+    // Toggle menu
     menuToggle.addEventListener('click', () => {
         navMenu.classList.toggle('open');
     });
 
+    // Close menu on link click
+    document.querySelectorAll('#main-nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('open');
+        });
+    });
+
+    // Set current year
     (function(){
-     var y = new Date().getFullYear();
-     var el = document.getElementById('year');
-     if(el) el.textContent = y;
+        var y = new Date().getFullYear();
+        var el = document.getElementById('year');
+        if(el) el.textContent = y;
     }());
 </script>
 </body>
