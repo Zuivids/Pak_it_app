@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>PaK it</title>
-    <meta name="viewport"
+    <meta charset="utf-8" name="viewport"
           content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>PaK it</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         /* --- RESET & BASE --- */
@@ -32,7 +32,7 @@
           position: sticky;
           top: 0;
           z-index: 100;
-          background: rgba(0, 51, 0, 0.5); /* dark green, 50% transparent */
+          background: rgba(0, 51, 0, 0.5);
           backdrop-filter: blur(6px);
         }
 
@@ -75,88 +75,85 @@
         }
 
         @media (max-width: 767px) {
+            #main-nav ul {
+                position: fixed;
+                top: 63px;
+                right: 0;
+                background: rgba(0, 51, 0, 0.5);
+                flex-direction: column;
+                width: 220px;
+                padding: 1rem;
+                border-radius: 0 0 0 8px;
+                box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+                transform: translateX(100%);
+                transition: transform 0.4s ease;
+                z-index: 100;
+            }
 
-        #main-nav ul {
-        position: fixed;
-        top: 69px;
-        right: 0;
-        background: rgba(0, 51, 0, 0.5);
-        flex-direction: column;
-        width: 220px;
-        padding: 1rem;
-        border-radius: 0 0 0 8px;
-        box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+            #main-nav ul.open {
+                transform: translateX(0);
+            }
 
-        /* Keep menu in DOM always, slide it off-screen */
-        transform: translateX(100%);
-        transition: transform 0.4s ease;
-        z-index: 100;
-    }
+            #main-nav li {
+                margin: 0.5rem 0;
+            }
 
-    #main-nav ul.open {
-        transform: translateX(0); /* slide in */
-    }
+            #main-nav a {
+                text-decoration: none;
+                color: #fff;
+                padding: 0.5rem;
+                border-radius: 4px;
+                display: block;
+                transition: background 0.2s, color 0.2s;
+            }
 
-    #main-nav li {
-        margin: 0.5rem 0;
-    }
+            #main-nav a:hover,
+            #main-nav a:focus {
+                color: #006400;
+                background: rgba(255,255,255,0.1);
+            }
 
-    #main-nav a {
-        text-decoration: none;
-        color: #fff;
-        padding: 0.5rem;
-        border-radius: 4px;
-        display: block;
-        transition: background 0.2s, color 0.2s;
-    }
+            .menu-toggle {
+                display: flex;
+                z-index: 101;
+            }
+        }
 
-    #main-nav a:hover,
-    #main-nav a:focus {
-        color: #006400;
-        background: rgba(255,255,255,0.1);
-    }
-
-    .menu-toggle {
-        display: flex;
-        z-index: 101;
-    }
-}
-
-        /* --- REMAINING LAYOUT (shortened for clarity) --- */
         section { padding: 2rem 1rem; max-width: 1200px; margin: 0 auto; width: 100%; }
         h1, h2, h3, h4 { margin-top: 0; line-height: 1.3; }
         h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); }
         h2 { font-size: clamp(1.4rem, 3vw, 2rem); }
 
-        /* HERO */
         #hero { text-align: center; background: #f0f4f8; padding: 3rem 1rem; }
         #hero button { background: #0056b3; color: #fff; border: none; cursor: pointer; padding: 0.75rem; border-radius: 6px; }
         #hero button:hover { background: #00408d; }
 
-        /* FOOTER */
         footer { background: #111; color: #ccc; padding: 2rem 1rem; text-align: center; }
         footer a { color: #fff; }
     </style>
-
 </head>
 <body>
+
 <!-- SITE HEADER -->
 <header id="site-header">
     <div id="brand">
         <a href="/" aria-label="PaK It Logistics home">
-            <!-- Placeholder logo text; replace with SVG or image later -->
-            <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="100" height="30">
+            <img src="/img/PaK_it_logo.png" width="100" height="30" alt="PaK It">
         </a>
     </div>
 
     <nav id="main-nav" aria-label="Primary navigation">
-        <!-- On mobile you'll likely collapse this into a hamburger -->
         <ul>
             <li><a href="#services">Services</a></li>
             <li><a href="#how-it-works">How it works</a></li>
             <li><a href="#testimonials">Clients</a></li>
             <li><a href="#about-us">About Us</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <img src="https://www.svgrepo.com/show/506725/login.svg" alt="Login" width="24" height="24">
+                </a>
+            </li>
         </ul>
     </nav>
 
@@ -167,7 +164,6 @@
     </div>
 </header>
 
-<!-- HERO / ABOVE THE FOLD -->
 <main>
     <section id="hero" aria-labelledby="hero-heading">
         <h1 id="hero-heading">Get your goods moving — faster, safer, smarter.</h1>
@@ -260,50 +256,51 @@
             </li>
         </ol>
     </section>
+</main>
 
-    <!-- TESTIMONIALS / TRUST -->
-    <section id="testimonials" aria-labelledby="testimonials-heading">
-        <h2 id="testimonials-heading">Trusted by</h2>
+<!-- TESTIMONIALS / TRUST -->
+<section id="testimonials" aria-labelledby="testimonials-heading">
+    <h2 id="testimonials-heading">Trusted by</h2>
 
-        <!-- client logos are often images; placeholder list -->
-        <div id="client-logos" aria-hidden="false">
-            <p>Client Logo 1 • Client Logo 2 • Client Logo 3</p>
-        </div>
+    <!-- client logos are often images; placeholder list -->
+    <div id="client-logos" aria-hidden="false">
+        <p>Client Logo 1 • Client Logo 2 • Client Logo 3</p>
+    </div>
 
-        <blockquote>
-            <p>"PaK it reduced our transit time by 22% and simplified billing." — Supply Chain Manager, RetailCo</p>
-        </blockquote>
-    </section>
+    <blockquote>
+        <p>"PaK it reduced our transit time by 22% and simplified billing." — Supply Chain Manager, RetailCo</p>
+    </blockquote>
+</section>
 
-    <!-- PRIMARY CTA / REINFORCE ACTION -->
-    <section id="cta" aria-labelledby="cta-heading">
-        <h2 id="cta-heading">Ready to move?</h2>
-        <p>Start with a quote or talk to an account rep.</p>
-        <div>
-            <a href="#quick-quote" role="button">Get a Quote</a>
-            <a href="#contact" role="button">Talk to Sales</a>
-        </div>
-    </section>
+<!-- PRIMARY CTA / REINFORCE ACTION -->
+<section id="cta" aria-labelledby="cta-heading">
+    <h2 id="cta-heading">Ready to move?</h2>
+    <p>Start with a quote or talk to an account rep.</p>
+    <div>
+        <a href="#quick-quote" role="button">Get a Quote</a>
+        <a href="#contact" role="button">Talk to Sales</a>
+    </div>
+</section>
 
-    <!-- ABOUT US -->
-    <section id="about-us" aria-labelledby="about-heading">
-        <h2 id="about-heading">About Us</h2>
-        <p><strong>SIA PaK it</strong> provides local and international freight transport — fast, reliable, and
-            efficient.</p>
-        <p>Our motto: <em>"Keep moving forward!"</em></p>
-        <p>
-            With over a decade of hands-on experience, our professional team and modern vehicle fleet enable us to
-            deliver quick, effective solutions for any logistics challenge.
-            We offer a full range of services across the entire supply chain — from transport and warehousing to
-            documentation and customs formalities.
-        </p>
-        <p>
-            Together with our trusted partners, we handle all types of freight daily for both businesses and private
-            clients across Europe, the United Kingdom, and the Baltic states.
-            Every client matters to us, which is why we provide complete support and end-to-end logistics solutions that
-            help you cut transport costs and stay focused on your core business.
-        </p>
-    </section>
+<!-- ABOUT US -->
+<section id="about-us" aria-labelledby="about-heading">
+    <h2 id="about-heading">About Us</h2>
+    <p><strong>SIA PaK it</strong> provides local and international freight transport — fast, reliable, and
+        efficient.</p>
+    <p>Our motto: <em>"Keep moving forward!"</em></p>
+    <p>
+        With over a decade of hands-on experience, our professional team and modern vehicle fleet enable us to
+        deliver quick, effective solutions for any logistics challenge.
+        We offer a full range of services across the entire supply chain — from transport and warehousing to
+        documentation and customs formalities.
+    </p>
+    <p>
+        Together with our trusted partners, we handle all types of freight daily for both businesses and private
+        clients across Europe, the United Kingdom, and the Baltic states.
+        Every client matters to us, which is why we provide complete support and end-to-end logistics solutions that
+        help you cut transport costs and stay focused on your core business.
+    </p>
+</section>
 
 
 </main>
@@ -334,31 +331,110 @@
 
         <button type="submit">Send</button>
     </form>
-
-    <small>&copy; <span id="year"></span> PaK it Logistics. All rights reserved.</small>
 </footer>
+<!-- LOGIN MODAL -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="loginModalLabel">Pieslēgties</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Aizvērt"></button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm" method="POST" action="/login">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Lietotājvārds</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                        <span id="username-error" class="error-message text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Parole</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                        <span id="password-error" class="error-message text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="totp" class="form-label">Authenticator code</label>
+                        <input type="text" class="form-control w-25" id="totp" name="totp">
+                        <span id="totp-error" class="error-message text-danger"></span>
+                    </div>
+                    <span id="errorMessage" class="error-message text-danger mb-2 d-block"></span>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">Ieiet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const menuToggle = document.getElementById('menu-toggle');
     const navMenu = document.querySelector('#main-nav ul');
 
-    // Toggle menu
-    menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('open');
+    menuToggle.addEventListener('click', () => navMenu.classList.toggle('open'));
+    document.querySelectorAll('#main-nav a').forEach(link => {
+        link.addEventListener('click', () => navMenu.classList.remove('open'));
     });
 
-    // Close menu on link click
-    document.querySelectorAll('#main-nav a').forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('open');
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+        $(document).ready(function () {
+        $("#loginForm").on("submit", function (e) {
+            e.preventDefault();
+
+            const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+            const csrfValue = $("meta[name='_csrf']").attr("content");
+
+            const request = {
+                username: $("#username").val() || null,
+                password: $("#password").val() || null,
+                totp: $("#totp").val() || null
+            };
+
+            fetch("/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    [csrfHeader]: csrfValue
+                },
+                body: JSON.stringify(request),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    response.json().then(handleErrorResponse);
+                } else {
+                    alert("Pieslēgšanās veiksmīga!");
+                    window.location.href = "/backoffice";
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+            const handleErrorResponse = (errorResponse) => {
+                $(".error-message").text("");
+
+                if (errorResponse.fieldErrors) {
+                    handleFieldErrors(errorResponse.fieldErrors);
+                } else {
+                    handleErrorMessage(errorResponse.errorMessage);
+                }
+            };
+
+            const handleFieldErrors = (fieldErrors) => {
+                for (let field in fieldErrors) {
+                    $(`#${field}-error`).text(fieldErrors[field]);
+                }
+            };
+
+            const handleErrorMessage = (errorMessage) => {
+                $("#errorMessage").text(errorMessage);
+            };
         });
     });
-
-    // Set current year
-    (function(){
-        var y = new Date().getFullYear();
-        var el = document.getElementById('year');
-        if(el) el.textContent = y;
-    }());
 </script>
 </body>
 </html>
