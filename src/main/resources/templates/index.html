@@ -13,13 +13,18 @@
         html { min-width: 375px; scroll-behavior: smooth; }
         body {
           margin: 0;
-          font-family: system-ui, sans-serif;
+          font-family: 'Inter', system-ui, sans-serif; /* modern, readable */
+          font-weight: 400; /* normal weight */
           line-height: 1.6;
           color: #222;
           background-color: #fff;
           min-width: 375px;
         }
 
+        h1, h2, h3, h4 {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-weight: 600; /* bolder headings */
+        }
         a { color: #0056b3; text-decoration: none; }
         a:hover { text-decoration: underline; }
 
@@ -54,10 +59,11 @@
           justify-content: center; /* center the nav items */
           align-items: center;
         }
+
         #main-nav a {
             position: relative;
             text-decoration: none;
-            font-weight: 500;
+            font-size: clamp(14px, 1.2vw, 18px);
             color: #fff; /* fallback for non-gradient browsers */
             background: linear-gradient(to right, #fff 50%, #006400 50%);
             background-size: 200% 100%;
@@ -72,33 +78,67 @@
         }
 
         #nav-info {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #f0f0f0;
-        padding: 10px 0;
-        gap: 40px;
-        width: 100%;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 6px 10px;
+            gap: 20px;
+            width: 100%;
+            background-color: #f0f0f0;
+            flex-wrap: wrap;
+            font-size: clamp(12px, 1.5vw, 14px);
         }
 
         #nav-info a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        color: #333;
-        font-size: 14px;
+            display: flex;
+            align-items: center;
+            font-size: clamp(12px, 1.5vw, 14px);   /* auto scales on screen size */
+            color: #333;
+            text-decoration: none;
         }
 
         #nav-info a svg {
-        margin-right: 8px;
-        fill: #333; /* default icon color */
-        transition: fill 0.3s;
+            width: clamp(16px, 2vw, 20px);   /* responsive icon */
+            height: clamp(16px, 2vw, 20px);
+            margin-right: 6px;
+            fill: #333;
+            transition: fill 0.3s;
         }
 
         #nav-info a:hover svg {
-        fill: #006400; /* dark green on hover */
+            fill: #006400;
+        }
+
+        .language-switch {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid #fff;
+            padding: 2px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn svg {
+            display: block;
+        }
+
+        .lang-btn:hover {
+            background-color: #fff;
+        }
+
+        .lang-btn.active {
+            background-color: #006400;
+            border-color: #006400;
         }
 
         /* --- HAMBURGER --- */
@@ -119,6 +159,12 @@
         }
 
         @media (max-width: 767px) {
+
+            #nav-info {
+                gap: 12px;
+                padding: 8px 5px;
+            }
+
             #main-nav ul {
                 position: fixed;
                 top: 63px;
@@ -193,13 +239,32 @@
 
     <nav id="main-nav" aria-label="Primary navigation">
         <ul>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#how-it-works">How it works</a></li>
-            <li><a href="#testimonials">Clients</a></li>
-            <li><a href="#about-us">About Us</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+            <li><a href="#services" data-lv="Piedāvājumi">Services</a></li>
+            <li><a href="#how-it-works" data-lv="Kā tas darbojas">How it works</a></li>
+            <li><a href="#testimonials" data-lv="Klienti">Clients</a></li>
+            <li><a href="#about-us" data-lv="Par mums">About Us</a></li>
+            <li><a href="#contact" data-lv="Kontakti">Contact</a></li>
+            <li class="language-switch">
+                <button class="lang-btn active" data-lang="lv" aria-label="Latvian">
+                    <!-- Latvia flag SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14">
+                        <rect width="20" height="14" fill="#9e3039"/>
+                        <rect y="4" width="20" height="6" fill="#fff"/>
+                    </svg>
+                </button>
+                <button class="lang-btn" data-lang="en" aria-label="English">
+                    <!-- UK flag SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14">
+                        <rect width="20" height="14" fill="#012169"/>
+                        <path d="M0 0 L20 14 M20 0 L0 14" stroke="#fff" stroke-width="2"/>
+                        <path d="M0 0 L20 14 M20 0 L0 14" stroke="#C8102E" stroke-width="1"/>
+                        <rect x="8" width="4" height="14" fill="#fff"/>
+                        <rect y="5" width="20" height="4" fill="#fff"/>
+                        <rect x="8.5" width="3" height="14" fill="#C8102E"/>
+                        <rect y="5.5" width="20" height="3" fill="#C8102E"/>
+                    </svg>
+                </button>
+                <a href="#" class="login-trigger" data-bs-toggle="modal" data-bs-target="#loginModal">
                     <img src="https://www.svgrepo.com/show/506725/login.svg" alt="Login" width="24" height="24">
                 </a>
             </li>
@@ -444,65 +509,61 @@
     const navMenu = document.querySelector('#main-nav ul');
 
     menuToggle.addEventListener('click', () => navMenu.classList.toggle('open'));
-    document.querySelectorAll('#main-nav a').forEach(link => {
-        link.addEventListener('click', () => navMenu.classList.remove('open'));
+
+    document
+      .querySelectorAll('#main-nav a:not(.login-trigger)')
+      .forEach(link => {
+          link.addEventListener('click', () => navMenu.classList.remove('open'));
+      });
+
+    document.querySelector('.login-trigger').addEventListener('click', (e) => {
+        e.stopPropagation();
     });
 
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-        $(document).ready(function () {
-        $("#loginForm").on("submit", function (e) {
-            e.preventDefault();
-
-            const csrfHeader = $("meta[name='_csrf_header']").attr("content");
-            const csrfValue = $("meta[name='_csrf']").attr("content");
-
-            const request = {
-                username: $("#username").val() || null,
-                password: $("#password").val() || null,
-                totp: $("#totp").val() || null
-            };
-
-            fetch("/api/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    [csrfHeader]: csrfValue
-                },
-                body: JSON.stringify(request),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    response.json().then(handleErrorResponse);
-                } else {
-                    alert("Pieslēgšanās veiksmīga!");
-                    window.location.href = "/backoffice";
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
-            const handleErrorResponse = (errorResponse) => {
-                $(".error-message").text("");
-
-                if (errorResponse.fieldErrors) {
-                    handleFieldErrors(errorResponse.fieldErrors);
-                } else {
-                    handleErrorMessage(errorResponse.errorMessage);
-                }
-            };
-
-            const handleFieldErrors = (fieldErrors) => {
-                for (let field in fieldErrors) {
-                    $(`#${field}-error`).text(fieldErrors[field]);
-                }
-            };
-
-            const handleErrorMessage = (errorMessage) => {
-                $("#errorMessage").text(errorMessage);
-            };
+            const lang = btn.dataset.lang;
+            // Here you can add your language switch logic, e.g., reload page with ?lang=xx
+            console.log('Switching language to:', lang);
         });
+    });
+
+    const langButtons = document.querySelectorAll('.lang-btn');
+
+    // Store English original text in data attribute (once)
+    document.querySelectorAll('#main-nav a').forEach(link => {
+        if (!link.classList.contains('login-trigger')) {
+            link.dataset.en = link.textContent;
+        }
+    });
+
+    langButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // toggle active class
+            langButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const lang = btn.dataset.lang; // 'lv' or 'en'
+
+            // Update nav links, skip login
+            document.querySelectorAll('#main-nav a').forEach(link => {
+                if (link.classList.contains('login-trigger')) return; // skip login
+
+                if (lang === 'lv') {
+                    link.textContent = link.dataset.lv;
+                } else {
+                    link.textContent = link.dataset.en || link.textContent;
+                }
+            });
+        });
+    });
+
+    // Store English original text in data attribute (once)
+    document.querySelectorAll('#main-nav a').forEach(link => {
+        link.dataset.en = link.textContent;
     });
 </script>
 </body>
