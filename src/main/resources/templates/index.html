@@ -261,8 +261,68 @@
             display: block;
         }
 
-        /* --- MEDIA QUERIES --- */
+                /* HOW IT WORKS */
+        .how-wrapper {
+            padding: 4rem 1rem;
+        }
+
+        .how-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .how-image {
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .how-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.6s ease;
+        }
+
+        .how-steps {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .how-steps li {
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .how-steps li:hover {
+            transform: translateX(6px);
+        }
+
+        .how-steps li.active {
+            background: #e6f3e6;
+            border-left: 4px solid #006400;
+            transform: translateX(6px);
+        }
+
         @media (max-width: 767px) {
+
+            .how-container {
+                grid-template-columns: 1fr;
+            }
+
+            .how-image {
+                height: 240px;
+            }
             #nav-info {
                 gap: 12px;
                 padding: 8px 5px;
@@ -604,26 +664,33 @@
     </section>
 
     <!-- HOW IT WORKS -->
-    <section id="how-it-works" aria-labelledby="how-heading">
+    <section id="how-it-works" aria-labelledby="how-heading" class="how-wrapper">
         <h2 id="how-heading">How it works</h2>
-        <ol>
-            <li>
-                <strong>Request</strong>
-                <p>Quick quote from origin to destination.</p>
-            </li>
-            <li>
-                <strong>Book</strong>
-                <p>Confirm pickup, get assigned carrier and ETA.</p>
-            </li>
-            <li>
-                <strong>Track</strong>
-                <p>Live updates to your dashboard and mobile.</p>
-            </li>
-            <li>
-                <strong>Deliver</strong>
-                <p>Proof of delivery and automated invoicing.</p>
-            </li>
-        </ol>
+
+        <div class="how-container">
+            <div class="how-image">
+                <img id="how-slide" src="img/how1.jpg" alt="How it works step image">
+            </div>
+
+            <ol class="how-steps">
+                <li data-step="0">
+                    <strong>Request</strong>
+                    <p>Quick quote from origin to destination.</p>
+                </li>
+                <li data-step="1">
+                    <strong>Book</strong>
+                    <p>Confirm pickup, get assigned carrier and ETA.</p>
+                </li>
+                <li data-step="2">
+                    <strong>Track</strong>
+                    <p>Live updates to your email.</p>
+                </li>
+                <li data-step="3">
+                    <strong>Deliver</strong>
+                    <p>Proof of delivery and automated invoicing.</p>
+                </li>
+            </ol>
+        </div>
     </section>
 </main>
 
@@ -820,6 +887,62 @@
 
     // Change image every 5 seconds
     setInterval(changeBackground, 5000);
+
+    // HOW IT WORKS SLIDER
+    const howImages = [
+        "img/how1.jpg",
+        "img/how2.jpg",
+        "img/how3.jpg",
+        "img/how4.jpg"
+    ];
+
+    let howIndex = 0;
+    let howTimer;
+
+    const imgEl = document.getElementById("how-slide");
+    const stepEls = document.querySelectorAll(".how-steps li");
+
+    // highlight step
+    function setActiveStep(index) {
+        stepEls.forEach(el => el.classList.remove("active"));
+        stepEls[index].classList.add("active");
+    }
+
+    // change image + highlight
+    function changeHowStep(index) {
+        howIndex = index;
+
+        imgEl.style.opacity = "0";
+        setTimeout(() => {
+            imgEl.src = howImages[index];
+            imgEl.style.opacity = "1";
+        }, 250);
+
+        setActiveStep(index);
+    }
+
+    // auto rotation
+    function startHowAuto() {
+        howTimer = setInterval(() => {
+            howIndex = (howIndex + 1) % howImages.length;
+            changeHowStep(howIndex);
+        }, 3000);
+    }
+
+    // click handler
+    stepEls.forEach(step => {
+        step.addEventListener("click", () => {
+            clearInterval(howTimer);
+            changeHowStep(parseInt(step.dataset.step));
+
+            // restart auto after 5 sec
+            setTimeout(startHowAuto, 5000);
+        });
+    });
+
+    // init
+    changeHowStep(0);
+    startHowAuto();
 </script>
 </body>
 </html>
