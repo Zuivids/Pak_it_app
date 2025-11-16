@@ -361,8 +361,89 @@
             font-size: 1rem;
             color: #555;
         }
+            /* ABOUT SECTION */
+        .about-section {
+            padding: 4rem 1rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .about-motto {
+            background: #f2f7f2;
+            padding: 0.8rem 1rem;
+            border-left: 4px solid #006400;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+        }
+
+        /* CTA buttons */
+        .about-cta {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            padding: 0.8rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.25s ease;
+        }
+
+        .btn-primary {
+            background: #006400;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #004d00;
+        }
+
+        .btn-secondary {
+            background: #f2f2f2;
+            color: #333;
+            border: 1px solid #ccc;
+        }
+
+        .btn-secondary:hover {
+            border-color: #999;
+        }
 
         @media (max-width: 767px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                order: -1;
+            }
             .trust-logos img {
                 height: 35px;
             }
@@ -763,35 +844,41 @@
     </div>
 </section>
 
-<!-- PRIMARY CTA / REINFORCE ACTION -->
-<section id="cta" aria-labelledby="cta-heading">
-    <h2 id="cta-heading">Ready to move?</h2>
-    <p>Start with a quote or talk to an account rep.</p>
-    <div>
-        <a href="#quick-quote" role="button">Get a Quote</a>
-        <a href="#contact" role="button">Talk to Sales</a>
+<!-- ABOUT US -->
+<section id="about-us" aria-labelledby="about-heading" class="about-section">
+    <div class="about-grid">
+
+        <div class="about-content">
+            <h2 id="about-heading">About Us</h2>
+            <p><strong>SIA PaK it</strong> provides local and international freight transport — fast, reliable, and efficient.</p>
+
+            <div class="about-motto">
+                <em>"Keep moving forward!"</em>
+            </div>
+
+            <p>With over a decade of hands-on experience, our team and modern fleet deliver quick, effective solutions for any logistics challenge.</p>
+
+            <p>We provide full supply-chain coverage: transport, warehousing, documentation, and customs. Our partner network enables daily freight movement across Europe, the UK, and the Baltics — for both businesses and private clients.</p>
+
+            <p>Every client gets end-to-end support designed to cut transport costs and keep operations running smoothly.</p>
+
+            <div class="about-cta">
+                <a href="#quick-quote" class="btn-primary">Get a Quote</a>
+                <a href="#contact" class="btn-secondary">Talk to Sales</a>
+            </div>
+        </div>
+
+        <div class="about-image">
+            <img src="img/About_us.png" >
+        </div>
+
     </div>
 </section>
 
-<!-- ABOUT US -->
-<section id="about-us" aria-labelledby="about-heading">
-    <h2 id="about-heading">About Us</h2>
-    <p><strong>SIA PaK it</strong> provides local and international freight transport — fast, reliable, and
-        efficient.</p>
-    <p>Our motto: <em>"Keep moving forward!"</em></p>
-    <p>
-        With over a decade of hands-on experience, our professional team and modern vehicle fleet enable us to
-        deliver quick, effective solutions for any logistics challenge.
-        We offer a full range of services across the entire supply chain — from transport and warehousing to
-        documentation and customs formalities.
-    </p>
-    <p>
-        Together with our trusted partners, we handle all types of freight daily for both businesses and private
-        clients across Europe, the United Kingdom, and the Baltic states.
-        Every client matters to us, which is why we provide complete support and end-to-end logistics solutions that
-        help you cut transport costs and stay focused on your core business.
-    </p>
-</section>
+<style>
+
+
+</style>
 
 
 </main>
