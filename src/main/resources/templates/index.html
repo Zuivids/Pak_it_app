@@ -314,8 +314,58 @@
             transform: translateX(6px);
         }
 
-        @media (max-width: 767px) {
+        /* TRUST / TESTIMONIALS */
+        .trust-section {
+            text-align: center;
+            padding: 4rem 1rem;
+        }
 
+        .trust-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0 3rem;
+            opacity: 0.9;
+        }
+
+        .trust-logos img {
+            height: 45px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .trust-logos img:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .trust-quote {
+            max-width: 650px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .trust-quote blockquote {
+            margin: 0 0 0.5rem;
+            font-style: italic;
+            color: #222;
+        }
+
+        .trust-quote cite {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        @media (max-width: 767px) {
+            .trust-logos img {
+                height: 35px;
+            }
             .how-container {
                 grid-template-columns: 1fr;
             }
@@ -695,17 +745,22 @@
 </main>
 
 <!-- TESTIMONIALS / TRUST -->
-<section id="testimonials" aria-labelledby="testimonials-heading">
+<section id="testimonials" aria-labelledby="testimonials-heading" class="trust-section">
     <h2 id="testimonials-heading">Trusted by</h2>
 
-    <!-- client logos are often images; placeholder list -->
-    <div id="client-logos" aria-hidden="false">
-        <p>Client Logo 1 • Client Logo 2 • Client Logo 3</p>
+    <div class="trust-logos">
+        <img src="img/logo1.png" alt="Client 1">
+        <img src="img/logo2.png" alt="Client 2">
+        <img src="img/logo3.png" alt="Client 3">
+        <img src="img/logo4.png" alt="Client 4">
     </div>
 
-    <blockquote>
-        <p>"PaK it reduced our transit time by 22% and simplified billing." — Supply Chain Manager, RetailCo</p>
-    </blockquote>
+    <div class="trust-quote">
+        <blockquote>
+            “PaK it reduced our transit time by 22% and simplified billing.”
+        </blockquote>
+        <cite>— Supply Chain Manager, RetailCo</cite>
+    </div>
 </section>
 
 <!-- PRIMARY CTA / REINFORCE ACTION -->
