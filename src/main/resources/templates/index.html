@@ -24,7 +24,7 @@
             font-weight: 400;
             line-height: 1.6;
             color: #222;
-            background-color: #fff;
+            background: linear-gradient(to bottom, #ffffff, #00330080);
         }
 
         h1, h2, h3, h4 {
@@ -60,7 +60,6 @@
             font-size: 1.25rem;
             color: #fff;
         }
-
         /* --- NAV --- */
         #main-nav {
             position: relative;
@@ -435,8 +434,103 @@
         .btn-secondary:hover {
             border-color: #999;
         }
+        /* FOOTER STYLING */
+        .footer-section {
+            background-color: #00330080;
+            trans
+            color: #ccc;
+            padding: 4rem 1rem 2rem;
+            font-family: 'Inter', sans-serif;
+        }
 
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .footer-info p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        .footer-info a {
+            color: #00b300;
+            text-decoration: none;
+        }
+
+        .footer-info a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-social {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-form label {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            color: #eee;
+        }
+
+        .footer-form input,
+        .footer-form textarea {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .footer-form input:focus,
+        .footer-form textarea:focus {
+            box-shadow: 0 0 0 2px #00b300;
+        }
+
+        .btn-footer {
+            background-color: #00b300;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .btn-footer:hover {
+            background-color: #009900;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
         @media (max-width: 767px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-form {
+                margin-top: 2rem;
+            }
             .about-grid {
                 grid-template-columns: 1fr;
             }
@@ -606,18 +700,6 @@
             #quick-quote button {
                 width: 100%;
             }
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            background: #111;
-            color: #ccc;
-            padding: 2rem 1rem;
-            text-align: center;
-        }
-
-        footer a {
-            color: #fff;
         }
     </style>
 
@@ -884,31 +966,57 @@
 </main>
 
 <!-- CONTACT / FOOTER -->
-<footer id="contact" aria-labelledby="contact-heading">
-    <h2 id="contact-heading">Contact</h2>
-    <address>
-        <p>PaK it logistic services</p>
-        <p>123 Shipping Ave, Riga</p>
-        <p><a href="tel:+37112345678">+371 123 45678</a></p>
-        <p><a href="mailto:sales@pakit.example">sales@pakit.example</a></p>
-    </address>
+<footer id="contact" aria-labelledby="contact-heading" class="footer-section">
+    <div class="footer-grid">
 
-    <!-- Full contact form for detailed leads -->
-    <form id="lead-form" action="/leads" method="post" aria-label="Contact form">
-        <label for="name">Full name</label>
-        <input id="name" name="name" type="text" required/>
+        <!-- Contact Info -->
+        <div class="footer-info">
+            <h2 id="contact-heading">Contact Us</h2>
+            <p><strong>PaK it Logistic Services</strong></p>
+            <p>123 Shipping Ave, Riga</p>
+            <p>Phone: <a href="tel:+37112345678">+371 123 45678</a></p>
+            <p>Email: <a href="mailto:sales@pakit.example">sales@pakit.example</a></p>
 
-        <label for="company">Company</label>
-        <input id="company" name="company" type="text" required/>
+            <div class="footer-social">
+                <a href="#" aria-label="Facebook">
+                    <img src="img/facebook.svg" alt="Facebook" width="24">
+                </a>
+                <a href="#" aria-label="LinkedIn">
+                    <img src="img/linkedin.svg" alt="LinkedIn" width="24">
+                </a>
+                <a href="#" aria-label="Instagram">
+                    <img src="img/instagram.svg" alt="Instagram" width="24">
+                </a>
+            </div>
+        </div>
 
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" required/>
+        <!-- Contact Form -->
+        <div class="footer-form">
+            <form id="lead-form" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST" aria-label="Contact form">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://yourdomain.com/thank-you">
 
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="4" placeholder="Tell us about your shipment or needs"></textarea>
+                <label for="name">Full Name</label>
+                <input id="name" name="name" type="text" placeholder="Your full name" required>
 
-        <button type="submit">Send</button>
-    </form>
+                <label for="company">Company</label>
+                <input id="company" name="company" type="text" placeholder="Your company" required>
+
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="your@email.com" required>
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="Tell us about your shipment or needs"></textarea>
+
+                <button type="submit" class="btn-footer">Send Message</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 PaK it. All rights reserved.</p>
+    </div>
 </footer>
 <!-- LOGIN MODAL -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
