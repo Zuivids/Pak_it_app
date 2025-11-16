@@ -451,27 +451,88 @@
     </section>
 
     <!-- SERVICES / OFFERINGS -->
-    <section id="services" aria-labelledby="services-heading">
+    <section id="services" aria-labelledby="services-heading" class="services-enhanced">
         <h2 id="services-heading">Services</h2>
-        <ul>
-            <li>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="icon-wrapper">
+                    <img src="img/delivery.png">
+                </div>
                 <h3>Full Truckload (FTL)</h3>
                 <p>Direct routes, guaranteed capacity for large shipments.</p>
-            </li>
-            <li>
+            </div>
+
+            <div class="service-card">
+                <div class="icon-wrapper">
+                    <img src="img/delivery-truck.png" alt="LTL icon">
+                </div>
                 <h3>Less-than-Truckload (LTL)</h3>
                 <p>Cost efficient consolidation for smaller loads.</p>
-            </li>
-            <li>
+            </div>
+
+            <div class="service-card">
+                <div class="icon-wrapper">
+                    <img src="img/global.png" alt="International Freight icon">
+                </div>
                 <h3>International Freight</h3>
-                <p>Air, ocean, and cross-border solutions with customs support.</p>
-            </li>
-            <li>
+                <p>Cross-border solutions with customs support.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="icon-wrapper">
+                    <img src="img/warehouse.png" alt="Warehouse icon">
+                </div>
                 <h3>Warehousing & Fulfillment</h3>
                 <p>Short- and long-term storage + pick & pack services.</p>
-            </li>
-        </ul>
+            </div>
+        </div>
     </section>
+
+    <style>
+        .services-enhanced {
+        text-align: center;
+        padding: 4rem 1rem;
+        }
+
+        .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+        }
+
+        .service-card {
+        background: #eef5ee;
+        padding: 2rem;
+        border-radius: 14px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+
+        .service-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .services-enhanced .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .services-enhanced .icon-wrapper img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            display: block;
+        }
+
+    </style>
 
     <!-- WHY CHOOSE US / DIFFERENTIATORS -->
     <section id="why" aria-labelledby="why-heading">
