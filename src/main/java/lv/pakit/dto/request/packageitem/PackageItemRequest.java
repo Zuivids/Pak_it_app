@@ -1,4 +1,4 @@
-package lv.pakit.dto.request.packageItem;
+package lv.pakit.dto.request.packageitem;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

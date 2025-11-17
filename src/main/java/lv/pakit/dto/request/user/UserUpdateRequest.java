@@ -1,11 +1,9 @@
 package lv.pakit.dto.request.user;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
+import lv.pakit.model.UserRole;
 
 @Getter
 @Setter
@@ -34,4 +32,6 @@ public class UserUpdateRequest {
     @Email(message = "Email must be a valid format")
     private String email;
 
+    @NotNull(message = "Role must be selected")
+    private UserRole role;
 }

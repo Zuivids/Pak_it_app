@@ -1,6 +1,7 @@
 package lv.pakit.dto.response.user;
 
 import lombok.*;
+import lv.pakit.model.UserRole;
 
 @Getter
 @Builder
@@ -13,4 +14,5 @@ public class UserResponse {
     private final String email;
     private final Boolean totpConfirmed;
     private final Boolean isTotp;
+    private final UserRole role;
 }

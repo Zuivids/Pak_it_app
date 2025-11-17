@@ -1,7 +1,7 @@
 package lv.pakit.service;
 
 import lombok.RequiredArgsConstructor;
-import lv.pakit.dto.request.packageItem.PackageItemRequest;
+import lv.pakit.dto.request.packageitem.PackageItemRequest;
 import lv.pakit.dto.response.CommodityResponse;
 import lv.pakit.dto.response.PackageItemResponse;
 import lv.pakit.model.Commodity;

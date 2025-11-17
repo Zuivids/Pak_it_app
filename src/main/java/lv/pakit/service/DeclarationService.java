@@ -15,6 +15,7 @@ import lv.pakit.model.Client;
 import lv.pakit.model.Declaration;
 import lv.pakit.repo.IDeclarationRepo;
 import lv.pakit.repo.IPackageItemRepo;
+import lv.pakit.service.auth.AuthService;
 import org.springframework.data.jpa.domain.Specification;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
