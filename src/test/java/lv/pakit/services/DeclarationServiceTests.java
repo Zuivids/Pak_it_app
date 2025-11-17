@@ -2,7 +2,7 @@ package lv.pakit.services;
 
 import lv.pakit.dto.request.declaration.DeclarationRequest;
 import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
-import lv.pakit.dto.request.packageItem.PackageItemRequest;
+import lv.pakit.dto.request.packageitem.PackageItemRequest;
 import lv.pakit.dto.response.DeclarationResponse;
 import lv.pakit.exception.http.NotFoundException;
 import lv.pakit.model.Client;

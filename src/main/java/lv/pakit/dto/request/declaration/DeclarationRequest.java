@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import lv.pakit.dto.request.packageItem.PackageItemRequest;
+import lv.pakit.dto.request.packageitem.PackageItemRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;

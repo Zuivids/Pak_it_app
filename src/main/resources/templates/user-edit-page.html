@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/layout :: header(~{})">
+<head th:replace="~{fragments/layout :: header(~{})}">
 </head>
 
 <body class="bg-light d-flex flex-column min-vh-100">
@@ -40,6 +40,16 @@
                     <input type="text" th:value="${user.email}" class="form-control" id="email" required/>
                 </div>
             </div>
+            <div class="row mb-3">
+                <label for="role" class="col-sm-2 col-form-label">Role</label>
+                <span id="role-error" class="text-danger"></span>
+                <div class="col-sm-10">
+                    <select id="role" name="role" class="form-select" required>
+                        <option value="ADMIN" th:selected="${user.role.name() == 'ADMIN'}">Admin</option>
+                        <option value="DRIVER" th:selected="${user.role.name() == 'DRIVER'}">Driver</option>
+                    </select>
+                </div>
+            </div>
 
             <span id="errorMessage" class="text-danger"></span>
 
@@ -69,7 +79,8 @@
             username: $("#username").val(),
             firstName: $("#firstName").val(),
             lastName: $("#lastName").val(),
-            email: $("#email").val()
+            email: $("#email").val(),
+            role: $("#role").val()
         };
 
         fetch(url, {
