@@ -24,20 +24,26 @@ VALUES
     ('0000000010', 'Used Boots'),
     ('0000000011', 'Used Monitor');
 
+INSERT INTO shipment (shipment_id, shipment_code, created_at, created_by, delivery_datetime, delivery_state)
+VALUES
+    (1, '1_3198498AB', '2025-11-19 19:58:07.000', 1, '2025-11-19 19:58:00.000', 'PLANNED'),
+    (2, '2_ACVK9AJS8', '2025-11-19 20:58:49.000', 1, '2025-12-19 20:58:00.000', 'IN_PROGRESS');
+
 INSERT INTO declaration (client_id, `date`, identifier_code, sender_name, sender_address,
 sender_country_code, sender_phone_number, receiver_name, receiver_address, receiver_country_code,
-receiver_phone_number, total_value, total_weight, created_by, created_at)
+receiver_phone_number, total_value, total_weight, created_by, created_at, shipment_id)
 VALUES
     (1,'20250529','1_1636SEP25','Toms Bērziņš','Ventspils iela 77','LV','+3711111111',
-        'Elizabeth Oak','London street 77','UK','+449876543',191.5,27.5, 'admin', '2025-09-04 17:24:22'),
+        'Elizabeth Oak','London street 77','UK','+449876543',191.5,27.5, 'admin', '2025-09-04 17:24:22', 1),
     (2,'20250528','08_2036AUG25','Pēteris Bērziņš','Rīgas iela 77','LV','+37122222222',
-        'Mark Grass','Bridge street 41','UK','+442222222',1311.49,93.05, 'driver', '2025-09-04 17:24:22'),
+        'Mark Grass','Bridge street 41','UK','+442222222',1311.49,93.05, 'driver', '2025-09-04 17:24:22', 1),
     (3,'20250527','03_0536SEP25','John Wood','Crown street 1','UK','+4433333333',
-        'Miks Bērziņš','Tukuma iela 77','LV','+37133333333',94.72,14.5, 'admin', '2025-09-04 17:24:22');
+        'Miks Bērziņš','Tukuma iela 77','LV','+37133333333',94.72,14.5, 'admin', '2025-09-04 17:24:22', 2);
 
 INSERT INTO package_item (commodity_id,declaration_id,net_weight,quantity,used,`value`)
 VALUES
     (1,1,15.25,1,FALSE,120.50),
+    (1,2,2.22,2,FALSE,3.33),
     (7,1,5,1,FALSE,20.50),
     (4,2,80.55,4,FALSE,1200),
     (5,2,5.25,1,FALSE,10.59),
