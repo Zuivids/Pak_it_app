@@ -159,7 +159,6 @@ public class DeclarationService {
 
         return Declaration.builder()
                 .client(client)
-                .shipment(shipment)
                 .shipmentId(shipmentId)
                 .identifierCode(request.getIdentifierCode())
                 .senderName(request.getSenderName())

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: header(~{::#headerChildren})}">
+    <div id="headerChildren">
+        <style>
+            .cell {
+                display: flex;
+                align-items: center;
+            }
+            .field-name-cell {
+                display: flex;
+                align-items: center;
+                font-weight: 700;
+            }
+        </style>
+    </div>
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container py-5">
+    <h2 class="mb-5">Delete shipment</h2>
+
+    <div class="mb-4">
+        <span th:text="|Are you sure you want to delete shipment ${shipment.shipmentCode}?|"></span>
+    </div>
+
+    <div id="errorMessage" class="text-danger mb-3"></div>
+
+    <div class="d-flex gap-3 mb-4">
+        <button type="button" class="btn btn-danger" onclick="deleteShipment()" th:data-id="${shipment.shipmentId}">Delete</button>
+        <a th:href="@{/shipment}" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script>
+    const deleteShipment = () => {
+        const shipmentId = $("button[onclick='deleteShipment()']").data("id");
+        const url = `/api/shipment/${shipmentId}`;
+        const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        const csrfValue = $("meta[name='_csrf']").attr("content");
+
+        fetch(url, {
+            method: "DELETE",
+            headers: {
+                [csrfHeader]: csrfValue
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(handleErrorResponse);
+            }
+            window.location.href = '/shipment';
+        })
+        .catch(error => {
+            console.error("Error deleting shipment:", error);
+            handleErrorMessage("An unexpected error occurred.");
+        });
+    };
+
+    const handleErrorResponse = (errorResponse) => {
+        if (errorResponse.fieldErrors) {
+            console.warn("Unexpected fieldErrors on DELETE", errorResponse.fieldErrors);
+        }
+        handleErrorMessage(errorResponse.errorMessage || "Failed to delete the shipment.");
+    };
+
+    const handleErrorMessage = (message) => {
+        $("#errorMessage").text(message);
+    };
+</script>
+
+</body>
+</html>

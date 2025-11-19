@@ -45,6 +45,7 @@ public class DeclarationPageController {
     public String showDeclarationCreateForm(Model model) {
         model.addAttribute("commodities", commodityService.fetchAll());
         model.addAttribute("clients", clientService.fetchAll());
+        model.addAttribute("shipments", shipmentService.fetchAll());
 
         return "declaration/declaration-add-new-page";
     }

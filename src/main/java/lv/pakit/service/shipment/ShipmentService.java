@@ -8,13 +8,12 @@ import lv.pakit.dto.request.shipment.ShipmentCreateRequest;
 import lv.pakit.dto.request.shipment.ShipmentSearchRequest;
 import lv.pakit.dto.response.shipment.ShipmentResponse;
 import lv.pakit.exception.http.NotFoundException;
+import lv.pakit.model.Declaration;
 import lv.pakit.model.user.User;
 import lv.pakit.model.shipment.Shipment;
+import lv.pakit.repo.IDeclarationRepo;
 import lv.pakit.repo.IShipmentRepo;
 import lv.pakit.service.auth.AuthService;
-import lv.pakit.service.declaration.DeclarationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +31,7 @@ public class ShipmentService {
 
     private final AuthService authService;
     private final IShipmentRepo shipmentRepo;
-
-    @Lazy
-    @Autowired
-    private DeclarationService declarationService;
+    private final IDeclarationRepo declarationRepo;
 
     @Transactional
     public List<ShipmentResponse> fetchAll() {
@@ -69,6 +65,13 @@ public class ShipmentService {
 
     @Transactional
     public void deleteById(long shipmentId) {
+        List<Declaration> declarations = declarationRepo.findByShipmentId(shipmentId);
+        declarations.forEach(declaration -> {
+            declaration.setShipmentId(null);
+            declaration.setShipment(null);
+        });
+
+        declarationRepo.saveAll(declarations);
         shipmentRepo.deleteById(shipmentId);
     }
 

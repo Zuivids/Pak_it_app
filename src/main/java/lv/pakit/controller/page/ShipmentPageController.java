@@ -45,4 +45,11 @@ public class ShipmentPageController {
 
         return "shipment/shipment-edit-page";
     }
+
+    @GetMapping("/{id}/delete")
+    public String deleteShipment(@PathVariable long id, Model model) {
+        model.addAttribute("shipment", shipmentService.findById(id));
+
+        return "shipment/shipment-delete-page";
+    }
 }
