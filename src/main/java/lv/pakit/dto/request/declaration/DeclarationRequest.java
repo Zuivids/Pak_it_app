@@ -17,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 public class DeclarationRequest {
 
-    @NotNull
     private Long clientId;
     @NotEmpty
     @Valid
@@ -42,7 +41,7 @@ public class DeclarationRequest {
     private String receiverPhoneNumber;
     @NotNull
     private String date;
-
     private String createdBy;
     private LocalDateTime createdAt;
+    private Long shipmentId;
 }

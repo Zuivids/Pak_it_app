@@ -4,10 +4,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.annotations.RequiresRole;
 import lv.pakit.dto.request.declaration.DeclarationRequest;
-import lv.pakit.service.DeclarationService;
+import lv.pakit.service.declaration.DeclarationService;
 import org.springframework.web.bind.annotation.*;
 
-import static lv.pakit.model.UserRole.ADMIN;
+import static lv.pakit.model.user.UserRole.ADMIN;
 
 @RestController
 @RequiredArgsConstructor

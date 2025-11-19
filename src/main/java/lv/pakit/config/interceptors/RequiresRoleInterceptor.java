@@ -31,7 +31,7 @@ public class RequiresRoleInterceptor implements HandlerInterceptor {
         }
 
         if (annotation.page()) {
-            response.sendRedirect("/backoffice");
+            response.sendRedirect("/home");
             return false;
         }
 

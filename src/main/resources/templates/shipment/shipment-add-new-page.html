@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: header(~{})}">
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container py-5 flex-fill">
+    <h1 class="mb-4">Add new shipment</h1>
+    <div class="container">
+        <div class="row mb-3">
+            <label for="shipmentCode" class="col-sm-2 col-form-label">Code</label>
+            <span id="shipmentCode-error" class="text-danger"></span>
+            <div class="col-sm-10">
+                <input id="shipmentCode" name="shipmentCode" type="text" class="form-control" required/>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="deliveryDatetime" class="col-sm-2 col-form-label">Delivery time</label>
+            <span id="deliveryDatetime-error" class="text-danger"></span>
+            <div class="col-sm-10">
+                <div id="deliveryDatetime-container" class="input-group" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                    <input id="deliveryDatetime" class="form-control" type="text" data-td-target="#deliveryDatetime-container">
+                    <span class="input-group-text" data-td-target="#deliveryDatetime-container" data-td-toggle="datetimepicker">
+                        <i class="fa-solid fa-calendar"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="deliveryState" class="col-sm-2 col-form-label">Delivery state</label>
+            <span id="deliveryState-error" class="text-danger"></span>
+            <div class="col-sm-10">
+                <select id="deliveryState" name="deliveryState" class="form-select" required>
+                    <option th:each="deliveryState : ${T(lv.pakit.model.shipment.DeliveryState).values()}"
+                            th:value="${deliveryState.name}"
+                            th:text="${deliveryState.publicName}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <span id="errorMessage" class="text-danger"></span>
+
+        <div class="row mb-3 text-center">
+            <div class="col">
+                <button type="button" onClick="createShipment()" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <form action="/home" method="get" class="mt-4">
+        <div class="text-start">
+            <button type="submit" class="btn btn-secondary">Back</button>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script>
+    var deliveryDatetimePicker;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        deliveryDatetimePicker = new tempusDominus.TempusDominus(document.getElementById("deliveryDatetime-container"), {
+            defaultDate: new Date(),
+            display: {
+                buttons: {
+                    today: true
+                },
+            },
+            localization: {
+                format: "dd-MM-yyyy HH:mm",
+                hourCycle: "h24"
+            }
+        });
+    });
+
+    const createShipment = () => {
+        const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        const csrfValue = $("meta[name='_csrf']").attr("content");
+
+        const deliveryDatetime = moment(deliveryDatetimePicker.dates.lastPicked).format("YYYY-MM-DDTHH:mm:ss");
+
+        const request = {
+            shipmentCode: $("#shipmentCode").val(),
+            deliveryDatetime: deliveryDatetime,
+            deliveryState: $("#deliveryState").val(),
+            declarationIds: []
+        };
+
+        fetch("/api/shipment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                [csrfHeader]: csrfValue
+            },
+            body: JSON.stringify(request),
+        })
+        .then(response => {
+            if (!response.ok) {
+                response.json().then(handleErrorResponse);
+            } else {
+                window.location.href = "/shipment";
+            }
+        })
+        .catch(error => console.log(error));
+    };
+
+    const handleErrorResponse = (errorResponse) => {
+        if (errorResponse.fieldErrors) {
+            handleFieldErrors(errorResponse.fieldErrors);
+        } else {
+            handleErrorMessage(errorResponse.errorMessage);
+        }
+    };
+
+    const handleFieldErrors = (fieldErrors) => {
+        for (let field in fieldErrors) {
+            $(`#${field}-error`).text(fieldErrors[field]);
+        }
+    };
+
+    const handleErrorMessage = (errorMessage) => {
+        $("#errorMessage").text(errorMessage);
+    };
+</script>
+
+</body>
+</html>

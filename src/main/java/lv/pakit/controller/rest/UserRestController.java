@@ -8,7 +8,7 @@ import lv.pakit.dto.request.user.UserUpdateRequest;
 import lv.pakit.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
-import static lv.pakit.model.UserRole.ADMIN;
+import static lv.pakit.model.user.UserRole.ADMIN;
 
 @RestController
 @RequiredArgsConstructor

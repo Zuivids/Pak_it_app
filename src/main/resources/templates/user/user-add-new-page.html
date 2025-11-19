@@ -9,35 +9,42 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <main class="container py-5 flex-fill">
-    <h1 class="mb-4">Edit User</h1>
-    <form id="editUserForm" th:action="|/api/user/${user.userId}|" method="post">
+    <h1 class="mb-4">Insert New User</h1>
+    <form id="createUserForm" action="/api/user">
         <div class="container">
             <div class="row mb-3">
                 <label for="username" class="col-sm-2 col-form-label">Username</label>
                 <span id="username-error" class="text-danger"></span>
                 <div class="col-sm-10">
-                    <input type="text" th:value="${user.username}" class="form-control" id="username" required/>
+                    <input id="username" type="text" name="username" class="form-control" required/>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="password" class="col-sm-2 col-form-label">Password</label>
+                <span id="password-error" class="text-danger"></span>
+                <div class="col-sm-10">
+                    <input id="password" type="text" name="password" class="form-control" required/>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
                 <span id="firstName-error" class="text-danger"></span>
                 <div class="col-sm-10">
-                    <input type="text" th:value="${user.firstName}" class="form-control" id="firstName" required/>
+                    <input id="firstName" type="text" name="firstName" class="form-control" required/>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
                 <span id="lastName-error" class="text-danger"></span>
                 <div class="col-sm-10">
-                    <input type="text" th:value="${user.lastName}" class="form-control" id="lastName" required/>
+                    <input id="lastName" type="text" name="lastName" class="form-control" required/>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                 <span id="email-error" class="text-danger"></span>
                 <div class="col-sm-10">
-                    <input type="text" th:value="${user.email}" class="form-control" id="email" required/>
+                    <input id="email" type="text" name="email" class="form-control" required/>
                 </div>
             </div>
             <div class="row mb-3">
@@ -45,8 +52,10 @@
                 <span id="role-error" class="text-danger"></span>
                 <div class="col-sm-10">
                     <select id="role" name="role" class="form-select" required>
-                        <option value="ADMIN" th:selected="${user.role.name() == 'ADMIN'}">Admin</option>
-                        <option value="DRIVER" th:selected="${user.role.name() == 'DRIVER'}">Driver</option>
+                        <option th:each="userRole : ${T(lv.pakit.model.user.UserRole).values()}"
+                                th:value="${userRole.name}"
+                                th:text="${userRole.publicName}">
+                        </option>
                     </select>
                 </div>
             </div>
@@ -55,36 +64,38 @@
 
             <div class="row mb-3 text-center">
                 <div class="col">
-                    <button type="button" onClick="editUser()" class="btn btn-success">Update User</button>
+                    <button type="button" onClick="createUser()" class="btn btn-primary">Save User</button>
                 </div>
             </div>
         </div>
     </form>
 
-    <form th:action="@{/user}" method="get" class="mt-4">
+    <form th:action="@{/home}" method="get" class="mt-4">
         <div class="text-center">
             <button type="submit" class="btn btn-secondary">Back</button>
         </div>
     </form>
+
 </main>
 
 <footer th:replace="~{fragments/layout :: footer}"></footer>
 
 <script>
-    const editUser = () => {
-        const url = $("#editUserForm").attr('action');
+    const createUser = () => {
         const csrfHeader = $("meta[name='_csrf_header']").attr("content");
         const csrfValue = $("meta[name='_csrf']").attr("content");
+
         const request = {
             username: $("#username").val(),
+            password: $("#password").val(),
             firstName: $("#firstName").val(),
             lastName: $("#lastName").val(),
             email: $("#email").val(),
             role: $("#role").val()
         };
 
-        fetch(url, {
-            method: "PUT",
+        fetch("/api/user", {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 [csrfHeader]: csrfValue
@@ -95,7 +106,7 @@
             if (!response.ok) {
                 response.json().then(handleErrorResponse);
             } else {
-                window.location.href = '/user';
+                window.location.href = "/user";
             }
         })
         .catch(error => {
@@ -112,7 +123,6 @@
     };
 
     const handleFieldErrors = (fieldErrors) => {
-        console.log(fieldErrors);
         for (let field in fieldErrors) {
             $(`#${field}-error`).text(fieldErrors[field]);
         }
@@ -121,7 +131,6 @@
     const handleErrorMessage = (errorMessage) => {
         $("#errorMessage").text(errorMessage);
     };
-
 </script>
 </body>
 </html>

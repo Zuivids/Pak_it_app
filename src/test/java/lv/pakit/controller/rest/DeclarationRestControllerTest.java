@@ -3,7 +3,7 @@ package lv.pakit.controller.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lv.pakit.dto.request.declaration.DeclarationRequest;
 import lv.pakit.dto.request.packageitem.PackageItemRequest;
-import lv.pakit.service.DeclarationService;
+import lv.pakit.service.declaration.DeclarationService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

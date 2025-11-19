@@ -7,38 +7,40 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import static lv.pakit.model.UserRole.ADMIN;
+import static lv.pakit.model.user.UserRole.ADMIN;
 
 @Controller
+@RequestMapping("/client")
 @RequiredArgsConstructor
 public class ClientPageController {
 
     private final ClientService clientService;
 
-    @GetMapping("client")
+    @GetMapping
     public String getAllClients(Model model) {
         model.addAttribute("clients", clientService.fetchAll());
-        return "client-show-many-page";
+        return "client/client-show-many-page";
     }
 
-    @GetMapping("client/new")
+    @GetMapping("/new")
     public String showClientForm() {
-        return "client-add-new-page";
+        return "client/client-add-new-page";
     }
 
-    @GetMapping("client/{id}/edit")
+    @GetMapping("/{id}/edit")
     public String editClient(@PathVariable("id") long id, Model model) {
         model.addAttribute("client", clientService.fetchById(id));
 
-        return "client-edit-page";
+        return "client/client-edit-page";
     }
 
-    @GetMapping("/client/{id}/delete")
+    @GetMapping("/{id}/delete")
     @RequiresRole(ADMIN)
     public String deleteClient(@PathVariable("id") long id, Model model) {
         model.addAttribute("client", clientService.fetchById(id));
 
-        return "client-delete-page";
+        return "client/client-delete-page";
     }
 }

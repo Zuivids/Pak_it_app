@@ -1,6 +1,6 @@
 package lv.pakit.annotations;
 
-import lv.pakit.model.UserRole;
+import lv.pakit.model.user.UserRole;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

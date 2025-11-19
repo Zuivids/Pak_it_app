@@ -9,7 +9,7 @@ import lv.pakit.model.Client;
 import lv.pakit.model.Declaration;
 import lv.pakit.repo.IDeclarationRepo;
 import lv.pakit.service.ClientService;
-import lv.pakit.service.DeclarationService;
+import lv.pakit.service.declaration.DeclarationService;
 import lv.pakit.service.PackageItemService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
