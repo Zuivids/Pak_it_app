@@ -2,6 +2,7 @@ package lv.pakit.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lv.pakit.model.shipment.Shipment;
 
 import java.time.LocalDateTime;
 
@@ -14,15 +15,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Declaration {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(value = AccessLevel.NONE)
     private long declarationId;
-
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
-
+    @ManyToOne
+    @JoinColumn(name = "shipment_id", insertable = false, updatable = false)
+    private Shipment shipment;
+    @Column(name = "shipment_id")
+    private Long shipmentId;
     private String identifierCode;
     private String senderName;
     private String senderAddress;
@@ -37,6 +42,4 @@ public class Declaration {
     private String date;
     private String createdBy;
     private LocalDateTime createdAt;
-
-
 }

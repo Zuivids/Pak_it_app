@@ -1,7 +1,7 @@
 package lv.pakit.dto.response.user;
 
 import lombok.*;
-import lv.pakit.model.UserRole;
+import lv.pakit.model.user.UserRole;
 
 @Getter
 @Builder

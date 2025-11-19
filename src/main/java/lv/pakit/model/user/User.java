@@ -1,4 +1,4 @@
-package lv.pakit.model;
+package lv.pakit.model.user;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -51,5 +51,9 @@ public class User implements Serializable {
 
     public boolean isTotp() {
         return totpSecret != null && Boolean.TRUE.equals(totpConfirmed);
+    }
+
+    public String fullName() {
+        return "%s %s".formatted(firstName, lastName);
     }
 }

@@ -3,8 +3,8 @@ package lv.pakit.service.auth;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lv.pakit.exception.http.BadRequestException;
-import lv.pakit.model.User;
-import lv.pakit.model.UserRole;
+import lv.pakit.model.user.User;
+import lv.pakit.model.user.UserRole;
 import lv.pakit.security.CustomUserDetails;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.stream.Stream;
 
-import static lv.pakit.model.UserRole.ADMIN;
+import static lv.pakit.model.user.UserRole.ADMIN;
 
 @Service
 @RequiredArgsConstructor

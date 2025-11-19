@@ -11,7 +11,7 @@ import lv.pakit.dto.response.user.TotpSetupResponse;
 import lv.pakit.exception.http.BadRequestException;
 import lv.pakit.exception.http.FieldErrorException;
 import lv.pakit.exception.http.InternalErrorException;
-import lv.pakit.model.User;
+import lv.pakit.model.user.User;
 import lv.pakit.repo.IUserRepo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

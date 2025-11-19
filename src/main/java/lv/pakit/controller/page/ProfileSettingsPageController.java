@@ -1,7 +1,7 @@
 package lv.pakit.controller.page;
 
 import lombok.RequiredArgsConstructor;
-import lv.pakit.model.User;
+import lv.pakit.model.user.User;
 import lv.pakit.service.UserService;
 import lv.pakit.service.auth.AuthService;
 import org.springframework.stereotype.Controller;

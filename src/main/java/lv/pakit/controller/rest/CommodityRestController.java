@@ -8,7 +8,7 @@ import lv.pakit.service.CommodityService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import static lv.pakit.model.UserRole.ADMIN;
+import static lv.pakit.model.user.UserRole.ADMIN;
 
 @RestController
 @RequiredArgsConstructor

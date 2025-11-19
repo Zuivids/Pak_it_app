@@ -4,7 +4,7 @@ import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
 import lv.pakit.dto.response.DeclarationResponse;
 import lv.pakit.service.ClientService;
 import lv.pakit.service.CommodityService;
-import lv.pakit.service.DeclarationService;
+import lv.pakit.service.declaration.DeclarationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

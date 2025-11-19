@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: header(~{::#headerChildren})}">
+    <div id="headerChildren">
+        <style>
+            .cell {
+                display: flex;
+                align-items: center;
+            }
+            .field-name-cell {
+                display: flex;
+                align-items: center;
+                font-weight: 700;
+            }
+        </style>
+    </div>
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container py-5">
+    <h2 class="mb-5">General info</h2>
+
+    <div class="row mb-3">
+        <div class="col-2 field-name-cell">
+            <span>Code:</span>
+        </div>
+        <div class="col-2 cell">
+            <span th:text="${shipment.shipmentCode}"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2 field-name-cell">
+            <span>Delivery time:</span>
+        </div>
+        <div class="col-2 cell">
+            <span th:text="${#temporals.format(shipment.deliveryDatetime, 'dd-MM-yyyy HH:mm')}"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2 field-name-cell">
+            <span>Delivery state:</span>
+        </div>
+        <div class="col-2 cell">
+            <span th:text="${shipment.deliveryState.publicName}"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2 field-name-cell">
+            <span>Created at:</span>
+        </div>
+        <div class="col-2 cell">
+            <span th:text="${#temporals.format(shipment.createdAt, 'dd-MM-yyyy HH:mm')}"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2 field-name-cell">
+            <span>Created by:</span>
+        </div>
+        <div class="col-2 cell">
+            <span th:text="${shipment.createdBy}"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2 field-name-cell">
+            <span>Total weight:</span>
+        </div>
+        <div class="col-2 cell">
+            <span th:text="|${shipmentStats.totalWeight} Kg|"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2 field-name-cell">
+            <span>Total value:</span>
+        </div>
+        <div class="col-2 cell">
+            <span th:text="|${shipmentStats.totalValue} EUR|"></span>
+        </div>
+    </div>
+
+    <h2 class="mt-5 mb-5">Declarations</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-light">
+            <thead class="table-secondary text-center">
+                <tr>
+                    <td></td>
+                    <th>Declaration code</th>
+                    <th>Total weight (Kg)</th>
+                    <th>Total value (EUR)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="declarationStats, iterStat : ${shipmentStats.declarationStats}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td><a th:text="${declarationStats.identifierCode}"
+                           th:href="|/declaration/${declarationStats.declarationId}|">
+                    </a></td>
+                    <td th:text="|${declarationStats.totalWeight} Kg|"></td>
+                    <td th:text="|${declarationStats.totalValue} EUR|"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="mt-5 mb-5">Commodities</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-light">
+            <thead class="table-secondary text-center">
+            <tr>
+                <td></td>
+                <th>Commodity code</th>
+                <th>Total weight (Kg)</th>
+                <th>Total value (EUR)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="commodityStats, iterStat : ${shipmentStats.commodityStats}">
+                <td th:text="${iterStat.index + 1}"></td>
+                <td><a th:text="|${commodityStats.commodityCode} - ${commodityStats.description}|"
+                       th:href="|/commodity/${commodityStats.commodityId}/edit|">
+                <td th:text="|${commodityStats.totalWeight} Kg|"></td>
+                <td th:text="|${commodityStats.totalValue} EUR|"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

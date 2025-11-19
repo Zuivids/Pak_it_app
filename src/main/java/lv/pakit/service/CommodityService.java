@@ -41,7 +41,7 @@ public class CommodityService {
     public void updateById(long id, CommodityRequest request) {
         Commodity commodity = requireById(id);
 
-        if (commmodityCodeChanged(commodity, request)) {
+        if (commodityCodeChanged(commodity, request)) {
             checkCommodityCodeIsUnique(request);
         }
 
@@ -51,7 +51,7 @@ public class CommodityService {
         commodityRepo.save(commodity);
     }
 
-    private boolean commmodityCodeChanged(Commodity commodity, CommodityRequest request) {
+    private boolean commodityCodeChanged(Commodity commodity, CommodityRequest request) {
         return !request.getCommodityCode().equals(commodity.getCommodityCode());
     }
 

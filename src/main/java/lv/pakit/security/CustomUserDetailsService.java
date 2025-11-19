@@ -1,6 +1,6 @@
 package lv.pakit.security;
 
-import lv.pakit.model.User;
+import lv.pakit.model.user.User;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.repo.IUserRepo;
 import org.springframework.security.core.userdetails.UserDetails;

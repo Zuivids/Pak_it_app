@@ -143,15 +143,29 @@
                     <span id="declarationDate-error" class="text-danger"></span>
                     <input type="text" id="declarationDate" class="form-control" th:value="${declaration.date}">
                 </div>
+            </div>
+            <div class="row mb-3">
                 <div class="col-md-4">
-                    <label for="clientId" class="form-label fw-bold">Client</label>
+                    <label for="clientId" class="form-label">Client</label>
                     <span id="clientId-error" class="text-danger"></span>
                     <select id="clientId" name="clientId" class="form-select">
-                        <option value="">Select a client</option>
+                        <option></option>
                         <option th:each="client : ${clients}"
                                 th:value="${client.clientId}"
                                 th:text="${client.fullName}"
                                 th:selected="${client.clientId} == ${declaration.clientId}">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="shipmentId" class="form-label">Shipment</label>
+                    <span id="shipmentId-error" class="text-danger"></span>
+                    <select id="shipmentId" name="shipmentId" class="form-select">
+                        <option></option>
+                        <option th:each="shipment : ${shipments}"
+                                th:value="${shipment.shipmentId}"
+                                th:text="${shipment.shipmentCode}"
+                                th:selected="${shipment.shipmentId} == ${declaration.shipmentId}">
                         </option>
                     </select>
                 </div>
@@ -280,7 +294,8 @@
 
             identifierCode: $("#identifierCode").val(),
             date: $("#declarationDate").val(),
-            clientId: $("#clientId").val()
+            clientId: $("#clientId").val(),
+            shipmentId: $("#shipmentId").val()
         };
 
         fetch(url, {

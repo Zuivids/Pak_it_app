@@ -5,7 +5,7 @@ import lv.pakit.dto.request.user.UserCreateRequest;
 import lv.pakit.dto.request.user.UserUpdateRequest;
 import lv.pakit.dto.response.user.UserResponse;
 import lv.pakit.exception.http.NotFoundException;
-import lv.pakit.model.User;
+import lv.pakit.model.user.User;
 import lv.pakit.repo.IUserRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

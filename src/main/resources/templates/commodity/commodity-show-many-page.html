@@ -9,33 +9,42 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <main class="container py-5 flex-fill">
-    <h1 class="mb-4">Client List</h1>
+    <h1 class="mb-4">Commodity List</h1>
+
+    <form th:action="@{/commodity}" method="get" class="mb-4 d-flex">
+        <input type="text" name="query" class="form-control me-2" placeholder="Search by code or description">
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+    </form>
+
     <div class="table-responsive rounded">
         <table class="table table-bordered table-striped align-middle">
             <thead th:class="${@authService.isAdmin()} ? 'table-danger' : 'table-success'">
             <tr>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
+            <tr>
+                <th>Code</th>
+                <th>Description</th>
                 <th style="width: 80px;"></th>
                 <th style="width: 80px;" th:if="${@authService.isAdmin()}"></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="client : ${clients}">
-                <td th:text="${client.fullName}">Full Name</td>
-                <td th:text="${client.email}">Email</td>
-                <td th:text="${client.phoneNumber}">Phone Number</td>
+            <tr th:each="commodity : ${commodities}">
+                <td th:text="${commodity.commodityCode}">Code</td>
+                <td th:text="${commodity.description}">Description</td>
                 <td class="text-center">
-                    <form th:action="|/client/${client.clientId}/edit|" method="get" class="d-inline">
+                    <form th:action="|/commodity/${commodity.commodityId}/edit|" method="get" class="d-inline">
                         <button type="submit" class="btn btn-primary btn-sm">Edit</button>
                     </form>
                 </td>
                 <td class="text-center" th:if="${@authService.isAdmin()}">
-                    <form class="d-inline" method="get"  th:action="|/client/${client.clientId}/delete|">
+                    <form class="d-inline" method="get" th:action="|/commodity/${commodity.commodityId}/delete|">
                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
                 </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(commodities)}">
+                <td colspan="5" class="text-center text-muted">No commodities found.</td>
             </tr>
             </tbody>
         </table>
@@ -45,7 +54,7 @@
         <span th:text="${errorMessage}"></span>
     </div>
 
-    <form th:action="@{/backoffice}" method="get" class="mt-4">
+    <form th:action="@{/home}" method="get" class="mt-4">
         <button type="submit" class="btn btn-secondary">Back</button>
     </form>
 </main>

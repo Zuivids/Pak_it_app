@@ -3,7 +3,7 @@ package lv.pakit.dto.request.user;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-import lv.pakit.model.UserRole;
+import lv.pakit.model.user.UserRole;
 
 @Getter
 @Setter

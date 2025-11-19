@@ -1,6 +1,6 @@
 package lv.pakit.security;
 
-import lv.pakit.model.User;
+import lv.pakit.model.user.User;
 import lv.pakit.repo.IUserRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
