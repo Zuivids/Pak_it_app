@@ -569,7 +569,8 @@
         }
 
         /* RESPONSIVE */
-        @media (max-width: 767px) {
+
+        @media (max-width: 800px) {
             .footer-grid {
                 grid-template-columns: 1fr;
             }
@@ -764,21 +765,19 @@
 
     <nav id="main-nav" aria-label="Primary navigation">
         <ul>
-            <li><a href="#services" data-lv="Piedāvājumi">Services</a></li>
-            <li><a href="#how-it-works" data-lv="Kā tas darbojas">How it works</a></li>
-            <li><a href="#testimonials" data-lv="Klienti">Clients</a></li>
-            <li><a href="#about-us" data-lv="Par mums">About Us</a></li>
-            <li><a href="#contact" data-lv="Kontakti">Contact</a></li>
+            <li><a href="#services" data-en="Services">Piedāvājumi</a></li>
+            <li><a href="#how-it-works" data-en="How it works">Kā tas darbojas</a></li>
+            <li><a href="#testimonials" data-en="Clients">Klienti</a></li>
+            <li><a href="#about-us" data-en="About Us">Par mums</a></li>
+            <li><a href="#contact" data-en="Contact">Kontakti</a></li>
             <li class="language-switch">
                 <button class="lang-btn active" data-lang="lv" aria-label="Latvian">
-                    <!-- Latvia flag SVG -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14">
                         <rect width="20" height="14" fill="#9e3039"/>
                         <rect y="4" width="20" height="6" fill="#fff"/>
                     </svg>
                 </button>
                 <button class="lang-btn" data-lang="en" aria-label="English">
-                    <!-- UK flag SVG -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14">
                         <rect width="20" height="14" fill="#012169"/>
                         <path d="M0 0 L20 14 M20 0 L0 14" stroke="#fff" stroke-width="2"/>
@@ -805,7 +804,7 @@
 
 <main>
     <div id="nav-info">
-        <a href="#">
+        <a href="#" data-en="M. - F. : 09:00 - 17:00">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path d="M12 1a11 11 0 1 0 11 11A11 11 0 0 0 12 1zm0 20a9 9 0 1 1 9-9 9 9 0 0 1-9 9zm.5-9.59V7h-1v5.41l4.24 2.52.5-.87-3.74-2.16z"/>
             </svg>
@@ -827,106 +826,106 @@
     <section id="hero" aria-labelledby="hero-heading">
         <div class="hero-bg"></div>
         <div class="hero-content">
-            <h1 id="hero-heading" >Get your goods moving — faster, safer, smarter.</h1>
-            <p id="hero-sub">
-                Nationwide freight, real-time tracking, and tailored logistics solutions for growing businesses.
+            <h1 id="hero-heading" data-en="Get your goods moving — faster, safer, smarter." >Pārvadājiet savas preces ātrāk, drošāk un gudrāk.</h1>
+            <p id="hero-sub" data-en="Nationwide freight, real-time tracking, and tailored logistics solutions for growing businesses.">
+                Starptautisku kravu pārvadājumi, reāllaika izsekošana un pielāgoti loģistikas risinājumi uzņēmumiem.
             </p>
 
             <!-- Primary CTA -->
             <form id="quick-quote" action="/quote" method="post" aria-label="Request a quick quote">
-                <label for="qq-origin" class="visually-hidden">Origin</label>
-                <input id="qq-origin" name="origin" type="text" placeholder="Origin city or zip" required />
+                <label for="qq-origin" class="visually-hidden" data-en="Origin">No</label>
+                <input id="qq-origin" name="origin" type="text" placeholder="Pilsēta vai pasta indekss" data-en="Origin city or zip" required />
 
-                <label for="qq-destination" class="visually-hidden">Destination</label>
-                <input id="qq-destination" name="destination" type="text" placeholder="Destination city or zip" required />
+                <label for="qq-destination" class="visually-hidden" data-en="Destination">Uz</label>
+                <input id="qq-destination" name="destination" type="text" placeholder="Pilsēta vai pasta indekss" data-en="Destination city or zip" required />
 
-                <label for="qq-weight" class="visually-hidden">Weight (kg)</label>
-                <input id="qq-weight" name="weight" type="number" placeholder="Weight (kg)" min="1" required />
+                <label for="qq-weight" class="visually-hidden" data-en="Weight (kg)">Svars (kg)</label>
+                <input id="qq-weight" name="weight" type="number" placeholder="Svars (kg)" min="1" data-en="Weight (kg)" required />
 
-                <button type="submit">Get a Quote</button>
+                <button type="submit" data-en="Get a Quote">Saņemt piedāvājumu</button>
             </form>
 
             <!-- Secondary CTA -->
             <p class="secondary-cta">
-                <a href="#contact" aria-label="Contact sales">Contact sales</a> •
-                <a href="#how-it-works" aria-label="See how it works">How it works</a>
+                <a href="#contact" aria-label="Contact sales" data-en="Contact sales">Sazinies ar mums</a>
+                <a href="#how-it-works" aria-label="See how it works" data-en="How it works">Kā tas strādā</a>
             </p>
         </div>
     </section>
 
     <!-- SERVICES / OFFERINGS -->
     <section id="services" aria-labelledby="services-heading" class="services">
-        <h2 id="services-heading">Services</h2>
+        <h2 id="services-heading" data-en="Services">Servisi</h2>
 
         <div class="services-grid">
             <div class="service-card">
                 <div class="icon-wrapper">
                     <img src="img/delivery.png">
                 </div>
-                <h3>Full Truckload (FTL)</h3>
-                <p>Direct routes, guaranteed capacity for large shipments.</p>
+                <h3 data-en="Full Truckload (FTL)">Pilna kravas automašīna</h3>
+                <p data-en="Direct routes, guaranteed capacity for large shipments.">Tieši maršruti, garantēta kapacitāte lieliem sūtījumiem.</p>
             </div>
 
             <div class="service-card">
                 <div class="icon-wrapper">
                     <img src="img/delivery-truck.png" alt="LTL icon">
                 </div>
-                <h3>Less-than-Truckload (LTL)</h3>
-                <p>Cost efficient consolidation for smaller loads.</p>
+                <h3 data-en="Less-than-Truckload (LTL)">Mazāk nekā pilna kravas automašīna</h3>
+                <p data-en="Cost efficient consolidation for smaller loads.">Izmaksu ziņā efektīva konsolidācija mazākiem kravu apjomiem.</p>
             </div>
 
             <div class="service-card">
                 <div class="icon-wrapper">
                     <img src="img/global.png" alt="International Freight icon">
                 </div>
-                <h3>International Freight</h3>
-                <p>Cross-border solutions with customs support.</p>
+                <h3 data-en="International Freight">Starptautiskā kravu pārvadāšana</h3>
+                <p data-en="Cross-border solutions with customs support.">Pārrobežu risinājumi ar muitas atbalstu.</p>
             </div>
 
             <div class="service-card">
                 <div class="icon-wrapper">
                     <img src="img/warehouse.png" alt="Warehouse icon">
                 </div>
-                <h3>Warehousing & Fulfillment</h3>
-                <p>Short- and long-term storage + pick & pack services.</p>
+                <h3 data-en="Warehousing & Fulfillment">Noliktavu uzglabāšana un pasūtījumu izpilde</h3>
+                <p data-en="Short- and long-term storage + pick & pack services.">Īstermiņa un ilgtermiņa uzglabāšana + preču savākšanas un iepakošanas pakalpojumi.</p>
             </div>
         </div>
     </section>
 
     <!-- WHY CHOOSE US / DIFFERENTIATORS -->
     <section id="why" aria-labelledby="why-heading" class="why">
-        <h2 id="why-heading">Why choose PaK it</h2>
+        <h2 id="why-heading" data-en="Why choose PaK it">Kāpēc izvēlēties PaK it</h2>
 
         <div class="why-grid">
             <div class="why-card">
                 <div class="why-icon">
                     <img src="img/tracking.png" alt="Tracking icon">
                 </div>
-                <h4>Real-time tracking</h4>
-                <p>Live GPS & ETA updates for every shipment.</p>
+                <h4 data-en="Real-time tracking">Reāllaika izsekošana</h4>
+                <p data-en="Live GPS & ETA updates for every shipment.">Reāllaika GPS un ETA atjauninājumi par katru sūtījumu.</p>
             </div>
 
             <div class="why-card">
                 <div class="why-icon">
                     <img src="img/pricing.png" alt="Pricing icon">
                 </div>
-                <h4>Transparent pricing</h4>
-                <p>No hidden fees—clear quotes and invoices.</p>
+                <h4 data-en="Transparent pricing">Pārredzama cenu politika</h4>
+                <p data-en="No hidden fees - clear quotes and invoices.">Nekādas slēptās maksas - skaidras cenas un rēķini.</p>
             </div>
 
             <div class="why-card">
                 <div class="why-icon">
                     <img src="img/capacity.png" alt="Capacity icon">
                 </div>
-                <h4>Guaranteed capacity</h4>
-                <p>Priority lanes and partner network to meet tight SLAs.</p>
+                <h4 data-en="Guaranteed capacity">Garantēta ietilpība</h4>
+                <p data-en="Priority lanes and partner network to meet tight SLAs.">Prioritārās joslas un partneru tīkls, lai izpildītu stingrus SLA.</p>
             </div>
         </div>
     </section>
 
     <!-- HOW IT WORKS -->
     <section id="how-it-works" aria-labelledby="how-heading" class="how-wrapper">
-        <h2 id="how-heading">How it works</h2>
+        <h2 id="how-heading" data-en="How it works">Kā tas darbojas</h2>
 
         <div class="how-container">
             <div class="how-image">
@@ -935,20 +934,20 @@
 
             <ol class="how-steps">
                 <li data-step="0">
-                    <strong>Request</strong>
-                    <p>Quick quote from origin to destination.</p>
+                    <strong data-en="Request">Pieprasījums</strong>
+                    <p data-en="Quick quote from origin to destination.">Ātrs piedāvājums no izcelsmes vietas līdz galamērķim.</p>
                 </li>
                 <li data-step="1">
-                    <strong>Book</strong>
-                    <p>Confirm pickup, get assigned carrier and ETA.</p>
+                    <strong data-en="Book">Apstiprinājums</strong>
+                    <p data-en="Confirm pickup, get assigned carrier and ETA.">Apstipriniet saņemšanu, saņemiet piešķirto pārvadātāju un paredzamo ierašanās laiku.</p>
                 </li>
                 <li data-step="2">
-                    <strong>Track</strong>
-                    <p>Live updates to your email.</p>
+                    <strong data-en="Track">Izsekojamība</strong>
+                    <p data-en="Live updates to your email.">Tiešraides atjauninājumi uz jūsu e-pastu.</p>
                 </li>
                 <li data-step="3">
-                    <strong>Deliver</strong>
-                    <p>Proof of delivery and automated invoicing.</p>
+                    <strong data-en="Deliver">Piegāde</strong>
+                    <p data-en="Proof of delivery and automated invoicing.">Piegādes apliecinājums un automatizēta rēķinu izrakstīšana.</p>
                 </li>
             </ol>
         </div>
@@ -957,7 +956,7 @@
 
 <!-- TESTIMONIALS / TRUST -->
 <section id="testimonials" aria-labelledby="testimonials-heading" class="trust-section">
-    <h2 id="testimonials-heading">Trusted by</h2>
+    <h2 id="testimonials-heading" data-en="Trusted by">Uzticas</h2>
 
     <div class="trust-logos">
         <img src="img/logo1.png" alt="Client 1">
@@ -967,10 +966,10 @@
     </div>
 
     <div class="trust-quote">
-        <blockquote>
-            “PaK it reduced our transit time by 22% and simplified billing.”
+        <blockquote data-en="“PaK it reduced our transit time by 22% and simplified billing.”">
+            “PaK it samazināja mūsu pārvadājuma laiku par 22% un vienkāršoja maksāšanu.”
         </blockquote>
-        <cite>— Supply Chain Manager, RetailCo</cite>
+        <cite data-en="— Supply Chain Manager, RetailCo">— </cite>
     </div>
 </section>
 
@@ -979,22 +978,22 @@
     <div class="about-grid">
 
         <div class="about-content">
-            <h2 id="about-heading">About Us</h2>
-            <p><strong>SIA PaK it</strong> provides local and international freight transport — fast, reliable, and efficient.</p>
+            <h2 id="about-heading" data-en="About Us">Par mums</h2>
+            <p data-en="provides local and international freight transport — fast, reliable, and efficient."><strong >SIA PaK it</strong> nodrošina vietējos un starptautiskos kravu pārvadājumus — ātri, uzticami un efektīvi.</p>
 
             <div class="about-motto">
-                <em>"Keep moving forward!"</em>
+                <em data-en="Keep moving forward!">"Turpinām virzīties uz priekšu!"</em>
             </div>
 
-            <p>With over a decade of hands-on experience, our team and modern fleet deliver quick, effective solutions for any logistics challenge.</p>
+            <p data-en="With over a decade of hands-on experience, our team and modern fleet deliver quick, effective solutions for any logistics challenge.">Ar vairāk nekā desmit gadu praktisko pieredzi, mūsu komanda un modernā autoparka nodrošina ātru un efektīvu risinājumu jebkurai loģistikas problēmai.</p>
 
-            <p>We provide full supply-chain coverage: transport, warehousing, documentation, and customs. Our partner network enables daily freight movement across Europe, the UK, and the Baltics — for both businesses and private clients.</p>
+            <p data-en="We provide full supply-chain coverage: transport, warehousing, documentation, and customs. Our partner network enables daily freight movement across Europe, the UK, and the Baltics — for both businesses and private clients.">Mēs nodrošinām pilnu piegādes ķēdes segumu: transportu, noliktavu uzglabāšanu, dokumentāciju un muitas formalitāšu kārtošanu. Mūsu partneru tīkls nodrošina ikdienas kravu pārvadājumus visā Eiropā, Apvienotajā Karalistē un Baltijas valstīs — gan uzņēmumiem, gan privātiem klientiem.</p>
 
-            <p>Every client gets end-to-end support designed to cut transport costs and keep operations running smoothly.</p>
+            <p data-en="Every client gets end-to-end support designed to cut transport costs and keep operations running smoothly.">Katrs klients saņem visaptverošu atbalstu, kas paredzēts transporta izmaksu samazināšanai un darbības netraucētai norisei.</p>
 
             <div class="about-cta">
-                <a href="#quick-quote" class="btn-primary">Get a Quote</a>
-                <a href="#contact" class="btn-secondary">Talk to Sales</a>
+                <a href="#quick-quote" class="btn-primary" data-en="Get a Quote">Saņemt piedāvājumu</a>
+                <a href="#contact" class="btn-secondary" data-en="Talk to Sales">Sazinies ar mums</a>
             </div>
         </div>
 
@@ -1013,23 +1012,23 @@
 
         <!-- Contact Info -->
         <div class="footer-info">
-            <h2 id="contact-heading">Contact Us</h2>
+            <h2 id="contact-heading" data-en="Contact Us">Kontakti</h2>
 
-            <p><strong>Phone:</strong> <a href="tel:+37126568372">+371 2656 8372</a></p>
-            <p><strong>Email:</strong> <a href="mailto:sales@paula.varpina@pakit.lv">paula.varpina@pakit.lv</a></p>
+            <p><strong data-en="Phone:">Tel:</strong> <a href="tel:+37126568372">+371 2656 8372</a></p>
+            <p><strong data-en="Email:">Epasts:</strong> <a href="mailto:sales@paula.varpina@pakit.lv">paula.varpina@pakit.lv</a></p>
 
-            <p><strong>Reg. No.:</strong> 45403044671</p>
-            <p><strong>VAT No.:</strong> LV45403044671</p>
+            <p><strong data-en="Reg. No.:">Reg. Nr.:</strong> 45403044671</p>
+            <p><strong data-en="VAT No.:">VAT Nr.:</strong> LV45403044671</p>
 
-            <p><strong>Bank:</strong> Swedbank</p>
+            <p><strong data-en="Bank:">Banka:</strong> Swedbank</p>
             <p><strong>IBAN:</strong> LV37HABA0551041111928</p>
 
-            <p><strong>Legal Address:</strong><br>
+            <p><strong data-en="Legal Address:">Juridiskā adrese:</strong><br>
                 Draudzības iela 22, Skrīveri, Skrīveru pagasts,
                 Aizkraukles novads, LV-5125
             </p>
 
-            <p><strong>Warehouse Address:</strong><br>
+            <p><strong data-en="Warehouse Address:">Noliktavas adrese:</strong><br>
                 Jelgavas iela 69A, Jaunjelgava,
                 Aizkraukles novads, LV-5125
             </p>
@@ -1047,28 +1046,45 @@
         <div class="footer-form">
             <form id="lead-form" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST" aria-label="Contact form">
                 <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://yourdomain.com/thank-you">
+                <input type="hidden" name="_next" value="https://pakit.lv">
 
-                <label for="name">Full Name</label>
-                <input id="name" name="name" type="text" placeholder="Your full name" required>
+                <label for="name" data-en="Full Name" data-lv="Vārds Uzvārds">Vārds Uzvārds</label>
+                <input id="name" name="name" type="text"
+                       data-en-placeholder="Your full name"
+                       data-lv-placeholder="Tavs pilnais vārds"
+                       placeholder="Tavs pilnais vārds"
+                       required>
 
-                <label for="company">Company</label>
-                <input id="company" name="company" type="text" placeholder="Your company" required>
+                <label for="company" data-en="Company" data-lv="Uzņēmums">Uzņēmums</label>
+                <input id="company" name="company" type="text"
+                       data-en-placeholder="Your company"
+                       data-lv-placeholder="Tavs uzņēmums"
+                       placeholder="Tavs uzņēmums"
+                       required>
 
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" placeholder="your@email.com" required>
+                <label for="email" data-en="Email" data-lv="E-pasts">E-pasts</label>
+                <input id="email" name="email" type="email"
+                       data-en-placeholder="your@email.com"
+                       data-lv-placeholder="tavs@email.lv"
+                       placeholder="tavs@email.lv"
+                       required>
 
-                <label for="message">Message</label>
-                <textarea id="message" name="message" rows="5" placeholder="Tell us about your shipment or needs"></textarea>
+                <label for="message" data-en="Message" data-lv="Ziņa">Ziņa</label>
+                <textarea id="message" name="message" rows="5"
+                          data-en-placeholder="Tell us about your shipment or needs"
+                          data-lv-placeholder="Pastāsti par sūtījumu vai vajadzībām"
+                          placeholder="Pastāsti par sūtījumu vai vajadzībām"></textarea>
 
-                <button type="submit" class="btn-footer">Send Message</button>
+                <button type="submit" class="btn-footer"
+                        data-en="Send Message"
+                        data-lv="Sūtīt">Sūtīt</button>
             </form>
         </div>
 
     </div>
 
     <div class="footer-bottom">
-        <p>&copy; 2025 PaK it. All rights reserved.</p>
+        <p data-en="">&copy; 2025 PaK it. All rights reserved.</p>
     </div>
 </footer>
 <!-- LOGIN MODAL -->
@@ -1076,30 +1092,30 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" id="loginModalLabel">Pieslēgties</h5>
+                <h5 class="modal-title" id="loginModalLabel" data-en="Log In">Pieslēgties</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Aizvērt"></button>
             </div>
             <div class="modal-body">
                 <form id="loginForm" method="POST" action="/login">
                     <div class="mb-3">
-                        <label for="username" class="form-label">Lietotājvārds</label>
+                        <label for="username" class="form-label" data-en="Username">Lietotājvārds</label>
                         <input type="text" class="form-control" id="username" name="username" required>
                         <span id="username-error" class="error-message text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Parole</label>
+                        <label for="password" class="form-label" data-en="Password">Parole</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                         <span id="password-error" class="error-message text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label for="totp" class="form-label">Authenticator code</label>
+                        <label for="totp" class="form-label" data-en="Authenticator code">Autorizācijas kods</label>
                         <input type="text" class="form-control w-25" id="totp" name="totp">
                         <span id="totp-error" class="error-message text-danger"></span>
                     </div>
                     <span id="errorMessage" class="error-message text-danger mb-2 d-block"></span>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-success">Ieiet</button>
+                        <button type="submit" class="btn btn-success" data-en="Log in">Ieiet</button>
                     </div>
                 </form>
             </div>
@@ -1113,70 +1129,56 @@
     const menuToggle = document.getElementById('menu-toggle');
     const navMenu = document.querySelector('#main-nav ul');
 
+    // MENU TOGGLE
     menuToggle.addEventListener('click', () => navMenu.classList.toggle('open'));
 
-    document
-      .querySelectorAll('#main-nav a:not(.login-trigger)')
-      .forEach(link => {
-          link.addEventListener('click', () => navMenu.classList.remove('open'));
-      });
+    document.querySelectorAll('#main-nav a:not(.login-trigger)').forEach(link => {
+        link.addEventListener('click', () => navMenu.classList.remove('open'));
+    });
 
     document.querySelector('.login-trigger').addEventListener('click', (e) => {
         e.stopPropagation();
     });
 
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const lang = btn.dataset.lang;
-            // Here you can add your language switch logic, e.g., reload page with ?lang=xx
-            console.log('Switching language to:', lang);
-        });
-    });
-
+    // LANGUAGE SWITCH
     const langButtons = document.querySelectorAll('.lang-btn');
 
-    // Store English original text in data attribute (once)
-    document.querySelectorAll('#main-nav a').forEach(link => {
-        if (!link.classList.contains('login-trigger')) {
-            link.dataset.en = link.textContent;
-        }
+    // Store Latvian text once
+    document.querySelectorAll('[data-en]').forEach(el => {
+        if (!el.dataset.lv) el.dataset.lv = el.textContent.trim();
+    });
+
+    // Store placeholder Latvian text once
+    document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+        if (!el.dataset.lvPlaceholder) el.dataset.lvPlaceholder = el.placeholder;
     });
 
     langButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // toggle active class
+            // Toggle active class
             langButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            const lang = btn.dataset.lang; // 'lv' or 'en'
+            const lang = btn.dataset.lang;
 
-            // Update nav links, skip login
-            document.querySelectorAll('#main-nav a').forEach(link => {
-                if (link.classList.contains('login-trigger')) return; // skip login
+            // Translate text content
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = lang === 'en' ? el.dataset.en : el.dataset.lv;
+            });
 
-                if (lang === 'lv') {
-                    link.textContent = link.dataset.lv;
-                } else {
-                    link.textContent = link.dataset.en || link.textContent;
-                }
+            // Translate placeholders
+            document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+                el.placeholder = lang === 'en' ? el.dataset.enPlaceholder : el.dataset.lvPlaceholder;
             });
         });
     });
 
-    // Store English original text in data attribute (once)
-    document.querySelectorAll('#main-nav a').forEach(link => {
-        link.dataset.en = link.textContent;
-    });
-
+    // HERO BACKGROUND IMAGES
     const images = [
         '/img/picture1.jpg',
         '/img/picture2.jpg',
         '/img/picture3.jpg'
     ];
-
     let current = 0;
     const bgDiv = document.querySelector('.hero-bg');
 
@@ -1185,10 +1187,7 @@
         current = (current + 1) % images.length;
     }
 
-    // Initial image
     changeBackground();
-
-    // Change image every 5 seconds
     setInterval(changeBackground, 5000);
 
     // HOW IT WORKS SLIDER
@@ -1205,26 +1204,21 @@
     const imgEl = document.getElementById("how-slide");
     const stepEls = document.querySelectorAll(".how-steps li");
 
-    // highlight step
     function setActiveStep(index) {
         stepEls.forEach(el => el.classList.remove("active"));
         stepEls[index].classList.add("active");
     }
 
-    // change image + highlight
     function changeHowStep(index) {
         howIndex = index;
-
         imgEl.style.opacity = "0";
         setTimeout(() => {
             imgEl.src = howImages[index];
             imgEl.style.opacity = "1";
         }, 250);
-
         setActiveStep(index);
     }
 
-    // auto rotation
     function startHowAuto() {
         howTimer = setInterval(() => {
             howIndex = (howIndex + 1) % howImages.length;
@@ -1232,17 +1226,16 @@
         }, 3000);
     }
 
-    // click handler
+    // Click handler for manual steps
     stepEls.forEach(step => {
         step.addEventListener("click", () => {
             clearInterval(howTimer);
             changeHowStep(parseInt(step.dataset.step));
-
-            // restart auto after 5 sec
             setTimeout(startHowAuto, 5000);
         });
     });
 
+    // Initialize slider
     changeHowStep(0);
     startHowAuto();
 </script>
