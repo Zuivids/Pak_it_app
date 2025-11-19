@@ -44,7 +44,7 @@
 <script>
     const deleteClient = () => {
         const clientId = $("button[onclick='deleteClient()']").data("id");
-        const url = `/client/${clientId}/delete`;
+        const url = `/api/client/${clientId}`;
         const csrfHeader = $("meta[name='_csrf_header']").attr("content");
         const csrfValue = $("meta[name='_csrf']").attr("content");
 

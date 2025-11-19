@@ -27,7 +27,7 @@ public class ClientRestController {
         clientService.updateById(id, request);
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     @RequiresRole(ADMIN)
     public void deleteClient(@PathVariable("id") long id) {
         clientService.deleteById(id);
