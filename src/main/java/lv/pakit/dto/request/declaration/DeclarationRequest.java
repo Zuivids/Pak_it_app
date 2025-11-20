@@ -44,4 +44,5 @@ public class DeclarationRequest {
     private String createdBy;
     private LocalDateTime createdAt;
     private Long shipmentId;
+    private Long packageAmount;
 }

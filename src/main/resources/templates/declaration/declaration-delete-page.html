@@ -13,6 +13,16 @@
     <p class="mb-4">Are you sure you want to delete the following declaration?</p>
 
     <div class="bg-white p-4 rounded shadow-sm">
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <p><strong>Created by:</strong> <span th:text="${declaration.createdBy}"></span></p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Created at:</strong> <span th:text="${declaration.createdAt}"></span></p>
+            </div>
+        </div>
+
         <div class="row mb-4">
             <div class="col-md-6">
                 <h5>Sender Info</h5>
@@ -73,11 +83,14 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <p><strong>Total Weight:</strong> <span th:text="${declaration.totalWeight}"></span></p>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <p><strong>Total Value:</strong> <span th:text="${declaration.totalValue}"></span></p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Package Amount:</strong> <span th:text="${declaration.packageAmount}"></span></p>
             </div>
         </div>
 

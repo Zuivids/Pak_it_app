@@ -141,6 +141,7 @@ public class DeclarationService {
                 .createdBy(declaration.getCreatedBy())
                 .createdAt(declaration.getCreatedAt())
                 .packageItems(packageItemService.fetchByDeclarationId(declaration.getDeclarationId()))
+                .packageAmount(declaration.getPackageAmount())
                 .build();
     }
 
@@ -173,7 +174,8 @@ public class DeclarationService {
                 .totalWeight(packageItemService.calculateTotalWeight(request.getPackageItems()))
                 .totalValue(packageItemService.calculateTotalValue(request.getPackageItems()))
                 .createdBy(createdByFullName)
-                .createdAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+                .createdAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .packageAmount(request.getPackageAmount());
     }
 
     public Declaration requireById(long id) {

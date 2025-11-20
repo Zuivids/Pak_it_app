@@ -28,6 +28,7 @@ public class DeclarationResponse {
     private String receiverAddress;
     private String receiverCountryCode;
     private String receiverPhoneNumber;
+    private Long packageAmount;
     private double totalWeight;
     private double totalValue;
     private String date;

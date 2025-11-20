@@ -171,15 +171,20 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="form-label">Total Weight</label>
                     <span id="totalWeight-error" class="text-danger"></span>
                     <input type="text" id="totalWeight" class="form-control" th:value="${declaration.totalWeight}">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="form-label">Total Value</label>
                     <span id="totalValue-error" class="text-danger"></span>
                     <input type="text" id="totalValue" class="form-control" th:value="${declaration.totalValue}">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Package Amount</label>
+                    <span id="packageAmount-error" class="text-danger"></span>
+                    <input type="text" id="packageAmount" class="form-control" th:value="${declaration.packageAmount}">
                 </div>
             </div>
 
@@ -295,7 +300,8 @@
             identifierCode: $("#identifierCode").val(),
             date: $("#declarationDate").val(),
             clientId: $("#clientId").val(),
-            shipmentId: $("#shipmentId").val()
+            shipmentId: $("#shipmentId").val(),
+            packageAmount: $("#packageAmount").val()
         };
 
         fetch(url, {

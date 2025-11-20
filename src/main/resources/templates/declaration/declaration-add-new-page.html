@@ -14,19 +14,17 @@
     <form id="createDeclarationForm" action="/api/declaration" class="bg-white p-4 rounded shadow-sm">
 
         <div class="row mb-3">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="identifierCode" class="form-label fw-bold">ID Code</label>
                 <span id="identifierCode-error" class="text-danger"></span>
                 <input type="text" id="identifierCode" name="identifierCode" th:value="${identifierCode}" class="form-control" />
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="date" class="form-label fw-bold">Date</label>
                 <span id="date-error" class="text-danger"></span>
                 <input type="text" id="date" name="date" th:value="${date}" class="form-control" />
             </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-5">
+            <div class="col-md-3">
                 <label for="clientId" class="form-label fw-bold">Client</label>
                 <span id="clientId-error" class="text-danger"></span>
                 <select id="clientId" name="clientId" class="form-select">
@@ -37,7 +35,7 @@
                     </option>
                 </select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="shipmentId" class="form-label fw-bold">Shipment</label>
                 <span id="shipmentId-error" class="text-danger"></span>
                 <select id="shipmentId" name="shipmentId" class="form-select">
@@ -117,15 +115,20 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="totalWeight" class="form-label fw-bold">Total Weight</label>
                 <span id="totalWeight-error" class="text-danger"></span>
                 <input type="text" id="totalWeight" name="totalWeight" th:value="${totalWeight}" class="form-control" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="totalValue" class="form-label fw-bold">Total Value</label>
                 <span id="totalValue-error" class="text-danger"></span>
                 <input type="text" id="totalValue" name="totalValue" th:value="${totalValue}" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label for="packageAmount" class="form-label fw-bold">Package Amount</label>
+                <span id="packageAmount-error" class="text-danger"></span>
+                <input type="text" id="packageAmount" name="packageAmount" th:value="${packageAmount}" class="form-control" />
             </div>
         </div>
 
@@ -282,6 +285,7 @@
             clientId: $("#clientId").val(),
             totalWeight: $("#totalWeight").val(),
             totalValue: $("#totalValue").val(),
+            packageAmount: $("#packageAmount").val(),
             date: $("#date").val(),
             shipmentId: $("#shipmentId").val()
         };

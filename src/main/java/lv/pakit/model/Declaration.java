@@ -42,4 +42,5 @@ public class Declaration {
     private String date;
     private String createdBy;
     private LocalDateTime createdAt;
+    private Long packageAmount;
 }
