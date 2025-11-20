@@ -1,6 +1,7 @@
 package lv.pakit.service.declaration;
 
 import com.lowagie.text.*;
+import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +48,7 @@ public class DeclarationExportService {
 
             addTitle(document);
             document.add(buildOuterTable(declarationId, declaration));
+            addDate(document);
 
             document.close();
             return baos.toByteArray();
@@ -76,7 +79,7 @@ public class DeclarationExportService {
         document.add(new Paragraph("\n"));
     }
 
-    private PdfPTable buildOuterTable(long declarationId, Declaration declaration) throws DocumentException {
+    private PdfPTable buildOuterTable(long declarationId, Declaration declaration) throws DocumentException, IOException {
         PdfPTable table = new PdfPTable(6);
         table.setWidthPercentage(100);
         table.setWidths(new float[]{2, 2, 2, 2, 2, 2});
@@ -86,14 +89,16 @@ public class DeclarationExportService {
         addItemsHeader(table);
         addItems(table, declarationId);
         addTotals(table, declaration);
-        addCertification(table, declaration);
+        addCertification(table);
 
         return table;
     }
 
     private void addConsignmentInfo(PdfPTable table, long declarationId) {
+        var declaration = declarationService.requireById(declarationId);
+
         PdfPCell consignmentCell = new PdfPCell(new Paragraph(
-                "Consignment information (Packages): " + packageItemService.fetchByDeclarationId(declarationId).size() + " units",
+                "Consignment information (Packages): " + declaration.getPackageAmount() + " units",
                 FontFactory.getFont(FontFactory.HELVETICA_BOLD)
         ));
         consignmentCell.setColspan(6);
@@ -157,25 +162,32 @@ public class DeclarationExportService {
         table.addCell(totalValueCell);
     }
 
-    private void addCertification(PdfPTable table, Declaration declaration) {
+    private void addCertification(PdfPTable table){
+
         PdfPCell consignment = new PdfPCell(new Paragraph(
-                "I certify that the particulars given in this Consignment Note and Customs Declaration are correct and that above listed items do not contain any dangerous article or articles prohibited by legislation or by postal or customs regulations."
+                "[x] I certify that the particulars given in this Consignment Note and Customs Declaration are correct and that above listed items do not contain any dangerous article or articles prohibited by legislation or by postal or customs regulations."
         ));
-        consignment.setColspan(3);
+        consignment.setColspan(6);
         table.addCell(consignment);
 
-        PdfPCell date = new PdfPCell(new Paragraph("Date: " + declaration.getDate()));
-        date.setColspan(3);
-        table.addCell(date);
-
-        PdfPCell consignmentPakIt = new PdfPCell(new Paragraph(
-                "I instruct “SIA PaKit” and its legal representative to act on my behalf in connection with the presentation and completion of all documents (including those for customs purposes) relating to the movement and declaration of the items listed above."
+        PdfPCell agreementCell = new PdfPCell(new Paragraph(
+                "[x] I instruct “SIA PaKit” and its legal representative to act on my behalf in connection with the presentation and completion of all documents (including those for customs purposes) relating to the movement and declaration of the items listed above."
         ));
-        consignmentPakIt.setColspan(3);
-        table.addCell(consignmentPakIt);
+        agreementCell.setColspan(6);
+        table.addCell(agreementCell);
+    }
 
-        PdfPCell sendersSignature = new PdfPCell(new Paragraph("Sender’s signature:"));
-        sendersSignature.setColspan(3);
-        table.addCell(sendersSignature);
+    private void addDate(Document document) throws DocumentException {
+        document.add(new Paragraph("\n"));
+
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        String formattedDate = java.time.LocalDate.now().format(fmt);
+
+        Paragraph dateParagraph = new Paragraph(
+                "Date: " + formattedDate,
+                FontFactory.getFont(FontFactory.HELVETICA, 12)
+        );
+
+        document.add(dateParagraph);
     }
 }
