@@ -1,8 +1,10 @@
 package lv.pakit.controller.page;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.request.shipment.ShipmentSearchRequest;
 import lv.pakit.service.shipment.ShipmentService;
+import lv.pakit.service.shipment.ShipmentStatsExportService;
 import lv.pakit.service.shipment.ShipmentStatsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ public class ShipmentPageController {
 
     private final ShipmentService shipmentService;
     private final ShipmentStatsService shipmentStatsService;
+    private final ShipmentStatsExportService shipmentStatsExportService;
 
     @GetMapping
     public String searchShipments(@ModelAttribute(value = "query") ShipmentSearchRequest request, Model model) {
@@ -51,5 +54,10 @@ public class ShipmentPageController {
         model.addAttribute("shipment", shipmentService.findById(id));
 
         return "shipment/shipment-delete-page";
+    }
+
+    @GetMapping("/{id}/pdf")
+    public void downloadPdf(@PathVariable long id, HttpServletResponse response) {
+        shipmentStatsExportService.getShipmentStatsPdf(id, response);
     }
 }

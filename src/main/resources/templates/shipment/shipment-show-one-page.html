@@ -86,22 +86,22 @@
     <div class="table-responsive">
         <table class="table table-bordered table-light">
             <thead class="table-secondary text-center">
-                <tr>
-                    <td></td>
-                    <th>Declaration code</th>
-                    <th>Total weight (Kg)</th>
-                    <th>Total value (EUR)</th>
-                </tr>
+            <tr>
+                <td></td>
+                <th>Declaration code</th>
+                <th>Total weight (Kg)</th>
+                <th>Total value (EUR)</th>
+            </tr>
             </thead>
             <tbody>
-                <tr th:each="declarationStats, iterStat : ${shipmentStats.declarationStats}">
-                    <td th:text="${iterStat.index + 1}"></td>
-                    <td><a th:text="${declarationStats.identifierCode}"
-                           th:href="|/declaration/${declarationStats.declarationId}|">
-                    </a></td>
-                    <td th:text="|${declarationStats.totalWeight} Kg|"></td>
-                    <td th:text="|${declarationStats.totalValue} EUR|"></td>
-                </tr>
+            <tr th:each="declarationStats, iterStat : ${shipmentStats.declarationStats}">
+                <td th:text="${iterStat.index + 1}"></td>
+                <td><a th:text="${declarationStats.identifierCode}"
+                       th:href="|/declaration/${declarationStats.declarationId}|">
+                </a></td>
+                <td th:text="|${declarationStats.totalWeight} Kg|"></td>
+                <td th:text="|${declarationStats.totalValue} EUR|"></td>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -122,15 +122,16 @@
             <tr th:each="commodityStats, iterStat : ${shipmentStats.commodityStats}">
                 <td th:text="${iterStat.index + 1}"></td>
                 <td><a th:text="|${commodityStats.commodityCode} - ${commodityStats.description}|"
-                       th:href="|/commodity/${commodityStats.commodityId}/edit|">
-                <td th:text="|${commodityStats.totalWeight} Kg|"></td>
-                <td th:text="|${commodityStats.totalValue} EUR|"></td>
+                       th:href="|/commodity/${commodityStats.commodityId}/edit|"></a>
+                    <td th:text="|${commodityStats.totalWeight} Kg|"></td>
+                    <td th:text="|${commodityStats.totalValue} EUR|"></td>
             </tr>
             </tbody>
         </table>
     </div>
 
     <form action="/home" method="get" class="mt-4">
+        <a th:href="@{'/shipment/' + ${shipment.shipmentId} + '/pdf'}" class="btn btn-primary me-2">Download PDF</a>
         <div class="text-start">
             <button type="submit" class="btn btn-secondary">Back</button>
         </div>
