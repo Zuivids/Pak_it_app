@@ -86,24 +86,31 @@
     <div class="table-responsive">
         <table class="table table-bordered table-light">
             <thead class="table-secondary text-center">
-            <tr>
-                <td></td>
-                <th>Declaration code</th>
-                <th>Total weight (Kg)</th>
-                <th>Total value (EUR)</th>
-                <th>Package amount</th>
-            </tr>
+                <tr>
+                    <td></td>
+                    <th>Declaration code</th>
+                    <th>Total weight (Kg)</th>
+                    <th>Total value (EUR)</th>
+                    <th>Package amount</th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="declarationStats, iterStat : ${shipmentStats.declarationStats}">
-                <td th:text="${iterStat.index + 1}"></td>
-                <td><a th:text="${declarationStats.identifierCode}"
-                       th:href="|/declaration/${declarationStats.declarationId}|">
-                </a></td>
-                <td th:text="|${declarationStats.totalWeight} Kg|"></td>
-                <td th:text="|${declarationStats.totalValue} EUR|"></td>
-                <td th:text="|${declarationStats.packageAmount} |"></td>
-            </tr>
+                <tr th:each="declarationStats, iterStat : ${shipmentStats.declarationStats}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td><a th:text="${declarationStats.identifierCode}"
+                           th:href="|/declaration/${declarationStats.declarationId}|">
+                    </a></td>
+                    <td th:text="|${declarationStats.totalWeight} Kg|"></td>
+                    <td th:text="|${declarationStats.totalValue} EUR|"></td>
+                    <td th:text="|${declarationStats.packageAmount} |"></td>
+                </tr>
+
+                <tr class="table-secondary font-weight-bold text-center" style="font-weight: 700;">
+                    <td colspan="2">Total</td>
+                    <td th:text="|${shipmentStats.totalWeight} Kg|"></td>
+                    <td th:text="|${shipmentStats.totalValue} EUR|"></td>
+                    <td th:text="${shipmentStats.totalPackageAmount}"></td>
+                </tr>
             </tbody>
         </table>
     </div>
