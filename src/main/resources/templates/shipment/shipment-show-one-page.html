@@ -64,22 +64,6 @@
             <span th:text="${shipment.createdBy}"></span>
         </div>
     </div>
-    <div class="row mb-3">
-        <div class="col-2 field-name-cell">
-            <span>Total weight:</span>
-        </div>
-        <div class="col-2 cell">
-            <span th:text="|${shipmentStats.totalWeight} Kg|"></span>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 field-name-cell">
-            <span>Total value:</span>
-        </div>
-        <div class="col-2 cell">
-            <span th:text="|${shipmentStats.totalValue} EUR|"></span>
-        </div>
-    </div>
 
     <h2 class="mt-5 mb-5">Declarations</h2>
 
@@ -91,7 +75,7 @@
                     <th>Declaration code</th>
                     <th>Total weight (Kg)</th>
                     <th>Total value (EUR)</th>
-                    <th>Package amount</th>
+                    <th>Package count</th>
                 </tr>
             </thead>
             <tbody>

@@ -36,7 +36,7 @@ public class ShipmentPageController {
 
     @GetMapping("/{id}")
     public String viewShipment(@PathVariable long id, Model model) {
-        model.addAttribute("shipment", shipmentService.findById(id));
+        model.addAttribute("shipment", shipmentService.fetchById(id));
         model.addAttribute("shipmentStats", shipmentStatsService.getShipmentStats(id));
 
         return "shipment/shipment-show-one-page";
@@ -44,14 +44,14 @@ public class ShipmentPageController {
 
     @GetMapping("/{id}/edit")
     public String editShipment(@PathVariable long id, Model model) {
-        model.addAttribute("shipment", shipmentService.findById(id));
+        model.addAttribute("shipment", shipmentService.fetchById(id));
 
         return "shipment/shipment-edit-page";
     }
 
     @GetMapping("/{id}/delete")
     public String deleteShipment(@PathVariable long id, Model model) {
-        model.addAttribute("shipment", shipmentService.findById(id));
+        model.addAttribute("shipment", shipmentService.fetchById(id));
 
         return "shipment/shipment-delete-page";
     }
