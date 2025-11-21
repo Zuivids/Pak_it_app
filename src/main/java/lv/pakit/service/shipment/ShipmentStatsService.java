@@ -11,6 +11,8 @@ import lv.pakit.repo.IDeclarationRepo;
 import lv.pakit.repo.IPackageItemRepo;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +31,14 @@ public class ShipmentStatsService {
 
         List<Declaration> declarations = declarationRepo.findByShipmentId(id);
 
+        Long totalPackageAmount = declarations.stream()
+                .mapToLong(Declaration::getPackageAmount)
+                .sum();
+
         return ShipmentStatsResponse.builder()
-                .totalWeight(calculateTotalWeight(declarations))
-                .totalValue(calculateTotalValue(declarations))
+                .totalWeight(roundToTwoDecimals(calculateTotalWeight(declarations)))
+                .totalValue(roundToTwoDecimals(calculateTotalValue(declarations)))
+                .totalPackageAmount(totalPackageAmount)
                 .declarationStats(getDeclarationStats(declarations))
                 .commodityStats(getCommodityStats(declarations))
                 .build();
@@ -101,5 +108,11 @@ public class ShipmentStatsService {
                 .totalValue(declaration.getTotalValue())
                 .packageAmount(declaration.getPackageAmount())
                 .build();
+    }
+
+    private double roundToTwoDecimals(double value) {
+        return BigDecimal.valueOf(value)
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
     }
 }

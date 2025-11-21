@@ -11,6 +11,7 @@ public class ShipmentStatsResponse {
 
     private final Double totalWeight;
     private final Double totalValue;
+    private final Long totalPackageAmount;
     private final List<ShipmentDeclarationStats> declarationStats;
     private final List<ShipmentCommodityStats> commodityStats;
 }
