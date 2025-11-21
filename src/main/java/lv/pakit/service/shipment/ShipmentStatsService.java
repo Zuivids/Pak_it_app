@@ -11,9 +11,13 @@ import lv.pakit.repo.IDeclarationRepo;
 import lv.pakit.repo.IPackageItemRepo;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.Optional.ofNullable;
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +34,9 @@ public class ShipmentStatsService {
         List<Declaration> declarations = declarationRepo.findByShipmentId(id);
 
         return ShipmentStatsResponse.builder()
-                .totalWeight(calculateTotalWeight(declarations))
-                .totalValue(calculateTotalValue(declarations))
+                .totalWeight(roundToTwoDecimals(calculateTotalWeight(declarations)))
+                .totalValue(roundToTwoDecimals(calculateTotalValue(declarations)))
+                .totalPackageAmount(calculateTotalPackageAmount(declarations))
                 .declarationStats(getDeclarationStats(declarations))
                 .commodityStats(getCommodityStats(declarations))
                 .build();
@@ -39,12 +44,21 @@ public class ShipmentStatsService {
 
     private double calculateTotalWeight(List<Declaration> declarations) {
         return declarations.stream()
-                .mapToDouble(Declaration::getTotalWeight).sum();
+                .mapToDouble(Declaration::getTotalWeight)
+                .sum();
     }
 
     private double calculateTotalValue(List<Declaration> declarations) {
         return declarations.stream()
-                .mapToDouble(Declaration::getTotalValue).sum();
+                .mapToDouble(Declaration::getTotalValue)
+                .sum();
+    }
+
+    private long calculateTotalPackageAmount(List<Declaration> declarations) {
+        return declarations.stream()
+                .filter(declaration -> declaration.getPackageAmount() != null)
+                .mapToLong(Declaration::getPackageAmount)
+                .sum();
     }
 
     private List<ShipmentDeclarationStats> getDeclarationStats(List<Declaration> declarations) {
@@ -94,11 +108,20 @@ public class ShipmentStatsService {
     }
 
     private ShipmentDeclarationStats mapShipmentDeclarationStats(Declaration declaration) {
+        long packageAmount = ofNullable(declaration.getPackageAmount()).orElse(0L);
+
         return ShipmentDeclarationStats.builder()
                 .declarationId(declaration.getDeclarationId())
                 .identifierCode(declaration.getIdentifierCode())
                 .totalWeight(declaration.getTotalWeight())
                 .totalValue(declaration.getTotalValue())
+                .packageAmount(packageAmount)
                 .build();
+    }
+
+    private double roundToTwoDecimals(double value) {
+        return BigDecimal.valueOf(value)
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
     }
 }

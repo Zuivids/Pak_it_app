@@ -64,44 +64,37 @@
             <span th:text="${shipment.createdBy}"></span>
         </div>
     </div>
-    <div class="row mb-3">
-        <div class="col-2 field-name-cell">
-            <span>Total weight:</span>
-        </div>
-        <div class="col-2 cell">
-            <span th:text="|${shipmentStats.totalWeight} Kg|"></span>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 field-name-cell">
-            <span>Total value:</span>
-        </div>
-        <div class="col-2 cell">
-            <span th:text="|${shipmentStats.totalValue} EUR|"></span>
-        </div>
-    </div>
 
     <h2 class="mt-5 mb-5">Declarations</h2>
 
     <div class="table-responsive">
         <table class="table table-bordered table-light">
             <thead class="table-secondary text-center">
-            <tr>
-                <td></td>
-                <th>Declaration code</th>
-                <th>Total weight (Kg)</th>
-                <th>Total value (EUR)</th>
-            </tr>
+                <tr>
+                    <td></td>
+                    <th>Declaration code</th>
+                    <th>Total weight (Kg)</th>
+                    <th>Total value (EUR)</th>
+                    <th>Package count</th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="declarationStats, iterStat : ${shipmentStats.declarationStats}">
-                <td th:text="${iterStat.index + 1}"></td>
-                <td><a th:text="${declarationStats.identifierCode}"
-                       th:href="|/declaration/${declarationStats.declarationId}|">
-                </a></td>
-                <td th:text="|${declarationStats.totalWeight} Kg|"></td>
-                <td th:text="|${declarationStats.totalValue} EUR|"></td>
-            </tr>
+                <tr th:each="declarationStats, iterStat : ${shipmentStats.declarationStats}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td><a th:text="${declarationStats.identifierCode}"
+                           th:href="|/declaration/${declarationStats.declarationId}|">
+                    </a></td>
+                    <td th:text="|${declarationStats.totalWeight} Kg|"></td>
+                    <td th:text="|${declarationStats.totalValue} EUR|"></td>
+                    <td th:text="|${declarationStats.packageAmount} |"></td>
+                </tr>
+
+                <tr class="table-secondary font-weight-bold text-center" style="font-weight: 700;">
+                    <td colspan="2">Total</td>
+                    <td th:text="|${shipmentStats.totalWeight} Kg|"></td>
+                    <td th:text="|${shipmentStats.totalValue} EUR|"></td>
+                    <td th:text="${shipmentStats.totalPackageAmount}"></td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -123,8 +116,8 @@
                 <td th:text="${iterStat.index + 1}"></td>
                 <td><a th:text="|${commodityStats.commodityCode} - ${commodityStats.description}|"
                        th:href="|/commodity/${commodityStats.commodityId}/edit|"></a>
-                    <td th:text="|${commodityStats.totalWeight} Kg|"></td>
-                    <td th:text="|${commodityStats.totalValue} EUR|"></td>
+                <td th:text="|${commodityStats.totalWeight} Kg|"></td>
+                <td th:text="|${commodityStats.totalValue} EUR|"></td>
             </tr>
             </tbody>
         </table>

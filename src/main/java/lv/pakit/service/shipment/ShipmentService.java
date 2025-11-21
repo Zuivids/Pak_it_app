@@ -83,7 +83,7 @@ public class ShipmentService {
     }
 
     @Transactional
-    public ShipmentResponse findById(long id) {
+    public ShipmentResponse fetchById(long id) {
         Shipment shipment = requireById(id);
 
         return mapToDto(shipment);
