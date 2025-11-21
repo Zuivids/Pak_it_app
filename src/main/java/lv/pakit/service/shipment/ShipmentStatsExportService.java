@@ -107,6 +107,7 @@ public class ShipmentStatsExportService {
             table.addCell(d.getIdentifierCode());
             table.addCell(String.valueOf(d.getTotalWeight()));
             table.addCell(String.valueOf(d.getTotalValue()));
+            table.addCell(String.valueOf(d.getPackageAmount()));
         }
         document.add(table);
     }

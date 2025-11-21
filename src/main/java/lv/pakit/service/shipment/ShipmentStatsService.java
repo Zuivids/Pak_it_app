@@ -99,6 +99,7 @@ public class ShipmentStatsService {
                 .identifierCode(declaration.getIdentifierCode())
                 .totalWeight(declaration.getTotalWeight())
                 .totalValue(declaration.getTotalValue())
+                .packageAmount(declaration.getPackageAmount())
                 .build();
     }
 }
