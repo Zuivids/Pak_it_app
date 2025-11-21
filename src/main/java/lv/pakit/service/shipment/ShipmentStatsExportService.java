@@ -7,9 +7,11 @@ import com.lowagie.text.pdf.PdfWriter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lv.pakit.dto.response.shipment.ShipmentResponse;
 import lv.pakit.dto.response.shipment.ShipmentStatsResponse;
 import lv.pakit.dto.response.shipment.ShipmentDeclarationStats;
 import lv.pakit.dto.response.shipment.ShipmentCommodityStats;
+import lv.pakit.model.shipment.Shipment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
@@ -23,17 +25,19 @@ import java.util.List;
 public class ShipmentStatsExportService {
 
     private final ShipmentStatsService shipmentStatsService;
+    private final ShipmentService shipmentService;
 
     public void getShipmentStatsPdf(long shipmentId, HttpServletResponse response) {
         try {
             ShipmentStatsResponse stats = shipmentStatsService.getShipmentStats(shipmentId);
+            ShipmentResponse shipment = shipmentService.findById(shipmentId);
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             Document document = new Document(PageSize.A4, 36, 36, 36, 36);
             PdfWriter.getInstance(document, baos);
             document.open();
 
-            addTitle(document, "Shipment Report");
+            addTitle(document, "Shipment Report - ID: " + shipment.getShipmentCode());
             addGeneralInfo(document, stats);
             addTotals(document, stats);
             addDeclarationsTable(document, stats.getDeclarationStats());
@@ -86,7 +90,8 @@ public class ShipmentStatsExportService {
         addCell(table, "Total value:", true);
         addCell(table, stats.getTotalValue() + " EUR", false);
 
-        //TODO add total Packages
+        addCell(table, "Packages:", true);
+        addCell(table, stats.getTotalPackageAmount() + "", false);
 
         document.add(table);
     }
@@ -95,11 +100,11 @@ public class ShipmentStatsExportService {
         document.add(new Paragraph("Declarations", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
         document.add(new Paragraph("\n"));
 
-        PdfPTable table = new PdfPTable(4);
+        PdfPTable table = new PdfPTable(5);
         table.setWidthPercentage(100);
-        table.setWidths(new float[]{1, 3, 2, 2});
+        table.setWidths(new float[]{1, 3, 2, 2, 2});
 
-        addTableHeader(table, "", "Declaration code", "Total weight (Kg)", "Total value (EUR)");
+        addTableHeader(table, "", "Declaration code", "Total weight (Kg)", "Total value (EUR)", "Package Amount");
 
         int index = 1;
         for (ShipmentDeclarationStats d : declarations) {
