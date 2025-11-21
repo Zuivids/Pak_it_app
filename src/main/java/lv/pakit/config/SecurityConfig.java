@@ -28,7 +28,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/api/auth/login", "/css/**", "/img/**").permitAll()
+                        .requestMatchers("/", "/api/auth/login", "/css/**", "/js/**", "/img/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
