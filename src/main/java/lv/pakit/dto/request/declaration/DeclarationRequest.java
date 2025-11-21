@@ -39,10 +39,11 @@ public class DeclarationRequest {
     private String receiverCountryCode;
     @NotBlank
     private String receiverPhoneNumber;
-    @NotNull
+    @NotBlank
     private String date;
     private String createdBy;
     private LocalDateTime createdAt;
     private Long shipmentId;
+    @NotNull
     private Long packageAmount;
 }
