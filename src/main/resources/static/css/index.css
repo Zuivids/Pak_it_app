@@ -119,7 +119,7 @@
         .language-switch {
             display: flex;
             flex-direction: row;
-            gap: 0.5rem;
+            gap: 10px;
             align-items: center;
             flex-wrap: nowrap;
         }
