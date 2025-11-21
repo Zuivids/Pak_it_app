@@ -5,8 +5,9 @@ import lv.pakit.dto.request.user.UserCreateRequest;
 import lv.pakit.dto.request.user.UserUpdateRequest;
 import lv.pakit.dto.response.user.UserResponse;
 import lv.pakit.exception.http.NotFoundException;
-import lv.pakit.model.User;
+import lv.pakit.model.user.User;
 import lv.pakit.repo.IUserRepo;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserService {
 
     private final IUserRepo userRepo;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponse getUser(long userId) {
         return mapToDto(requireById(userId));
@@ -32,8 +34,9 @@ public class UserService {
                 .username(request.getUsername())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .email(request.getEmail())
+                .role(request.getRole())
                 .build();
 
         userRepo.save(user);
@@ -46,6 +49,7 @@ public class UserService {
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
+        user.setRole(request.getRole());
 
         userRepo.save(user);
     }
@@ -67,6 +71,7 @@ public class UserService {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .isTotp(user.isTotp())
+                .role(user.getRole())
                 .build();
     }
 }

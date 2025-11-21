@@ -4,7 +4,7 @@
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark"
      th:style="${@authService.isAdmin()} ? 'background-color:#6e0101' : 'background-color:#016e01'">>
     <div class="container">
-        <a class="navbar-brand" href="/backoffice">
+        <a class="navbar-brand" href="/home">
             <img src="/img/PaK_it_logo.png" class="d-inline-block align-top rounded" width="160" height="80">
         </a>
 
@@ -16,12 +16,24 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto flex-wrap">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                    <a class="nav-link dropdown-toggle" href="#" id="shipmentDropdown" role="button"
                        data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        Declaration Options
+                        Shipments
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                    <ul class="dropdown-menu" aria-labelledby="shipmentDropdown">
+                        <li><a class="dropdown-item" href="/shipment">View all shipments</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/shipment/new">Add new shipment</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="declarationDropdown" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Declarations
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="declarationDropdown">
                         <li><a class="dropdown-item" href="/declaration">View all declarations</a>
                         </li>
                         <li><a class="dropdown-item" href="/declaration/new">Add new
@@ -29,12 +41,12 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                    <a class="nav-link dropdown-toggle" href="#" id="commodityDropdown" role="button"
                        data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        Commodity Options
+                        Commodities
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                    <ul class="dropdown-menu" aria-labelledby="commodityDropdown">
                         <li><a class="dropdown-item" href="/commodity">View all commodities</a>
                         </li>
                         <li><a class="dropdown-item" href="/commodity/new">Add new commodity</a>
@@ -42,23 +54,23 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
+                    <a class="nav-link dropdown-toggle" href="#" id="clientDropdown" role="button"
                        data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        Client Options
+                        Clients
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                    <ul class="dropdown-menu" aria-labelledby="clientDropdown">
                         <li><a class="dropdown-item" href="/client">View all clients</a></li>
                         <li><a class="dropdown-item" href="/client/new">Add new client</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown" th:if="${@authService.isAdmin()}">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button"
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                        data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        User Options
+                        Users
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
+                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
                         <li><a class="dropdown-item" href="/user">View all Users</a></li>
                         <li><a class="dropdown-item" href="/user/new">Add new User</a></li>
                     </ul>

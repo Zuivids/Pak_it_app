@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: header(~{})}">
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container py-5 flex-fill">
+    <h1 class="mb-4">Declaration List</h1>
+    <div class="table-responsive rounded">
+        <table class="table table-bordered table-striped align-middle">
+            <thead th:class="${@authService.isAdmin()} ? 'table-danger' : 'table-success'">
+            <tr>
+                <th>Identifier Code</th>
+                <th>Client Name</th>
+                <th>Sender Name</th>
+                <th>Sender Address</th>
+                <th>Sender Country Code</th>
+                <th>Sender Phone Number</th>
+                <th>Receiver Name</th>
+                <th>Receiver Address</th>
+                <th>Receiver Country Code</th>
+                <th>Receiver Phone Number</th>
+                <th>Total Weight</th>
+                <th>Total Value</th>
+                <th>Date</th>
+                <th colspan="3"></th>
+            </tr>
+            <tr>
+                <form th:object="${query}" th:action="@{/declaration}" method="get">
+                    <th><input type="text" class="form-control" th:field="*{identifierCode}"/></th>
+                    <th><input type="text" class="form-control" th:field="*{clientName}"></th>
+                    <th><input type="text" class="form-control" th:field="*{senderName}"></th>
+                    <th><input type="text" class="form-control" th:field="*{senderAddress}"></th>
+                    <th><input type="text" class="form-control" th:field="*{senderCountryCode}"></th>
+                    <th><input type="text" class="form-control" th:field="*{senderPhoneNumber}"></th>
+                    <th><input type="text" class="form-control" th:field="*{receiverName}"></th>
+                    <th><input type="text" class="form-control" th:field="*{receiverAddress}"></th>
+                    <th><input type="text" class="form-control" th:field="*{receiverCountryCode}"></th>
+                    <th><input type="text" class="form-control" th:field="*{receiverPhoneNumber}"></th>
+                    <th><input type="text" class="form-control" th:field="*{totalWeight}"></th>
+                    <th><input type="text" class="form-control" th:field="*{totalValue}"></th>
+                    <th><input type="text" class="form-control" th:field="*{date}"></th>
+                    <th colspan="3">
+                        <button type="submit" class="btn btn-outline-primary w-100">Search</button>
+                    </th>
+                </form>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="declaration : ${declarations}">
+                <td th:text="${declaration.identifierCode}"></td>
+                <td th:text="${declaration.clientFullName}"></td>
+                <td th:text="${declaration.senderName}"></td>
+                <td th:text="${declaration.senderAddress}"></td>
+                <td th:text="${declaration.senderCountryCode}"></td>
+                <td th:text="${declaration.senderPhoneNumber}"></td>
+                <td th:text="${declaration.receiverName}"></td>
+                <td th:text="${declaration.receiverAddress}"></td>
+                <td th:text="${declaration.receiverCountryCode}"></td>
+                <td th:text="${declaration.receiverPhoneNumber}"></td>
+                <td th:text="${declaration.totalWeight}"></td>
+                <td th:text="${declaration.totalValue}"></td>
+                <td th:text="${declaration.date}"></td>
+                <td class="text-center">
+                    <form th:action="|/declaration/${declaration.declarationId}|" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-primary btn-sm">View</button>
+                    </form>
+                </td>
+                <td class="text-center">
+                    <form th:action="|/declaration/${declaration.declarationId}/edit|" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+                    </form>
+                </td>
+                <td class="text-center" th:if="${@authService.isAdmin()}">
+                    <form class="d-inline" method="get" th:action="|/declaration/${declaration.declarationId}/delete|">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(declarations)}">
+                <td colspan="16" class="text-center text-muted">No declarations found.</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <form th:action="@{/home}" method="get" class="mt-4">
+        <button type="submit" class="btn btn-secondary">Back</button>
+    </form>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

@@ -1,11 +1,9 @@
 package lv.pakit.dto.request.user;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
+import lv.pakit.model.user.UserRole;
 
 @Getter
 @Setter
@@ -38,4 +36,6 @@ public class UserCreateRequest {
     @Size(min = 3, max = 20, message = "Password must be between 3 and 20 characters")
     private String password;
 
+    @NotNull
+    private UserRole role;
 }

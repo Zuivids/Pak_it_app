@@ -4,14 +4,13 @@ import lv.pakit.model.PackageItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
 public interface IPackageItemRepo extends JpaRepository<PackageItem, Long> {
 
-    List<PackageItem> findByDeclarationDeclarationId(long declarationId);
-
     List<PackageItem> findByDeclarationId(long declarationId);
-
+    List<PackageItem> findByDeclarationIdIn(Collection<Long> declarationIds);
     void deleteByDeclarationId(long declarationId);
 }

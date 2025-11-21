@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import lv.pakit.dto.request.packageItem.PackageItemRequest;
+import lv.pakit.dto.request.packageitem.PackageItemRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 public class DeclarationRequest {
 
-    @NotNull
     private Long clientId;
     @NotEmpty
     @Valid
@@ -42,7 +41,8 @@ public class DeclarationRequest {
     private String receiverPhoneNumber;
     @NotNull
     private String date;
-
     private String createdBy;
     private LocalDateTime createdAt;
+    private Long shipmentId;
+    private Long packageAmount;
 }

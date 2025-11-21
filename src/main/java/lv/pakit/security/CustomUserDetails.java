@@ -2,7 +2,7 @@ package lv.pakit.security;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lv.pakit.model.User;
+import lv.pakit.model.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

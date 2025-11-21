@@ -15,8 +15,10 @@ public class DeclarationResponse {
 
     private long declarationId;
     private List<PackageItemResponse> packageItems;
-    private long clientId;
+    private Long clientId;
     private String clientFullName;
+    private Long shipmentId;
+    private String shipmentCode;
     private String identifierCode;
     private String senderName;
     private String senderAddress;
@@ -26,6 +28,7 @@ public class DeclarationResponse {
     private String receiverAddress;
     private String receiverCountryCode;
     private String receiverPhoneNumber;
+    private Long packageAmount;
     private double totalWeight;
     private double totalValue;
     private String date;

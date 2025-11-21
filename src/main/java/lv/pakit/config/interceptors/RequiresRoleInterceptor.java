@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.annotations.RequiresRole;
 import lv.pakit.exception.http.BadRequestException;
-import lv.pakit.service.AuthService;
+import lv.pakit.service.auth.AuthService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -31,7 +31,7 @@ public class RequiresRoleInterceptor implements HandlerInterceptor {
         }
 
         if (annotation.page()) {
-            response.sendRedirect("/backoffice");
+            response.sendRedirect("/home");
             return false;
         }
 

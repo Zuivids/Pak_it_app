@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/layout :: header(~{::#headerChildren})">
+<head th:replace="~{fragments/layout :: header(~{::#headerChildren})}">
     <div id="headerChildren">
         <style>
             .cell {
@@ -17,14 +17,14 @@
     </div>
 </head>
 
-<body class="bg-light">
+<body class="bg-light d-flex flex-column min-vh-100">
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <main class="container py-5">
-    <h1 class="mb-4" th:text="|Settings for user ${user.username}|"></h1>
+    <h1 class="mb-5" th:text="|Settings for user ${user.username}|"></h1>
 
-    <div class="row mb-2">
+    <div class="row mb-3">
         <div class="col-2 field-name-cell">
             <span>Email:</span>
         </div>
@@ -32,7 +32,17 @@
             <span th:text="${user.email}"></span>
         </div>
     </div>
-    <div class="row mb-2">
+    <div class="row mb-3">
+        <div class="col-2 field-name-cell">
+            <span>Password:</span>
+        </div>
+        <div class="col-2 cell">
+        </div>
+        <div class="col-2 cell">
+            <button class="btn btn-success" onclick="startPasswordReset()">Reset</button>
+        </div>
+    </div>
+    <div class="row mb-3">
         <div class="col-2 field-name-cell">
             <span>2FA status:</span>
         </div>
@@ -50,7 +60,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">Setup 2FA</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -69,7 +79,7 @@
                     <span id="totp-error" class="error-message text-danger"></span>
                 </div>
                 <div class="mt-3">
-                    <span id="errorMessage" class="error-message text-danger mb-2 d-block"></span>
+                    <span class="error-message text-danger mb-2 d-block"></span>
                 </div>
             </div>
             <div class="modal-footer">
@@ -79,14 +89,89 @@
     </div>
 </div>
 
+<div id="resetPasswordModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reset password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-2">
+                    <label for="oldPassword" class="col-form-label">Old password</label>
+                    <div class="col-sm-10">
+                        <input id="oldPassword" name="oldPassword" type="password" class="form-control" required/>
+                    </div>
+                    <span class="error-message oldPassword-error text-danger"></span>
+                </div>
+                <div class="row mb-2">
+                    <label for="newPassword" class="col-form-label">New password</label>
+                    <div class="col-sm-10">
+                        <input id="newPassword" name="newPassword" type="password" class="form-control" required/>
+                    </div>
+                    <span class="error-message newPassword-error text-danger"></span>
+                </div>
+                <div class="row mb-2">
+                    <label for="newPasswordConfirm" class="col-form-label">Confirm new password</label>
+                    <div class="col-sm-10">
+                        <input id="newPasswordConfirm" name="newPasswordConfirm" type="password" class="form-control" required/>
+                    </div>
+                    <span class="error-message newPasswordConfirm-error text-danger"></span>
+                </div>
+                <div class="mt-3">
+                    <span class="form-error error-message text-danger mb-2 d-block"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="resetPassword()">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    const startPasswordReset = () => {
+        $("#resetPasswordModal").modal("show");
+    };
+
+    const resetPassword = () => {
+        const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        const csrfValue = $("meta[name='_csrf']").attr("content");
+
+        const request = {
+            oldPassword: $("#oldPassword").val(),
+            newPassword: $("#newPassword").val(),
+            newPasswordConfirm: $("#newPasswordConfirm").val()
+        };
+
+        fetch("/api/profile/password/reset", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                [csrfHeader]: csrfValue
+            },
+            body: JSON.stringify(request)
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json()
+                        .then(errorResponse => handleErrorResponse("resetPasswordModal", errorResponse));
+            }
+
+            window.location.reload();
+        })
+        .catch(error => {
+            handleErrorMessage("resetPasswordModal", "An unexpected error occurred.");
+        });
+    };
+
     const start2FASetup = () => {
         $("#setup2FAModal").modal("show");
 
         const csrfHeader = $("meta[name='_csrf_header']").attr("content");
         const csrfValue = $("meta[name='_csrf']").attr("content");
 
-        fetch("/api/profile/settings/2fa/setup", {
+        fetch("/api/profile/2fa/setup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -95,13 +180,14 @@
         })
         .then(response => {
             if (!response.ok) {
-                return response.json().then(handleErrorResponse);
+                return response.json()
+                        .then(errorResponse => handleErrorResponse("setup2FAModal", errorResponse));
             }
 
             response.json().then(showQRCode);
         })
         .catch(error => {
-            handleErrorMessage("An unexpected error occurred.");
+            handleErrorMessage("setup2FAModal", "An unexpected error occurred.");
         });
     };
 
@@ -120,7 +206,7 @@
             totp: $("#totp").val() || null
         };
 
-        fetch("/api/profile/settings/2fa/confirm", {
+        fetch("/api/profile/2fa/confirm", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -130,34 +216,35 @@
         })
         .then(response => {
             if (!response.ok) {
-                return response.json().then(handleErrorResponse);
+                return response.json()
+                        .then(errorResponse => handleErrorResponse("setup2FAModal", errorResponse));
             }
 
             window.location.reload();
         })
         .catch(error => {
-            handleErrorMessage("An unexpected error occurred.");
+            handleErrorMessage("setup2FAModal", "An unexpected error occurred.");
         });
     };
 
-    const handleErrorResponse = (errorResponse) => {
+    const handleErrorResponse = (containerId, errorResponse) => {
         $(".error-message").text("");
 
         if (errorResponse.fieldErrors) {
-            handleFieldErrors(errorResponse.fieldErrors);
+            handleFieldErrors(containerId, errorResponse.fieldErrors);
         } else {
-            handleErrorMessage(errorResponse.errorMessage);
+            handleErrorMessage(containerId, errorResponse.errorMessage);
         }
     };
 
-    const handleFieldErrors = (fieldErrors) => {
+    const handleFieldErrors = (containerId, fieldErrors) => {
         for (let field in fieldErrors) {
-            $(`#${field}-error`).text(fieldErrors[field]);
+            $(`#${containerId} .${field}-error`).text(fieldErrors[field]);
         }
     };
 
-    const handleErrorMessage = (errorMessage) => {
-        $("#errorMessage").text(errorMessage);
+    const handleErrorMessage = (containerId, errorMessage) => {
+        $(`#{containerId} .form-error`).text(errorMessage);
     };
 </script>
 

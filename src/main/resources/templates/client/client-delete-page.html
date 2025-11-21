@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: header(~{})}">
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container py-5 flex-fill">
+    <h2 class="mb-3">Confirm Delete</h2>
+    <p class="mb-4">Are you sure you want to delete the following client?</p>
+
+    <div class="table-responsive mb-4 rounded" style="max-width: 600px;">
+        <table class="table table-bordered table-striped">
+            <tbody>
+            <tr>
+                <th>Email</th>
+                <td th:text="${client.email}" id="email"></td>
+            </tr>
+            <tr>
+                <th>Phone Number</th>
+                <td th:text="${client.phoneNumber}" id="phoneNumber"></td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td th:text="${client.fullName}" id="fullName"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="errorMessage" class="text-danger mb-3"></div>
+
+    <div class="d-flex gap-3 mb-4">
+        <button type="button" class="btn btn-danger" onclick="deleteClient()" th:data-id="${client.clientId}">Delete</button>
+        <a th:href="@{/client}" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script>
+    const deleteClient = () => {
+        const clientId = $("button[onclick='deleteClient()']").data("id");
+        const url = `/api/client/${clientId}`;
+        const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        const csrfValue = $("meta[name='_csrf']").attr("content");
+
+        fetch(url, {
+            method: "DELETE",
+            headers: {
+                [csrfHeader]: csrfValue
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(handleErrorResponse);
+            }
+            window.location.href = '/client';
+        })
+        .catch(error => {
+            console.error("Error deleting client:", error);
+            handleErrorMessage("An unexpected error occurred.");
+        });
+    };
+
+    const handleErrorResponse = (errorResponse) => {
+        if (errorResponse.fieldErrors) {
+            console.warn("Unexpected fieldErrors on DELETE", errorResponse.fieldErrors);
+        }
+        handleErrorMessage(errorResponse.errorMessage || "Failed to delete the client.");
+    };
+
+    const handleErrorMessage = (message) => {
+        $("#errorMessage").text(message);
+    };
+</script>
+
+</body>
+</html>

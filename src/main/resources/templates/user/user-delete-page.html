@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: header(~{})}">
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container py-5 flex-fill">
+    <h2 class="mb-3">Confirm Delete</h2>
+    <p class="mb-4">Are you sure you want to delete the following user?</p>
+
+    <div class="table-responsive mb-4 rounded" style="max-width: 600px;">
+        <table class="table table-bordered table-striped">
+            <tbody>
+            <tr>
+                <th>Username</th>
+                <td th:text="${user.username}" id="username"></td>
+            </tr>
+            <tr>
+                <th>First Name</th>
+                <td th:text="${user.firstName}" id="firstName"></td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td th:text="${user.lastName}" id="lastName"></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td th:text="${user.email}" id="email"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="errorMessage" class="text-danger mb-3"></div>
+
+    <div class="d-flex gap-3 mb-4">
+        <button type="button" class="btn btn-danger" onclick="deleteUser()" th:data-id="${user.userId}">Delete</button>
+        <a th:href="@{/user}" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script>
+    const deleteUser = () => {
+        const userId = $("button[onclick='deleteUser()']").data("id");
+        const url = `/api/user/${userId}/delete`;
+        const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        const csrfValue = $("meta[name='_csrf']").attr("content");
+
+        fetch(url, {
+            method: "DELETE",
+            headers: {
+                [csrfHeader]: csrfValue
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(handleErrorResponse);
+            }
+            window.location.href = '/user';
+        })
+        .catch(error => {
+            console.error("Error deleting user:", error);
+            handleErrorMessage("An unexpected error occurred.");
+        });
+    };
+
+    const handleErrorResponse = (errorResponse) => {
+        if (errorResponse.fieldErrors) {
+            console.warn("Unexpected fieldErrors on DELETE", errorResponse.fieldErrors);
+        }
+        handleErrorMessage(errorResponse.errorMessage || "Failed to delete the user.");
+    };
+
+    const handleErrorMessage = (message) => {
+        $("#errorMessage").text(message);
+    };
+</script>
+
+</body>
+</html>

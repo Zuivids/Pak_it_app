@@ -2,14 +2,14 @@ package lv.pakit.services;
 
 import lv.pakit.dto.request.declaration.DeclarationRequest;
 import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
-import lv.pakit.dto.request.packageItem.PackageItemRequest;
+import lv.pakit.dto.request.packageitem.PackageItemRequest;
 import lv.pakit.dto.response.DeclarationResponse;
 import lv.pakit.exception.http.NotFoundException;
 import lv.pakit.model.Client;
 import lv.pakit.model.Declaration;
 import lv.pakit.repo.IDeclarationRepo;
 import lv.pakit.service.ClientService;
-import lv.pakit.service.DeclarationService;
+import lv.pakit.service.declaration.DeclarationService;
 import lv.pakit.service.PackageItemService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

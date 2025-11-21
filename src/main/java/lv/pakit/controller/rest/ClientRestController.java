@@ -8,7 +8,7 @@ import lv.pakit.dto.request.client.ClientUpdateRequest;
 import lv.pakit.service.ClientService;
 import org.springframework.web.bind.annotation.*;
 
-import static lv.pakit.model.UserRole.ADMIN;
+import static lv.pakit.model.user.UserRole.ADMIN;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +27,7 @@ public class ClientRestController {
         clientService.updateById(id, request);
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     @RequiresRole(ADMIN)
     public void deleteClient(@PathVariable("id") long id) {
         clientService.deleteById(id);

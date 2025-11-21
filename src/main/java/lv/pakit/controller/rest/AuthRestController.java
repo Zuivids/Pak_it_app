@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.request.auth.LoginRequest;
 import lv.pakit.dto.response.LoginResponse;
-import lv.pakit.service.AuthService;
+import lv.pakit.service.auth.AuthApiService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 public class AuthRestController {
 
-    private final AuthService authService;
+    private final AuthApiService authApiService;
 
     @PostMapping("/login")
     public LoginResponse login(@Valid @RequestBody LoginRequest request, HttpServletRequest httpRequest) {
-        return authService.login(request, httpRequest);
+        return authApiService.login(request, httpRequest);
     }
 }

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: header(~{})}">
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container py-5 flex-fill">
+    <h2 class="mb-3">Confirm Delete</h2>
+    <p class="mb-4">Are you sure you want to delete the following declaration?</p>
+
+    <div class="bg-white p-4 rounded shadow-sm">
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <p><strong>Created by:</strong> <span th:text="${declaration.createdBy}"></span></p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Created at:</strong> <span th:text="${declaration.createdAt}"></span></p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h5>Sender Info</h5>
+                <p><strong>Name:</strong> <span th:text="${declaration.senderName}"></span></p>
+                <p><strong>Phone:</strong> <span th:text="${declaration.senderPhoneNumber}"></span></p>
+                <p><strong>Address:</strong> <span th:text="${declaration.senderAddress}"></span></p>
+                <p><strong>Country Code:</strong> <span th:text="${declaration.senderCountryCode}"></span></p>
+            </div>
+            <div class="col-md-6">
+                <h5>Receiver Info</h5>
+                <p><strong>Name:</strong> <span th:text="${declaration.receiverName}"></span></p>
+                <p><strong>Phone:</strong> <span th:text="${declaration.receiverPhoneNumber}"></span></p>
+                <p><strong>Address:</strong> <span th:text="${declaration.receiverAddress}"></span></p>
+                <p><strong>Country Code:</strong> <span th:text="${declaration.receiverCountryCode}"></span></p>
+            </div>
+        </div>
+
+        <h5 class="mt-3">Package Items</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered table-light">
+                <thead class="table-secondary text-center">
+                <tr>
+                    <td></td>
+                    <th>Commodity Code</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Net Weight</th>
+                    <th>Value</th>
+                    <th>Used</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item, iterStat : ${declaration.packageItems}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${item.commodity.commodityCode}"></td>
+                    <td th:text="${item.commodity.description}"></td>
+                    <td th:text="${item.quantity}"></td>
+                    <td th:text="${item.netWeight}"></td>
+                    <td th:text="${item.value}"></td>
+                    <td class="text-center">
+                        <input type="checkbox" th:checked="${item.used}" disabled />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <p><strong>ID Code:</strong> <span th:text="${declaration.identifierCode}"></span></p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Date:</strong> <span th:text="${declaration.date}"></span></p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Client ID:</strong> <span th:text="${declaration.clientId}"></span></p>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <p><strong>Total Weight:</strong> <span th:text="${declaration.totalWeight}"></span></p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Total Value:</strong> <span th:text="${declaration.totalValue}"></span></p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Package Amount:</strong> <span th:text="${declaration.packageAmount}"></span></p>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="text-danger mb-3"></div>
+
+        <div class="d-flex gap-3 mt-4">
+            <button type="button" class="btn btn-danger" onclick="deleteDeclaration()" th:data-id="${declaration.declarationId}">Delete</button>
+            <a th:href="@{/declaration}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script>
+    const deleteDeclaration = () => {
+        const declarationId = $("button[onclick='deleteDeclaration()']").data("id");
+        const url = `/api/declaration/${declarationId}`;
+        const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        const csrfValue = $("meta[name='_csrf']").attr("content");
+
+        fetch(url, {
+            method: "DELETE",
+            headers: {
+                [csrfHeader]: csrfValue
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(handleErrorResponse);
+            }
+            window.location.href = '/declaration';
+        })
+        .catch(error => {
+            console.error("Error deleting declaration:", error);
+            handleErrorMessage("An unexpected error occurred.");
+        });
+    };
+
+    const handleErrorResponse = (errorResponse) => {
+        if (errorResponse.fieldErrors) {
+            console.warn("Unexpected fieldErrors on DELETE", errorResponse.fieldErrors);
+        }
+        handleErrorMessage(errorResponse.errorMessage || "Failed to delete the declaration.");
+    };
+
+    const handleErrorMessage = (message) => {
+        $("#errorMessage").text(message);
+    };
+</script>
+
+</body>
+</html>

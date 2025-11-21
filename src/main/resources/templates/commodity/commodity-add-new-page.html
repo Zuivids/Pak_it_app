@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: header(~{})}">
+</head>
+
+<body class="bg-light">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container py-5 flex-fill">
+    <h1 class="mb-4">Insert New Commodity</h1>
+    <form id="createCommodityForm" action="/api/commodity">
+        <div class="container">
+            <div class="row mb-3">
+                <label for="commodityCode" class="col-sm-2 col-form-label">Code</label>
+                <span id="commodityCode-error" class="text-danger"></span>
+                <div class="col-sm-10">
+                    <input id="commodityCode" name="commodityCode" th:value="${commodityCode}" type="text" class="form-control" required/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="description" class="col-sm-2 col-form-label">Description</label>
+                <span id="description-error" class="text-danger"></span>
+                <div class="col-sm-10">
+                    <input id="description" name="description" th:value="${description}" type="text" class="form-control" required/>
+                </div>
+            </div>
+
+            <span id="errorMessage" class="text-danger"></span>
+
+            <div class="row mb-3 text-center">
+                <div class="col">
+                    <button type="button" onClick="createCommodity()" class="btn btn-success">Save Commodity</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <h2 class="mt-5">Upload from Excel</h2>
+    <form id="uploadExcelForm" enctype="multipart/form-data" action="/api/commodity/upload" method="post">
+        <div class="row mb-3">
+            <div class="col-sm-10">
+                <input type="file" id="excelFile" name="file" class="form-control" accept=".xlsx,.xls" required/>
+            </div>
+        </div>
+
+        <div class="row mb-3 text-center">
+            <div class="col">
+                <button type="button" onClick="uploadExcel()" class="btn btn-primary">Upload File</button>
+            </div>
+        </div>
+        <span id="uploadError" class="text-danger"></span>
+    </form>
+
+    <form action="/home" method="get" class="mt-4">
+        <div class="text-start">
+            <button type="submit" class="btn btn-secondary">Back</button>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script>
+    const createCommodity = () => {
+        const url = $("#createCommodityForm").attr('action');
+        const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        const csrfValue = $("meta[name='_csrf']").attr("content");
+        const request = {
+            commodityCode: $("#commodityCode").val(),
+            description: $("#description").val()
+        };
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                [csrfHeader]: csrfValue
+            },
+            body: JSON.stringify(request),
+        })
+        .then(response => {
+            if (!response.ok) {
+                response.json().then(handleErrorResponse);
+            } else {
+                window.location.href = '/commodity';
+            }
+        })
+        .catch(error => console.log(error));
+    };
+
+    const uploadExcel = () => {
+        const form = document.getElementById("uploadExcelForm");
+        const url = form.getAttribute("action");
+        const formData = new FormData(form);
+        const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        const csrfValue = $("meta[name='_csrf']").attr("content");
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                [csrfHeader]: csrfValue
+            },
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) {
+                response.json().then(data => {
+                    $("#uploadError").text(data.errorMessage || "Upload failed");
+                });
+            } else {
+                window.location.href = '/commodity';
+            }
+        })
+        .catch(error => {
+            $("#uploadError").text("Unexpected error: " + error);
+        });
+    };
+
+    const handleErrorResponse = (errorResponse) => {
+        if (errorResponse.fieldErrors) {
+            handleFieldErrors(errorResponse.fieldErrors);
+        } else {
+            handleErrorMessage(errorResponse.errorMessage);
+        }
+    };
+
+    const handleFieldErrors = (fieldErrors) => {
+        for (let field in fieldErrors) {
+            $(`#${field}-error`).text(fieldErrors[field]);
+        }
+    };
+
+    const handleErrorMessage = (errorMessage) => {
+        $("#errorMessage").text(errorMessage);
+    };
+</script>
+
+</body>
+</html>
