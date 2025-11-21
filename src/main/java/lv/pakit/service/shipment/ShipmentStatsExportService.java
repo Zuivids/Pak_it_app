@@ -7,7 +7,6 @@ import com.lowagie.text.pdf.PdfWriter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lv.pakit.dto.response.shipment.ShipmentResponse;
 import lv.pakit.dto.response.shipment.ShipmentStatsResponse;
 import lv.pakit.dto.response.shipment.ShipmentDeclarationStats;
 import lv.pakit.dto.response.shipment.ShipmentCommodityStats;
@@ -30,7 +29,7 @@ public class ShipmentStatsExportService {
     public void getShipmentStatsPdf(long shipmentId, HttpServletResponse response) {
         try {
             ShipmentStatsResponse stats = shipmentStatsService.getShipmentStats(shipmentId);
-            ShipmentResponse shipment = shipmentService.findById(shipmentId);
+            Shipment shipment = shipmentService.requireById(shipmentId);
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             Document document = new Document(PageSize.A4, 36, 36, 36, 36);
