@@ -11,4 +11,5 @@ public class ShipmentDeclarationStats {
     private final String identifierCode;
     private final Double totalWeight;
     private final Double totalValue;
+    private final Long packageAmount;
 }
