@@ -120,19 +120,21 @@ public class ShipmentStatsExportService {
         document.add(new Paragraph("\nCommodities", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
         document.add(new Paragraph("\n"));
 
-        PdfPTable table = new PdfPTable(4);
+        PdfPTable table = new PdfPTable(5);
         table.setWidthPercentage(100);
-        table.setWidths(new float[]{1, 3, 2, 2});
+        table.setWidths(new float[]{1, 3, 2, 2, 2});
 
-        addTableHeader(table, "", "Commodity code", "Total weight (Kg)", "Total value (EUR)");
+        addTableHeader(table, "", "Commodity code", "Quantity", "Total weight (Kg)", "Total value (EUR)");
 
         int index = 1;
         for (ShipmentCommodityStats c : commodities) {
             table.addCell(String.valueOf(index++));
             table.addCell(c.getCommodityCode() + " - " + c.getDescription());
+            table.addCell(String.valueOf(c.getQuantity()));
             table.addCell(String.valueOf(c.getTotalWeight()));
             table.addCell(String.valueOf(c.getTotalValue()));
         }
+
         document.add(table);
     }
 
