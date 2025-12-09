@@ -41,7 +41,7 @@ public class ShipmentStatsExportService {
             addTotals(document, stats);
             addDeclarationsTable(document, stats.getDeclarationStats());
             addCommoditiesTable(document, stats.getCommodityStats());
-            addDate(document);
+//            addDate(document);
 
             document.close();
 

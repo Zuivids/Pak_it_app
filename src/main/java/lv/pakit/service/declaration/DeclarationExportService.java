@@ -48,7 +48,7 @@ public class DeclarationExportService {
 
             addTitle(document);
             document.add(buildOuterTable(declarationId, declaration));
-            addDate(document);
+//            addDate(document);
 
             document.close();
             return baos.toByteArray();
