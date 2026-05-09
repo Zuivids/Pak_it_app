@@ -12,4 +12,5 @@ public class ShipmentCommodityStats {
     private final String description;
     private final Double totalWeight;
     private final Double totalValue;
+    private final Long quantity;
 }

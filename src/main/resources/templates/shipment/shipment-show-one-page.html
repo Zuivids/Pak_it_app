@@ -107,6 +107,7 @@
             <tr>
                 <td></td>
                 <th>Commodity code</th>
+                <th>Quantity</th>
                 <th>Total weight (Kg)</th>
                 <th>Total value (EUR)</th>
             </tr>
@@ -116,6 +117,7 @@
                 <td th:text="${iterStat.index + 1}"></td>
                 <td><a th:text="|${commodityStats.commodityCode} - ${commodityStats.description}|"
                        th:href="|/commodity/${commodityStats.commodityId}/edit|"></a>
+                <td th:text="${commodityStats.quantity}"></td>
                 <td th:text="|${commodityStats.totalWeight} Kg|"></td>
                 <td th:text="|${commodityStats.totalValue} EUR|"></td>
             </tr>

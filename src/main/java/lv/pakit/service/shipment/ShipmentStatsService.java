@@ -71,6 +71,7 @@ public class ShipmentStatsService {
         Map<Long, Double> totalCommodityWeights = new HashMap<>();
         Map<Long, Double> totalCommodityValues = new HashMap<>();
         Map<Long, Commodity> commoditiesById = new HashMap<>();
+        Map<Long, Long> totalCommodityQuantities = new HashMap<>();
 
         List<Long> declarationIds = declarations.stream()
                 .map(Declaration::getDeclarationId)
@@ -85,25 +86,31 @@ public class ShipmentStatsService {
 
             double value = totalCommodityValues.getOrDefault(commodity.getCommodityId(), 0d);
             totalCommodityValues.put(commodity.getCommodityId(), value + packageItem.getValue());
+
+            long quantity = totalCommodityQuantities.getOrDefault(commodity.getCommodityId(), 0L);
+            totalCommodityQuantities.put(commodity.getCommodityId(), quantity + packageItem.getQuantity());
         });
 
         return commoditiesById.values().stream()
                 .map(commodity -> {
                     double totalWeight = totalCommodityWeights.get(commodity.getCommodityId());
                     double totalValue = totalCommodityValues.get(commodity.getCommodityId());
+                    long quantity = totalCommodityQuantities.get(commodity.getCommodityId());
 
-                    return mapShipmentCommodityStats(commodity, totalWeight, totalValue);
+                    return mapShipmentCommodityStats(commodity, totalWeight, totalValue, quantity);
                 })
                 .toList();
     }
 
-    private ShipmentCommodityStats mapShipmentCommodityStats(Commodity commodity, Double totalWeight, Double totalValue) {
+    private ShipmentCommodityStats mapShipmentCommodityStats(Commodity commodity, Double totalWeight, Double totalValue,
+                                                             Long quantity) {
         return ShipmentCommodityStats.builder()
                 .commodityId(commodity.getCommodityId())
                 .commodityCode(commodity.getCommodityCode())
                 .description(commodity.getDescription())
                 .totalWeight(totalWeight)
                 .totalValue(totalValue)
+                .quantity(quantity)
                 .build();
     }
 
