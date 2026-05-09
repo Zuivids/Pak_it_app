@@ -1,3 +1,5 @@
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
         /* --- RESET & BASE --- */
         *, *::before, *::after {
             box-sizing: border-box;
@@ -14,7 +16,7 @@
             font-weight: 400;
             line-height: 1.6;
             color: #222;
-            background: linear-gradient(to bottom, #ffffff, #00330080);
+            background: #f9fafb;
         }
 
         h1, h2, h3, h4 {
@@ -169,7 +171,8 @@
 
         .services {
         text-align: center;
-        padding: 4rem 1rem;
+        padding: 4rem 5%;
+        background: #ffffff;
         }
 
         .services-grid {
@@ -180,10 +183,11 @@
         }
 
         .service-card {
-        background: #eef5ee;
+        background: #fff;
         padding: 2rem;
         border-radius: 14px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        border-top: 4px solid #006400;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
         transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
@@ -196,10 +200,12 @@
         .services .icon-wrapper {
             width: 80px;
             height: 80px;
-            margin: 0 auto 1rem;
+            margin: 0 auto 1.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #eef5ee;
+            border-radius: 50%;
         }
 
         .services .icon-wrapper img {
@@ -211,7 +217,8 @@
 
         .why {
             text-align: center;
-            padding: 4rem 1rem;
+            padding: 4rem 5%;
+            background: #f3f7f3;
         }
 
         .why-grid {
@@ -222,10 +229,11 @@
         }
 
         .why-card {
-            background: #f8f9fa;
+            background: #fff;
             padding: 2rem;
             border-radius: 14px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #006400;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
@@ -241,6 +249,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #eef5ee;
+            border-radius: 50%;
         }
 
         .why-icon img {
@@ -252,7 +262,8 @@
 
                 /* HOW IT WORKS */
         .how-wrapper {
-            padding: 4rem 1rem;
+            padding: 4rem 5%;
+            background: #ffffff;
         }
 
         .how-container {
@@ -306,7 +317,8 @@
         /* TRUST / TESTIMONIALS */
         .trust-section {
             text-align: center;
-            padding: 4rem 1rem;
+            padding: 4rem 5%;
+            background: #ffffff;
         }
 
         .trust-logos {
@@ -320,7 +332,7 @@
         }
 
         .trust-logos img {
-            height: 45px;
+            height: 120px;
             filter: grayscale(100%);
             opacity: 0.7;
             transition: all 0.3s ease;
@@ -344,6 +356,21 @@
             margin: 0 0 0.5rem;
             font-style: italic;
             color: #222;
+            position: relative;
+            padding: 1rem 1.5rem;
+            background: #f3f7f3;
+            border-radius: 10px;
+        }
+
+        .trust-quote blockquote::before {
+            content: '\201C';
+            font-size: 4rem;
+            color: #006400;
+            opacity: 0.3;
+            position: absolute;
+            top: -0.5rem;
+            left: 0.5rem;
+            line-height: 1;
         }
 
         .trust-quote cite {
@@ -352,7 +379,8 @@
         }
             /* ABOUT SECTION */
         .about-section {
-            padding: 4rem 1rem;
+            padding: 4rem 5%;
+            background: #f3f7f3;
         }
 
         .about-grid {
@@ -578,7 +606,7 @@
                 order: -1;
             }
             .trust-logos img {
-                height: 35px;
+                height: 60px;
             }
             .how-container {
                 grid-template-columns: 1fr;
@@ -650,6 +678,14 @@
             font-size: clamp(1.4rem, 3vw, 2rem);
         }
 
+        /* Section heading accent underline */
+        section > h2, .about-content h2 {
+            display: inline-block;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid #006400;
+            margin-bottom: 0.5rem;
+        }
+
         /* --- HERO / MODERN SLIDESHOW --- */
         #hero {
             position: relative;
@@ -713,14 +749,15 @@
             padding: 0.75rem 1.5rem;
             border-radius: 6px;
             border: none;
-            background-color: #0056b3;
+            background-color: #006400;
             color: #fff;
+            font-weight: 600;
             cursor: pointer;
             transition: background 0.3s;
         }
 
         #quick-quote button:hover {
-            background-color: #00408d;
+            background-color: #004d00;
         }
 
         .secondary-cta a {
