@@ -17,6 +17,8 @@ import lv.pakit.service.ClientService;
 import lv.pakit.service.PackageItemService;
 import lv.pakit.service.shipment.ShipmentService;
 import lv.pakit.service.auth.AuthService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,11 @@ public class DeclarationService {
         return declarationRepo.findAll(matchesSearchRequest(request)).stream()
                 .map(this::mapToDto)
                 .toList();
+    }
+
+    public Page<DeclarationResponse> searchPaged(DeclarationSearchRequest request, Pageable pageable) {
+        return declarationRepo.findAll(matchesSearchRequest(request), pageable)
+                .map(this::mapToDto);
     }
 
     private Specification<Declaration> matchesSearchRequest(DeclarationSearchRequest request) {

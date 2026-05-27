@@ -3,11 +3,15 @@ package lv.pakit.controller.page;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lv.pakit.dto.request.declaration.DeclarationSearchRequest;
+import lv.pakit.dto.response.DeclarationResponse;
 import lv.pakit.service.ClientService;
 import lv.pakit.service.CommodityService;
 import lv.pakit.service.shipment.ShipmentService;
 import lv.pakit.service.declaration.DeclarationExportService;
 import lv.pakit.service.declaration.DeclarationService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/declaration")
@@ -29,8 +34,21 @@ public class DeclarationPageController {
 
     @GetMapping
     public String getAllDeclarations(@ModelAttribute(value = "query") DeclarationSearchRequest request,
-                                     BindingResult bindingResult, Model model) {
-        model.addAttribute("declarations", declarationService.search(request));
+                                     BindingResult bindingResult,
+                                     @RequestParam(defaultValue = "0") int page,
+                                     Model model) {
+        Page<DeclarationResponse> declarationPage = declarationService.searchPaged(
+                request, PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "declarationId")));
+
+        int totalPages = declarationPage.getTotalPages();
+        int startPage = Math.max(0, page - 2);
+        int endPage = Math.min(totalPages - 1, page + 2);
+
+        model.addAttribute("declarations", declarationPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "declaration/declaration-show-many-page";
     }

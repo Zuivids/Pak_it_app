@@ -12,6 +12,8 @@ import lv.pakit.exception.http.NotFoundException;
 import lv.pakit.model.Commodity;
 import lv.pakit.repo.ICommodityRepo;
 import org.apache.poi.ss.usermodel.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -81,6 +83,15 @@ public class CommodityService {
         return commodities.stream()
                 .map(this::mapToDto)
                 .toList();
+    }
+
+    public Page<CommodityResponse> fetchByQueryPaged(String query, Pageable pageable) {
+        if (query == null || query.isEmpty()) {
+            return commodityRepo.findAll(pageable).map(this::mapToDto);
+        }
+        return commodityRepo
+                .findByCommodityCodeContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query, pageable)
+                .map(this::mapToDto);
     }
 
     public List<CommodityResponse> fetchAll() {

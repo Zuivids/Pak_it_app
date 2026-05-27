@@ -14,6 +14,8 @@ import lv.pakit.model.shipment.Shipment;
 import lv.pakit.repo.IDeclarationRepo;
 import lv.pakit.repo.IShipmentRepo;
 import lv.pakit.service.auth.AuthService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -80,6 +82,12 @@ public class ShipmentService {
         return shipmentRepo.findAll(matchesSearchRequest(request)).stream()
                 .map(this::mapToDto)
                 .toList();
+    }
+
+    @Transactional
+    public Page<ShipmentResponse> searchPaged(ShipmentSearchRequest request, Pageable pageable) {
+        return shipmentRepo.findAll(matchesSearchRequest(request), pageable)
+                .map(this::mapToDto);
     }
 
     @Transactional
