@@ -77,6 +77,39 @@
         <span th:text="${errorMessage}"></span>
     </div>
 
+    <!-- Pagination -->
+    <div th:if="${totalPages > 0}" class="d-flex flex-column align-items-center mt-3">
+        <nav th:if="${totalPages > 1}" aria-label="Shipment pagination">
+            <ul class="pagination mb-1">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <button type="button" class="page-link" th:onclick="|goToPage(${currentPage - 1})|">&laquo;</button>
+                </li>
+                <li th:if="${startPage > 0}" class="page-item">
+                    <button type="button" class="page-link" th:onclick="goToPage(0)">1</button>
+                </li>
+                <li th:if="${startPage > 1}" class="page-item disabled">
+                    <span class="page-link">…</span>
+                </li>
+                <li class="page-item"
+                    th:each="i : ${#numbers.sequence(startPage, endPage)}"
+                    th:classappend="${i == currentPage} ? 'active'">
+                    <button type="button" class="page-link" th:onclick="|goToPage(${i})|" th:text="${i + 1}"></button>
+                </li>
+                <li th:if="${endPage < totalPages - 2}" class="page-item disabled">
+                    <span class="page-link">…</span>
+                </li>
+                <li th:if="${endPage < totalPages - 1}" class="page-item">
+                    <button type="button" class="page-link" th:onclick="|goToPage(${totalPages - 1})|"
+                            th:text="${totalPages}"></button>
+                </li>
+                <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+                    <button type="button" class="page-link" th:onclick="|goToPage(${currentPage + 1})|">&raquo;</button>
+                </li>
+            </ul>
+        </nav>
+        <small class="text-muted" th:text="|Page ${currentPage + 1} of ${totalPages}|"></small>
+    </div>
+
     <form th:action="@{/home}" method="get" class="mt-4">
         <button type="submit" class="btn btn-secondary">Back</button>
     </form>
@@ -119,14 +152,18 @@
         const lastPickedDate = deliveryDatetimePicker.dates.lastPicked;
         const deliveryDate = lastPickedDate ? moment(deliveryDatetimePicker.dates.lastPicked).format("YYYY-MM-DD") : "";
 
-        console.log(deliveryDate);
-
         const params = new URLSearchParams({
             shipmentCode: shipmentCode,
             deliveryDate: deliveryDate,
             deliveryState: deliveryState
         });
 
+        window.location.href = `/shipment?${params.toString()}`;
+    };
+
+    const goToPage = (page) => {
+        const params = new URLSearchParams(window.location.search);
+        params.set('page', page);
         window.location.href = `/shipment?${params.toString()}`;
     };
 </script>

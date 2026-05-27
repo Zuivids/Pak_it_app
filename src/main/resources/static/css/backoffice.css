@@ -1,0 +1,87 @@
+/* ── Typography ──────────────────────────────────────────── */
+main h1,
+main h2 {
+    font-weight: 600;
+    color: #212529;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: .45rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ── Table container ─────────────────────────────────────── */
+.table-responsive {
+    border-radius: .5rem;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, .07);
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+tbody tr {
+    transition: background-color .12s ease;
+}
+
+tbody tr:hover > td {
+    background-color: rgba(0, 0, 0, .035) !important;
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+
+.btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .15);
+    filter: brightness(1.06);
+}
+
+.btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: none;
+    filter: brightness(.97);
+}
+
+/* ── Form inputs ─────────────────────────────────────────── */
+.form-control,
+.form-select {
+    border-radius: .375rem;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 .2rem rgba(13, 110, 253, .18);
+}
+
+/* ── Pagination ──────────────────────────────────────────── */
+.pagination {
+    gap: 3px;
+}
+
+.pagination .page-link {
+    border-radius: .4rem !important;
+    min-width: 36px;
+    text-align: center;
+    line-height: 1.5;
+    transition: background-color .12s ease, color .12s ease, border-color .12s ease;
+}
+
+/* ── Alerts ──────────────────────────────────────────────── */
+.alert {
+    border-radius: .5rem;
+    border-left-width: 4px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .07);
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+footer {
+    font-size: .875rem;
+    letter-spacing: .01em;
+}
+
+footer p {
+    margin-bottom: 0;
+    opacity: .92;
+}

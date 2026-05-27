@@ -108,6 +108,38 @@
             -webkit-text-fill-color: unset;
         }
 
+        #main-nav a img {
+            filter: brightness(0) invert(1);
+            opacity: 0.85;
+        }
+
+        /* Icon-only links: circular hover ring */
+        #main-nav a[aria-label="WhatsApp"],
+        #main-nav a[aria-label="Facebook"],
+        #main-nav a.login-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 transparent;
+            transition: color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #main-nav a[aria-label="WhatsApp"]::after,
+        #main-nav a[aria-label="Facebook"]::after,
+        #main-nav a.login-trigger::after {
+            display: none;
+        }
+
+        #main-nav a[aria-label="WhatsApp"]:hover,
+        #main-nav a[aria-label="Facebook"]:hover,
+        #main-nav a.login-trigger:hover {
+            color: var(--gold);
+            box-shadow: 0 0 0 2px var(--gold);
+        }
+
         #main-nav a::after {
             content: '';
             position: absolute;
@@ -191,6 +223,8 @@
 
         .lang-btn svg {
             display: block;
+            width: 30px;
+            height: 18px;
         }
 
         .lang-btn:hover {

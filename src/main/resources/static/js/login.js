@@ -23,7 +23,6 @@ $(document).ready(function () {
             if (!response.ok) {
                 response.json().then(handleErrorResponse);
             } else {
-                alert("Pieslēgšanās veiksmīga!");
                 window.location.href = "/home";
             }
         })

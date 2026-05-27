@@ -30,13 +30,15 @@
     <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
     <!-- MomentJS -->
     <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+    <!-- Backoffice styles -->
+    <link rel="stylesheet" th:href="@{/css/backoffice.css}">
 
     <div th:insert="${children} ?: ''"></div>
 </head>
 
 <footer class="text-white text-center py-4 mt-auto"
         th:style="${@authService.isAdmin()} ? 'background-color:#6e0101' : 'background-color:#016e01'">
-    <p>&copy; 2025 SIA Pak It. All rights reserved.</p>
+    <p>&copy; <span th:text="${T(java.time.LocalDate).now().getYear()}"></span> SIA Pak It. All rights reserved.</p>
 </footer>
 
 </html>
