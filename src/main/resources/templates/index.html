@@ -130,17 +130,23 @@
             </p>
 
             <!-- Primary CTA -->
-            <form id="quick-quote" action="/quote" method="post" aria-label="Request a quick quote">
+            <form id="quick-quote" action="https://formsubmit.co/paula.varpina@pakit.lv" method="post"
+                  aria-label="Request a quick quote" onsubmit="handleQuoteSubmit(event)">
+                <input type="hidden" name="_subject" value="Jauns cenas pieprasījums no mājas lapas">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" id="qq-user-email" name="email" value="">
+
                 <label for="qq-origin" class="visually-hidden" data-en="Origin">No</label>
-                <input id="qq-origin" name="origin" type="text" placeholder="Pilsēta vai pasta indekss"
+                <input id="qq-origin" name="Izcelsme" type="text" placeholder="Pilsēta vai pasta indekss"
                        data-en="Origin city or zip" required/>
 
                 <label for="qq-destination" class="visually-hidden" data-en="Destination">Uz</label>
-                <input id="qq-destination" name="destination" type="text" placeholder="Pilsēta vai pasta indekss"
+                <input id="qq-destination" name="Galamerkis" type="text" placeholder="Pilsēta vai pasta indekss"
                        data-en="Destination city or zip" required/>
 
                 <label for="qq-weight" class="visually-hidden" data-en="Weight (kg)">Svars (kg)</label>
-                <input id="qq-weight" name="weight" type="number" placeholder="Svars (kg)" min="1" data-en="Weight (kg)"
+                <input id="qq-weight" name="Svars_kg" type="number" placeholder="Svars (kg)" min="1" data-en="Weight (kg)"
                        required/>
 
                 <button type="submit" data-en="Get a Quote">Saņemt piedāvājumu</button>
@@ -445,10 +451,26 @@
     </div>
 </div>
 
+<!-- Quote Email Modal -->
+<div id="quote-modal" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title">
+    <div class="quote-modal-backdrop" onclick="closeQuoteModal()"></div>
+    <div class="quote-modal-box">
+        <h3 id="quote-modal-title" data-en="Enter your email">Ievadiet savu e-pastu</h3>
+        <p data-en="We will send the quote to your email address.">Mēs nosūtīsim piedāvājumu uz jūsu e-pasta adresi.</p>
+        <input type="email" id="modal-email-input" placeholder="jūsu@epasts.lv" autocomplete="email"/>
+        <span id="modal-email-error" class="modal-error">Lūdzu ievadiet derīgu e-pasta adresi.</span>
+        <div class="modal-actions">
+            <button class="modal-btn-confirm" onclick="submitWithEmail()" data-en="Send">Nosūtīt</button>
+            <button class="modal-btn-cancel" onclick="closeQuoteModal()" data-en="Cancel">Atcelt</button>
+        </div>
+    </div>
+</div>
+
 <script src="/js/login.js"></script>
 <script src="/js/navigation.js"></script>
 <script src="/js/hero.js"></script>
 <script src="/js/how-slider.js"></script>
+<script src="/js/quick-quote.js"></script>
 
 </body>
 </html>

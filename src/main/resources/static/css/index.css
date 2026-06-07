@@ -1049,3 +1049,106 @@
                 width: 100%;
             }
         }
+
+/* =============================================
+   QUOTE EMAIL MODAL
+   ============================================= */
+#quote-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.quote-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+}
+
+.quote-modal-box {
+    position: relative;
+    background: #fff;
+    border-radius: 6px;
+    padding: 2rem 2.5rem;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+}
+
+.quote-modal-box h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+    color: var(--deep-green);
+}
+
+.quote-modal-box p {
+    color: #555;
+    font-size: 0.9rem;
+    margin-bottom: 1.2rem;
+}
+
+.quote-modal-box input[type="email"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.quote-modal-box input[type="email"]:focus {
+    border-color: var(--gold);
+}
+
+.modal-error {
+    display: none;
+    color: #c0392b;
+    font-size: 0.82rem;
+    margin-top: 0.35rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    justify-content: flex-end;
+}
+
+.modal-btn-confirm {
+    padding: 0.65rem 1.5rem;
+    background: var(--gold);
+    color: var(--deep-green);
+    border: none;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.modal-btn-confirm:hover {
+    background: var(--gold-light);
+}
+
+.modal-btn-cancel {
+    padding: 0.65rem 1.25rem;
+    background: transparent;
+    color: #666;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.modal-btn-cancel:hover {
+    border-color: #999;
+    color: #333;
+}

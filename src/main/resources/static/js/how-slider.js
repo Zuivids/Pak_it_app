@@ -30,7 +30,7 @@ function startHowAuto() {
     howTimer = setInterval(() => {
         howIndex = (howIndex + 1) % howImages.length;
         changeHowStep(howIndex);
-    }, 3000);
+    }, 10000);
 }
 
 // Click handler for manual steps
