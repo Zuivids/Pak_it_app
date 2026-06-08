@@ -1,494 +1,982 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <title>PakIt</title>
 
     <!-- Stylesheets -->
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-          crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/css/tempus-dominus.min.css"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/css/tempus-dominus.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/js/tempus-dominus.min.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
-</head>
+  </head>
 
-<body>
-<!-- SITE HEADER -->
-<header id="site-header">
-    <div id="brand">
+  <body>
+    <!-- SITE HEADER -->
+    <header id="site-header">
+      <div id="brand">
         <a href="/" aria-label="PaK It Logistics home">
-            <img src="/img/PaK_it_logo.png" alt="PaK It">
+          <img src="/img/PaK_it_logo.png" alt="PaK It" />
         </a>
-    </div>
+      </div>
 
-    <nav id="main-nav" aria-label="Primary navigation">
+      <nav id="main-nav" aria-label="Primary navigation">
         <ul>
-            <li><a href="#services" data-en="Services">Piedāvājumi</a></li>
-            <li><a href="#how-it-works" data-en="How it works">Kā tas darbojas</a></li>
-            <li><a href="#testimonials" data-en="Clients">Klienti</a></li>
-            <li><a href="#about-us" data-en="About Us">Par mums</a></li>
-            <li><a href="#contact" data-en="Contact">Kontakti</a></li>
-            <li class="language-switch">
-                <button class="lang-btn active" data-lang="lv" aria-label="Latvian">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50">
-                        <rect width="100" height="50" fill="#9E3039"/>
-                        <rect y="20" width="100" height="10" fill="#fff"/>
-                    </svg>
-                </button>
-                <button class="lang-btn" data-lang="en" aria-label="English">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30">
-                        <defs>
-                            <clipPath id="uk-flag-clip">
-                                <rect width="60" height="30"/>
-                            </clipPath>
-                        </defs>
-                        <g clip-path="url(#uk-flag-clip)">
-                            <rect width="60" height="30" fill="#012169"/>
-                            <!-- St Andrew white saltire -->
-                            <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="10"/>
-                            <!-- St Patrick red saltire -->
-                            <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="3.34"/>
-                            <!-- St George white cross -->
-                            <path d="M30,0 V30 M0,15 H60" stroke="#fff" stroke-width="12"/>
-                            <!-- St George red cross -->
-                            <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" stroke-width="6"/>
-                        </g>
-                    </svg>
-                </button>
-                <a href="https://wa.me/+37128376343" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.52 3.48A11.78 11.78 0 0 0 12 .04C5.37.04.04 5.37.04 12a11.87 11.87 0 0 0 1.6 6L0 24l6.13-1.63A11.86 11.86 0 0 0 12 23.96c6.63 0 11.96-5.33 11.96-11.96a11.78 11.78 0 0 0-3.44-8.52zM12 21c-2.2 0-4.25-.72-5.87-1.93l-.42-.26-3.65.97.97-3.64-.27-.43A9.97 9.97 0 0 1 2 12C2 6.48 6.48 2 12 2c2.65 0 5.1 1.03 6.96 2.93A9.87 9.87 0 0 1 22 12c0 5.52-4.48 10-10 10zm5.11-7.7c-.27-.14-1.6-.79-1.84-.88-.24-.09-.41-.13-.58.14s-.67.88-.82 1.06c-.15.18-.31.2-.58.07-.27-.14-1.15-.42-2.19-1.36-.81-.72-1.36-1.6-1.52-1.87-.16-.28-.02-.43.12-.57.12-.12.27-.31.4-.47.13-.16.18-.27.27-.45.09-.18.05-.33-.02-.47-.07-.14-.58-1.41-.8-1.93-.21-.51-.43-.44-.58-.45-.15-.01-.33-.01-.51-.01s-.47.07-.72.33c-.25.25-.96.94-.96 2.3s.98 2.66 1.12 2.84c.14.18 1.94 2.96 4.72 4.15.66.28 1.17.45 1.57.58.66.21 1.26.18 1.73.11.53-.08 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.26-.18-.53-.32z"/>
-                    </svg>
-                </a>
-                <a href="https://www.facebook.com/share/17aFrpBM5A/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.406.593 24 1.325 24h11.495V14.708h-3.13v-3.622h3.13V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.764v2.312h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.406 24 22.676V1.325C24 .593 23.406 0 22.675 0z"/>
-                    </svg>
-                </a>
-                <a href="#" class="login-trigger" data-bs-toggle="modal" data-bs-target="#loginModal">
-                    <img src="https://www.svgrepo.com/show/506725/login.svg" alt="Login" width="24" height="24">
-                </a>
-            </li>
+          <li><a href="#services" data-en="Services">Piedāvājumi</a></li>
+          <li>
+            <a href="#how-it-works" data-en="How it works">Kā tas darbojas</a>
+          </li>
+          <li><a href="#testimonials" data-en="Clients">Klienti</a></li>
+          <li><a href="#about-us" data-en="About Us">Par mums</a></li>
+          <li><a href="#contact" data-en="Contact">Kontakti</a></li>
+          <li class="language-switch">
+            <button class="lang-btn active" data-lang="lv" aria-label="Latvian">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50">
+                <rect width="100" height="50" fill="#9E3039" />
+                <rect y="20" width="100" height="10" fill="#fff" />
+              </svg>
+            </button>
+            <button class="lang-btn" data-lang="en" aria-label="English">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30">
+                <defs>
+                  <clipPath id="uk-flag-clip">
+                    <rect width="60" height="30" />
+                  </clipPath>
+                </defs>
+                <g clip-path="url(#uk-flag-clip)">
+                  <rect width="60" height="30" fill="#012169" />
+                  <!-- St Andrew white saltire -->
+                  <path
+                    d="M0,0 L60,30 M60,0 L0,30"
+                    stroke="#fff"
+                    stroke-width="10"
+                  />
+                  <!-- St Patrick red saltire -->
+                  <path
+                    d="M0,0 L60,30 M60,0 L0,30"
+                    stroke="#C8102E"
+                    stroke-width="3.34"
+                  />
+                  <!-- St George white cross -->
+                  <path
+                    d="M30,0 V30 M0,15 H60"
+                    stroke="#fff"
+                    stroke-width="12"
+                  />
+                  <!-- St George red cross -->
+                  <path
+                    d="M30,0 V30 M0,15 H60"
+                    stroke="#C8102E"
+                    stroke-width="6"
+                  />
+                </g>
+              </svg>
+            </button>
+            <a
+              href="https://wa.me/+37126568372"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M20.52 3.48A11.78 11.78 0 0 0 12 .04C5.37.04.04 5.37.04 12a11.87 11.87 0 0 0 1.6 6L0 24l6.13-1.63A11.86 11.86 0 0 0 12 23.96c6.63 0 11.96-5.33 11.96-11.96a11.78 11.78 0 0 0-3.44-8.52zM12 21c-2.2 0-4.25-.72-5.87-1.93l-.42-.26-3.65.97.97-3.64-.27-.43A9.97 9.97 0 0 1 2 12C2 6.48 6.48 2 12 2c2.65 0 5.1 1.03 6.96 2.93A9.87 9.87 0 0 1 22 12c0 5.52-4.48 10-10 10zm5.11-7.7c-.27-.14-1.6-.79-1.84-.88-.24-.09-.41-.13-.58.14s-.67.88-.82 1.06c-.15.18-.31.2-.58.07-.27-.14-1.15-.42-2.19-1.36-.81-.72-1.36-1.6-1.52-1.87-.16-.28-.02-.43.12-.57.12-.12.27-.31.4-.47.13-.16.18-.27.27-.45.09-.18.05-.33-.02-.47-.07-.14-.58-1.41-.8-1.93-.21-.51-.43-.44-.58-.45-.15-.01-.33-.01-.51-.01s-.47.07-.72.33c-.25.25-.96.94-.96 2.3s.98 2.66 1.12 2.84c.14.18 1.94 2.96 4.72 4.15.66.28 1.17.45 1.57.58.66.21 1.26.18 1.73.11.53-.08 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.26-.18-.53-.32z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://www.facebook.com/share/17aFrpBM5A/?mibextid=wwXIfr"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.406.593 24 1.325 24h11.495V14.708h-3.13v-3.622h3.13V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.764v2.312h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.406 24 22.676V1.325C24 .593 23.406 0 22.675 0z"
+                />
+              </svg>
+            </a>
+            <a
+              href="#"
+              class="login-trigger"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+            >
+              <img
+                src="https://www.svgrepo.com/show/506725/login.svg"
+                alt="Login"
+                width="24"
+                height="24"
+              />
+            </a>
+          </li>
         </ul>
-    </nav>
+      </nav>
 
-    <div class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+      <div class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
         <span></span>
         <span></span>
         <span></span>
-    </div>
-</header>
+      </div>
+    </header>
 
-<main>
-    <div id="nav-info">
+    <main>
+      <div id="nav-info">
         <a href="#" data-en="M. - F. : 09:00 - 17:00">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M12 1a11 11 0 1 0 11 11A11 11 0 0 0 12 1zm0 20a9 9 0 1 1 9-9 9 9 0 0 1-9 9zm.5-9.59V7h-1v5.41l4.24 2.52.5-.87-3.74-2.16z"/>
-            </svg>
-            Pr. - Pk. : 09:00 - 17:00
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 1a11 11 0 1 0 11 11A11 11 0 0 0 12 1zm0 20a9 9 0 1 1 9-9 9 9 0 0 1-9 9zm.5-9.59V7h-1v5.41l4.24 2.52.5-.87-3.74-2.16z"
+            />
+          </svg>
+          Pr. - Pk. : 09:00 - 17:00
         </a>
-        <a href="tel:+37128376343">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.05-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1C10.07 21 3 13.93 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.24 1.05l-2.21 2.17z"/>
-            </svg>
-            +371 28376343
+        <a href="tel:+37126568372">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.05-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1C10.07 21 3 13.93 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.24 1.05l-2.21 2.17z"
+            />
+          </svg>
+          +371 26568372
         </a>
         <a href="mailto:paula.varpina@pakit.lv">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/>
-            </svg>
-            paula.varpina@pakit.lv
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"
+            />
+          </svg>
+          paula.varpina@pakit.lv
         </a>
-
-    </div>
-    <section id="hero" aria-labelledby="hero-heading">
+      </div>
+      <section id="hero" aria-labelledby="hero-heading">
         <div class="hero-bg"></div>
         <div class="hero-content">
-            <h1 id="hero-heading" data-en="Get your goods moving — faster, safer, smarter.">Pārvadājiet savas preces
-                ātrāk, drošāk un gudrāk.</h1>
-            <p id="hero-sub"
-               data-en="Nationwide freight, real-time tracking, and tailored logistics solutions for growing businesses.">
-                Starptautisku kravu pārvadājumi, reāllaika izsekošana un pielāgoti loģistikas risinājumi uzņēmumiem.
-            </p>
+          <h1
+            id="hero-heading"
+            th:text="${lpLv['hero_heading']}"
+            th:attr="data-en=${lpEn['hero_heading']}"
+          >
+            Pārvadājiet savas preces ātrāk, drošāk un gudrāk.
+          </h1>
+          <p
+            id="hero-sub"
+            th:text="${lpLv['hero_subheading']}"
+            th:attr="data-en=${lpEn['hero_subheading']}"
+          >
+            Starptautisku kravu pārvadājumi.
+          </p>
 
-            <!-- Primary CTA -->
-            <form id="quick-quote" action="https://formsubmit.co/paula.varpina@pakit.lv" method="post"
-                  aria-label="Request a quick quote" onsubmit="handleQuoteSubmit(event)">
-                <input type="hidden" name="_subject" value="Jauns cenas pieprasījums no mājas lapas">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_template" value="table">
-                <input type="hidden" id="qq-user-email" name="email" value="">
+          <!-- Primary CTA -->
+          <form
+            id="quick-quote"
+            action="https://formsubmit.co/paula.varpina@pakit.lv"
+            method="post"
+            aria-label="Request a quick quote"
+            onsubmit="handleQuoteSubmit(event)"
+          >
+            <input
+              type="hidden"
+              name="_subject"
+              value="Jauns cenas pieprasījums no mājas lapas"
+            />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" id="qq-user-email" name="email" value="" />
 
-                <label for="qq-origin" class="visually-hidden" data-en="Origin">No</label>
-                <input id="qq-origin" name="Izcelsme" type="text" placeholder="Pilsēta vai pasta indekss"
-                       data-en="Origin city or zip" required/>
+            <label for="qq-origin" class="visually-hidden" data-en="Origin"
+              >No</label
+            >
+            <input
+              id="qq-origin"
+              name="Izcelsme"
+              type="text"
+              placeholder="Pilsēta vai pasta indekss"
+              data-en="Origin city or zip"
+              required
+            />
 
-                <label for="qq-destination" class="visually-hidden" data-en="Destination">Uz</label>
-                <input id="qq-destination" name="Galamerkis" type="text" placeholder="Pilsēta vai pasta indekss"
-                       data-en="Destination city or zip" required/>
+            <label
+              for="qq-destination"
+              class="visually-hidden"
+              data-en="Destination"
+              >Uz</label
+            >
+            <input
+              id="qq-destination"
+              name="Galamerkis"
+              type="text"
+              placeholder="Pilsēta vai pasta indekss"
+              data-en="Destination city or zip"
+              required
+            />
 
-                <label for="qq-weight" class="visually-hidden" data-en="Weight (kg)">Svars (kg)</label>
-                <input id="qq-weight" name="Svars_kg" type="number" placeholder="Svars (kg)" min="1" data-en="Weight (kg)"
-                       required/>
+            <label for="qq-weight" class="visually-hidden" data-en="Weight (kg)"
+              >Svars (kg)</label
+            >
+            <input
+              id="qq-weight"
+              name="Svars_kg"
+              type="number"
+              placeholder="Svars (kg)"
+              min="1"
+              data-en="Weight (kg)"
+              required
+            />
 
-                <button type="submit" data-en="Get a Quote">Saņemt piedāvājumu</button>
-            </form>
+            <button type="submit" data-en="Get a Quote">
+              Saņemt piedāvājumu
+            </button>
+          </form>
 
-            <!-- Secondary CTA -->
-            <p class="secondary-cta">
-                <a href="#contact" aria-label="Contact sales" data-en="Contact sales">Sazinies ar mums</a>
-                <a href="#how-it-works" aria-label="See how it works" data-en="How it works">Kā tas strādā</a>
-            </p>
+          <!-- Secondary CTA -->
+          <p class="secondary-cta">
+            <a
+              href="#contact"
+              aria-label="Contact sales"
+              data-en="Contact sales"
+              >Sazinies ar mums</a
+            >
+            <a
+              href="#how-it-works"
+              aria-label="See how it works"
+              data-en="How it works"
+              >Kā tas strādā</a
+            >
+          </p>
         </div>
-    </section>
+      </section>
 
-    <!-- SERVICES / OFFERINGS -->
-    <section id="services" aria-labelledby="services-heading" class="services">
-        <h2 id="services-heading" data-en="Services">Servisi</h2>
+      <!-- SERVICES / OFFERINGS -->
+      <section
+        id="services"
+        aria-labelledby="services-heading"
+        class="services"
+      >
+        <h2
+          id="services-heading"
+          th:text="${lpLv['services_heading']}"
+          th:attr="data-en=${lpEn['services_heading']}"
+        >
+          Servisi
+        </h2>
 
         <div class="services-grid">
-            <div class="service-card">
-                <div class="icon-wrapper">
-                    <img src="img/delivery.png" alt="FTL icon">
-                </div>
-                <h3 data-en="Full Truckload (FTL)">Pilno kravu pārvadājumi</h3>
-                <p data-en="Direct routes, guaranteed capacity for large shipments.">Tieši maršruti, garantēta
-                    kapacitāte lieliem sūtījumiem.</p>
+          <div class="service-card">
+            <div class="icon-wrapper">
+              <img th:src="${lpLv['service_1_image']}" alt="FTL icon" />
             </div>
+            <h3
+              th:text="${lpLv['service_1_title']}"
+              th:attr="data-en=${lpEn['service_1_title']}"
+            >
+              Pilno kravu pārvadājumi
+            </h3>
+            <p
+              th:text="${lpLv['service_1_desc']}"
+              th:attr="data-en=${lpEn['service_1_desc']}"
+            >
+              Tieši maršruti, garantēta kapacitāte lieliem sūtījumiem.
+            </p>
+          </div>
 
-            <div class="service-card">
-                <div class="icon-wrapper">
-                    <img src="img/delivery-truck.png" alt="LTL icon">
-                </div>
-                <h3 data-en="Less-than-Truckload (LTL)">Salikto kravu pārvadājumi</h3>
-                <p data-en="Cost efficient consolidation for smaller loads.">Izmaksu ziņā efektīva konsolidācija
-                    mazākiem kravu apjomiem.</p>
+          <div class="service-card">
+            <div class="icon-wrapper">
+              <img th:src="${lpLv['service_2_image']}" alt="LTL icon" />
             </div>
+            <h3
+              th:text="${lpLv['service_2_title']}"
+              th:attr="data-en=${lpEn['service_2_title']}"
+            >
+              Salikto kravu pārvadājumi
+            </h3>
+            <p
+              th:text="${lpLv['service_2_desc']}"
+              th:attr="data-en=${lpEn['service_2_desc']}"
+            >
+              Izmaksu ziņā efektīva konsolidācija mazākiem kravu apjomiem.
+            </p>
+          </div>
 
-            <div class="service-card">
-                <div class="icon-wrapper">
-                    <img src="img/global.png" alt="International Freight icon">
-                </div>
-                <h3 data-en="International Freight">Starptautiskie kravu pārvadājumi</h3>
-                <p data-en="Cross-border solutions with customs support.">Pārrobežu risinājumi ar muitas atbalstu.</p>
+          <div class="service-card">
+            <div class="icon-wrapper">
+              <img
+                th:src="${lpLv['service_3_image']}"
+                alt="International Freight icon"
+              />
             </div>
+            <h3
+              th:text="${lpLv['service_3_title']}"
+              th:attr="data-en=${lpEn['service_3_title']}"
+            >
+              Starptautiskie kravu pārvadājumi
+            </h3>
+            <p
+              th:text="${lpLv['service_3_desc']}"
+              th:attr="data-en=${lpEn['service_3_desc']}"
+            >
+              Pārrobežu risinājumi ar muitas atbalstu.
+            </p>
+          </div>
 
-            <div class="service-card">
-                <div class="icon-wrapper">
-                    <img src="img/warehouse.png" alt="Warehouse icon">
-                </div>
-                <h3 data-en="Warehousing & Fulfillment">Vietējie kravu pārvadājumi un noliktava</h3>
-                <p data-en="Short- and long-term storage + pick & pack services.">Īstermiņa un ilgtermiņa uzglabāšana +
-                    preču savākšanas un iepakošanas pakalpojumi.</p>
+          <div class="service-card">
+            <div class="icon-wrapper">
+              <img th:src="${lpLv['service_4_image']}" alt="Warehouse icon" />
             </div>
+            <h3
+              th:text="${lpLv['service_4_title']}"
+              th:attr="data-en=${lpEn['service_4_title']}"
+            >
+              Vietējie kravu pārvadājumi un noliktava
+            </h3>
+            <p
+              th:text="${lpLv['service_4_desc']}"
+              th:attr="data-en=${lpEn['service_4_desc']}"
+            >
+              Pakalpojumi.
+            </p>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- WHY CHOOSE US / DIFFERENTIATORS -->
-    <section id="why" aria-labelledby="why-heading" class="why">
-        <h2 id="why-heading" data-en="Why choose PaK it">Kāpēc izvēlēties PaK it</h2>
+      <!-- WHY CHOOSE US / DIFFERENTIATORS -->
+      <section id="why" aria-labelledby="why-heading" class="why">
+        <h2
+          id="why-heading"
+          th:text="${lpLv['why_heading']}"
+          th:attr="data-en=${lpEn['why_heading']}"
+        >
+          Kāpēc izvēlēties PaK it
+        </h2>
 
         <div class="why-grid">
-            <div class="why-card">
-                <div class="why-icon">
-                    <img src="img/tracking.png" alt="Tracking icon">
-                </div>
-                <h4 data-en="Real-time tracking">Reāllaika izsekošana</h4>
-                <p data-en="Live GPS & ETA updates for every shipment.">Reāllaika GPS un ETA atjauninājumi par katru
-                    sūtījumu.</p>
+          <div class="why-card">
+            <div class="why-icon">
+              <img th:src="${lpLv['why_1_image']}" alt="Tracking icon" />
             </div>
+            <h4
+              th:text="${lpLv['why_1_title']}"
+              th:attr="data-en=${lpEn['why_1_title']}"
+            >
+              Reāllaika izsekošana
+            </h4>
+            <p
+              th:text="${lpLv['why_1_desc']}"
+              th:attr="data-en=${lpEn['why_1_desc']}"
+            >
+              Reāllaika GPS un ETA atjauninājumi.
+            </p>
+          </div>
 
-            <div class="why-card">
-                <div class="why-icon">
-                    <img src="img/pricing.png" alt="Pricing icon">
-                </div>
-                <h4 data-en="Transparent pricing">Pārredzama cenu politika</h4>
-                <p data-en="No hidden fees - clear quotes and invoices.">Nekādas slēptās maksas - skaidras cenas un
-                    rēķini.</p>
+          <div class="why-card">
+            <div class="why-icon">
+              <img th:src="${lpLv['why_2_image']}" alt="Pricing icon" />
             </div>
+            <h4
+              th:text="${lpLv['why_2_title']}"
+              th:attr="data-en=${lpEn['why_2_title']}"
+            >
+              Pārredzama cenu politika
+            </h4>
+            <p
+              th:text="${lpLv['why_2_desc']}"
+              th:attr="data-en=${lpEn['why_2_desc']}"
+            >
+              Nekādas slēptās maksas - skaidras cenas un rēķini.
+            </p>
+          </div>
 
-            <div class="why-card">
-                <div class="why-icon">
-                    <img src="img/capacity.png" alt="Capacity icon">
-                </div>
-                <h4 data-en="Guaranteed capacity">Garantēta ietilpība</h4>
-                <p data-en="Priority lanes and partner network to meet tight SLAs.">Prioritārās joslas un partneru
-                    tīkls, lai izpildītu stingrus SLA.</p>
+          <div class="why-card">
+            <div class="why-icon">
+              <img th:src="${lpLv['why_3_image']}" alt="Capacity icon" />
             </div>
+            <h4
+              th:text="${lpLv['why_3_title']}"
+              th:attr="data-en=${lpEn['why_3_title']}"
+            >
+              Garantēta ietilpība
+            </h4>
+            <p
+              th:text="${lpLv['why_3_desc']}"
+              th:attr="data-en=${lpEn['why_3_desc']}"
+            >
+              Prioritārās joslas.
+            </p>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- HOW IT WORKS -->
-    <section id="how-it-works" aria-labelledby="how-heading" class="how-wrapper">
-        <h2 id="how-heading" data-en="How it works">Kā tas darbojas</h2>
+      <!-- HOW IT WORKS -->
+      <section
+        id="how-it-works"
+        aria-labelledby="how-heading"
+        class="how-wrapper"
+      >
+        <h2
+          id="how-heading"
+          th:text="${lpLv['how_heading']}"
+          th:attr="data-en=${lpEn['how_heading']}"
+        >
+          Kā tas darbojas
+        </h2>
 
         <div class="how-container">
-            <div class="how-image">
-                <img id="how-slide" src="img/how1.jpg" alt="How it works step image">
-            </div>
+          <div class="how-image">
+            <img
+              id="how-slide"
+              src="img/how1.jpg"
+              alt="How it works step image"
+            />
+          </div>
 
-            <ol class="how-steps">
-                <li data-step="0">
-                    <strong data-en="Request">Pieprasījums</strong>
-                    <p data-en="Quick quote from origin to destination.">Ātrs piedāvājums no izcelsmes vietas līdz
-                        galamērķim.</p>
-                </li>
-                <li data-step="1">
-                    <strong data-en="Book">Apstiprinājums</strong>
-                    <p data-en="Confirm pickup, get assigned carrier and ETA.">Apstipriniet saņemšanu, saņemiet
-                        piešķirto pārvadātāju un paredzamo ierašanās laiku.</p>
-                </li>
-                <li data-step="2">
-                    <strong data-en="Track">Izsekojamība</strong>
-                    <p data-en="Possibility to obtain information about the location of the cargo.">Iespēja iegūt informāciju par kravas atrašanās vietu.</p>
-                </li>
-                <li data-step="3">
-                    <strong data-en="Deliver">Piegāde</strong>
-                    <p data-en="Proof of delivery and automated invoicing.">Piegādes apliecinājums un automatizēta
-                        rēķinu izrakstīšana.</p>
-                </li>
-            </ol>
+          <ol class="how-steps">
+            <li data-step="0">
+              <strong
+                th:text="${lpLv['how_1_title']}"
+                th:attr="data-en=${lpEn['how_1_title']}"
+                >Pieprasījums</strong
+              >
+              <p
+                th:text="${lpLv['how_1_desc']}"
+                th:attr="data-en=${lpEn['how_1_desc']}"
+              >
+                Ātrs piedāvājums no izcelsmes vietas līdz galamērķim.
+              </p>
+            </li>
+            <li data-step="1">
+              <strong
+                th:text="${lpLv['how_2_title']}"
+                th:attr="data-en=${lpEn['how_2_title']}"
+                >Apstiprinājums</strong
+              >
+              <p
+                th:text="${lpLv['how_2_desc']}"
+                th:attr="data-en=${lpEn['how_2_desc']}"
+              >
+                Apstipriniet saņemÅ¡ānu.
+              </p>
+            </li>
+            <li data-step="2">
+              <strong
+                th:text="${lpLv['how_3_title']}"
+                th:attr="data-en=${lpEn['how_3_title']}"
+                >Izsekojamība</strong
+              >
+              <p
+                th:text="${lpLv['how_3_desc']}"
+                th:attr="data-en=${lpEn['how_3_desc']}"
+              >
+                Iespēja iegūt informāciju par kravas atradšanās vietu.
+              </p>
+            </li>
+            <li data-step="3">
+              <strong
+                th:text="${lpLv['how_4_title']}"
+                th:attr="data-en=${lpEn['how_4_title']}"
+                >Piegāde</strong
+              >
+              <p
+                th:text="${lpLv['how_4_desc']}"
+                th:attr="data-en=${lpEn['how_4_desc']}"
+              >
+                Piegādes aplieciņājums un automātizÄ“ta rēķinu izrakstīÅ¡ana.
+              </p>
+            </li>
+          </ol>
         </div>
-    </section>
+      </section>
 
-<!-- TESTIMONIALS / TRUST -->
-<section id="testimonials" aria-labelledby="testimonials-heading" class="trust-section">
-    <h2 id="testimonials-heading" data-en="Trusted by">Uzticas</h2>
+      <!-- TESTIMONIALS / TRUST -->
+      <section
+        id="testimonials"
+        aria-labelledby="testimonials-heading"
+        class="trust-section"
+      >
+        <h2
+          id="testimonials-heading"
+          th:text="${lpLv['testimonials_heading']}"
+          th:attr="data-en=${lpEn['testimonials_heading']}"
+        >
+          Uzticas
+        </h2>
 
-    <div class="trust-logos">
-        <img src="img/logo1.png" alt="Client 1">
-        <img src="img/logo2.png" alt="Client 2">
-        <img src="img/logo3.png" alt="Client 3">
-        <img src="img/logo4.png" alt="Client 4">
-        <img src="img/logo5.png" alt="Client 5">
-        <img src="img/logo6.png" alt="Client 6">
-        <img src="img/logo7.png" alt="Client 7">
-        <img src="img/logo8.png" alt="Client 8">
-    </div>
+        <div class="trust-logos">
+          <img th:src="${lpLv['trust_logo_1']}" alt="Client 1" />
+          <img th:src="${lpLv['trust_logo_2']}" alt="Client 2" />
+          <img th:src="${lpLv['trust_logo_3']}" alt="Client 3" />
+          <img th:src="${lpLv['trust_logo_4']}" alt="Client 4" />
+          <img th:src="${lpLv['trust_logo_5']}" alt="Client 5" />
+          <img th:src="${lpLv['trust_logo_6']}" alt="Client 6" />
+          <img th:src="${lpLv['trust_logo_7']}" alt="Client 7" />
+          <img th:src="${lpLv['trust_logo_8']}" alt="Client 8" />
+        </div>
 
-    <div class="trust-quote">
-        <div class="testimonial-item">
-            <blockquote data-en="“TEXT TEXT TEXT.”">
-                “TEKSTS TEKSTS TEKSTS.”
+        <div class="trust-quote">
+          <div class="testimonial-item">
+            <blockquote
+              th:text="${lpLv['testimonial_1_quote']}"
+              th:attr="data-en=${lpEn['testimonial_1_quote']}"
+            >
+              “TEKSTS TEKSTS TEKSTS.”
             </blockquote>
-            <cite data-en="Test1">Tests 1</cite>
-        </div>
-        <div class="testimonial-item">
-            <blockquote data-en="“TEXT TEXT TEXT.”">
-                “TEKSTS TEKSTS TEKSTS.”
+            <cite
+              th:text="${lpLv['testimonial_1_author']}"
+              th:attr="data-en=${lpEn['testimonial_1_author']}"
+              >Tests 1</cite
+            >
+          </div>
+          <div class="testimonial-item">
+            <blockquote
+              th:text="${lpLv['testimonial_2_quote']}"
+              th:attr="data-en=${lpEn['testimonial_2_quote']}"
+            >
+              “TEKSTS TEKSTS TEKSTS.”
             </blockquote>
-            <cite data-en="Test2">Tests 2</cite>
-        </div>
-        <div class="testimonial-item">
-            <blockquote data-en="“TEXT TEXT TEXT.”">
-                “TEKSTS TEKSTS TEKSTS.”
+            <cite
+              th:text="${lpLv['testimonial_2_author']}"
+              th:attr="data-en=${lpEn['testimonial_2_author']}"
+              >Tests 2</cite
+            >
+          </div>
+          <div class="testimonial-item">
+            <blockquote
+              th:text="${lpLv['testimonial_3_quote']}"
+              th:attr="data-en=${lpEn['testimonial_3_quote']}"
+            >
+              “TEKSTS TEKSTS TEKSTS.”
             </blockquote>
-            <cite data-en="Test3">Tests 3</cite>
+            <cite
+              th:text="${lpLv['testimonial_3_author']}"
+              th:attr="data-en=${lpEn['testimonial_3_author']}"
+              >Tests 3</cite
+            >
+          </div>
         </div>
-    </div>
-</section>
+      </section>
 
-<!-- ABOUT US -->
-<section id="about-us" aria-labelledby="about-heading" class="about-section">
-    <div class="about-grid">
-
-        <div class="about-content">
-            <h2 id="about-heading" data-en="About Us">Par mums</h2>
-            <p data-en="provides local and international freight transport — fast, reliable, and efficient."><strong>SIA
-                PaK it</strong> nodrošina vietējos un starptautiskos kravu pārvadājumus — ātri, uzticami un efektīvi.
+      <!-- ABOUT US -->
+      <section
+        id="about-us"
+        aria-labelledby="about-heading"
+        class="about-section"
+      >
+        <div class="about-grid">
+          <div class="about-content">
+            <h2
+              id="about-heading"
+              th:text="${lpLv['about_heading']}"
+              th:attr="data-en=${lpEn['about_heading']}"
+            >
+              Par mums
+            </h2>
+            <p th:attr="data-en=${lpEn['about_p1']}">
+              <strong>SIA PaK it</strong>
+              <span th:text="${lpLv['about_p1']}"
+                >nodrošina vietējos un starptautiskos kravu pārvadājumus — ātri,
+                uzticami un efektīvi.</span
+              >
             </p>
 
             <div class="about-motto">
-                <em data-en="Keep moving forward!">"Turpinām virzīties uz priekšu!"</em>
+              <em
+                th:text="${lpLv['about_motto']}"
+                th:attr="data-en=${lpEn['about_motto']}"
+                >"Turpinām virzīties uz priekšu!"</em
+              >
             </div>
 
-            <p data-en="With over a decade of hands-on experience, our team and modern fleet deliver quick, effective solutions for any logistics challenge.">
-                Ar vairāk nekā desmit gadu praktisko pieredzi, mūsu komanda un modernā autoparka nodrošina ātru un
-                efektīvu risinājumu jebkurai loģistikas problēmai.</p>
+            <p
+              th:text="${lpLv['about_p2']}"
+              th:attr="data-en=${lpEn['about_p2']}"
+            >
+              Ar vairāk nekā desmit gadu praktisko pieredzi.
+            </p>
 
-            <p data-en="We provide full supply-chain coverage: transport, warehousing, documentation, and customs. Our partner network enables daily freight movement across Europe, the UK, and the Baltics — for both businesses and private clients.">
-                Mēs nodrošinām pilnu piegādes ķēdes segumu: transportu, noliktavu uzglabāšanu, dokumentāciju un muitas
-                formalitāšu kārtošanu. Mūsu partneru tīkls nodrošina ikdienas kravu pārvadājumus visā Eiropā,
-                Apvienotajā Karalistē un Baltijas valstīs — gan uzņēmumiem, gan privātiem klientiem.</p>
+            <p
+              th:text="${lpLv['about_p3']}"
+              th:attr="data-en=${lpEn['about_p3']}"
+            >
+              Mēs nodrošinām pilnu piegādes ķēdes segumu.
+            </p>
 
-            <p data-en="Every client gets end-to-end support designed to cut transport costs and keep operations running smoothly.">
-                Katrs klients saņem visaptverošu atbalstu, kas paredzēts transporta izmaksu samazināšanai un darbības
-                netraucētai norisei.</p>
+            <p
+              th:text="${lpLv['about_p4']}"
+              th:attr="data-en=${lpEn['about_p4']}"
+            >
+              Katrs klients saņem visaptveroÅ¡u atbalstu.
+            </p>
 
             <div class="about-cta">
-                <a href="#quick-quote" class="btn-primary" data-en="Get a Quote">Saņemt piedāvājumu</a>
-                <a href="#contact" class="btn-secondary" data-en="Talk to Sales">Sazinies ar mums</a>
+              <a href="#quick-quote" class="btn-primary" data-en="Get a Quote"
+                >Saņemt piedāvājumu</a
+              >
+              <a href="#contact" class="btn-secondary" data-en="Talk to Sales"
+                >Sazinies ar mums</a
+              >
             </div>
+          </div>
+
+          <div class="about-image">
+            <img th:src="${lpLv['about_image']}" alt="About PaK it" />
+          </div>
         </div>
+      </section>
+    </main>
 
-        <div class="about-image">
-            <img src="img/About_us.png" alt="About PaK it">
-        </div>
-
-    </div>
-</section>
-
-</main>
-
-<!-- CONTACT / FOOTER -->
-<footer id="contact" aria-labelledby="contact-heading" class="footer-section">
-    <div class="footer-grid">
-
+    <!-- CONTACT / FOOTER -->
+    <footer
+      id="contact"
+      aria-labelledby="contact-heading"
+      class="footer-section"
+    >
+      <div class="footer-grid">
         <!-- Contact Info -->
         <div class="footer-info">
-            <h2 id="contact-heading" data-en="Contact Us">Kontakti</h2>
+          <h2 id="contact-heading" data-en="Contact Us">Kontakti</h2>
 
-            <p><strong data-en="Phone:">Tel:</strong> <a href="tel:+37128376343">+371 2837 6343</a></p>
-            <p><strong data-en="Email:">Epasts:</strong> <a href="mailto:paula.varpina@pakit.lv">paula.varpina@pakit.lv</a>
-            </p>
+          <p>
+            <strong data-en="Phone:">Tel:</strong>
+            <a href="tel:+37126568372">+371 2837 6343</a>
+          </p>
+          <p>
+            <strong data-en="Email:">Epasts:</strong>
+            <a href="mailto:paula.varpina@pakit.lv">paula.varpina@pakit.lv</a>
+          </p>
 
-            <p><strong data-en="Reg. No.:">Reg. Nr.:</strong> 45403044671</p>
-            <p><strong data-en="VAT No.:">VAT Nr.:</strong> LV45403044671</p>
+          <p><strong data-en="Reg. No.:">Reg. Nr.:</strong> 45403044671</p>
+          <p><strong data-en="VAT No.:">VAT Nr.:</strong> LV45403044671</p>
 
-            <p><strong data-en="Bank:">Banka:</strong> Swedbank</p>
-            <p><strong>IBAN:</strong> LV37HABA0551041111928</p>
+          <p><strong data-en="Bank:">Banka:</strong> Swedbank</p>
+          <p><strong>IBAN:</strong> LV37HABA0551041111928</p>
 
-            <p><strong data-en="Legal Address:">Juridiskā adrese:</strong><br>
-                Draudzības iela 22, Skrīveri, Skrīveru pagasts,
-                Aizkraukles novads, LV-5125
-            </p>
+          <p>
+            <strong data-en="Legal Address:">Juridiskā adrese:</strong><br />
+            Draudzības iela 22, Skrīveri, Skrīveru pagasts, Aizkraukles novads,
+            LV-5125
+          </p>
 
-            <p><strong data-en="Warehouse Address:">Noliktavas adrese:</strong><br>
-                Jelgavas iela 69A, Jaunjelgava,
-                Aizkraukles novads, LV-5125
-            </p>
+          <p>
+            <strong data-en="Warehouse Address:">Noliktavas adrese:</strong
+            ><br />
+            Jelgavas iela 69A, Jaunjelgava, Aizkraukles novads, LV-5125
+          </p>
 
-            <div class="footer-map">
-                <iframe
-                        title="PaK it warehouse location"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1427.143!2d25.116!3d56.650!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46d5640bad%3A0x0!2sJelgavas%20iela%2069A%2C%20Jaunjelgava!5e0!3m2!1sen!2slv!4v0000000000"
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
+          <div class="footer-map">
+            <iframe
+              title="PaK it warehouse location"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1427.143!2d25.116!3d56.650!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46d5640bad%3A0x0!2sJelgavas%20iela%2069A%2C%20Jaunjelgava!5e0!3m2!1sen!2slv!4v0000000000"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            >
+            </iframe>
+          </div>
         </div>
 
         <!-- Contact Form -->
         <div class="footer-form">
-            <form id="lead-form" action="https://formsubmit.co/paula.varpina@pakit.lv" method="POST" aria-label="Contact form">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://pakit.lv">
+          <form
+            id="lead-form"
+            action="https://formsubmit.co/paula.varpina@pakit.lv"
+            method="POST"
+            aria-label="Contact form"
+          >
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_next" value="https://pakit.lv" />
 
-                <label for="name" data-en="Full Name" data-lv="Vārds Uzvārds">Vārds Uzvārds</label>
-                <input id="name" name="name" type="text"
-                       data-en-placeholder="Your full name"
-                       data-lv-placeholder="Tavs pilnais vārds"
-                       placeholder="Tavs pilnais vārds"
-                       required>
+            <label for="name" data-en="Full Name" data-lv="Vārds Uzvārds"
+              >Vārds Uzvārds</label
+            >
+            <input
+              id="name"
+              name="name"
+              type="text"
+              data-en-placeholder="Your full name"
+              data-lv-placeholder="Tavs pilnais vārds"
+              placeholder="Tavs pilnais vārds"
+              required
+            />
 
-                <label for="company" data-en="Company" data-lv="Uzņēmums">Uzņēmums</label>
-                <input id="company" name="company" type="text"
-                       data-en-placeholder="Your company"
-                       data-lv-placeholder="Tavs uzņēmums"
-                       placeholder="Tavs uzņēmums"
-                       required>
+            <label for="company" data-en="Company" data-lv="Uzņēmums"
+              >Uzņēmums</label
+            >
+            <input
+              id="company"
+              name="company"
+              type="text"
+              data-en-placeholder="Your company"
+              data-lv-placeholder="Tavs uzņēmums"
+              placeholder="Tavs uzņēmums"
+              required
+            />
 
-                <label for="email" data-en="Email" data-lv="E-pasts">E-pasts</label>
-                <input id="email" name="email" type="email"
-                       data-en-placeholder="your@email.com"
-                       data-lv-placeholder="tavs@email.lv"
-                       placeholder="tavs@email.lv"
-                       required>
+            <label for="email" data-en="Email" data-lv="E-pasts">E-pasts</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              data-en-placeholder="your@email.com"
+              data-lv-placeholder="tavs@email.lv"
+              placeholder="tavs@email.lv"
+              required
+            />
 
-                <label for="message" data-en="Message" data-lv="Ziņa">Ziņa</label>
-                <textarea id="message" name="message" rows="5"
-                          data-en-placeholder="Tell us about your shipment or needs"
-                          data-lv-placeholder="Pastāsti par sūtījumu vai vajadzībām"
-                          placeholder="Pastāsti par sūtījumu vai vajadzībām"></textarea>
+            <label for="message" data-en="Message" data-lv="Ziņa">Ziņa</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              data-en-placeholder="Tell us about your shipment or needs"
+              data-lv-placeholder="Pastāsti par sūtījumu vai vajadzībām"
+              placeholder="Pastāsti par sūtījumu vai vajadzībām"
+            ></textarea>
 
-                <button type="submit" class="btn-footer"
-                        data-en="Send Message"
-                        data-lv="Sūtīt">Sūtīt
-                </button>
-            </form>
+            <button
+              type="submit"
+              class="btn-footer"
+              data-en="Send Message"
+              data-lv="Sūtīt"
+            >
+              Sūtīt
+            </button>
+          </form>
         </div>
+      </div>
 
-    </div>
-
-    <div class="footer-bottom">
-        <p th:attr="data-en=|© ${#dates.format(#dates.createNow(), 'yyyy')} PaK it. All rights reserved.|">&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> PaK it. All rights reserved.</p>
-        <span class="footer-designedBy">Izstrādāja <a href="https://www.linkedin.com/in/m%C4%81rti%C5%86%C5%A1-%C5%BEaimis-0a9b21394" target="_blank" rel="noopener noreferrer" class="footer-designedBy-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="13" height="13" aria-hidden="true"><path d="M17 2H3a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1ZM6.94 15.5H4.56V8h2.38v7.5ZM5.75 6.965a1.378 1.378 0 1 1 0-2.756 1.378 1.378 0 0 1 0 2.756ZM15.5 15.5h-2.38v-3.647c0-.87-.016-1.988-1.212-1.988-1.213 0-1.399.948-1.399 1.927V15.5H8.13V8h2.284v1.023h.031c.318-.602 1.094-1.236 2.252-1.236 2.41 0 2.854 1.587 2.854 3.648L15.5 15.5Z"></path></svg> Mārtiņš Žaimis</a></span>
-    </div>
-</footer>
-<!-- LOGIN MODAL -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+      <div class="footer-bottom">
+        <p
+          th:attr="data-en=|© ${#dates.format(#dates.createNow(), 'yyyy')} PaK it. All rights reserved.|"
+        >
+          &copy;
+          <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"
+            >2025</span
+          >
+          PaK it. All rights reserved.
+        </p>
+        <span class="footer-designedBy"
+          >Izstrādāja
+          <a
+            href="https://www.linkedin.com/in/m%C4%81rti%C5%86%C5%A1-%C5%BEaimis-0a9b21394"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-designedBy-link"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              width="13"
+              height="13"
+              aria-hidden="true"
+            >
+              <path
+                d="M17 2H3a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1ZM6.94 15.5H4.56V8h2.38v7.5ZM5.75 6.965a1.378 1.378 0 1 1 0-2.756 1.378 1.378 0 0 1 0 2.756ZM15.5 15.5h-2.38v-3.647c0-.87-.016-1.988-1.212-1.988-1.213 0-1.399.948-1.399 1.927V15.5H8.13V8h2.284v1.023h.031c.318-.602 1.094-1.236 2.252-1.236 2.41 0 2.854 1.587 2.854 3.648L15.5 15.5Z"
+              ></path>
+            </svg>
+            Mārtiņš Žaimis</a
+          ></span
+        >
+      </div>
+    </footer>
+    <!-- LOGIN MODAL -->
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
-            <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" id="loginModalLabel">Pieslēgties</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Aizvērt"></button>
-            </div>
-            <div class="modal-body">
-                <form id="loginForm" method="POST" action="/login">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Lietotājvārds</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
-                        <span id="username-error" class="error-message text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Parole</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                        <span id="password-error" class="error-message text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="totp" class="form-label">Authenticator code</label>
-                        <input type="text" class="form-control w-25" id="totp" name="totp">
-                        <span id="totp-error" class="error-message text-danger"></span>
-                    </div>
-                    <span id="errorMessage" class="error-message text-danger mb-2 d-block"></span>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-success">Ieiet</button>
-                    </div>
-                </form>
-            </div>
+          <div class="modal-header bg-success text-white">
+            <h5 class="modal-title" id="loginModalLabel">Pieslēgties</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Aizvērt"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="loginForm" method="POST" action="/login">
+              <div class="mb-3">
+                <label for="username" class="form-label">Lietotājvārds</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  name="username"
+                  required
+                />
+                <span
+                  id="username-error"
+                  class="error-message text-danger"
+                ></span>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Parole</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  required
+                />
+                <span
+                  id="password-error"
+                  class="error-message text-danger"
+                ></span>
+              </div>
+              <div class="mb-3">
+                <label for="totp" class="form-label">Authenticator code</label>
+                <input
+                  type="text"
+                  class="form-control w-25"
+                  id="totp"
+                  name="totp"
+                />
+                <span id="totp-error" class="error-message text-danger"></span>
+              </div>
+              <span
+                id="errorMessage"
+                class="error-message text-danger mb-2 d-block"
+              ></span>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-success">Ieiet</button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
-</div>
 
-<!-- Quote Email Modal -->
-<div id="quote-modal" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title">
-    <div class="quote-modal-backdrop" onclick="closeQuoteModal()"></div>
-    <div class="quote-modal-box">
-        <h3 id="quote-modal-title" data-en="Enter your email">Ievadiet savu e-pastu</h3>
-        <p data-en="We will send the quote to your email address.">Mēs nosūtīsim piedāvājumu uz jūsu e-pasta adresi.</p>
-        <input type="email" id="modal-email-input" placeholder="jūsu@epasts.lv" autocomplete="email"/>
-        <span id="modal-email-error" class="modal-error">Lūdzu ievadiet derīgu e-pasta adresi.</span>
+    <!-- Quote Email Modal -->
+    <div
+      id="quote-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="quote-modal-title"
+    >
+      <div class="quote-modal-backdrop" onclick="closeQuoteModal()"></div>
+      <div class="quote-modal-box">
+        <h3 id="quote-modal-title" data-en="Enter your email">
+          Ievadiet savu e-pastu
+        </h3>
+        <p data-en="We will send the quote to your email address.">
+          Mēs nosūtīsim piedāvājumu uz jūsu e-pasta adresi.
+        </p>
+        <input
+          type="email"
+          id="modal-email-input"
+          placeholder="jūsu@epasts.lv"
+          autocomplete="email"
+        />
+        <span id="modal-email-error" class="modal-error"
+          >Lūdzu ievadiet derīgu e-pasta adresi.</span
+        >
         <div class="modal-actions">
-            <button class="modal-btn-confirm" onclick="submitWithEmail()" data-en="Send">Nosūtīt</button>
-            <button class="modal-btn-cancel" onclick="closeQuoteModal()" data-en="Cancel">Atcelt</button>
+          <button
+            class="modal-btn-confirm"
+            onclick="submitWithEmail()"
+            data-en="Send"
+          >
+            Nosūtīt
+          </button>
+          <button
+            class="modal-btn-cancel"
+            onclick="closeQuoteModal()"
+            data-en="Cancel"
+          >
+            Atcelt
+          </button>
         </div>
+      </div>
     </div>
-</div>
 
-<script src="/js/login.js"></script>
-<script src="/js/navigation.js"></script>
-<script src="/js/hero.js"></script>
-<script src="/js/how-slider.js"></script>
-<script src="/js/quick-quote.js"></script>
-
-</body>
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      var _bg1 = /*[[${lpLv['hero_bg_1']}]]*/ "/img/picture1.jpg";
+      var _bg2 = /*[[${lpLv['hero_bg_2']}]]*/ "/img/picture2.jpg";
+      var _bg3 = /*[[${lpLv['hero_bg_3']}]]*/ "/img/picture3.jpg";
+      window.heroBgImages = [_bg1, _bg2, _bg3];
+      var _how1 = /*[[${lpLv['how_1_image']}]]*/ "img/how1.jpg";
+      var _how2 = /*[[${lpLv['how_2_image']}]]*/ "img/how2.jpg";
+      var _how3 = /*[[${lpLv['how_3_image']}]]*/ "img/how3.jpg";
+      var _how4 = /*[[${lpLv['how_4_image']}]]*/ "img/how4.jpg";
+      window.howSlideImages = [_how1, _how2, _how3, _how4];
+      /*]]>*/
+    </script>
+    <script src="/js/login.js"></script>
+    <script src="/js/navigation.js"></script>
+    <script src="/js/hero.js"></script>
+    <script src="/js/how-slider.js"></script>
+    <script src="/js/quick-quote.js"></script>
+  </body>
 </html>

@@ -1,4 +1,4 @@
-const howImages = [
+const howImages = window.howSlideImages || [
     "img/how1.jpg",
     "img/how2.jpg",
     "img/how3.jpg",

@@ -1,4 +1,4 @@
-const images = [
+const images = window.heroBgImages || [
     '/img/picture1.jpg',
     '/img/picture2.jpg',
     '/img/picture3.jpg'

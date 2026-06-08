@@ -24,17 +24,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         XorCsrfTokenRequestAttributeHandler csrfRequestHandler = new XorCsrfTokenRequestAttributeHandler();
-        csrfRequestHandler.setCsrfRequestAttributeName(null);
 
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/api/auth/login", "/css/**", "/js/**", "/img/**").permitAll()
-                        .anyRequest().authenticated()
-                )
+                        .requestMatchers("/", "/api/auth/login", "/css/**", "/js/**", "/img/**", "/uploads/**")
+                        .permitAll()
+                        .anyRequest().authenticated())
                 .logout(logout -> logout
                         .logoutUrl("/api/auth/logout")
-                        .logoutSuccessUrl("/")
-                )
+                        .logoutSuccessUrl("/"))
                 .csrf(csrf -> csrf.csrfTokenRequestHandler(csrfRequestHandler))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);

@@ -1,0 +1,155 @@
+CREATE TABLE landing_page_config (
+    config_key  VARCHAR(100) NOT NULL,
+    value_lv    TEXT,
+    value_en    TEXT,
+    config_type VARCHAR(10)  NOT NULL DEFAULT 'text',
+    section     VARCHAR(50)  NOT NULL,
+    label       VARCHAR(255) NOT NULL,
+    sort_order  INT          NOT NULL DEFAULT 0,
+    PRIMARY KEY (config_key)
+);
+
+INSERT INTO landing_page_config (config_key, value_lv, value_en, config_type, section, label, sort_order) VALUES
+-- ── HERO ──────────────────────────────────────────────────────────────────────
+('hero_heading',    'Pārvadājiet savas preces ātrāk, drošāk un gudrāk.',
+                    'Get your goods moving — faster, safer, smarter.',
+                    'text', 'hero', 'Hero: Heading', 1),
+('hero_subheading', 'Starptautisku kravu pārvadājumi, reāllaika izsekošana un pielāgoti loģistikas risinājumi uzņēmumiem.',
+                    'Nationwide freight, real-time tracking, and tailored logistics solutions for growing businesses.',
+                    'text', 'hero', 'Hero: Subheading', 2),
+('hero_bg_1',  '/img/picture1.jpg', NULL, 'image', 'hero', 'Hero: Background Image 1', 3),
+('hero_bg_2',  '/img/picture2.jpg', NULL, 'image', 'hero', 'Hero: Background Image 2', 4),
+('hero_bg_3',  '/img/picture3.jpg', NULL, 'image', 'hero', 'Hero: Background Image 3', 5),
+
+-- ── SERVICES ──────────────────────────────────────────────────────────────────
+('services_heading', 'Servisi', 'Services', 'text', 'services', 'Services: Section Heading', 10),
+
+('service_1_title', 'Pilno kravu pārvadājumi', 'Full Truckload (FTL)',
+ 'text', 'services', 'Service 1: Title', 11),
+('service_1_desc',  'Tieši maršruti, garantēta kapacitāte lieliem sūtījumiem.',
+                    'Direct routes, guaranteed capacity for large shipments.',
+ 'text', 'services', 'Service 1: Description', 12),
+('service_1_image', '/img/delivery.png', NULL, 'image', 'services', 'Service 1: Image', 13),
+
+('service_2_title', 'Salikto kravu pārvadājumi', 'Less-than-Truckload (LTL)',
+ 'text', 'services', 'Service 2: Title', 14),
+('service_2_desc',  'Izmaksu ziņā efektīva konsolidācija mazākiem kravu apjomiem.',
+                    'Cost efficient consolidation for smaller loads.',
+ 'text', 'services', 'Service 2: Description', 15),
+('service_2_image', '/img/delivery-truck.png', NULL, 'image', 'services', 'Service 2: Image', 16),
+
+('service_3_title', 'Starptautiskie kravu pārvadājumi', 'International Freight',
+ 'text', 'services', 'Service 3: Title', 17),
+('service_3_desc',  'Pārrobežu risinājumi ar muitas atbalstu.',
+                    'Cross-border solutions with customs support.',
+ 'text', 'services', 'Service 3: Description', 18),
+('service_3_image', '/img/global.png', NULL, 'image', 'services', 'Service 3: Image', 19),
+
+('service_4_title', 'Vietējie kravu pārvadājumi un noliktava', 'Warehousing & Fulfillment',
+ 'text', 'services', 'Service 4: Title', 20),
+('service_4_desc',  'Īstermiņa un ilgtermiņa uzglabāšana + preču savākšanas un iepakošanas pakalpojumi.',
+                    'Short- and long-term storage + pick & pack services.',
+ 'text', 'services', 'Service 4: Description', 21),
+('service_4_image', '/img/warehouse.png', NULL, 'image', 'services', 'Service 4: Image', 22),
+
+-- ── WHY ───────────────────────────────────────────────────────────────────────
+('why_heading', 'Kāpēc izvēlēties PaK it', 'Why choose PaK it',
+ 'text', 'why', 'Why: Section Heading', 30),
+
+('why_1_title', 'Reāllaika izsekošana', 'Real-time tracking',
+ 'text', 'why', 'Why 1: Title', 31),
+('why_1_desc',  'Reāllaika GPS un ETA atjauninājumi par katru sūtījumu.',
+                'Live GPS & ETA updates for every shipment.',
+ 'text', 'why', 'Why 1: Description', 32),
+('why_1_image', '/img/tracking.png', NULL, 'image', 'why', 'Why 1: Image', 33),
+
+('why_2_title', 'Pārredzama cenu politika', 'Transparent pricing',
+ 'text', 'why', 'Why 2: Title', 34),
+('why_2_desc',  'Nekādas slēptās maksas - skaidras cenas un rēķini.',
+                'No hidden fees - clear quotes and invoices.',
+ 'text', 'why', 'Why 2: Description', 35),
+('why_2_image', '/img/pricing.png', NULL, 'image', 'why', 'Why 2: Image', 36),
+
+('why_3_title', 'Garantēta ietilpība', 'Guaranteed capacity',
+ 'text', 'why', 'Why 3: Title', 37),
+('why_3_desc',  'Prioritārās joslas un partneru tīkls, lai izpildītu stingrus SLA.',
+                'Priority lanes and partner network to meet tight SLAs.',
+ 'text', 'why', 'Why 3: Description', 38),
+('why_3_image', '/img/capacity.png', NULL, 'image', 'why', 'Why 3: Image', 39),
+
+-- ── HOW IT WORKS ──────────────────────────────────────────────────────────────
+('how_heading', 'Kā tas darbojas', 'How it works',
+ 'text', 'how', 'How: Section Heading', 40),
+
+('how_1_title', 'Pieprasījums', 'Request',
+ 'text', 'how', 'How Step 1: Title', 41),
+('how_1_desc',  'Ātrs piedāvājums no izcelsmes vietas līdz galamērķim.',
+                'Quick quote from origin to destination.',
+ 'text', 'how', 'How Step 1: Description', 42),
+('how_1_image', '/img/how1.jpg', NULL, 'image', 'how', 'How Step 1: Image', 43),
+
+('how_2_title', 'Apstiprinājums', 'Book',
+ 'text', 'how', 'How Step 2: Title', 44),
+('how_2_desc',  'Apstipriniet saņemšanu, saņemiet piešķirto pārvadātāju un paredzamo ierašanās laiku.',
+                'Confirm pickup, get assigned carrier and ETA.',
+ 'text', 'how', 'How Step 2: Description', 45),
+('how_2_image', '/img/how2.jpg', NULL, 'image', 'how', 'How Step 2: Image', 46),
+
+('how_3_title', 'Izsekojamība', 'Track',
+ 'text', 'how', 'How Step 3: Title', 47),
+('how_3_desc',  'Iespēja iegūt informāciju par kravas atrašanās vietu.',
+                'Possibility to obtain information about the location of the cargo.',
+ 'text', 'how', 'How Step 3: Description', 48),
+('how_3_image', '/img/how3.jpg', NULL, 'image', 'how', 'How Step 3: Image', 49),
+
+('how_4_title', 'Piegāde', 'Deliver',
+ 'text', 'how', 'How Step 4: Title', 50),
+('how_4_desc',  'Piegādes apliecinājums un automatizēta rēķinu izrakstīšana.',
+                'Proof of delivery and automated invoicing.',
+ 'text', 'how', 'How Step 4: Description', 51),
+('how_4_image', '/img/how4.jpg', NULL, 'image', 'how', 'How Step 4: Image', 52),
+
+-- ── TESTIMONIALS ──────────────────────────────────────────────────────────────
+('testimonials_heading', 'Uzticas', 'Trusted by',
+ 'text', 'testimonials', 'Testimonials: Section Heading', 60),
+
+('trust_logo_1', '/img/logo1.png', NULL, 'image', 'testimonials', 'Trust Logo 1', 61),
+('trust_logo_2', '/img/logo2.png', NULL, 'image', 'testimonials', 'Trust Logo 2', 62),
+('trust_logo_3', '/img/logo3.png', NULL, 'image', 'testimonials', 'Trust Logo 3', 63),
+('trust_logo_4', '/img/logo4.png', NULL, 'image', 'testimonials', 'Trust Logo 4', 64),
+('trust_logo_5', '/img/logo5.png', NULL, 'image', 'testimonials', 'Trust Logo 5', 65),
+('trust_logo_6', '/img/logo6.png', NULL, 'image', 'testimonials', 'Trust Logo 6', 66),
+('trust_logo_7', '/img/logo7.png', NULL, 'image', 'testimonials', 'Trust Logo 7', 67),
+('trust_logo_8', '/img/logo8.png', NULL, 'image', 'testimonials', 'Trust Logo 8', 68),
+
+('testimonial_1_quote',  '"TEKSTS TEKSTS TEKSTS."', '"TEXT TEXT TEXT."',
+ 'text', 'testimonials', 'Testimonial 1: Quote', 69),
+('testimonial_1_author', 'Tests 1', 'Test1',
+ 'text', 'testimonials', 'Testimonial 1: Author', 70),
+('testimonial_2_quote',  '"TEKSTS TEKSTS TEKSTS."', '"TEXT TEXT TEXT."',
+ 'text', 'testimonials', 'Testimonial 2: Quote', 71),
+('testimonial_2_author', 'Tests 2', 'Test2',
+ 'text', 'testimonials', 'Testimonial 2: Author', 72),
+('testimonial_3_quote',  '"TEKSTS TEKSTS TEKSTS."', '"TEXT TEXT TEXT."',
+ 'text', 'testimonials', 'Testimonial 3: Quote', 73),
+('testimonial_3_author', 'Tests 3', 'Test3',
+ 'text', 'testimonials', 'Testimonial 3: Author', 74),
+
+-- ── ABOUT US ──────────────────────────────────────────────────────────────────
+('about_heading', 'Par mums', 'About Us',
+ 'text', 'about', 'About: Section Heading', 80),
+('about_p1',    'nodrošina vietējos un starptautiskos kravu pārvadājumus — ātri, uzticami un efektīvi.',
+                'provides local and international freight transport — fast, reliable, and efficient.',
+ 'text', 'about', 'About: Paragraph 1 (after company name)', 81),
+('about_motto', '"Turpinām virzīties uz priekšu!"', '"Keep moving forward!"',
+ 'text', 'about', 'About: Motto', 82),
+('about_p2',    'Ar vairāk nekā desmit gadu praktisko pieredzi, mūsu komanda un modernā autoparka nodrošina ātru un efektīvu risinājumu jebkurai loģistikas problēmai.',
+                'With over a decade of hands-on experience, our team and modern fleet deliver quick, effective solutions for any logistics challenge.',
+ 'text', 'about', 'About: Paragraph 2', 83),
+('about_p3',    'Mēs nodrošinām pilnu piegādes ķēdes segumu: transportu, noliktavu uzglabāšanu, dokumentāciju un muitas formalitāšu kārtošanu. Mūsu partneru tīkls nodrošina ikdienas kravu pārvadājumus visā Eiropā, Apvienotajā Karalistē un Baltijas valstīs — gan uzņēmumiem, gan privātiem klientiem.',
+                'We provide full supply-chain coverage: transport, warehousing, documentation, and customs. Our partner network enables daily freight movement across Europe, the UK, and the Baltics — for both businesses and private clients.',
+ 'text', 'about', 'About: Paragraph 3', 84),
+('about_p4',    'Katrs klients saņem visaptverošu atbalstu, kas paredzēts transporta izmaksu samazināšanai un darbības netraucētai norisei.',
+                'Every client gets end-to-end support designed to cut transport costs and keep operations running smoothly.',
+ 'text', 'about', 'About: Paragraph 4', 85),
+('about_image', '/img/About_us.png', NULL, 'image', 'about', 'About: Image', 86);

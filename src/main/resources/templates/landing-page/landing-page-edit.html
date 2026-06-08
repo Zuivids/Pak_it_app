@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: header(~{})}"></head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container-fluid py-4 flex-fill">
+    <div class="d-flex align-items-center mb-4">
+        <a href="/home" class="btn btn-outline-secondary btn-sm me-3">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+        <h3 class="mb-0">Landing Page Configuration</h3>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="position-fixed top-0 end-0 p-3" style="z-index:9999">
+        <div id="saveToast" class="toast align-items-center text-white border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">Saved successfully.</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section tabs -->
+    <ul class="nav nav-tabs mb-3" id="sectionTabs">
+        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab-hero">Hero</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-services">Services</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-why">Why</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-how">How it works</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-testimonials">Testimonials</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-about">About</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+        <!-- ── HERO ─────────────────────────────────────────────────────── -->
+        <div class="tab-pane fade show active" id="tab-hero">
+            <div th:each="cfg : ${configs}" th:if="${cfg.section == 'hero'}">
+                <div th:replace="~{this :: configRow(${cfg})}"></div>
+            </div>
+        </div>
+
+        <!-- ── SERVICES ──────────────────────────────────────────────────── -->
+        <div class="tab-pane fade" id="tab-services">
+            <div th:each="cfg : ${configs}" th:if="${cfg.section == 'services'}">
+                <div th:replace="~{this :: configRow(${cfg})}"></div>
+            </div>
+        </div>
+
+        <!-- ── WHY ───────────────────────────────────────────────────────── -->
+        <div class="tab-pane fade" id="tab-why">
+            <div th:each="cfg : ${configs}" th:if="${cfg.section == 'why'}">
+                <div th:replace="~{this :: configRow(${cfg})}"></div>
+            </div>
+        </div>
+
+        <!-- ── HOW IT WORKS ──────────────────────────────────────────────── -->
+        <div class="tab-pane fade" id="tab-how">
+            <div th:each="cfg : ${configs}" th:if="${cfg.section == 'how'}">
+                <div th:replace="~{this :: configRow(${cfg})}"></div>
+            </div>
+        </div>
+
+        <!-- ── TESTIMONIALS ──────────────────────────────────────────────── -->
+        <div class="tab-pane fade" id="tab-testimonials">
+            <div th:each="cfg : ${configs}" th:if="${cfg.section == 'testimonials'}">
+                <div th:replace="~{this :: configRow(${cfg})}"></div>
+            </div>
+        </div>
+
+        <!-- ── ABOUT ─────────────────────────────────────────────────────── -->
+        <div class="tab-pane fade" id="tab-about">
+            <div th:each="cfg : ${configs}" th:if="${cfg.section == 'about'}">
+                <div th:replace="~{this :: configRow(${cfg})}"></div>
+            </div>
+        </div>
+
+    </div><!-- /tab-content -->
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<!-- ── CONFIG ROW FRAGMENT ──────────────────────────────────────────────────── -->
+<th:block th:fragment="configRow(config)" th:if="${config != null}">
+    <div class="card mb-3">
+        <div class="card-header fw-semibold" th:text="${config.label}">Label</div>
+        <div class="card-body">
+
+            <!-- TEXT field -->
+            <th:block th:if="${config.configType == 'text'}">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small">Latvian (LV)</label>
+                        <textarea class="form-control lp-value-lv" rows="2"
+                                  th:data-key="${config.configKey}"
+                                  th:text="${config.valueLv}"></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small">English (EN)</label>
+                        <textarea class="form-control lp-value-en" rows="2"
+                                  th:data-key="${config.configKey}"
+                                  th:text="${config.valueEn}"></textarea>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-success mt-2 lp-save-text"
+                        th:data-key="${config.configKey}">
+                    <i class="bi bi-floppy"></i> Save
+                </button>
+            </th:block>
+
+            <!-- IMAGE field -->
+            <th:block th:if="${config.configType == 'image'}">
+                <div class="d-flex align-items-start gap-4 flex-wrap">
+                    <div>
+                        <label class="form-label text-muted small d-block">Current image</label>
+                        <img th:src="${config.valueLv}" alt="current"
+                             class="lp-img-preview rounded border"
+                             th:data-key="${config.configKey}"
+                             style="max-height:120px; max-width:200px; object-fit:contain;"
+                             onerror="this.style.display='none'">
+                    </div>
+                    <div class="flex-grow-1">
+                        <label class="form-label text-muted small">Upload new image</label>
+                        <input type="file" class="form-control lp-file-input"
+                               accept="image/jpeg,image/png,image/gif,image/webp"
+                               th:data-key="${config.configKey}">
+                        <button class="btn btn-sm btn-primary mt-2 lp-upload-image"
+                                th:data-key="${config.configKey}">
+                            <i class="bi bi-cloud-upload"></i> Upload
+                        </button>
+                        <span class="lp-upload-status ms-2 small text-muted"
+                              th:data-key="${config.configKey}"></span>
+                    </div>
+                </div>
+            </th:block>
+
+        </div>
+    </div>
+</th:block>
+
+<script th:inline="javascript">
+    const CSRF_TOKEN  = /*[[${_csrf.token}]]*/ '';
+    const CSRF_HEADER = /*[[${_csrf.headerName}]]*/ 'X-CSRF-TOKEN';
+
+    function showToast(msg, success) {
+        const toast = document.getElementById('saveToast');
+        toast.className = 'toast align-items-center text-white border-0 ' + (success ? 'bg-success' : 'bg-danger');
+        document.getElementById('toastMessage').textContent = msg;
+        new bootstrap.Toast(toast, {delay: 2500}).show();
+    }
+
+    // ── Save text ──────────────────────────────────────────────────────────────
+    document.querySelectorAll('.lp-save-text').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const key = btn.dataset.key;
+            const lvEl = document.querySelector(`.lp-value-lv[data-key="${key}"]`);
+            const enEl = document.querySelector(`.lp-value-en[data-key="${key}"]`);
+            const body = new URLSearchParams({
+                valueLv: lvEl.value,
+                valueEn: enEl.value
+            });
+            try {
+                const res = await fetch(`/api/landing-page/${key}/text`, {
+                    method: 'POST',
+                    headers: {[CSRF_HEADER]: CSRF_TOKEN, 'Content-Type': 'application/x-www-form-urlencoded'},
+                    body
+                });
+                showToast(res.ok ? 'Saved successfully.' : 'Save failed.', res.ok);
+            } catch (e) {
+                showToast('Network error.', false);
+            }
+        });
+    });
+
+    // ── Upload image ───────────────────────────────────────────────────────────
+    document.querySelectorAll('.lp-upload-image').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const key = btn.dataset.key;
+            const fileInput = document.querySelector(`.lp-file-input[data-key="${key}"]`);
+            const statusEl  = document.querySelector(`.lp-upload-status[data-key="${key}"]`);
+            const imgEl     = document.querySelector(`.lp-img-preview[data-key="${key}"]`);
+
+            if (!fileInput.files.length) {
+                showToast('Please select a file first.', false);
+                return;
+            }
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            btn.disabled = true;
+            statusEl.textContent = 'Uploading…';
+            try {
+                const res = await fetch(`/api/landing-page/${key}/image`, {
+                    method: 'POST',
+                    headers: {[CSRF_HEADER]: CSRF_TOKEN},
+                    body: formData
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (imgEl) { imgEl.src = data.path; imgEl.style.display = ''; }
+                    statusEl.textContent = '';
+                    showToast('Image uploaded.', true);
+                } else {
+                    const err = await res.text();
+                    statusEl.textContent = '';
+                    showToast('Upload failed: ' + err, false);
+                }
+            } catch (e) {
+                statusEl.textContent = '';
+                showToast('Network error.', false);
+            } finally {
+                btn.disabled = false;
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
